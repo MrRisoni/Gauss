@@ -25,4 +25,4 @@ AddLanguageDialog::~AddLanguageDialog()
   #Diplomas ( ComboBox???)
 
 }
- * /
+ */

@@ -1,7 +1,22 @@
 ﻿#ifndef CSPSOLVER_H
 #define CSPSOLVER_H
 #include <QList>
-#include <variable.h>
+#include "variable.h"
+
+
+
+//Timetabling via backtracking Forward checking
+
+
+//Very simple at first
+//All Hours and all days are possible!!!!!
+//Only one class per week !!!!!!
+//So each class has 3 variables that need to be set Day,Hour,Buidling
+//Duration for ALL classes is 2 hours
+
+
+
+
 
 class CspSolver
 {

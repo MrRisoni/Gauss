@@ -16,6 +16,6 @@ AddNewSchwerDialog::~AddNewSchwerDialog()
 
 /*
  SchwerID , fore RGB, back RGB
- * /
+ */
 
 

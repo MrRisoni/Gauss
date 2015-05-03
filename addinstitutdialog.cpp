@@ -17,5 +17,5 @@ AddInstitutDialog::~AddInstitutDialog()
 
 
 /* TODO
- Show Instutut Name , #Diplomas
- * /
+            Show Instutut Name , #Diplomas
+ */

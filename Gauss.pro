@@ -77,7 +77,12 @@ SOURCES += main.cpp\
     Entities/wagesschule.cpp \
     Entities/orm.cpp \
     addsprachescheduledialog.cpp \
-    managecoursesdialog.cpp
+    managecoursesdialog.cpp \
+    myCSP/cspsolver.cpp \
+    myCSP/node.cpp \
+    myCSP/point.cpp \
+    myCSP/variable.cpp \
+    Tests/hi.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -143,7 +148,11 @@ HEADERS  += mainwindow.h \
     Entities/wagesschule.h \
     Entities/orm.h \
     addsprachescheduledialog.h \
-    managecoursesdialog.h
+    managecoursesdialog.h \
+    myCSP/cspsolver.h \
+    myCSP/node.h \
+    myCSP/point.h \
+    myCSP/variable.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
@@ -164,3 +173,7 @@ FORMS    += mainwindow.ui \
     viewteacherdialog.ui \
     addsprachescheduledialog.ui \
     managecoursesdialog.ui
+
+    
+CONFIG +=   c++11
+
