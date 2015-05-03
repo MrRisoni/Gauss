@@ -82,7 +82,6 @@ SOURCES += main.cpp\
     myCSP/node.cpp \
     myCSP/point.cpp \
     myCSP/variable.cpp \
-    Tests/hi.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
