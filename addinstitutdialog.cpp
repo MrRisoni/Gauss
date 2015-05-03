@@ -12,3 +12,10 @@ AddInstitutDialog::~AddInstitutDialog()
 {
     delete ui;
 }
+
+
+
+
+/* TODO
+ Show Instutut Name , #Diplomas
+ * /

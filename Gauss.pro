@@ -75,7 +75,9 @@ SOURCES += main.cpp\
     Entities/wagesuni.cpp \
     Entities/wagessprache.cpp \
     Entities/wagesschule.cpp \
-    Entities/orm.cpp
+    Entities/orm.cpp \
+    addsprachescheduledialog.cpp \
+    managecoursesdialog.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -139,7 +141,9 @@ HEADERS  += mainwindow.h \
     Entities/wagesuni.h \
     Entities/wagessprache.h \
     Entities/wagesschule.h \
-    Entities/orm.h
+    Entities/orm.h \
+    addsprachescheduledialog.h \
+    managecoursesdialog.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
@@ -157,4 +161,6 @@ FORMS    += mainwindow.ui \
     managesalariesdialog.ui \
     statisticsdialog.ui \
     viewstudentdialog.ui \
-    viewteacherdialog.ui
+    viewteacherdialog.ui \
+    addsprachescheduledialog.ui \
+    managecoursesdialog.ui

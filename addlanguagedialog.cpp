@@ -12,3 +12,17 @@ AddLanguageDialog::~AddLanguageDialog()
 {
     delete ui;
 }
+
+
+
+/* TO DO
+  Language
+  Instituts
+  #Teachers
+  #Total Groups
+  #Total Active Groups
+  #Total Students
+  #Diplomas ( ComboBox???)
+
+}
+ * /

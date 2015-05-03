@@ -12,3 +12,10 @@ AddNewSchwerDialog::~AddNewSchwerDialog()
 {
     delete ui;
 }
+
+
+/*
+ SchwerID , fore RGB, back RGB
+ * /
+
+
