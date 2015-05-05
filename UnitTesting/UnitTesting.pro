@@ -10,7 +10,11 @@ qtcAddDeployment()
 
 
 
-unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lcppunit
+unix:!macx: LIBS += -L$$PWD/../../../../usr/lib/ -lboost_unit_test_framework
 
-INCLUDEPATH += $$PWD/../../../../usr/include/cppunit
-DEPENDPATH += $$PWD/../../../../usr/include/cppunit
+INCLUDEPATH += $$PWD/../../../../usr/include/boost/test
+
+DEPENDPATH += $$PWD/../../../../usr/include/boost/test
+
+
+CONFIG +=   c++11
