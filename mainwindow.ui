@@ -106,6 +106,20 @@
     <property name="title">
      <string>Members</string>
     </property>
+    <widget class="QMenu" name="menuStudents">
+     <property name="title">
+      <string>Students</string>
+     </property>
+     <addaction name="actionAdd_Student"/>
+    </widget>
+    <widget class="QMenu" name="menuTeachers">
+     <property name="title">
+      <string>Teachers</string>
+     </property>
+     <addaction name="actionAdd_Teacher"/>
+    </widget>
+    <addaction name="menuStudents"/>
+    <addaction name="menuTeachers"/>
    </widget>
    <widget class="QMenu" name="menuUtilities">
     <property name="title">
@@ -113,8 +127,14 @@
     </property>
     <addaction name="actionSchwer_Levels"/>
    </widget>
+   <widget class="QMenu" name="menuStatistics">
+    <property name="title">
+     <string>Statistics</string>
+    </property>
+   </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
+   <addaction name="menuStatistics"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -130,6 +150,16 @@
   <action name="actionSchwer_Levels">
    <property name="text">
     <string>Schwer Levels</string>
+   </property>
+  </action>
+  <action name="actionAdd_Student">
+   <property name="text">
+    <string>Add Student</string>
+   </property>
+  </action>
+  <action name="actionAdd_Teacher">
+   <property name="text">
+    <string>Add Teacher</string>
    </property>
   </action>
  </widget>
