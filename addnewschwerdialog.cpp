@@ -21,6 +21,8 @@ AddNewSchwerDialog::AddNewSchwerDialog(QWidget *parent) :
 void AddNewSchwerDialog::LoadColors() {
     /*
      Show color and number of courses :)
+     SElect Count(CourseID) From Courses Group by SchwerID 
+     
      */
 
     QStandardItemModel *mod=new QStandardItemModel();
