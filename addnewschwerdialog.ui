@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Schweriegkeit Levels</string>
   </property>
   <widget class="QTableView" name="tableSchwer">
    <property name="geometry">
