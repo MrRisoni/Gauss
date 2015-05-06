@@ -20,6 +20,8 @@ private:
 
 private slots:
     void addSchwer();
+    void manageDeps();
+    void manageCourses();
 };
 
 #endif // MAINWINDOW_H

@@ -126,6 +126,8 @@
      <string>Utilities</string>
     </property>
     <addaction name="actionSchwer_Levels"/>
+    <addaction name="actionManage_Departments"/>
+    <addaction name="actionManage_Courses"/>
    </widget>
    <widget class="QMenu" name="menuStatistics">
     <property name="title">
@@ -160,6 +162,16 @@
   <action name="actionAdd_Teacher">
    <property name="text">
     <string>Add Teacher</string>
+   </property>
+  </action>
+  <action name="actionManage_Departments">
+   <property name="text">
+    <string>Manage Departments</string>
+   </property>
+  </action>
+  <action name="actionManage_Courses">
+   <property name="text">
+    <string>Manage Courses</string>
    </property>
   </action>
  </widget>
