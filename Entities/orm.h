@@ -2,6 +2,9 @@
 #define ORM_H
 
 #include "schwierigkeit.h"
+#include "departments.h"
+
+
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
@@ -14,8 +17,14 @@ public:
     ORM();
     ~ORM();
 
-    int save(Schwierigkeit schw);
+    void save(Schwierigkeit schw);
+    void save(Departments D);
 
+    QList<Schwierigkeit> getSchwer();
+    QList<Departments> getDeps();
+
+private:
+    void ShowError(QSqlQuery q);
 
 };
 
