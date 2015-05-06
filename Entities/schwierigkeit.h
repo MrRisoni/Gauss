@@ -19,7 +19,11 @@ public:
 
 
 
+    int getSchwerID() const;
+    void setSchwerID(int value);
+
 private:
+    int SchwerID;
     int Red;
     int Green;
     int Blue;

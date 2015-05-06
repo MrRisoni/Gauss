@@ -36,6 +36,16 @@ void Schwierigkeit::setRed(int value)
 {
     Red = value;
 }
+int Schwierigkeit::getSchwerID() const
+{
+    return SchwerID;
+}
+
+void Schwierigkeit::setSchwerID(int value)
+{
+    SchwerID = value;
+}
+
 
 
 
