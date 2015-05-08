@@ -21,7 +21,7 @@ ManageCoursesDialog::ManageCoursesDialog(QWidget *parent) :
      Stuffen=O.getSchwer();
     for (Schwierigkeit stuffe: Stuffen) {
         qDebug() << "new stuffe" << stuffe.getRed() << " " << stuffe.getGreen() << " " << stuffe.getBlue();
-        ui->comboSchwer->addItem("Pick a level");
+        ui->comboSchwer->addItem(QString::number(stuffe.getSchwerID()));
         QColor col;
 
         col.setRed(stuffe.getRed());
@@ -52,6 +52,19 @@ ManageCoursesDialog::~ManageCoursesDialog()
 void ManageCoursesDialog::on_pushSaveCourses_clicked()
 {
 
+    Courses C=Courses();
+
+    Departments D=Departments();
+    D.setDepName(ui->comboDepName->currentText());
+    C.setD(D);
+
+
+    C.setName(ui->lineCourse->text());
+   C.setSchwerID(ui->comboSchwer->currentText().toInt());
+
+    ORM O=ORM();
+
+    O.save(C);
 }
 
 
