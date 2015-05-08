@@ -16,6 +16,39 @@ ORM::~ORM()
 
 }
 
+void ORM::save(Courses C) {
+    QSqlQuery q;
+    try {
+        qDebug() << "saving Course";
+        //fetch department ID
+        q.prepare("Select DepID From Departments Where DepName=:dpname");
+        q.bindValue(":dpname",C.getD().getDepName());
+        q.exec();
+        int depid;
+        while (q.next()) {
+           depid=q.value(0).toInt();
+        }
+
+        qDebug() << "dep id" << depid << " schwer " << C.getSchwerID();
+
+        q.prepare("INSERT INTO `Courses`   ( `DepID`, `CourseName`, `Schwer`, `Active`) VALUES (:dpid,:name,:schwid,'1')");
+        q.bindValue(":dpid",depid);
+        q.bindValue(":name",C.getName());
+        q.bindValue(":schwid",C.getSchwerID());
+         q.exec();
+
+         ShowSuccess();
+    }
+    catch (exception& ex) {
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
+    }
+    q.finish();
+
+}
+
+
 
 void ORM::save(Departments D) {
 
@@ -38,6 +71,14 @@ void ORM::save(Departments D) {
 
 
 
+void ORM::ShowSuccess() {
+    QMessageBox msgBox;
+    msgBox.setText("OK");
+    msgBox.setStandardButtons(QMessageBox::Ok);
+    msgBox.setIcon(QMessageBox::Information);
+    int ret = msgBox.exec();
+
+}
 
 
 

@@ -3,12 +3,14 @@
 
 #include "schwierigkeit.h"
 #include "departments.h"
+#include "courses.h"
 
 
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
+
 
 
 class ORM
@@ -19,12 +21,15 @@ public:
 
     void save(Schwierigkeit schw);
     void save(Departments D);
+    void save(Courses C);
 
     QList<Schwierigkeit> getSchwer();
     QList<Departments> getDeps();
 
 private:
     void ShowError(QSqlQuery q);
+    void ShowSuccess();
+
 
 };
 
