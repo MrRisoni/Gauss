@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Manage Pay Schemes</string>
   </property>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
@@ -29,7 +29,7 @@
     <attribute name="title">
      <string>Echelons</string>
     </attribute>
-    <widget class="QTableView" name="tableView">
+    <widget class="QTableView" name="tableEchelons">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -39,12 +39,25 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushNewEchel">
+     <property name="geometry">
+      <rect>
+       <x>460</x>
+       <y>350</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>New</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
      <string>Base Scheme</string>
     </attribute>
-    <widget class="QTableView" name="tableView_2">
+    <widget class="QTableView" name="tableBase">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -54,7 +67,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboEchelon">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -64,7 +77,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit">
+    <widget class="QLineEdit" name="lineBaseWages">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -87,12 +100,38 @@
       <string>Wages</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_12">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>325</y>
+       <width>171</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select Echelon</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushAddBaseScheme">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>370</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
      <string>Schule</string>
     </attribute>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="comboSchuleEchel">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -108,14 +147,14 @@
        <x>40</x>
        <y>410</y>
        <width>61</width>
-       <height>15</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>Wages</string>
      </property>
     </widget>
-    <widget class="QTableView" name="tableView_3">
+    <widget class="QTableView" name="tableSchule">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -125,7 +164,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_2">
+    <widget class="QLineEdit" name="lineSchuleWages">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -148,7 +187,7 @@
       <string>Echelon</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="comboSchule">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -162,13 +201,26 @@
      <property name="geometry">
       <rect>
        <x>40</x>
-       <y>380</y>
+       <y>374</y>
        <width>61</width>
-       <height>15</height>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
       <string>Courses</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushAddSchuleScheme">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>410</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
      </property>
     </widget>
    </widget>
@@ -176,7 +228,7 @@
     <attribute name="title">
      <string>Uni</string>
     </attribute>
-    <widget class="QComboBox" name="comboBox_4">
+    <widget class="QComboBox" name="comboUniEchel">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -186,7 +238,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_5">
+    <widget class="QComboBox" name="comboUniCourses">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -209,7 +261,7 @@
       <string>Courses</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_3">
+    <widget class="QLineEdit" name="lineUniWages">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -232,7 +284,7 @@
       <string>Echelon</string>
      </property>
     </widget>
-    <widget class="QTableView" name="tableView_4">
+    <widget class="QTableView" name="tableUni">
      <property name="geometry">
       <rect>
        <x>30</x>
@@ -268,7 +320,7 @@
       <string>Edu</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_6">
+    <widget class="QComboBox" name="comboEdu">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -278,12 +330,25 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushAddUniScheme">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>450</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_5">
     <attribute name="title">
-     <string>Page</string>
+     <string>Languages</string>
     </attribute>
-    <widget class="QComboBox" name="comboBox_7">
+    <widget class="QComboBox" name="comboSpracheEchel">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -306,7 +371,7 @@
       <string>Diploma</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_8">
+    <widget class="QComboBox" name="comboDiploma">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -329,7 +394,7 @@
       <string>Wages</string>
      </property>
     </widget>
-    <widget class="QLineEdit" name="lineEdit_4">
+    <widget class="QLineEdit" name="lineSprachWages">
      <property name="geometry">
       <rect>
        <x>230</x>
@@ -360,6 +425,19 @@
        <width>521</width>
        <height>291</height>
       </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushAddSpracheScheme">
+     <property name="geometry">
+      <rect>
+       <x>370</x>
+       <y>450</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
      </property>
     </widget>
    </widget>

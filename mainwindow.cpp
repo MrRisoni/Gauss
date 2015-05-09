@@ -4,6 +4,7 @@
 #include "addnewschwerdialog.h"
 #include "managedepsdialog.h"
 #include "managecoursesdialog.h"
+#include "managesalariesdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -15,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionSchwer_Levels,SIGNAL(triggered()),this,SLOT(addSchwer()));
     connect(ui->actionManage_Departments,SIGNAL(triggered()),this,SLOT(manageDeps()));
     connect(ui->actionManage_Courses,SIGNAL(triggered()),this,SLOT(manageCourses()));
+    connect(ui->actionManage_Pay_Schemes,SIGNAL(triggered()),this,SLOT(manageSchemes()));
 
 }
 
@@ -23,6 +25,11 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::manageSchemes() {
+    ManageSalariesDialog *sals=new ManageSalariesDialog();
+    sals->setAttribute(Qt::WA_DeleteOnClose);
+    sals->show();
+}
 
 void MainWindow::manageCourses() {
     ManageCoursesDialog *crs=new ManageCoursesDialog();
