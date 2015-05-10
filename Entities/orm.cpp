@@ -16,6 +16,30 @@ ORM::~ORM()
 
 }
 
+
+
+void ORM::save(Echelon E) {
+    QSqlQuery q;
+    try {
+        q.prepare("INSERT INTO `Echelon`  (`Exp`) VALUES (:jahr)");
+        q.bindValue(":jahr",E.getExpYears());
+        q.exec();
+         ShowSuccess();
+
+    }
+    catch (exception& ex) {
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
+    }
+    q.finish();
+
+}
+
+
+
+
+
 void ORM::save(Courses C) {
     QSqlQuery q;
     try {
@@ -133,6 +157,39 @@ QList<Departments> ORM::getDeps() {
 
 
 
+void ORM::save(BaseWages BW) {
+    QSqlQuery q;
+    try {
+        //fetch echelon id
+        q.prepare("Select EchelID From Echelon Where Exp=:xp");
+        q.bindValue(":xp",BW.getE().getExpYears());
+        q.exec();
+        int EchID;
+        while (q.next()) {
+            EchID=q.value(0).toInt();
+        }
+
+        q.prepare("INSERT INTO `BaseWages`   ( `EchelID`, `Dat`, `Wages`) VALUES (:echelid,:dt,:wg)");
+        q.bindValue(":echelid",EchID);
+        q.bindValue(":dt",QDate::currentDate());
+        q.bindValue(":wg",BW.getWage());
+        q.exec();
+
+            ShowSuccess();
+    }
+    catch (exception& ex) {
+
+
+        QMessageBox msgBox;
+        msgBox.setText(q.lastError().text()+ ex.what());
+        msgBox.setStandardButtons(QMessageBox::Ok);
+        msgBox.setIcon(QMessageBox::Warning);
+        int ret = msgBox.exec();
+    }
+
+
+    q.finish();
+}
 
 
 
@@ -169,4 +226,19 @@ void ORM::save(Schwierigkeit schw) {
 
     q.finish();
 
+}
+
+
+QList<Echelon> ORM::getEchels() {
+    QList<Echelon> Ech;
+
+    QSqlQuery q;
+    q.exec("Select Exp From Echelon");
+    while (q.next()) {
+        Echelon c=Echelon();
+        c.setExpYears(q.value(0).toInt());
+        Ech.append(c);
+    }
+    q.finish();
+    return Ech;
 }
