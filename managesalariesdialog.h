@@ -15,8 +15,15 @@ public:
     explicit ManageSalariesDialog(QWidget *parent = 0);
     ~ManageSalariesDialog();
 
+private slots:
+    void on_pushNewEchel_clicked();
+
+    void on_pushAddBaseScheme_clicked();
+
 private:
     Ui::ManageSalariesDialog *ui;
+    void populateEchelTable();
+    void populateBaseTable();
 };
 
 #endif // MANAGESALARIESDIALOG_H
