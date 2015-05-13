@@ -14,7 +14,11 @@ public:
     int getTeachers() const;
     void setTeachers(int value);
 
+    int getEchelID() const;
+    void setEchelID(int value);
+
 private:
+    int EchelID;
     int ExpYears;
     int Teachers;
 };

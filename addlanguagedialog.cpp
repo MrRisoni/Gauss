@@ -26,3 +26,8 @@ AddLanguageDialog::~AddLanguageDialog()
 
 }
  */
+
+void AddLanguageDialog::on_pushAddSprache_clicked()
+{
+
+}

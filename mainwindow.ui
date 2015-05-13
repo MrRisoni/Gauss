@@ -128,8 +128,10 @@
     <addaction name="actionSchwer_Levels"/>
     <addaction name="actionManage_Departments"/>
     <addaction name="actionManage_Courses"/>
-    <addaction name="actionManage_Pay_Schemes"/>
     <addaction name="actionManage_Fee_Schemes"/>
+    <addaction name="actionManage_Pay_Schemes"/>
+    <addaction name="actionManage_Instituts"/>
+    <addaction name="actionManage_Langugages"/>
    </widget>
    <widget class="QMenu" name="menuStatistics">
     <property name="title">
@@ -184,6 +186,16 @@
   <action name="actionManage_Fee_Schemes">
    <property name="text">
     <string>Manage Fee Schemes</string>
+   </property>
+  </action>
+  <action name="actionManage_Instituts">
+   <property name="text">
+    <string>Manage Instituts</string>
+   </property>
+  </action>
+  <action name="actionManage_Langugages">
+   <property name="text">
+    <string>Manage Langugages</string>
    </property>
   </action>
  </widget>

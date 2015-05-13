@@ -5,6 +5,9 @@
 #include "Entities/orm.h"
 #include "Entities/basewages.h"
 #include <QInputDialog>
+#include "Entities/courses.h"
+#include "Entities/wagesschule.h"
+
 
 ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
     QDialog(parent),
@@ -30,6 +33,12 @@ ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
         ui->comboUniEchel->addItem(QString::number(c.getExpYears()));
     }
 
+
+    //get schule courses
+    QList<Courses> SchuleCourses=o.getSchuleCourses();
+    for (Courses C : SchuleCourses) {
+        ui->comboSchule->addItem(C.getName());
+    }
 }
 
 ManageSalariesDialog::~ManageSalariesDialog()
@@ -55,6 +64,8 @@ void ManageSalariesDialog::on_pushNewEchel_clicked()
     }
 
     populateEchelTable();
+
+
 
 }
 
@@ -91,4 +102,30 @@ void ManageSalariesDialog::on_pushAddBaseScheme_clicked()
     ORM o=ORM();
     o.save(B);
     populateBaseTable();
+}
+
+void ManageSalariesDialog::on_pushAddSchuleScheme_clicked()
+{
+    WagesSchule WgSchule=WagesSchule();
+
+    Courses C=Courses();
+    C.setName(ui->comboSchule->currentText());
+
+    WgSchule.setC(C);
+
+    WgSchule.setDat(QDate::currentDate());
+
+    Echelon E=Echelon();
+
+    E.setExpYears(ui->comboSchuleEchel->currentText().toInt());
+
+    WgSchule.setEchel(E);
+
+    WgSchule.setWage(ui->lineSchuleWages->text().toFloat());
+
+    ORM o=ORM();
+    o.save(WgSchule);
+
+
+
 }

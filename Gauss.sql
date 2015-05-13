@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.3.12
+-- version 4.4.4
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 10, 2015 at 04:16 PM
+-- Generation Time: May 13, 2015 at 02:29 PM
 -- Server version: 10.0.15-MariaDB
 -- PHP Version: 5.6.8
 
@@ -43,14 +43,16 @@ CREATE TABLE IF NOT EXISTS `BaseWages` (
   `EchelID` int(11) NOT NULL,
   `Dat` date NOT NULL,
   `Wages` float NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf32 COMMENT='salaries go according to experience';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf32 COMMENT='salaries go according to experience';
 
 --
 -- Dumping data for table `BaseWages`
 --
 
 INSERT INTO `BaseWages` (`SalID`, `EchelID`, `Dat`, `Wages`) VALUES
-(1, 3, '2015-05-10', 7.25);
+(1, 3, '2015-05-10', 7.25),
+(2, 2, '2015-05-10', 9.78),
+(3, 1, '2015-05-10', 8.67);
 
 -- --------------------------------------------------------
 
@@ -99,7 +101,7 @@ CREATE TABLE IF NOT EXISTS `Courses` (
   `CourseName` varchar(120) NOT NULL,
   `Schwer` tinyint(4) NOT NULL COMMENT 'Schwerigkeit',
   `Active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf32;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf32;
 
 --
 -- Dumping data for table `Courses`
@@ -107,7 +109,9 @@ CREATE TABLE IF NOT EXISTS `Courses` (
 
 INSERT INTO `Courses` (`CourseID`, `DepID`, `CourseName`, `Schwer`, `Active`) VALUES
 (1, 2, 'Ενεργειακά', 10, 1),
-(2, 2, 'Εισαγωγή στα ΣΗΕ', 10, 1);
+(2, 2, 'Εισαγωγή στα ΣΗΕ', 10, 1),
+(3, 1, 'ΜΑΘΗΜΑΤΙΚΑ ΚΑΤΕΥΘΥΝΣΗΣ Γ ΛΥΚΕΙΟΥ', 10, 1),
+(4, 1, 'ΑΡΧΕΣ ΔΙΟΙΚΗΣΗΣΗ ΕΠΙΧΕΙΡΗΣΕΩΝ', 11, 1);
 
 -- --------------------------------------------------------
 
@@ -737,7 +741,16 @@ CREATE TABLE IF NOT EXISTS `WagesSchule` (
   `Dat` date NOT NULL,
   `CourseID` int(11) NOT NULL COMMENT 'not all courses and classes are the same',
   `Wage` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf32;
+
+--
+-- Dumping data for table `WagesSchule`
+--
+
+INSERT INTO `WagesSchule` (`WagesSchuleID`, `EchelID`, `Dat`, `CourseID`, `Wage`) VALUES
+(9, 3, '2015-05-13', 3, 0.87),
+(10, 1, '2015-05-13', 3, 1),
+(11, 2, '2015-05-13', 3, 1.8);
 
 -- --------------------------------------------------------
 
@@ -776,13 +789,16 @@ CREATE TABLE IF NOT EXISTS `WagesUni` (
 -- Indexes for table `Absent`
 --
 ALTER TABLE `Absent`
-  ADD PRIMARY KEY (`AbsID`), ADD KEY `MembID` (`StudentID`), ADD KEY `HistID` (`HistID`);
+  ADD PRIMARY KEY (`AbsID`),
+  ADD KEY `MembID` (`StudentID`),
+  ADD KEY `HistID` (`HistID`);
 
 --
 -- Indexes for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
-  ADD PRIMARY KEY (`SalID`), ADD KEY `EchelID` (`EchelID`);
+  ADD PRIMARY KEY (`SalID`),
+  ADD KEY `EchelID` (`EchelID`);
 
 --
 -- Indexes for table `Buildings`
@@ -794,19 +810,23 @@ ALTER TABLE `Buildings`
 -- Indexes for table `Canceled`
 --
 ALTER TABLE `Canceled`
-  ADD PRIMARY KEY (`CancID`), ADD KEY `GroupID` (`GroupID`);
+  ADD PRIMARY KEY (`CancID`),
+  ADD KEY `GroupID` (`GroupID`);
 
 --
 -- Indexes for table `Contract`
 --
 ALTER TABLE `Contract`
-  ADD PRIMARY KEY (`ConID`), ADD KEY `TeacherID` (`TeacherID`);
+  ADD PRIMARY KEY (`ConID`),
+  ADD KEY `TeacherID` (`TeacherID`);
 
 --
 -- Indexes for table `Courses`
 --
 ALTER TABLE `Courses`
-  ADD PRIMARY KEY (`CourseID`), ADD KEY `DepID` (`DepID`), ADD KEY `Schwer` (`Schwer`);
+  ADD PRIMARY KEY (`CourseID`),
+  ADD KEY `DepID` (`DepID`),
+  ADD KEY `Schwer` (`Schwer`);
 
 --
 -- Indexes for table `Days`
@@ -824,7 +844,10 @@ ALTER TABLE `Departments`
 -- Indexes for table `Diplomas`
 --
 ALTER TABLE `Diplomas`
-  ADD PRIMARY KEY (`DiplID`), ADD KEY `LangID` (`LangID`), ADD KEY `ProvID` (`ProvID`), ADD KEY `Schwer` (`Schwer`);
+  ADD PRIMARY KEY (`DiplID`),
+  ADD KEY `LangID` (`LangID`),
+  ADD KEY `ProvID` (`ProvID`),
+  ADD KEY `Schwer` (`Schwer`);
 
 --
 -- Indexes for table `Echelon`
@@ -842,25 +865,32 @@ ALTER TABLE `EduTypes`
 -- Indexes for table `Ensembles`
 --
 ALTER TABLE `Ensembles`
-  ADD PRIMARY KEY (`EnsPK`), ADD KEY `GroupID` (`GroupID`), ADD KEY `StudID` (`StudID`);
+  ADD PRIMARY KEY (`EnsPK`),
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `StudID` (`StudID`);
 
 --
 -- Indexes for table `Erlaubnis`
 --
 ALTER TABLE `Erlaubnis`
-  ADD PRIMARY KEY (`UlrID`), ADD KEY `TeacherID` (`TeacherID`);
+  ADD PRIMARY KEY (`UlrID`),
+  ADD KEY `TeacherID` (`TeacherID`);
 
 --
 -- Indexes for table `ExamSchule`
 --
 ALTER TABLE `ExamSchule`
-  ADD PRIMARY KEY (`ExamID`), ADD KEY `StudentID` (`StudentID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`ExamID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `ExamSprache`
 --
 ALTER TABLE `ExamSprache`
-  ADD PRIMARY KEY (`TestID`), ADD KEY `DiplID` (`DiplID`), ADD KEY `StudentID` (`StudentID`);
+  ADD PRIMARY KEY (`TestID`),
+  ADD KEY `DiplID` (`DiplID`),
+  ADD KEY `StudentID` (`StudentID`);
 
 --
 -- Indexes for table `Faces`
@@ -872,37 +902,48 @@ ALTER TABLE `Faces`
 -- Indexes for table `FeeSchule`
 --
 ALTER TABLE `FeeSchule`
-  ADD PRIMARY KEY (`FrSchID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`FrSchID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `FeeSprache`
 --
 ALTER TABLE `FeeSprache`
-  ADD PRIMARY KEY (`FspID`), ADD KEY `SchedID` (`SchedID`);
+  ADD PRIMARY KEY (`FspID`),
+  ADD KEY `SchedID` (`SchedID`);
 
 --
 -- Indexes for table `FeeUni`
 --
 ALTER TABLE `FeeUni`
-  ADD PRIMARY KEY (`FareID`), ADD KEY `CourseID` (`CourseID`), ADD KEY `EduType` (`EduType`);
+  ADD PRIMARY KEY (`FareID`),
+  ADD KEY `CourseID` (`CourseID`),
+  ADD KEY `EduType` (`EduType`);
 
 --
 -- Indexes for table `Funds`
 --
 ALTER TABLE `Funds`
-  ADD PRIMARY KEY (`FundID`), ADD KEY `StudentID` (`StudentID`);
+  ADD PRIMARY KEY (`FundID`),
+  ADD KEY `StudentID` (`StudentID`);
 
 --
 -- Indexes for table `Groups`
 --
 ALTER TABLE `Groups`
-  ADD PRIMARY KEY (`GroupID`), ADD KEY `TeacherID` (`TeacherID`), ADD KEY `CourseID` (`CourseID`), ADD KEY `Edu` (`Edu`);
+  ADD PRIMARY KEY (`GroupID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `CourseID` (`CourseID`),
+  ADD KEY `Edu` (`Edu`);
 
 --
 -- Indexes for table `History`
 --
 ALTER TABLE `History`
-  ADD PRIMARY KEY (`HistID`), ADD KEY `GroupID` (`GroupID`), ADD KEY `StartHourID` (`StartHourID`), ADD KEY `RoomID` (`RoomID`);
+  ADD PRIMARY KEY (`HistID`),
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `StartHourID` (`StartHourID`),
+  ADD KEY `RoomID` (`RoomID`);
 
 --
 -- Indexes for table `Hours`
@@ -932,7 +973,8 @@ ALTER TABLE `Languages`
 -- Indexes for table `Members`
 --
 ALTER TABLE `Members`
-  ADD PRIMARY KEY (`MembID`), ADD KEY `MembTypeID` (`MembTypeID`);
+  ADD PRIMARY KEY (`MembID`),
+  ADD KEY `MembTypeID` (`MembTypeID`);
 
 --
 -- Indexes for table `MembTypes`
@@ -944,43 +986,57 @@ ALTER TABLE `MembTypes`
 -- Indexes for table `Payments`
 --
 ALTER TABLE `Payments`
-  ADD PRIMARY KEY (`PayID`), ADD KEY `TeacherID` (`TeacherID`);
+  ADD PRIMARY KEY (`PayID`),
+  ADD KEY `TeacherID` (`TeacherID`);
 
 --
 -- Indexes for table `Permament`
 --
 ALTER TABLE `Permament`
-  ADD PRIMARY KEY (`PermaID`), ADD KEY `GroupID` (`GroupID`), ADD KEY `DayID` (`DayID`), ADD KEY `RoomID` (`RoomID`), ADD KEY `HourID` (`HourID`), ADD KEY `Type` (`Type`);
+  ADD PRIMARY KEY (`PermaID`),
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `DayID` (`DayID`),
+  ADD KEY `RoomID` (`RoomID`),
+  ADD KEY `HourID` (`HourID`),
+  ADD KEY `Type` (`Type`);
 
 --
 -- Indexes for table `RequestSchule`
 --
 ALTER TABLE `RequestSchule`
-  ADD PRIMARY KEY (`RequestID`), ADD KEY `StudentID` (`StudentID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`RequestID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `RequestSprache`
 --
 ALTER TABLE `RequestSprache`
-  ADD PRIMARY KEY (`RequestID`), ADD KEY `StudentID` (`StudentID`), ADD KEY `ScheduleID` (`ScheduleID`);
+  ADD PRIMARY KEY (`RequestID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `ScheduleID` (`ScheduleID`);
 
 --
 -- Indexes for table `RequestUni`
 --
 ALTER TABLE `RequestUni`
-  ADD PRIMARY KEY (`RequestID`), ADD KEY `StudentID` (`StudentID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`RequestID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `Rooms`
 --
 ALTER TABLE `Rooms`
-  ADD PRIMARY KEY (`RoomID`), ADD KEY `BuildID` (`BuildID`);
+  ADD PRIMARY KEY (`RoomID`),
+  ADD KEY `BuildID` (`BuildID`);
 
 --
 -- Indexes for table `Schedule`
 --
 ALTER TABLE `Schedule`
-  ADD PRIMARY KEY (`SchedID`), ADD KEY `DiploID` (`DiploID`);
+  ADD PRIMARY KEY (`SchedID`),
+  ADD KEY `DiploID` (`DiploID`);
 
 --
 -- Indexes for table `Schwierigkeit`
@@ -992,31 +1048,42 @@ ALTER TABLE `Schwierigkeit`
 -- Indexes for table `TeachOther`
 --
 ALTER TABLE `TeachOther`
-  ADD PRIMARY KEY (`TTID`), ADD KEY `TeacherID` (`TeacherID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`TTID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `TeachSprache`
 --
 ALTER TABLE `TeachSprache`
-  ADD PRIMARY KEY (`SPID`), ADD KEY `TeacherID` (`TeacherID`), ADD KEY `DiplomaID` (`DiplomaID`);
+  ADD PRIMARY KEY (`SPID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `DiplomaID` (`DiplomaID`);
 
 --
 -- Indexes for table `TestSchule`
 --
 ALTER TABLE `TestSchule`
-  ADD PRIMARY KEY (`TestSpID`), ADD KEY `StudID` (`StudID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`TestSpID`),
+  ADD KEY `StudID` (`StudID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `TestSprache`
 --
 ALTER TABLE `TestSprache`
-  ADD PRIMARY KEY (`TestSpID`), ADD KEY `StudID` (`StudID`), ADD KEY `ScheduleID` (`ScheduleID`);
+  ADD PRIMARY KEY (`TestSpID`),
+  ADD KEY `StudID` (`StudID`),
+  ADD KEY `ScheduleID` (`ScheduleID`);
 
 --
 -- Indexes for table `Times`
 --
 ALTER TABLE `Times`
-  ADD PRIMARY KEY (`TimesID`), ADD KEY `DayID` (`DayID`), ADD KEY `HourID` (`HourID`), ADD KEY `SchedID` (`SchedID`);
+  ADD PRIMARY KEY (`TimesID`),
+  ADD KEY `DayID` (`DayID`),
+  ADD KEY `HourID` (`HourID`),
+  ADD KEY `SchedID` (`SchedID`);
 
 --
 -- Indexes for table `TrainingSprache`
@@ -1034,31 +1101,42 @@ ALTER TABLE `TrainingUni`
 -- Indexes for table `Unavailable`
 --
 ALTER TABLE `Unavailable`
-  ADD PRIMARY KEY (`UnavailID`), ADD KEY `TeacherID` (`TeacherID`), ADD KEY `DayID` (`DayID`);
+  ADD PRIMARY KEY (`UnavailID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `DayID` (`DayID`);
 
 --
 -- Indexes for table `Versicherung`
 --
 ALTER TABLE `Versicherung`
-  ADD PRIMARY KEY (`SicherID`), ADD KEY `TeacherID` (`TeacherID`), ADD KEY `KasseID` (`KasseID`);
+  ADD PRIMARY KEY (`SicherID`),
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `KasseID` (`KasseID`);
 
 --
 -- Indexes for table `WagesSchule`
 --
 ALTER TABLE `WagesSchule`
-  ADD PRIMARY KEY (`WagesSchuleID`), ADD KEY `EchelID` (`EchelID`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`WagesSchuleID`),
+  ADD KEY `EchelID` (`EchelID`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `WagesSprache`
 --
 ALTER TABLE `WagesSprache`
-  ADD PRIMARY KEY (`WageSpracheID`), ADD KEY `EchelID` (`EchelID`), ADD KEY `SchedID` (`SchedID`);
+  ADD PRIMARY KEY (`WageSpracheID`),
+  ADD KEY `EchelID` (`EchelID`),
+  ADD KEY `SchedID` (`SchedID`);
 
 --
 -- Indexes for table `WagesUni`
 --
 ALTER TABLE `WagesUni`
-  ADD PRIMARY KEY (`WageUniID`), ADD KEY `EchelID` (`EchelID`), ADD KEY `EduType` (`EduType`), ADD KEY `CourseID` (`CourseID`);
+  ADD PRIMARY KEY (`WageUniID`),
+  ADD KEY `EchelID` (`EchelID`),
+  ADD KEY `EduType` (`EduType`),
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -1073,7 +1151,7 @@ ALTER TABLE `Absent`
 -- AUTO_INCREMENT for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
-  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `Buildings`
 --
@@ -1093,7 +1171,7 @@ ALTER TABLE `Contract`
 -- AUTO_INCREMENT for table `Courses`
 --
 ALTER TABLE `Courses`
-  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Days`
 --
@@ -1283,7 +1361,7 @@ ALTER TABLE `Versicherung`
 -- AUTO_INCREMENT for table `WagesSchule`
 --
 ALTER TABLE `WagesSchule`
-  MODIFY `WagesSchuleID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `WagesSchuleID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
 --
 -- AUTO_INCREMENT for table `WagesSprache`
 --
@@ -1302,236 +1380,236 @@ ALTER TABLE `WagesUni`
 -- Constraints for table `Absent`
 --
 ALTER TABLE `Absent`
-ADD CONSTRAINT `fkhistid` FOREIGN KEY (`HistID`) REFERENCES `History` (`HistID`),
-ADD CONSTRAINT `fkstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkhistid` FOREIGN KEY (`HistID`) REFERENCES `History` (`HistID`),
+  ADD CONSTRAINT `fkstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
-ADD CONSTRAINT `fkechelid` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`);
+  ADD CONSTRAINT `fkechelid` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`);
 
 --
 -- Constraints for table `Canceled`
 --
 ALTER TABLE `Canceled`
-ADD CONSTRAINT `fkgroupid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
+  ADD CONSTRAINT `fkgroupid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
 
 --
 -- Constraints for table `Contract`
 --
 ALTER TABLE `Contract`
-ADD CONSTRAINT `fkteachid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkteachid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Courses`
 --
 ALTER TABLE `Courses`
-ADD CONSTRAINT `fkdepid` FOREIGN KEY (`DepID`) REFERENCES `Departments` (`DepID`),
-ADD CONSTRAINT `fkschwerid` FOREIGN KEY (`Schwer`) REFERENCES `Schwierigkeit` (`SchwerID`);
+  ADD CONSTRAINT `fkdepid` FOREIGN KEY (`DepID`) REFERENCES `Departments` (`DepID`),
+  ADD CONSTRAINT `fkschwerid` FOREIGN KEY (`Schwer`) REFERENCES `Schwierigkeit` (`SchwerID`);
 
 --
 -- Constraints for table `Diplomas`
 --
 ALTER TABLE `Diplomas`
-ADD CONSTRAINT `Diplomas_ibfk_1` FOREIGN KEY (`Schwer`) REFERENCES `Schwierigkeit` (`SchwerID`),
-ADD CONSTRAINT `fklangid` FOREIGN KEY (`LangID`) REFERENCES `Languages` (`LangID`),
-ADD CONSTRAINT `fkprovid` FOREIGN KEY (`ProvID`) REFERENCES `Instituts` (`InstID`);
+  ADD CONSTRAINT `Diplomas_ibfk_1` FOREIGN KEY (`Schwer`) REFERENCES `Schwierigkeit` (`SchwerID`),
+  ADD CONSTRAINT `fklangid` FOREIGN KEY (`LangID`) REFERENCES `Languages` (`LangID`),
+  ADD CONSTRAINT `fkprovid` FOREIGN KEY (`ProvID`) REFERENCES `Instituts` (`InstID`);
 
 --
 -- Constraints for table `Ensembles`
 --
 ALTER TABLE `Ensembles`
-ADD CONSTRAINT `Ensembles_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-ADD CONSTRAINT `enskdstudid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `Ensembles_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `enskdstudid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Erlaubnis`
 --
 ALTER TABLE `Erlaubnis`
-ADD CONSTRAINT `erteachid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `erteachid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `ExamSchule`
 --
 ALTER TABLE `ExamSchule`
-ADD CONSTRAINT `exstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
-ADD CONSTRAINT `fkcourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
+  ADD CONSTRAINT `exstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `fkcourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
 
 --
 -- Constraints for table `ExamSprache`
 --
 ALTER TABLE `ExamSprache`
-ADD CONSTRAINT `exstudentid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
-ADD CONSTRAINT `fkdiplid` FOREIGN KEY (`DiplID`) REFERENCES `Diplomas` (`DiplID`);
+  ADD CONSTRAINT `exstudentid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `fkdiplid` FOREIGN KEY (`DiplID`) REFERENCES `Diplomas` (`DiplID`);
 
 --
 -- Constraints for table `FeeSchule`
 --
 ALTER TABLE `FeeSchule`
-ADD CONSTRAINT `feecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
+  ADD CONSTRAINT `feecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
 
 --
 -- Constraints for table `FeeSprache`
 --
 ALTER TABLE `FeeSprache`
-ADD CONSTRAINT `fkshedid` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`);
+  ADD CONSTRAINT `fkshedid` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`);
 
 --
 -- Constraints for table `FeeUni`
 --
 ALTER TABLE `FeeUni`
-ADD CONSTRAINT `fecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `fkedu` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`);
+  ADD CONSTRAINT `fecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `fkedu` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`);
 
 --
 -- Constraints for table `Funds`
 --
 ALTER TABLE `Funds`
-ADD CONSTRAINT `studid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `studid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Groups`
 --
 ALTER TABLE `Groups`
-ADD CONSTRAINT `csrid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `edyy` FOREIGN KEY (`Edu`) REFERENCES `EduTypes` (`EduID`),
-ADD CONSTRAINT `teach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `csrid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `edyy` FOREIGN KEY (`Edu`) REFERENCES `EduTypes` (`EduID`),
+  ADD CONSTRAINT `teach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `History`
 --
 ALTER TABLE `History`
-ADD CONSTRAINT `fkhourid` FOREIGN KEY (`StartHourID`) REFERENCES `Hours` (`HourID`),
-ADD CONSTRAINT `fkroom` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`),
-ADD CONSTRAINT `group` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
+  ADD CONSTRAINT `fkhourid` FOREIGN KEY (`StartHourID`) REFERENCES `Hours` (`HourID`),
+  ADD CONSTRAINT `fkroom` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`),
+  ADD CONSTRAINT `group` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
 
 --
 -- Constraints for table `Members`
 --
 ALTER TABLE `Members`
-ADD CONSTRAINT `fkmembtype` FOREIGN KEY (`MembTypeID`) REFERENCES `MembTypes` (`MembTypeID`);
+  ADD CONSTRAINT `fkmembtype` FOREIGN KEY (`MembTypeID`) REFERENCES `MembTypes` (`MembTypeID`);
 
 --
 -- Constraints for table `Payments`
 --
 ALTER TABLE `Payments`
-ADD CONSTRAINT `fkteacherid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkteacherid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Permament`
 --
 ALTER TABLE `Permament`
-ADD CONSTRAINT `fkday` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
-ADD CONSTRAINT `fkhour` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`),
-ADD CONSTRAINT `fktype` FOREIGN KEY (`Type`) REFERENCES `EduTypes` (`EduID`),
-ADD CONSTRAINT `gropu` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-ADD CONSTRAINT `room` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
+  ADD CONSTRAINT `fkday` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
+  ADD CONSTRAINT `fkhour` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`),
+  ADD CONSTRAINT `fktype` FOREIGN KEY (`Type`) REFERENCES `EduTypes` (`EduID`),
+  ADD CONSTRAINT `gropu` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
+  ADD CONSTRAINT `room` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
 
 --
 -- Constraints for table `RequestSchule`
 --
 ALTER TABLE `RequestSchule`
-ADD CONSTRAINT `fkcourse` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `fkstudent` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkcourse` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `fkstudent` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `RequestSprache`
 --
 ALTER TABLE `RequestSprache`
-ADD CONSTRAINT `fksched` FOREIGN KEY (`ScheduleID`) REFERENCES `Schedule` (`SchedID`),
-ADD CONSTRAINT `stud` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fksched` FOREIGN KEY (`ScheduleID`) REFERENCES `Schedule` (`SchedID`),
+  ADD CONSTRAINT `stud` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `RequestUni`
 --
 ALTER TABLE `RequestUni`
-ADD CONSTRAINT `kursid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `reqstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `kursid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `reqstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Rooms`
 --
 ALTER TABLE `Rooms`
-ADD CONSTRAINT `fkbuildid` FOREIGN KEY (`BuildID`) REFERENCES `Buildings` (`BuildID`);
+  ADD CONSTRAINT `fkbuildid` FOREIGN KEY (`BuildID`) REFERENCES `Buildings` (`BuildID`);
 
 --
 -- Constraints for table `Schedule`
 --
 ALTER TABLE `Schedule`
-ADD CONSTRAINT `fkdiplo` FOREIGN KEY (`DiploID`) REFERENCES `Diplomas` (`DiplID`);
+  ADD CONSTRAINT `fkdiplo` FOREIGN KEY (`DiploID`) REFERENCES `Diplomas` (`DiplID`);
 
 --
 -- Constraints for table `TeachOther`
 --
 ALTER TABLE `TeachOther`
-ADD CONSTRAINT `fkcours` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `fkteach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkcours` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `fkteach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `TeachSprache`
 --
 ALTER TABLE `TeachSprache`
-ADD CONSTRAINT `fktfeach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`),
-ADD CONSTRAINT `fkurz` FOREIGN KEY (`DiplomaID`) REFERENCES `Diplomas` (`DiplID`);
+  ADD CONSTRAINT `fktfeach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `fkurz` FOREIGN KEY (`DiplomaID`) REFERENCES `Diplomas` (`DiplID`);
 
 --
 -- Constraints for table `TestSchule`
 --
 ALTER TABLE `TestSchule`
-ADD CONSTRAINT `fkkurz` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `fkstid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkkurz` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `fkstid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `TestSprache`
 --
 ALTER TABLE `TestSprache`
-ADD CONSTRAINT `fkscheid` FOREIGN KEY (`ScheduleID`) REFERENCES `Schedule` (`SchedID`),
-ADD CONSTRAINT `fkstuid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkscheid` FOREIGN KEY (`ScheduleID`) REFERENCES `Schedule` (`SchedID`),
+  ADD CONSTRAINT `fkstuid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Times`
 --
 ALTER TABLE `Times`
-ADD CONSTRAINT `fkdayid` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
-ADD CONSTRAINT `fkshed` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`),
-ADD CONSTRAINT `fkstundeid` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`);
+  ADD CONSTRAINT `fkdayid` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
+  ADD CONSTRAINT `fkshed` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`),
+  ADD CONSTRAINT `fkstundeid` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`);
 
 --
 -- Constraints for table `Unavailable`
 --
 ALTER TABLE `Unavailable`
-ADD CONSTRAINT `fkdid` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
-ADD CONSTRAINT `fktid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `fkdid` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
+  ADD CONSTRAINT `fktid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Versicherung`
 --
 ALTER TABLE `Versicherung`
-ADD CONSTRAINT `fkasseid` FOREIGN KEY (`TeacherID`) REFERENCES `Kassen` (`KasseID`),
-ADD CONSTRAINT `fkverid` FOREIGN KEY (`KasseID`) REFERENCES `Kassen` (`KasseID`);
+  ADD CONSTRAINT `fkasseid` FOREIGN KEY (`TeacherID`) REFERENCES `Kassen` (`KasseID`),
+  ADD CONSTRAINT `fkverid` FOREIGN KEY (`KasseID`) REFERENCES `Kassen` (`KasseID`);
 
 --
 -- Constraints for table `WagesSchule`
 --
 ALTER TABLE `WagesSchule`
-ADD CONSTRAINT `fkcid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-ADD CONSTRAINT `fkechel` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`);
+  ADD CONSTRAINT `fkcid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
+  ADD CONSTRAINT `fkechel` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`);
 
 --
 -- Constraints for table `WagesSprache`
 --
 ALTER TABLE `WagesSprache`
-ADD CONSTRAINT `fkeid` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`),
-ADD CONSTRAINT `fksd` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`);
+  ADD CONSTRAINT `fkeid` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`),
+  ADD CONSTRAINT `fksd` FOREIGN KEY (`SchedID`) REFERENCES `Schedule` (`SchedID`);
 
 --
 -- Constraints for table `WagesUni`
 --
 ALTER TABLE `WagesUni`
-ADD CONSTRAINT `fkedy` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`),
-ADD CONSTRAINT `fkhird` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`),
-ADD CONSTRAINT `fkuci` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
+  ADD CONSTRAINT `fkedy` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`),
+  ADD CONSTRAINT `fkhird` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`),
+  ADD CONSTRAINT `fkuci` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

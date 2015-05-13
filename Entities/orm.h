@@ -6,6 +6,7 @@
 #include "courses.h"
 #include "echelon.h"
 #include "basewages.h"
+#include "wagesschule.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -25,7 +26,7 @@ public:
     void save(Courses C);
     void save(Echelon E);
     void save(BaseWages BW);
-
+    void save(WagesSchule WGS);
 
 
 
@@ -33,6 +34,7 @@ public:
     QList<Schwierigkeit> getSchwer();
     QList<Departments> getDeps();
     QList<Echelon> getEchels();
+    QList<Courses> getSchuleCourses();
 
 private:
     void ShowError(QSqlQuery q);

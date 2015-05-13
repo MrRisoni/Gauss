@@ -20,6 +20,8 @@ private slots:
 
     void on_pushAddBaseScheme_clicked();
 
+    void on_pushAddSchuleScheme_clicked();
+
 private:
     Ui::ManageSalariesDialog *ui;
     void populateEchelTable();

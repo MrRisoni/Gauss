@@ -15,6 +15,9 @@ public:
     explicit AddLanguageDialog(QWidget *parent = 0);
     ~AddLanguageDialog();
 
+private slots:
+    void on_pushAddSprache_clicked();
+
 private:
     Ui::AddLanguageDialog *ui;
 };

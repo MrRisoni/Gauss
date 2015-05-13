@@ -27,6 +27,16 @@ void Echelon::setTeachers(int value)
 {
     Teachers = value;
 }
+int Echelon::getEchelID() const
+{
+    return EchelID;
+}
+
+void Echelon::setEchelID(int value)
+{
+    EchelID = value;
+}
+
 
 
 

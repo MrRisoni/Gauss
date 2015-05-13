@@ -115,6 +115,21 @@ void ORM::ShowError(QSqlQuery q) {
     q.finish();
 }
 
+QList<Courses> ORM::getSchuleCourses() {
+    QList<Courses> CL;
+    QSqlQuery q;
+
+    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID=1 ");
+    while (q.next()) {
+        Courses C=Courses();
+        qDebug() << "Schule Course " << q.value(0).toString();
+        C.setName(q.value(0).toString());
+        CL.append(C);
+    }
+    q.finish();
+    qDebug() << "Schule Courses " << CL.size();
+    return CL;
+}
 
 
 QList<Schwierigkeit> ORM::getSchwer() {
@@ -154,6 +169,61 @@ QList<Departments> ORM::getDeps() {
 
 
 
+void ORM::save(WagesSchule WGS) {
+    QSqlQuery q;
+    try{
+
+        qDebug() << " saving WageSchule...";
+
+        qDebug() << " xp years " << WGS.getEchel().getExpYears();
+        q.prepare("Select EchelID From Echelon Where Exp=:xp");
+        q.bindValue(":xp",WGS.getEchel().getExpYears());
+        q.exec();
+        while (q.next()) {
+            WGS.getEchel().setEchelID(q.value(0).toInt());
+
+             WGS.setEchelID(q.value(0).toInt());
+             qDebug() << "EchelonID " << q.value(0).toString() << " years " << WGS.getEchel().getExpYears();
+
+        }
+
+
+         //get courseID
+        qDebug() << "Course Name " << WGS.getC().getName();
+
+
+        q.prepare("SELECT CourseID FROM Courses WHERE CourseName=:cname");
+        q.bindValue(":cname",WGS.getC().getName());
+        q.exec();
+
+        while (q.next()) {
+            WGS.getC().setCourseID(q.value(0).toInt());
+            WGS.setCourseID(q.value(0).toInt());
+        }
+
+        qDebug() << "CourseID " << WGS.getCourseID();
+
+        q.prepare("INSERT INTO `WagesSchule`  ( `EchelID`, `Dat`, `CourseID`, `Wage`) VALUES (:echid,:wann,:crsid,:wg)");
+        q.bindValue(":echid",WGS.getEchelID());
+        q.bindValue(":wann",WGS.getDat());
+        q.bindValue(":crsid",WGS.getCourseID());
+        q.bindValue(":wg",WGS.getWage());
+        q.exec();
+
+
+
+
+        ShowSuccess();
+    }
+    catch (exception& ex) {
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
+    }
+
+    q.finish();
+}
+
 
 
 
@@ -179,12 +249,9 @@ void ORM::save(BaseWages BW) {
     }
     catch (exception& ex) {
 
+        qDebug() << "Error " << ex.what() ;
 
-        QMessageBox msgBox;
-        msgBox.setText(q.lastError().text()+ ex.what());
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Warning);
-        int ret = msgBox.exec();
+        ShowError(q);
     }
 
 
@@ -216,11 +283,9 @@ void ORM::save(Schwierigkeit schw) {
     catch (exception& ex) {
 
 
-        QMessageBox msgBox;
-        msgBox.setText(q.lastError().text()+ ex.what());
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setIcon(QMessageBox::Warning);
-        int ret = msgBox.exec();
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
     }
 
 
