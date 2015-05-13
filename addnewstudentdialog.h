@@ -15,6 +15,9 @@ public:
     explicit AddNewStudentDialog(QWidget *parent = 0);
     ~AddNewStudentDialog();
 
+private slots:
+    void on_pushAddStudent_clicked();
+
 private:
     Ui::AddNewStudentDialog *ui;
 };

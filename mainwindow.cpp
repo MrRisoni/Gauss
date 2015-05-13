@@ -5,6 +5,7 @@
 #include "managedepsdialog.h"
 #include "managecoursesdialog.h"
 #include "managesalariesdialog.h"
+#include "addnewstudentdialog.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -17,12 +18,22 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionManage_Departments,SIGNAL(triggered()),this,SLOT(manageDeps()));
     connect(ui->actionManage_Courses,SIGNAL(triggered()),this,SLOT(manageCourses()));
     connect(ui->actionManage_Pay_Schemes,SIGNAL(triggered()),this,SLOT(manageSchemes()));
+    connect(ui->actionAdd_Student,SIGNAL(triggered()),this,SLOT(addStudent()));
+
 
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::addStudent() {
+    AddNewStudentDialog *newstud=new AddNewStudentDialog();
+    newstud->setAttribute(Qt::WA_DeleteOnClose);
+    newstud->show();
+
 }
 
 void MainWindow::manageSchemes() {

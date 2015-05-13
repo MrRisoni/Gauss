@@ -23,6 +23,7 @@ private slots:
     void manageDeps();
     void manageCourses();
     void manageSchemes();
+    void addStudent();
 };
 
 #endif // MAINWINDOW_H

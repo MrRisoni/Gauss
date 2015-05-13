@@ -259,6 +259,43 @@ void ORM::save(BaseWages BW) {
 }
 
 
+void ORM::saveStudent(Members m) {
+    QSqlQuery q;
+    try {
+
+        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'1',:rdate,:bdate,'0','0')");
+
+
+        qDebug() << "name " << m.getName();
+        q.bindValue(":name",m.getName());
+
+        q.bindValue(":fname",m.getFName());
+        q.bindValue(":mname",m.getMName());
+        q.bindValue(":adres",m.getAddress());
+        q.bindValue(":phone",m.getPhone());
+        q.bindValue(":mobile",m.getMobile());
+        q.bindValue(":email",m.getEmail());
+        q.bindValue(":rdate",m.getRegDate());
+        q.bindValue(":bdate",m.getBirthDate());
+
+        q.exec();
+
+        ShowSuccess();
+
+    }
+    catch (exception& ex) {
+
+
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
+    }
+
+
+    q.finish();
+
+
+}
 
 void ORM::save(Schwierigkeit schw) {
     QSqlQuery q;

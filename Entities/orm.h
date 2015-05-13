@@ -7,6 +7,8 @@
 #include "echelon.h"
 #include "basewages.h"
 #include "wagesschule.h"
+#include "members.h"
+
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -27,7 +29,7 @@ public:
     void save(Echelon E);
     void save(BaseWages BW);
     void save(WagesSchule WGS);
-
+    void saveStudent(Members m);
 
 
 

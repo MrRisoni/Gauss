@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>513</width>
-    <height>443</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,16 +84,6 @@
      <x>120</x>
      <y>109</y>
      <width>361</width>
-     <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineBirth">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>349</y>
-     <width>51</width>
      <height>21</height>
     </rect>
    </property>
@@ -284,17 +274,27 @@
     </palette>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushAddStudent">
    <property name="geometry">
     <rect>
-     <x>390</x>
-     <y>410</y>
+     <x>410</x>
+     <y>480</y>
      <width>82</width>
      <height>23</height>
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Add</string>
+   </property>
+  </widget>
+  <widget class="QCalendarWidget" name="calendarBirth">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>350</y>
+     <width>272</width>
+     <height>156</height>
+    </rect>
    </property>
   </widget>
  </widget>
