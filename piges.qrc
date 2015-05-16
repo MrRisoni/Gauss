@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/professor.png</file>
+    <file>icons/student.png</file>
+  </qresource>
+</RCC>
