@@ -16,6 +16,193 @@ ORM::~ORM()
 
 }
 
+void ORM::save(Kassen K) {
+    QSqlQuery q;
+    try {
+        q.prepare("INSERT INTO `Kassen`  (`Name`) VALUES (:name)");
+        q.bindValue(":name",K.getName());
+        q.exec();
+
+        ShowSuccess();
+    }
+    catch (exception& ex) {
+        qDebug () << "error in saving Kassen " << ex.what();
+        ShowError(q);
+    }
+
+    q.finish();
+}
+
+
+void ORM::saveTeacher(Teacher T) {
+    QSqlQuery q;
+    try {
+
+        INSERT INTO `Contract`(`ConID`, `TeacherID`, `End`) VALUES ([value-1],[value-2],[value-3])
+
+
+
+        //15 days off first record is StartDat==EndDat==day of creation
+       INSERT INTO `Erlaubnis`(`UlrID`, `TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+
+
+        INSERT INTO `Members`(`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
+
+
+        INSERT INTO `TeachOther`(`TTID`, `TeacherID`, `CourseID`) VALUES ([value-1],[value-2],[value-3])
+
+
+        INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+
+
+
+        INSERT INTO `Versicherung`(`SicherID`, `TeacherID`, `KasseID`) VALUES ([value-1],[value-2],[value-3])
+
+        ShowSuccess();
+    }
+    catch (exception& ex) {
+        qDebug () << "Error saving teacher " << ex.what();
+        ShowError(q);
+    }
+    q.finish();
+}
+
+QList<Kassen> ORM::getKassen() {
+    QSqlQuery q;
+    QList<Kassen> Tameia;
+    q.exec("Select Name From Kassen");
+    while (q.next()) {
+        Kassen K=Kassen();
+        K.setName(q.value(0).toString());
+
+        Tameia.append(K);
+    }
+
+    q.finish();
+    return Tameia;
+}
+
+
+
+QList<BaseWages> ORM::getBaseWages() {
+    QList<BaseWages> BW;
+
+    //return the lastest schemes !!!
+    QSqlQuery q;
+    q.exec("Select E.EchelID, E.Exp ,B.Dat, B.Wages FROM Echelon E,BaseWages B Where B.EchelID=E.EchelID ORDER BY E.Exp DESC");
+    qDebug () << "fetching base wages ...";
+    while (q.next()) {
+
+
+        Echelon e=Echelon();
+        e.setEchelID(q.value(0).toInt());
+        e.setExpYears(q.value(1).toInt());
+
+        qDebug () << "Echelid " << q.value(0).toString() << " xp " << q.value(1).toString();
+        BaseWages b=BaseWages();
+        b.setD(q.value(2).toDate());
+        b.setE(e);
+        b.setWage(q.value(3).toFloat());
+
+        BW.append(b);
+    }
+
+    q.finish();
+    return BW;
+}
+
+QList<Days> ORM::getDays() {
+
+    QSqlQuery q;
+    QList<Days> meres;
+
+    q.exec("SELECT DayName FROM Days");
+    while (q.next()) {
+        Days d=Days();
+        d.setName(q.value(0).toString());
+
+        meres.append(d);
+    }
+
+    q.finish();
+    return meres;
+}
+
+QList<Hours> ORM::getHours() {
+    QSqlQuery q;
+
+    QList<Hours> Ores;
+    q.exec("SELECT HourN FROM Hours");
+    while (q.next()) {
+        Hours h=Hours();
+        h.setName(q.value(0).toString());
+        Ores.append(h);
+    }
+
+
+    q.finish();
+    return Ores;
+
+
+}
+
+
+QList<WagesSchule> ORM::getWagesSchule() {
+
+    QList<WagesSchule> WgSchule;
+
+    QSqlQuery q;
+    q.exec("Select E.Exp,W.Dat,C.CourseName,W.Wage From Echelon E,WagesSchule W,Courses C WHERE E.EchelID=W.EchelID AND C.CourseID=W.CourseID");
+
+    while (q.next()) {
+        WagesSchule W=WagesSchule();
+
+        Echelon E=Echelon();
+        E.setExpYears(q.value(0).toInt());
+
+        W.setEchel(E);
+
+        W.setDat(q.value(1).toDate());
+
+        Courses C=Courses();
+        C.setName(q.value(2).toString());
+
+        W.setC(C);
+
+        W.setWage(q.value(3).toFloat());
+
+        WgSchule.append(W);
+        qDebug() << "XP " << q.value(0).toString() << " Date " << q.value(1).toDate().toString() << " Course " << q.value(2).toString() << " wages " << q.value(3).toString();
+    }
+    return  WgSchule;
+}
+
+
+
+
+
+QList<Courses> ORM::getSpecialCourses(QString DepName) {
+    QList<Courses> CL;
+    QSqlQuery q;
+
+    q.prepare("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S,Departments D Where S.SchwerID=C.Schwer AND C.DepID=D.DepID And D.DepName=:dname ");
+    q.bindValue(":dname",DepName);
+    q.exec();
+
+    while (q.next()) {
+        Courses C=Courses();
+        qDebug() << "Schule Course " << q.value(0).toString();
+        C.setName(q.value(0).toString());
+        Departments d=Departments();
+        d.setDepName(DepName);
+        C.setD(d);
+
+        CL.append(C);
+    }
+    q.finish();
+    qDebug() << "Schule Courses " << CL.size();
+    return CL;
+}
 
 
 void ORM::save(Echelon E) {

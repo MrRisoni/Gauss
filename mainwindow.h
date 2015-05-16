@@ -3,6 +3,18 @@
 
 #include <QMainWindow>
 
+
+
+#include "addnewschwerdialog.h"
+#include "managedepsdialog.h"
+#include "managecoursesdialog.h"
+#include "managesalariesdialog.h"
+#include "addnewstudentdialog.h"
+#include "addnewteacherdialog.h"
+#include "kassendialog.h"
+
+
+
 namespace Ui {
 class MainWindow;
 }
@@ -24,6 +36,8 @@ private slots:
     void manageCourses();
     void manageSchemes();
     void addStudent();
+    void addTeacher();
+    void manageKassen();
 };
 
 #endif // MAINWINDOW_H

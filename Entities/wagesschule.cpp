@@ -63,6 +63,16 @@ void WagesSchule::setEchelID(int value)
 {
     EchelID = value;
 }
+int WagesSchule::getTeachers() const
+{
+    return Teachers;
+}
+
+void WagesSchule::setTeachers(int value)
+{
+    Teachers = value;
+}
+
 
 
 

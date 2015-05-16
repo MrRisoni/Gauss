@@ -26,6 +26,7 @@ private:
     Ui::ManageSalariesDialog *ui;
     void populateEchelTable();
     void populateBaseTable();
+    void populateSchuleTable();
 };
 
 #endif // MANAGESALARIESDIALOG_H

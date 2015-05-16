@@ -82,6 +82,9 @@ SOURCES += main.cpp\
     myCSP/node.cpp \
     myCSP/point.cpp \
     myCSP/variable.cpp \
+    Entities/teacher.cpp \
+    kassendialog.cpp \
+    absentbuchdialog.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -151,7 +154,10 @@ HEADERS  += mainwindow.h \
     myCSP/cspsolver.h \
     myCSP/node.h \
     myCSP/point.h \
-    myCSP/variable.h
+    myCSP/variable.h \
+    Entities/teacher.h \
+    kassendialog.h \
+    absentbuchdialog.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
@@ -171,8 +177,11 @@ FORMS    += mainwindow.ui \
     viewstudentdialog.ui \
     viewteacherdialog.ui \
     addsprachescheduledialog.ui \
-    managecoursesdialog.ui
+    managecoursesdialog.ui \
+    kassendialog.ui \
+    absentbuchdialog.ui
 
     
 CONFIG +=   c++11
 
+RESOURCES     = piges.qrc

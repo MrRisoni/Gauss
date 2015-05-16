@@ -29,6 +29,9 @@ public:
     int getEchelID() const;
     void setEchelID(int value);
 
+    int getTeachers() const;
+    void setTeachers(int value);
+
 private:
     int EchelID;
     Echelon Echel;
@@ -36,6 +39,8 @@ private:
     int CourseID;
     Courses C;
     float Wage;
+    int Teachers;
+
 
 
 };

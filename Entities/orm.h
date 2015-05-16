@@ -8,13 +8,18 @@
 #include "basewages.h"
 #include "wagesschule.h"
 #include "members.h"
-
+#include "teacher.h"
+#include "languages.h"
+#include "diplomas.h"
+#include "basewages.h"
+#include "days.h"
+#include "hours.h"
+#include "kassen.h"
 
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
-
 
 
 class ORM
@@ -30,6 +35,8 @@ public:
     void save(BaseWages BW);
     void save(WagesSchule WGS);
     void saveStudent(Members m);
+    void save(Kassen K);
+    void saveTeacher(Teacher T);
 
 
 
@@ -37,6 +44,15 @@ public:
     QList<Departments> getDeps();
     QList<Echelon> getEchels();
     QList<Courses> getSchuleCourses();
+    QList<Languages> getSprachen();
+    QList<Diplomas> getDiplomas();
+    QList<Courses> getSpecialCourses(QString DepName);
+    QList<BaseWages> getBaseWages();
+    QList<Days> getDays();
+    QList<Hours> getHours();
+    QList<WagesSchule> getWagesSchule();
+    QList<Kassen> getKassen();
+
 
 private:
     void ShowError(QSqlQuery q);

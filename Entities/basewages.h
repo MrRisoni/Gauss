@@ -19,10 +19,14 @@ public:
     float getWage() const;
     void setWage(float value);
 
+
 private:
     Echelon E;
     QDate D;
     float Wage;
+
+
+
 };
 
 #endif // BASEWAGES_H

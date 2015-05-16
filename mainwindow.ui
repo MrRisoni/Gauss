@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1329</width>
-    <height>687</height>
+    <height>684</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
       <x>10</x>
       <y>170</y>
       <width>1311</width>
-      <height>471</height>
+      <height>441</height>
      </rect>
     </property>
     <property name="currentIndex">
@@ -71,7 +71,7 @@
         <x>10</x>
         <y>20</y>
         <width>1281</width>
-        <height>401</height>
+        <height>371</height>
        </rect>
       </property>
      </widget>
@@ -132,19 +132,38 @@
     <addaction name="actionManage_Pay_Schemes"/>
     <addaction name="actionManage_Instituts"/>
     <addaction name="actionManage_Langugages"/>
+    <addaction name="actionManage_Kassen"/>
    </widget>
    <widget class="QMenu" name="menuStatistics">
     <property name="title">
      <string>Statistics</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menuGroups">
+    <property name="title">
+     <string>Groups</string>
+    </property>
+    <addaction name="actionCreate_Uni_Group"/>
+    <addaction name="actionCreate_Schule_Group"/>
+    <addaction name="actionCreate_Sprache_Group"/>
+   </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
    <addaction name="menuStatistics"/>
+   <addaction name="menuGroups"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
     <string>toolBar</string>
+   </property>
+   <property name="movable">
+    <bool>false</bool>
+   </property>
+   <property name="iconSize">
+    <size>
+     <width>30</width>
+     <height>30</height>
+    </size>
    </property>
    <attribute name="toolBarArea">
     <enum>TopToolBarArea</enum>
@@ -152,6 +171,8 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
+   <addaction name="actionAdd_Teacher"/>
+   <addaction name="actionAdd_Student"/>
   </widget>
   <action name="actionSchwer_Levels">
    <property name="text">
@@ -159,11 +180,19 @@
    </property>
   </action>
   <action name="actionAdd_Student">
+   <property name="icon">
+    <iconset resource="piges.qrc">
+     <normaloff>:/icons/icons/student.png</normaloff>:/icons/icons/student.png</iconset>
+   </property>
    <property name="text">
     <string>Add Student</string>
    </property>
   </action>
   <action name="actionAdd_Teacher">
+   <property name="icon">
+    <iconset resource="piges.qrc">
+     <normaloff>:/icons/icons/professor.png</normaloff>:/icons/icons/professor.png</iconset>
+   </property>
    <property name="text">
     <string>Add Teacher</string>
    </property>
@@ -198,8 +227,30 @@
     <string>Manage Langugages</string>
    </property>
   </action>
+  <action name="actionManage_Kassen">
+   <property name="text">
+    <string>Manage Kassen</string>
+   </property>
+  </action>
+  <action name="actionCreate_Uni_Group">
+   <property name="text">
+    <string>Create Uni Group</string>
+   </property>
+  </action>
+  <action name="actionCreate_Schule_Group">
+   <property name="text">
+    <string>Create Schule Group</string>
+   </property>
+  </action>
+  <action name="actionCreate_Sprache_Group">
+   <property name="text">
+    <string>Create Sprache Group</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="piges.qrc"/>
+ </resources>
  <connections/>
 </ui>

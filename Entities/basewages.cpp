@@ -40,3 +40,5 @@ void BaseWages::setWage(float value)
 
 
 
+
+

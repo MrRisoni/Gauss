@@ -1,11 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
-#include "addnewschwerdialog.h"
-#include "managedepsdialog.h"
-#include "managecoursesdialog.h"
-#include "managesalariesdialog.h"
-#include "addnewstudentdialog.h"
+
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -19,7 +15,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionManage_Courses,SIGNAL(triggered()),this,SLOT(manageCourses()));
     connect(ui->actionManage_Pay_Schemes,SIGNAL(triggered()),this,SLOT(manageSchemes()));
     connect(ui->actionAdd_Student,SIGNAL(triggered()),this,SLOT(addStudent()));
-
+    connect(ui->actionAdd_Teacher,SIGNAL(triggered()),this,SLOT(addTeacher()));
+    connect(ui->actionManage_Kassen,SIGNAL(triggered()),this,SLOT(manageKassen()));
 
 }
 
@@ -28,6 +25,19 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+
+void MainWindow::manageKassen() {
+    KassenDialog *kassDial = new KassenDialog();
+    kassDial->setAttribute(Qt::WA_DeleteOnClose);
+    kassDial->show();
+}
+
+void MainWindow::addTeacher() {
+    AddNewTeacherDialog *newteach = new AddNewTeacherDialog();
+    newteach->setAttribute(Qt::WA_DeleteOnClose);
+    newteach->show();
+
+}
 
 void MainWindow::addStudent() {
     AddNewStudentDialog *newstud=new AddNewStudentDialog();
