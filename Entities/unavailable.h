@@ -9,6 +9,15 @@ class Unavailable
 public:
     Unavailable();
     ~Unavailable();
+    Days getTag() const;
+    void setTag(const Days &value);
+
+    Hours getStartStude() const;
+    void setStartStude(const Hours &value);
+
+    float getDuration() const;
+    void setDuration(float value);
+
 private:
     Days Tag; //what day can toy not work
     Hours StartStude; //start hour

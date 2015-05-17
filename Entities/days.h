@@ -11,6 +11,9 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
+    int getDayID() const;
+    void setDayID(int value);
+
 private:
     int DayID;
     QString Name;

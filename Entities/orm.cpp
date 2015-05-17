@@ -38,25 +38,29 @@ void ORM::saveTeacher(Teacher T) {
     QSqlQuery q;
     try {
 
-        INSERT INTO `Contract`(`ConID`, `TeacherID`, `End`) VALUES ([value-1],[value-2],[value-3])
+
+        //query the db to get the base wages
+        //INSERT INTO `Contract`(`ConID`, `TeacherID`, `End`) VALUES ([value-1],[value-2],[value-3]) 1 year
 
 
 
         //15 days off first record is StartDat==EndDat==day of creation
-       INSERT INTO `Erlaubnis`(`UlrID`, `TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+       //INSERT INTO `Erlaubnis`(`UlrID`, `TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+
+        //INSERT INTO `Faces`(`MembID`, `Pic`) VALUES ([value-1],[value-2])
+
+       // INSERT INTO `Members`(`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
 
 
-        INSERT INTO `Members`(`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
+       // INSERT INTO `TeachOther`(`TTID`, `TeacherID`, `CourseID`) VALUES ([value-1],[value-2],[value-3])
 
 
-        INSERT INTO `TeachOther`(`TTID`, `TeacherID`, `CourseID`) VALUES ([value-1],[value-2],[value-3])
+       // INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
 
+        //INSERT INTO `PayKassen`(`SalID`, `TeacherID`, `Dat`, `Wages`) VALUES ([value-1],[value-2],[value-3],[value-4])
+        //INSERT INTO `TeachEchelon`(`TeacherID`, `EchelonID`) VALUES ([value-1],[value-2])
 
-        INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
-
-
-
-        INSERT INTO `Versicherung`(`SicherID`, `TeacherID`, `KasseID`) VALUES ([value-1],[value-2],[value-3])
+       // INSERT INTO `Versicherung`(`SicherID`, `TeacherID`, `KasseID`) VALUES ([value-1],[value-2],[value-3])
 
         ShowSuccess();
     }
