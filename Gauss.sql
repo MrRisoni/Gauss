@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 15, 2015 at 02:33 PM
+-- Generation Time: May 17, 2015 at 06:28 PM
 -- Server version: 10.0.15-MariaDB
 -- PHP Version: 5.6.8
 
@@ -533,6 +533,19 @@ INSERT INTO `MembTypes` (`MembTypeID`, `MembTypeName`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `PayKassen`
+--
+
+CREATE TABLE IF NOT EXISTS `PayKassen` (
+  `SalID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `Dat` date NOT NULL,
+  `Wages` float NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='how much money we will pay each month for health insurance';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Payments`
 --
 
@@ -678,6 +691,17 @@ INSERT INTO `Schwierigkeit` (`SchwerID`, `Red`, `Green`, `Blue`) VALUES
 (11, 255, 255, 0),
 (12, 0, 255, 127),
 (13, 85, 85, 255);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `TeachEchelon`
+--
+
+CREATE TABLE IF NOT EXISTS `TeachEchelon` (
+  `TeacherID` int(11) NOT NULL,
+  `EchelonID` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='assigns a teacher to an echelon id';
 
 -- --------------------------------------------------------
 
@@ -1072,6 +1096,14 @@ ALTER TABLE `MembTypes`
   ADD PRIMARY KEY (`MembTypeID`);
 
 --
+-- Indexes for table `PayKassen`
+--
+ALTER TABLE `PayKassen`
+  ADD PRIMARY KEY (`SalID`),
+  ADD KEY `EchelID` (`TeacherID`),
+  ADD KEY `TeacherID` (`TeacherID`);
+
+--
 -- Indexes for table `Payments`
 --
 ALTER TABLE `Payments`
@@ -1139,6 +1171,13 @@ ALTER TABLE `Schedule`
 --
 ALTER TABLE `Schwierigkeit`
   ADD PRIMARY KEY (`SchwerID`);
+
+--
+-- Indexes for table `TeachEchelon`
+--
+ALTER TABLE `TeachEchelon`
+  ADD KEY `TeacherID` (`TeacherID`),
+  ADD KEY `EchelonID` (`EchelonID`);
 
 --
 -- Indexes for table `TeachOther`
@@ -1370,6 +1409,11 @@ ALTER TABLE `Members`
 ALTER TABLE `MembTypes`
   MODIFY `MembTypeID` tinyint(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
+-- AUTO_INCREMENT for table `PayKassen`
+--
+ALTER TABLE `PayKassen`
+  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `Payments`
 --
 ALTER TABLE `Payments`
@@ -1546,6 +1590,12 @@ ALTER TABLE `ExamSprache`
   ADD CONSTRAINT `fkdiplid` FOREIGN KEY (`DiplID`) REFERENCES `Diplomas` (`DiplID`);
 
 --
+-- Constraints for table `Faces`
+--
+ALTER TABLE `Faces`
+  ADD CONSTRAINT `fkmelosid` FOREIGN KEY (`MembID`) REFERENCES `Members` (`MembID`);
+
+--
 -- Constraints for table `FeeSchule`
 --
 ALTER TABLE `FeeSchule`
@@ -1591,6 +1641,12 @@ ALTER TABLE `History`
 --
 ALTER TABLE `Members`
   ADD CONSTRAINT `fkmembtype` FOREIGN KEY (`MembTypeID`) REFERENCES `MembTypes` (`MembTypeID`);
+
+--
+-- Constraints for table `PayKassen`
+--
+ALTER TABLE `PayKassen`
+  ADD CONSTRAINT `fklehreid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Payments`
@@ -1641,6 +1697,13 @@ ALTER TABLE `Rooms`
 --
 ALTER TABLE `Schedule`
   ADD CONSTRAINT `fkdiplo` FOREIGN KEY (`DiploID`) REFERENCES `Diplomas` (`DiplID`);
+
+--
+-- Constraints for table `TeachEchelon`
+--
+ALTER TABLE `TeachEchelon`
+  ADD CONSTRAINT `fkdaskalosid` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `fkskalaid` FOREIGN KEY (`EchelonID`) REFERENCES `Echelon` (`EchelID`);
 
 --
 -- Constraints for table `TeachOther`
