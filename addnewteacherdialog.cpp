@@ -4,6 +4,8 @@
 
 #include "Entities/orm.h"
 #include <QListWidgetItem>
+#include <QModelIndexList>
+#include <QBuffer>
 
 AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -63,6 +65,7 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
 
     coursesModel=new QStandardItemModel();
     QStringList labs;
+    labs.append("CourseID");
     labs.append("Department");
     labs.append("Course");
 
@@ -87,6 +90,7 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QStandardItemModel *unavailModel=new QStandardItemModel();
     unavailModel->setHorizontalHeaderLabels(horLabels);
     unavailModel->setVerticalHeaderLabels(verLabels);
+
     ui->tableUnAvail->setModel(unavailModel);
     ui->tableUnAvail->resizeColumnsToContents();
 
@@ -124,6 +128,7 @@ void AddNewTeacherDialog::on_listAllCourses_itemDoubleClicked(QListWidgetItem *i
     //create a model
 
     qDebug() << " double clicked on " << item->text();
+
     QStandardItem *itDepName=new QStandardItem();
     itDepName->setText(ui->comboDeps->currentText());
 
@@ -142,3 +147,107 @@ void AddNewTeacherDialog::on_listAllCourses_itemDoubleClicked(QListWidgetItem *i
 
 }
 
+
+void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
+{
+    Teacher t=Teacher();
+
+    t.setAddress(ui->lineAddress->text());
+
+
+    t.setBirthDate(ui->calendarBirth->selectedDate());
+
+    //get all the table data
+    QList<Courses> kann_Lehren;
+
+     qDebug () << "fetching courses he can teach";
+    QAbstractItemModel* model = ui->tableCanCourses->model();
+    for (int r=0;model->rowCount();r++) {
+        qDebug() << "-----------------";
+        QModelIndex idx = model->index(r, 0);
+
+        Courses C=Courses();
+        Departments D=Departments();
+        D.setDepName(model->data(idx).toString());
+        qDebug () << "dep name " << model->data(idx).toString();
+        C.setD(D);
+
+
+        idx = model->index(r, 1);
+
+        C.setName(model->data(idx).toString());
+
+        qDebug () << "course name " << model->data(idx).toString();
+
+        kann_Lehren.append(C);
+    }
+
+
+    t.setCanTeach(kann_Lehren);
+    t.setEmail(ui->lineEmail->text());
+
+    t.setEndOfContract(QDate::currentDate().addDays(370));
+
+    t.setFName(ui->lineFName->text());
+    t.setMName(ui->lineMName->text());
+    t.setMobile(ui->lineMobile->text());
+    t.setName(ui->lineName->text());
+    t.setPhone(ui->linePhone->text());
+
+    QByteArray Arr;
+
+    QBuffer buffer( &Arr );
+    buffer.open( QIODevice::WriteOnly );
+    ui->labelProfile->pixmap()->save( &buffer, "PNG" );
+
+    t.setPhoto(Arr);
+    t.setRegDate(QDate::currentDate());
+
+
+    //get the selected cells from ui table unavail
+    QList<Unavailable> Kann_Nicht_Sein;
+
+    QModelIndexList indexList = ui->tableUnAvail->selectionModel()->selectedIndexes();
+    foreach (QModelIndex index, indexList) {
+
+
+        //add one because SQL primary keys start from one
+        Unavailable U=Unavailable();
+        Hours H=Hours();
+        H.setHourID(index.column()+1);
+        U.setStartStude(H);
+
+        Days tg=Days();
+        tg.setDayID(index.row()+1);
+
+        U.setTag(tg);
+        Kann_Nicht_Sein.append(U);
+
+
+   }
+
+
+
+
+    t.setUnAvailability(Kann_Nicht_Sein);
+
+    Kassen Ks=Kassen();
+    Ks.setName(ui->comboKassen->currentText());
+
+    t.setVersichern(Ks);
+
+    //get text
+    int selected_Echel = ui->tableSalary->selectionModel()->currentIndex().row();
+
+    Echelon e=Echelon();
+    e.setEchelID(ui->tableSalary->model()->index(selected_Echel , 0).data().toInt());
+    t.setEch(e);
+
+    PayKassen pk=PayKassen();
+    pk.setDat(QDate::currentDate());
+    pk.setWages(ui->lineKasse->text().toFloat());
+    t.setPayKasse(pk);
+
+    ORM o=ORM();
+    o.saveTeacher(t);
+}

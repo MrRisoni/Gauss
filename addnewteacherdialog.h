@@ -24,6 +24,8 @@ private slots:
 
     void on_listAllCourses_itemDoubleClicked(QListWidgetItem *item);
 
+    void on_pushSaveTeacher_clicked();
+
 private:
     Ui::AddNewTeacherDialog *ui;
     QStandardItemModel *coursesModel;
