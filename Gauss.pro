@@ -84,7 +84,8 @@ SOURCES += main.cpp\
     myCSP/variable.cpp \
     Entities/teacher.cpp \
     kassendialog.cpp \
-    absentbuchdialog.cpp
+    absentbuchdialog.cpp \
+    Entities/paykassen.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -157,7 +158,8 @@ HEADERS  += mainwindow.h \
     myCSP/variable.h \
     Entities/teacher.h \
     kassendialog.h \
-    absentbuchdialog.h
+    absentbuchdialog.h \
+    Entities/paykassen.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
