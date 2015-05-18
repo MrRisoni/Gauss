@@ -90,6 +90,16 @@ void Members::setPhone(const QString &value)
 {
     Phone = value;
 }
+QString Members::getADT() const
+{
+    return ADT;
+}
+
+void Members::setADT(const QString &value)
+{
+    ADT = value;
+}
+
 
 
 

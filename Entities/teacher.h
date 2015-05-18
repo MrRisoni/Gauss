@@ -40,6 +40,9 @@ public:
     PayKassen getPayKasse() const;
     void setPayKasse(const PayKassen &value);
 
+    QString getAFM() const;
+    void setAFM(const QString &value);
+
 private:
     BaseWages base_wages;
     QList<Courses> CanTeach;
@@ -50,7 +53,7 @@ private:
     QList<Unavailable> UnAvailability;
 
     QDate EndOfContract;
-
+    QString AFM; //Greek SSN
 
 
 

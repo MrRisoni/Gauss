@@ -1,10 +1,10 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.4
+-- version 4.4.6.1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 17, 2015 at 06:28 PM
--- Server version: 10.0.15-MariaDB
+-- Generation Time: May 18, 2015 at 11:45 AM
+-- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -43,16 +43,7 @@ CREATE TABLE IF NOT EXISTS `BaseWages` (
   `EchelID` int(11) NOT NULL,
   `Dat` date NOT NULL,
   `Wages` float NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf32 COMMENT='salaries go according to experience';
-
---
--- Dumping data for table `BaseWages`
---
-
-INSERT INTO `BaseWages` (`SalID`, `EchelID`, `Dat`, `Wages`) VALUES
-(1, 3, '2015-05-10', 7.25),
-(2, 2, '2015-05-10', 9.78),
-(3, 1, '2015-05-10', 8.67);
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='salaries go according to experience';
 
 -- --------------------------------------------------------
 
@@ -101,21 +92,7 @@ CREATE TABLE IF NOT EXISTS `Courses` (
   `CourseName` varchar(120) NOT NULL,
   `Schwer` tinyint(4) NOT NULL COMMENT 'Schwerigkeit',
   `Active` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Courses`
---
-
-INSERT INTO `Courses` (`CourseID`, `DepID`, `CourseName`, `Schwer`, `Active`) VALUES
-(1, 2, 'ΕΝΕΡΓΕΙΑΚΑ', 10, 1),
-(2, 2, 'ΕΙΣΑΓΩΓΗ ΣΤΑ ΣΗΕ', 10, 1),
-(3, 1, 'ΜΑΘΗΜΑΤΙΚΑ ΚΑΤΕΥΘΥΝΣΗΣ Γ ΛΥΚΕΙΟΥ', 10, 1),
-(4, 1, 'ΑΡΧΕΣ ΔΙΟΙΚΗΣΗΣΗ ΕΠΙΧΕΙΡΗΣΕΩΝ', 11, 1),
-(5, 1, 'ΛΑΤΙΝΙΚΑ Γ ΛΥΚΕΙΟΥ', 9, 1),
-(6, 1, 'ΛΑΤΙΝΙΚΑ Β ΛΥΚΕΙΟΥ', 10, 1),
-(7, 1, 'ΜΑΘΗΜΑΤΙΚΑ ΚΑΤΕΥΘΥΝΣΗΣ Β ΛΥΚΕΙΟΥ', 11, 1),
-(8, 1, 'ΗΛΕΚΤΡΟΛΟΓΙΑ', 11, 1);
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -126,19 +103,7 @@ INSERT INTO `Courses` (`CourseID`, `DepID`, `CourseName`, `Schwer`, `Active`) VA
 CREATE TABLE IF NOT EXISTS `Days` (
   `DayID` tinyint(4) NOT NULL,
   `DayName` varchar(18) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Days`
---
-
-INSERT INTO `Days` (`DayID`, `DayName`) VALUES
-(1, 'Sunday'),
-(2, 'Monday'),
-(3, 'Tuesday'),
-(4, 'Wednesday'),
-(5, 'Thursday'),
-(6, 'Saturday');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -149,15 +114,7 @@ INSERT INTO `Days` (`DayID`, `DayName`) VALUES
 CREATE TABLE IF NOT EXISTS `Departments` (
   `DepID` int(11) NOT NULL,
   `DepName` varchar(55) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Departments`
---
-
-INSERT INTO `Departments` (`DepID`, `DepName`) VALUES
-(1, 'Λύκειο'),
-(2, 'Ηλεκτρολόγοι Μηχανικοί');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -183,16 +140,7 @@ CREATE TABLE IF NOT EXISTS `Diplomas` (
 CREATE TABLE IF NOT EXISTS `Echelon` (
   `EchelID` int(11) NOT NULL,
   `Exp` int(11) NOT NULL COMMENT 'exp in months'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='categorizee teachers according to experience more experience more wages';
-
---
--- Dumping data for table `Echelon`
---
-
-INSERT INTO `Echelon` (`EchelID`, `Exp`) VALUES
-(1, 12),
-(2, 24),
-(3, 6);
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='categorizee teachers according to experience more experience more wages';
 
 -- --------------------------------------------------------
 
@@ -203,14 +151,7 @@ INSERT INTO `Echelon` (`EchelID`, `Exp`) VALUES
 CREATE TABLE IF NOT EXISTS `EduTypes` (
   `EduID` tinyint(4) NOT NULL,
   `Description` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `EduTypes`
---
-
-INSERT INTO `EduTypes` (`EduID`, `Description`) VALUES
-(1, 'Group');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -369,42 +310,7 @@ CREATE TABLE IF NOT EXISTS `History` (
 CREATE TABLE IF NOT EXISTS `Hours` (
   `HourID` tinyint(4) NOT NULL COMMENT 'id represents the cell row',
   `HourN` varchar(4) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Hours`
---
-
-INSERT INTO `Hours` (`HourID`, `HourN`) VALUES
-(1, '0830'),
-(2, '0900'),
-(3, '0930'),
-(4, '1000'),
-(5, '1030'),
-(6, '1100'),
-(7, '1130'),
-(8, '1200'),
-(9, '1230'),
-(10, '1300'),
-(11, '1330'),
-(12, '1400'),
-(13, '1430'),
-(14, '1500'),
-(15, '1530'),
-(16, '1600'),
-(17, '1630'),
-(18, '1700'),
-(19, '1730'),
-(20, '1800'),
-(21, '1830'),
-(22, '1900'),
-(23, '1930'),
-(24, '2000'),
-(25, '2030'),
-(26, '2100'),
-(27, '2130'),
-(28, '2200'),
-(29, '2230');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -415,17 +321,7 @@ INSERT INTO `Hours` (`HourID`, `HourN`) VALUES
 CREATE TABLE IF NOT EXISTS `Instituts` (
   `InstID` int(11) NOT NULL,
   `Name` varchar(60) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf32 COMMENT='foreign language instituts';
-
---
--- Dumping data for table `Instituts`
---
-
-INSERT INTO `Instituts` (`InstID`, `Name`) VALUES
-(1, 'Goethe'),
-(2, 'Cambridge'),
-(3, 'Michigan'),
-(4, 'Sorbonne');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='foreign language instituts';
 
 -- --------------------------------------------------------
 
@@ -436,17 +332,7 @@ INSERT INTO `Instituts` (`InstID`, `Name`) VALUES
 CREATE TABLE IF NOT EXISTS `Kassen` (
   `KasseID` int(11) NOT NULL,
   `Name` varchar(20) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='versicherungskasse';
-
---
--- Dumping data for table `Kassen`
---
-
-INSERT INTO `Kassen` (`KasseID`, `Name`) VALUES
-(1, 'ΙΚΑ'),
-(2, 'ΤΕΒΕ'),
-(3, 'ΟΓΑ'),
-(4, 'ΤΣΜΕΔΕ');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='versicherungskasse';
 
 -- --------------------------------------------------------
 
@@ -457,21 +343,7 @@ INSERT INTO `Kassen` (`KasseID`, `Name`) VALUES
 CREATE TABLE IF NOT EXISTS `Languages` (
   `LangID` int(11) NOT NULL,
   `Name` varchar(12) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Languages`
---
-
-INSERT INTO `Languages` (`LangID`, `Name`) VALUES
-(4, 'Αγγλικά'),
-(5, 'Γαλλικά'),
-(6, 'Γερμανικά'),
-(7, 'Ολλανδικά'),
-(8, 'Ισπανικά'),
-(9, 'Ιταλικά'),
-(10, 'Αραβικά'),
-(11, 'Κινέζικα');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -492,21 +364,9 @@ CREATE TABLE IF NOT EXISTS `Members` (
   `RegDate` date DEFAULT NULL,
   `BirthDate` date NOT NULL,
   `TotHours` float NOT NULL DEFAULT '0',
-  `TotPaidHours` float NOT NULL DEFAULT '0' COMMENT 'pososto tot hours poy exoun plirwthei / xrwstane'
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `Members`
---
-
-INSERT INTO `Members` (`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES
-(1, 'Παρίσης Νικόλαος', 'dfdfdf', 'dffdfd', 'dfdfdf', 'dfdfd', 'dfdfd', 'dfdfd????', 1, '2015-04-21', '1970-01-01', 0, 0),
-(2, 'Δεδεκάκη Ελένη', '????', '??????', '?????', '??', '???', '?????', 1, '2015-04-21', '1970-01-01', 0, 0),
-(3, 'Σίμου Φλώρα', 'γφγφ', 'γφγφγ', 'γφγφ', 'φγφγφ', 'γφγφ', 'γφγφγφ', 2, '2015-04-21', '1970-01-01', 0, 0),
-(4, 'Φράγκος Άρης', 'Πέτρος', 'Σοφία', 'Ζαβλάνι 12', '2610773601', '6947128400', 'arisf@gmail.com', 1, '2015-04-21', '1970-01-01', 0, 0),
-(5, 'Παπαδόπουλος Σπύρος', 'Κωνσταντίνος', 'Ακριβή', '1212', 'δφγ', 'δφ', '1212121', 1, '2015-04-20', '2015-04-23', 0, 0),
-(6, 'Μπισδίκης Χρήστος', 'Ανδρέας', 'Άννα', 'Φραγκοκλησσιάς 8 , Μαρούσι', '2107882431', '6956009812', 'bischris@gmail.com', 1, '2015-04-21', '1991-08-09', 0, 0),
-(7, 'ΓΙΑΒΟΡΔΙΟΣ ΕΛΕΥΘΕΡΙΟΣ', 'ΚΩΝΣΤΑΝΤΙΝΟΣ', 'ΜΑΡΙΑ', 'ΜΕΣΣΗΝΙΑΣ 14 ΓΕΡΑΚΑΣ', '2122424', '46464', 'giavord@hotmail.com', 1, '2015-05-13', '1999-10-22', 0, 0);
+  `TotPaidHours` float NOT NULL DEFAULT '0' COMMENT 'pososto tot hours poy exoun plirwthei / xrwstane',
+  `ADT` varchar(8) NOT NULL COMMENT 'ausweisID'
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -517,18 +377,7 @@ INSERT INTO `Members` (`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `
 CREATE TABLE IF NOT EXISTS `MembTypes` (
   `MembTypeID` tinyint(11) NOT NULL,
   `MembTypeName` varchar(20) CHARACTER SET utf8 NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `MembTypes`
---
-
-INSERT INTO `MembTypes` (`MembTypeID`, `MembTypeName`) VALUES
-(1, 'Φοιτητής'),
-(2, 'Μαθητής'),
-(3, 'Γραμματεία'),
-(4, 'Διευθυντής'),
-(5, 'Καθηγητής');
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -567,16 +416,7 @@ CREATE TABLE IF NOT EXISTS `Payments` (
 CREATE TABLE IF NOT EXISTS `PayType` (
   `PayTypeID` tinyint(3) unsigned NOT NULL,
   `Comment` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COMMENT='describes the type of payment';
-
---
--- Dumping data for table `PayType`
---
-
-INSERT INTO `PayType` (`PayTypeID`, `Comment`) VALUES
-(1, 'ΜΗΝΙΑΤΙΚΟ'),
-(2, 'ΔΩΡΟ'),
-(3, 'ΑΣΦΑΛΙΣΗ');
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='describes the type of payment';
 
 -- --------------------------------------------------------
 
@@ -679,18 +519,7 @@ CREATE TABLE IF NOT EXISTS `Schwierigkeit` (
   `Red` tinyint(6) unsigned NOT NULL,
   `Green` tinyint(6) unsigned NOT NULL,
   `Blue` tinyint(6) unsigned NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf32 COMMENT='color for different difficulty levels from 0 to 10';
-
---
--- Dumping data for table `Schwierigkeit`
---
-
-INSERT INTO `Schwierigkeit` (`SchwerID`, `Red`, `Green`, `Blue`) VALUES
-(9, 255, 23, 127),
-(10, 255, 0, 0),
-(11, 255, 255, 0),
-(12, 0, 255, 127),
-(13, 85, 85, 255);
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='color for different difficulty levels from 0 to 10';
 
 -- --------------------------------------------------------
 
@@ -833,7 +662,8 @@ CREATE TABLE IF NOT EXISTS `Unavailable` (
 CREATE TABLE IF NOT EXISTS `Versicherung` (
   `SicherID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
-  `KasseID` int(11) NOT NULL
+  `KasseID` int(11) NOT NULL,
+  `AFM` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -848,22 +678,7 @@ CREATE TABLE IF NOT EXISTS `WagesSchule` (
   `Dat` date NOT NULL,
   `CourseID` int(11) NOT NULL COMMENT 'not all courses and classes are the same',
   `Wage` float NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf32;
-
---
--- Dumping data for table `WagesSchule`
---
-
-INSERT INTO `WagesSchule` (`WagesSchuleID`, `EchelID`, `Dat`, `CourseID`, `Wage`) VALUES
-(9, 3, '2015-05-13', 3, 0.87),
-(10, 1, '2015-05-13', 3, 1),
-(11, 2, '2015-05-13', 3, 1.8),
-(12, 2, '2015-05-15', 5, 2.25),
-(13, 1, '2015-05-15', 5, 1.76),
-(14, 2, '2015-05-15', 6, 2),
-(15, 3, '2015-05-15', 6, 0.45),
-(16, 3, '2015-05-15', 7, 0.45),
-(17, 3, '2015-05-15', 8, 0.23);
+) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
 
@@ -1287,7 +1102,7 @@ ALTER TABLE `Absent`
 -- AUTO_INCREMENT for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
-  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Buildings`
 --
@@ -1307,17 +1122,17 @@ ALTER TABLE `Contract`
 -- AUTO_INCREMENT for table `Courses`
 --
 ALTER TABLE `Courses`
-  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
+  MODIFY `CourseID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Days`
 --
 ALTER TABLE `Days`
-  MODIFY `DayID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+  MODIFY `DayID` tinyint(4) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Departments`
 --
 ALTER TABLE `Departments`
-  MODIFY `DepID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
+  MODIFY `DepID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Diplomas`
 --
@@ -1327,12 +1142,12 @@ ALTER TABLE `Diplomas`
 -- AUTO_INCREMENT for table `Echelon`
 --
 ALTER TABLE `Echelon`
-  MODIFY `EchelID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `EchelID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `EduTypes`
 --
 ALTER TABLE `EduTypes`
-  MODIFY `EduID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `EduID` tinyint(4) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Ensembles`
 --
@@ -1382,32 +1197,32 @@ ALTER TABLE `History`
 -- AUTO_INCREMENT for table `Hours`
 --
 ALTER TABLE `Hours`
-  MODIFY `HourID` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'id represents the cell row',AUTO_INCREMENT=30;
+  MODIFY `HourID` tinyint(4) NOT NULL AUTO_INCREMENT COMMENT 'id represents the cell row';
 --
 -- AUTO_INCREMENT for table `Instituts`
 --
 ALTER TABLE `Instituts`
-  MODIFY `InstID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `InstID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Kassen`
 --
 ALTER TABLE `Kassen`
-  MODIFY `KasseID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `KasseID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Languages`
 --
 ALTER TABLE `Languages`
-  MODIFY `LangID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+  MODIFY `LangID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Members`
 --
 ALTER TABLE `Members`
-  MODIFY `MembID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
+  MODIFY `MembID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `MembTypes`
 --
 ALTER TABLE `MembTypes`
-  MODIFY `MembTypeID` tinyint(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
+  MODIFY `MembTypeID` tinyint(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `PayKassen`
 --
@@ -1422,7 +1237,7 @@ ALTER TABLE `Payments`
 -- AUTO_INCREMENT for table `PayType`
 --
 ALTER TABLE `PayType`
-  MODIFY `PayTypeID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `PayTypeID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Permament`
 --
@@ -1457,7 +1272,7 @@ ALTER TABLE `Schedule`
 -- AUTO_INCREMENT for table `Schwierigkeit`
 --
 ALTER TABLE `Schwierigkeit`
-  MODIFY `SchwerID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
+  MODIFY `SchwerID` tinyint(4) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `TeachOther`
 --
@@ -1507,7 +1322,7 @@ ALTER TABLE `Versicherung`
 -- AUTO_INCREMENT for table `WagesSchule`
 --
 ALTER TABLE `WagesSchule`
-  MODIFY `WagesSchuleID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=18;
+  MODIFY `WagesSchuleID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `WagesSprache`
 --

@@ -38,7 +38,7 @@ void ORM::saveTeacher(Teacher T) {
     QSqlQuery q;
     try {
 
-
+        qDebug() << "Trying to save teacher " ;
         //query the db to get the base wages
         //INSERT INTO `Contract`(`ConID`, `TeacherID`, `End`) VALUES ([value-1],[value-2],[value-3]) 1 year
 

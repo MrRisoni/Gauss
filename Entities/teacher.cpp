@@ -83,6 +83,16 @@ void Teacher::setPayKasse(const PayKassen &value)
 {
     payKasse = value;
 }
+QString Teacher::getAFM() const
+{
+    return AFM;
+}
+
+void Teacher::setAFM(const QString &value)
+{
+    AFM = value;
+}
+
 
 
 

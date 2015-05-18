@@ -37,6 +37,9 @@ public:
     QString getPhone() const;
     void setPhone(const QString &value);
 
+    QString getADT() const;
+    void setADT(const QString &value);
+
 private:
     QString Name;
     QString FName;
@@ -49,6 +52,8 @@ private:
     QDate BirthDate;
     float TotHours;
     float TotPaidHours;
+    QString ADT; // AusweisID
+
 
 
 };
