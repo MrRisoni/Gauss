@@ -39,34 +39,163 @@ void ORM::saveTeacher(Teacher T) {
     try {
 
         qDebug() << "Trying to save teacher " ;
+        //query the db to get CourseIDs
+        for (Courses C : T.getCanTeach()) {
+            q.prepare("SELECT C.CourseID From Courses C,Departments D Where D.DepName=:dp AND C.DepID=D.DepID");
+            q.bindValue(":dp",C.getD().getDepName());
+            q.exec();
+            while (q.next()) {
+                C.setCourseID(q.value(0).toInt());
+
+            }
+        }
+
+        //query the db to get KasseID
+        q.exec("SELECT KasseID FROM Kassen Where Name=:kn");
+        q.bindValue(":kn",T.getVersichern().getName());
+        q.exec();
+        while (q.next()) {
+            T.getVersichern().setKasseID(q.value(0).toInt());
+        }
+
+
+
+
+
+        db.transaction();
         //query the db to get the base wages
-        //INSERT INTO `Contract`(`ConID`, `TeacherID`, `End`) VALUES ([value-1],[value-2],[value-3]) 1 year
+
+        q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,'0,'0',:adt)");
+        q.bindValue(":name",T.getName());
+        q.bindValue(":fname",T.getFName());
+        q.bindValue(":mname",T.getMName());
+        q.bindValue(":adres",T.getAddress());
+        q.bindValue(":phone",T.getPhone());
+        q.bindValue(":mobile",T.getMobile());
+        q.bindValue(":mail",T.getEmail());
+        q.bindValue(":regdat",T.getRegDate());
+        q.bindValue(":birthdat",T.getBirthDate());
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 10;
+
+        }
+
+        T.setTeacherID(q.lastInsertId().toInt());
+
+        //get the teacher id
+        qDebug() << "TeacherID " << T.getTeacherID();
+
+        q.prepare("INSERT INTO `Contract` (`TeacherID`, `End`) VALUES (:tid,:enddat)");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":enddat",T.getEndOfContract());
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 20;
+
+        }
 
 
 
         //15 days off first record is StartDat==EndDat==day of creation
-       //INSERT INTO `Erlaubnis`(`UlrID`, `TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+       q.prepare("INSERT INTO `Erlaubnis` (`TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES (:tid,:sdat,:edat,:left)");
+       q.bindValue(":tid",T.getTeacherID());
+       q.bindValue(":sdat",T.getRegDate());
+       q.bindValue(":edat",T.getRegDate());
+       q.bindValue(":left",15);
 
-        //INSERT INTO `Faces`(`MembID`, `Pic`) VALUES ([value-1],[value-2])
-
-       // INSERT INTO `Members`(`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5],[value-6],[value-7],[value-8],[value-9],[value-10],[value-11],[value-12],[value-13])
 
 
-       // INSERT INTO `TeachOther`(`TTID`, `TeacherID`, `CourseID`) VALUES ([value-1],[value-2],[value-3])
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 30;
+
+        }
+
+
+
+        q.prepare("INSERT INTO `Faces`  (`MembID`, `Pic`) VALUES (:tid,:pic)");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":pic",T.getPhoto());
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 40;
+
+        }
+
+
+
+        q.prepare("INSERT INTO `PayKassen` (`TeacherID`, `Dat`, `Wages`) VALUES (:tid,:dat,:kasgeld)");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":dat",QDate::currentDate());
+        q.bindValue(":kasgeld",T.getPayKasse().getWages());
+
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 50;
+
+        }
+
+
+
+        q.prepare("INSERT INTO `TeachEchelon` (`TeacherID`, `EchelonID`) VALUES (:tid,:echid");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":echid",T.getEch().getEchelID());
+
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 60;
+
+        }
+
+
+       q.prepare("INSERT INTO `Versicherung`  (`TeacherID`, `KasseID`) VALUES (:tid,:kassid)");
+       q.bindValue(":tid",T.getTeacherID());
+       q.bindValue(":kassid",T.getVersichern().getKasseID());
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 70;
+
+        }
+
+
+
+
+        for (Courses C : T.getCanTeach()) {
+
+
+            q.prepare("NSERT INTO `TeachOther` (`TeacherID`, `CourseID`) VALUES (:tid,:cid)");
+            q.bindValue(":tid",T.getTeacherID());
+            //query for that first???
+
+            q.bindValue(":cid",C.getCourseID());
+
+            if (!q.exec())  {
+                qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+                throw 75;
+
+            }
+        }
+
 
 
        // INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
 
-        //INSERT INTO `PayKassen`(`SalID`, `TeacherID`, `Dat`, `Wages`) VALUES ([value-1],[value-2],[value-3],[value-4])
-        //INSERT INTO `TeachEchelon`(`TeacherID`, `EchelonID`) VALUES ([value-1],[value-2])
 
-       // INSERT INTO `Versicherung`(`SicherID`, `TeacherID`, `KasseID`) VALUES ([value-1],[value-2],[value-3])
-
+        db.commit();
         ShowSuccess();
     }
-    catch (exception& ex) {
-        qDebug () << "Error saving teacher " << ex.what();
+    catch (int ex) {
+        qDebug () << "Error saving teacher on step " << ex;
         ShowError(q);
+        db.rollback();
     }
     q.finish();
 }
@@ -294,6 +423,16 @@ void ORM::ShowSuccess() {
     int ret = msgBox.exec();
 
 }
+QSqlDatabase ORM::getDb() const
+{
+    return db;
+}
+
+void ORM::setDb(const QSqlDatabase &value)
+{
+    db = value;
+}
+
 
 
 

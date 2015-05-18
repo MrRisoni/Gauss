@@ -27,8 +27,12 @@ public:
     explicit MainWindow(QWidget *parent = 0);
     ~MainWindow();
 
+    QSqlDatabase getDb() const;
+    void setDb(const QSqlDatabase &value);
+
 private:
     Ui::MainWindow *ui;
+    QSqlDatabase db;
 
 private slots:
     void addSchwer();

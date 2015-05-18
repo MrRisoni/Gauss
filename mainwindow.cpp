@@ -24,6 +24,16 @@ MainWindow::~MainWindow()
 {
     delete ui;
 }
+QSqlDatabase MainWindow::getDb() const
+{
+    return db;
+}
+
+void MainWindow::setDb(const QSqlDatabase &value)
+{
+    db = value;
+}
+
 
 
 void MainWindow::manageKassen() {
@@ -34,6 +44,7 @@ void MainWindow::manageKassen() {
 
 void MainWindow::addTeacher() {
     AddNewTeacherDialog *newteach = new AddNewTeacherDialog();
+    newteach->setDb(getDb());
     newteach->setAttribute(Qt::WA_DeleteOnClose);
     newteach->show();
 

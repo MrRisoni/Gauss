@@ -10,18 +10,18 @@ int main(int argc, char *argv[])
 
     QSqlDatabase vasi;
 
-              vasi= QSqlDatabase::addDatabase("QMYSQL");
-              vasi.setHostName("localhost");
-              vasi.setDatabaseName("Gauss");
-              vasi.setUserName("jamie");
-              vasi.setPassword("jamie");
+    vasi= QSqlDatabase::addDatabase("QMYSQL");
+    vasi.setHostName("localhost");
+    vasi.setDatabaseName("Gauss");
+    vasi.setUserName("jamie");
+    vasi.setPassword("jamie");
 
-              vasi.open();
-
+    vasi.open();
 
 
 
     MainWindow w;
+    w.setDb(vasi);
     w.show();
 
     return a.exec();

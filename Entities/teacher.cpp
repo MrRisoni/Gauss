@@ -92,6 +92,16 @@ void Teacher::setAFM(const QString &value)
 {
     AFM = value;
 }
+int Teacher::getTeacherID() const
+{
+    return TeacherID;
+}
+
+void Teacher::setTeacherID(int value)
+{
+    TeacherID = value;
+}
+
 
 
 

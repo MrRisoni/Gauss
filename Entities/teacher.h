@@ -43,7 +43,11 @@ public:
     QString getAFM() const;
     void setAFM(const QString &value);
 
+    int getTeacherID() const;
+    void setTeacherID(int value);
+
 private:
+    int TeacherID;
     BaseWages base_wages;
     QList<Courses> CanTeach;
     Echelon Ech;

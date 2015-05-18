@@ -2,10 +2,7 @@
 #include "ui_addnewteacherdialog.h"
 
 
-#include "Entities/orm.h"
-#include <QListWidgetItem>
-#include <QModelIndexList>
-#include <QBuffer>
+
 
 AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -249,5 +246,18 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
     t.setPayKasse(pk);
 
     ORM o=ORM();
+    o.setDb(getDb());
     o.saveTeacher(t);
+
+
 }
+QSqlDatabase AddNewTeacherDialog::getDb() const
+{
+    return db;
+}
+
+void AddNewTeacherDialog::setDb(const QSqlDatabase &value)
+{
+    db = value;
+}
+

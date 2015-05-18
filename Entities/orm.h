@@ -20,7 +20,7 @@
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
-
+#include <QSqlDatabase>
 
 class ORM
 {
@@ -54,9 +54,13 @@ public:
     QList<Kassen> getKassen();
 
 
+    QSqlDatabase getDb() const;
+    void setDb(const QSqlDatabase &value);
+
 private:
     void ShowError(QSqlQuery q);
     void ShowSuccess();
+    QSqlDatabase db;
 
 
 };
