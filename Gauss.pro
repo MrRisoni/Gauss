@@ -85,7 +85,8 @@ SOURCES += main.cpp\
     Entities/teacher.cpp \
     kassendialog.cpp \
     absentbuchdialog.cpp \
-    Entities/paykassen.cpp
+    Entities/paykassen.cpp \
+    raumedialog.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -159,7 +160,8 @@ HEADERS  += mainwindow.h \
     Entities/teacher.h \
     kassendialog.h \
     absentbuchdialog.h \
-    Entities/paykassen.h
+    Entities/paykassen.h \
+    raumedialog.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
@@ -181,7 +183,8 @@ FORMS    += mainwindow.ui \
     addsprachescheduledialog.ui \
     managecoursesdialog.ui \
     kassendialog.ui \
-    absentbuchdialog.ui
+    absentbuchdialog.ui \
+    raumedialog.ui
 
     
 CONFIG +=   c++11
