@@ -146,6 +146,8 @@
     <addaction name="actionCreate_Uni_Group"/>
     <addaction name="actionCreate_Schule_Group"/>
     <addaction name="actionCreate_Sprache_Group"/>
+    <addaction name="actionBuildings_and_Rooms"/>
+    <addaction name="actionAdd_Requests"/>
    </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
@@ -245,6 +247,16 @@
   <action name="actionCreate_Sprache_Group">
    <property name="text">
     <string>Create Sprache Group</string>
+   </property>
+  </action>
+  <action name="actionBuildings_and_Rooms">
+   <property name="text">
+    <string>Buildings and Rooms</string>
+   </property>
+  </action>
+  <action name="actionAdd_Requests">
+   <property name="text">
+    <string>Add Requests</string>
    </property>
   </action>
  </widget>

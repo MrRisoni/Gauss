@@ -17,6 +17,15 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionAdd_Student,SIGNAL(triggered()),this,SLOT(addStudent()));
     connect(ui->actionAdd_Teacher,SIGNAL(triggered()),this,SLOT(addTeacher()));
     connect(ui->actionManage_Kassen,SIGNAL(triggered()),this,SLOT(manageKassen()));
+    connect(ui->actionBuildings_and_Rooms,SIGNAL(triggered()),this,SLOT(manageBuildings()));
+    connect(ui->actionAdd_Requests,SIGNAL(triggered()),this,SLOT(addrequest()));
+
+    connect(ui->actionCreate_Uni_Group,SIGNAL(triggered()),this,SLOT(createuni()));
+    connect(ui->actionCreate_Sprache_Group,SIGNAL(triggered()),this,SLOT(createpsprache()));
+    connect(ui->actionCreate_Schule_Group,SIGNAL(triggered()),this,SLOT(createschule()));
+
+
+
 
 }
 
@@ -35,6 +44,45 @@ void MainWindow::setDb(const QSqlDatabase &value)
 }
 
 
+void MainWindow::addrequest() {
+
+    AddNewRequestDialog *addReq = new AddNewRequestDialog();
+    addReq->setAttribute(Qt::WA_DeleteOnClose);
+    addReq->show();
+
+}
+
+void MainWindow::createuni() {
+
+    CreateUniDialog *crUni = new CreateUniDialog();
+    crUni->setAttribute(Qt::WA_DeleteOnClose);
+    crUni->show();
+
+}
+
+void MainWindow::createpsprache() {
+
+
+    CreateSpracheDialog *crSprache =new  CreateSpracheDialog();
+    crSprache->setAttribute(Qt::WA_DeleteOnClose);
+    crSprache->show();
+
+}
+
+void MainWindow::createschule() {
+
+    CreateSchuleGroupDialog *crSchule = new CreateSchuleGroupDialog();
+    crSchule->setAttribute(Qt::WA_DeleteOnClose);
+    crSchule->show();
+}
+
+
+
+void MainWindow::manageBuildings() {
+    RaumeDialog *raume = new RaumeDialog();
+    raume->setAttribute(Qt::WA_DeleteOnClose);
+    raume->show();
+}
 
 void MainWindow::manageKassen() {
     KassenDialog *kassDial = new KassenDialog();

@@ -12,7 +12,11 @@
 #include "addnewstudentdialog.h"
 #include "addnewteacherdialog.h"
 #include "kassendialog.h"
-
+#include "raumedialog.h"
+#include "addnewrequestdialog.h"
+#include "createschulegroupdialog.h"
+#include "createsprachedialog.h"
+#include "createunidialog.h"
 
 
 namespace Ui {
@@ -42,6 +46,11 @@ private slots:
     void addStudent();
     void addTeacher();
     void manageKassen();
+    void manageBuildings();
+    void addrequest();
+    void createuni();
+    void createpsprache();
+    void createschule();
 };
 
 #endif // MAINWINDOW_H
