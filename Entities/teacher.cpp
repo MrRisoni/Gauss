@@ -101,6 +101,16 @@ void Teacher::setTeacherID(int value)
 {
     TeacherID = value;
 }
+int Teacher::getKasseID() const
+{
+    return KasseID;
+}
+
+void Teacher::setKasseID(int value)
+{
+    KasseID = value;
+}
+
 
 
 

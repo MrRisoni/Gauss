@@ -46,6 +46,9 @@ public:
     int getTeacherID() const;
     void setTeacherID(int value);
 
+    int getKasseID() const;
+    void setKasseID(int value);
+
 private:
     int TeacherID;
     BaseWages base_wages;
@@ -56,6 +59,7 @@ private:
     PayKassen payKasse;
     QList<Unavailable> UnAvailability;
 
+    int KasseID;
     QDate EndOfContract;
     QString AFM; //Greek SSN
 
