@@ -28,6 +28,7 @@ void AddNewStudentDialog::on_pushAddStudent_clicked()
     m.setName(ui->lineName->text());
     m.setPhone(ui->linePhone->text());
     m.setRegDate(QDate::currentDate());
+    m.setADT(ui->lineADT->text()); //set a random string and number
 
     ORM O=ORM();
     O.saveStudent(m);

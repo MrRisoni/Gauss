@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="pushSearch">
    <property name="geometry">
     <rect>
      <x>490</x>
@@ -33,7 +33,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>PushButton</string>
+    <string>Search</string>
    </property>
   </widget>
   <widget class="QTabWidget" name="tabWidget">
@@ -46,11 +46,11 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
-     <string>Tab 1</string>
+     <string>Uni</string>
     </attribute>
     <widget class="QLabel" name="label">
      <property name="geometry">
@@ -78,7 +78,7 @@
       <string>Course</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QComboBox" name="comboDep">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -88,7 +88,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_2">
+    <widget class="QComboBox" name="comboCourses">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -98,7 +98,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textEdit">
+    <widget class="QTextEdit" name="textComments">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -108,10 +108,23 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushAddUni">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>300</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_2">
     <attribute name="title">
-     <string>Tab 2</string>
+     <string>Schule</string>
     </attribute>
     <widget class="QLabel" name="label_3">
      <property name="geometry">
@@ -126,7 +139,7 @@
       <string>Course</string>
      </property>
     </widget>
-    <widget class="QTextEdit" name="textEdit_2">
+    <widget class="QTextEdit" name="textScuhleComments">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -136,7 +149,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_3">
+    <widget class="QComboBox" name="comboSchuleCourses">
      <property name="geometry">
       <rect>
        <x>150</x>
@@ -146,10 +159,23 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushAddSchule">
+     <property name="geometry">
+      <rect>
+       <x>430</x>
+       <y>280</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
-     <string>Page</string>
+     <string>Sprache</string>
     </attribute>
     <widget class="QLabel" name="label_4">
      <property name="geometry">
@@ -203,7 +229,7 @@
       <string>Schedule</string>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_4">
+    <widget class="QComboBox" name="comboSprache">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -213,7 +239,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_5">
+    <widget class="QComboBox" name="comboInstitut">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -223,7 +249,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_6">
+    <widget class="QComboBox" name="comboDiploma">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -233,7 +259,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QComboBox" name="comboBox_7">
+    <widget class="QComboBox" name="comboSchedule">
      <property name="geometry">
       <rect>
        <x>130</x>
@@ -243,19 +269,17 @@
       </rect>
      </property>
     </widget>
-   </widget>
-   <widget class="QWidget" name="tab_4">
-    <attribute name="title">
-     <string>Page</string>
-    </attribute>
-    <widget class="QTableView" name="tableView">
+    <widget class="QPushButton" name="pushSearch_2">
      <property name="geometry">
       <rect>
-       <x>20</x>
-       <y>20</y>
-       <width>531</width>
-       <height>341</height>
+       <x>340</x>
+       <y>250</y>
+       <width>82</width>
+       <height>23</height>
       </rect>
+     </property>
+     <property name="text">
+      <string>Search</string>
      </property>
     </widget>
    </widget>

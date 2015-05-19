@@ -2,7 +2,7 @@
 #include "ui_addnewteacherdialog.h"
 
 
-
+#include <QFileDialog>
 
 AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -159,7 +159,10 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
 
      qDebug () << "fetching courses he can teach";
     QAbstractItemModel* model = ui->tableCanCourses->model();
-    for (int r=0;model->rowCount();r++) {
+
+    qDebug() << "can teach " << model->rowCount();
+
+    for (int r=0;r<model->rowCount();r++) {
         qDebug() << "-----------------";
         QModelIndex idx = model->index(r, 0);
 
@@ -190,6 +193,8 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
     t.setMobile(ui->lineMobile->text());
     t.setName(ui->lineName->text());
     t.setPhone(ui->linePhone->text());
+
+
 
     QByteArray Arr;
 
@@ -261,3 +266,18 @@ void AddNewTeacherDialog::setDb(const QSqlDatabase &value)
     db = value;
 }
 
+
+void AddNewTeacherDialog::on_pushLoadPic_clicked()
+{
+
+    QString FileName=QFileDialog::getOpenFileName(this, "Open File", "/tmp/","*.*");
+    QPixmap p(FileName);
+
+    int w = ui->labelProfile->width();
+    int h = ui->labelProfile->height();
+
+
+    ui->labelProfile->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+
+
+}
