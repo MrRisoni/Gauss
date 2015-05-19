@@ -61,6 +61,12 @@ private:
     void ShowError(QSqlQuery q);
     void ShowSuccess();
     QSqlDatabase db;
+    QString generateADT();
+    QString generateAFM();
+    QString generatePhone();
+    QString generateMobile();
+
+
 
 
 };

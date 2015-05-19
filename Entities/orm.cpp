@@ -33,39 +33,115 @@ void ORM::save(Kassen K) {
     q.finish();
 }
 
+QString ORM::generateADT() {
+    //generates a 8 digit ADT
+     QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+
+
+      QString randomString;
+      for(int i=0; i<2; ++i)
+      {
+          int index = qrand() % possibleCharacters.length();
+          QChar nextChar = possibleCharacters.at(index);
+          randomString.append(nextChar);
+      }
+      int High=9;
+      int Low=0;
+      for (int i=0;i<6;i++) {
+          randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+      }
+      return randomString;
+
+}
+
+
+QString ORM::generateAFM() {
+    QString randomString;
+    int High=9;
+    int Low=0;
+    for (int i=0;i<7;i++) {
+        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+    }
+    return randomString;
+}
+
+
+QString ORM::generatePhone() {
+    QString randomString="210";
+    int High=9;
+    int Low=0;
+    for (int i=0;i<7;i++) {
+        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+    }
+    return randomString;
+}
+
+QString ORM::generateMobile() {
+    QString randomString="69";
+    int High=9;
+    int Low=0;
+    for (int i=0;i<8;i++) {
+        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+    }
+    return randomString;
+}
+
+
 
 void ORM::saveTeacher(Teacher T) {
     QSqlQuery q;
     try {
 
+        T.setAFM(generateAFM());
+        T.setADT(generateADT());
+        T.setPhone(generatePhone());
+        T.setMobile(generateMobile());
+
+
+        qDebug() << "random generations" ;
+        qDebug() << "AFM " <<  T.getAFM();
+        qDebug() << "ADT " << T.getADT();
+        qDebug() << "Phone " << T.getPhone();
+        qDebug() << "Mobile " << T.getMobile();
+
         qDebug() << "Trying to save teacher " ;
         //query the db to get CourseIDs
-        for (Courses C : T.getCanTeach()) {
-            q.prepare("SELECT C.CourseID From Courses C,Departments D Where D.DepName=:dp AND C.DepID=D.DepID");
-            q.bindValue(":dp",C.getD().getDepName());
+
+        QList<Courses> Didaskalia = T.getCanTeach();
+        for (int y=0;y<Didaskalia.size();y++) {
+
+            q.prepare("SELECT C.CourseID From Courses C,Departments D Where D.DepName=:dp AND C.CourseName=:cn AND C.DepID=D.DepID");
+
+            q.bindValue(":dp",Didaskalia.at(y).getD().getDepName());
+            q.bindValue(":cn",Didaskalia.at(y).getName());
             q.exec();
             while (q.next()) {
-                C.setCourseID(q.value(0).toInt());
+                Didaskalia[y].setCourseID(q.value(0).toInt());
+                qDebug() << " Dep " << Didaskalia.at(y).getD().getDepName() <<  " Course name " << Didaskalia.at(y).getName() << " " << Didaskalia.at(y).getCourseID() << " " << q.value(0).toInt();
 
             }
         }
 
         //query the db to get KasseID
-        q.exec("SELECT KasseID FROM Kassen Where Name=:kn");
-        q.bindValue(":kn",T.getVersichern().getName());
-        q.exec();
+        QString wtf="SELECT KasseID FROM Kassen Where Name LIKE  '%"+T.getVersichern().getName() +"%'";
+        qDebug() << wtf  ;
+        q.exec(wtf);
+
         while (q.next()) {
             T.getVersichern().setKasseID(q.value(0).toInt());
+
+            T.setKasseID(q.value(0).toInt());
         }
 
 
 
+        qDebug() << "KasseID " << T.getKasseID() << " " << QString::number(T.getVersichern().getKasseID()) << " " << T.getVersichern().getName();
 
 
         db.transaction();
         //query the db to get the base wages
 
-        q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,'0,'0',:adt)");
+        q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,'0','0',:adt)");
         q.bindValue(":name",T.getName());
         q.bindValue(":fname",T.getFName());
         q.bindValue(":mname",T.getMName());
@@ -75,6 +151,7 @@ void ORM::saveTeacher(Teacher T) {
         q.bindValue(":mail",T.getEmail());
         q.bindValue(":regdat",T.getRegDate());
         q.bindValue(":birthdat",T.getBirthDate());
+        q.bindValue(":adt",T.getADT());
 
         if (!q.exec())  {
             qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
@@ -143,7 +220,9 @@ void ORM::saveTeacher(Teacher T) {
 
 
 
-        q.prepare("INSERT INTO `TeachEchelon` (`TeacherID`, `EchelonID`) VALUES (:tid,:echid");
+        qDebug() << "TeacherID  " <<T.getTeacherID() << " echelon " << T.getEch().getEchelID();
+
+        q.prepare("INSERT INTO `TeachEchelon` (`TeacherID`, `EchelonID`) VALUES (:tid,:echid)");
         q.bindValue(":tid",T.getTeacherID());
         q.bindValue(":echid",T.getEch().getEchelID());
 
@@ -155,9 +234,10 @@ void ORM::saveTeacher(Teacher T) {
         }
 
 
-       q.prepare("INSERT INTO `Versicherung`  (`TeacherID`, `KasseID`) VALUES (:tid,:kassid)");
+       q.prepare("INSERT INTO `Versicherung`  (`TeacherID`, `KasseID`,`AFM`) VALUES (:tid,:kassid,:afm)");
        q.bindValue(":tid",T.getTeacherID());
-       q.bindValue(":kassid",T.getVersichern().getKasseID());
+       q.bindValue(":kassid",T.getKasseID());
+       q.bindValue(":afm",T.getAFM());
 
         if (!q.exec())  {
             qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
@@ -168,13 +248,13 @@ void ORM::saveTeacher(Teacher T) {
 
 
 
-        for (Courses C : T.getCanTeach()) {
+        for (Courses C : Didaskalia) {
 
-
-            q.prepare("NSERT INTO `TeachOther` (`TeacherID`, `CourseID`) VALUES (:tid,:cid)");
-            q.bindValue(":tid",T.getTeacherID());
             //query for that first???
 
+            q.prepare("INSERT INTO `TeachOther` (`TeacherID`, `CourseID`) VALUES (:tid,:cid)");
+            q.bindValue(":tid",T.getTeacherID());
+            qDebug() << "insert to teachother " << C.getCourseID();
             q.bindValue(":cid",C.getCourseID());
 
             if (!q.exec())  {
