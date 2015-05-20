@@ -40,6 +40,10 @@ public:
     QString getADT() const;
     void setADT(const QString &value);
 
+
+
+
+
 private:
     QString Name;
     QString FName;

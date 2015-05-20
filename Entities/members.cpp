@@ -1,4 +1,6 @@
 #include "members.h"
+#include <QDebug>
+
 
 Members::Members()
 {
@@ -102,8 +104,10 @@ void Members::setADT(const QString &value)
 
 
 
-
-
+QDebug operator<< (QDebug d, const Members &student) {
+    d << " Name " + student.getName() + " ADT " + student.getADT();
+    return d ;
+}
 
 
 
