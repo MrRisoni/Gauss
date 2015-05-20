@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>620</width>
-    <height>504</height>
+    <height>542</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
     <string>Select Course</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="comboCourse">
    <property name="geometry">
     <rect>
      <x>160</x>
@@ -52,12 +52,12 @@
     <attribute name="title">
      <string>Professors</string>
     </attribute>
-    <widget class="QTableWidget" name="tableWidget">
+    <widget class="QTableView" name="tableTeachers">
      <property name="geometry">
       <rect>
-       <x>20</x>
+       <x>10</x>
        <y>20</y>
-       <width>541</width>
+       <width>561</width>
        <height>361</height>
       </rect>
      </property>
@@ -67,17 +67,17 @@
     <attribute name="title">
      <string>Students</string>
     </attribute>
-    <widget class="QListWidget" name="listWidget">
+    <widget class="QListWidget" name="listAll">
      <property name="geometry">
       <rect>
        <x>10</x>
        <y>30</y>
-       <width>256</width>
+       <width>251</width>
        <height>351</height>
       </rect>
      </property>
     </widget>
-    <widget class="QListWidget" name="listWidget_2">
+    <widget class="QListWidget" name="listGroup">
      <property name="geometry">
       <rect>
        <x>310</x>
@@ -87,7 +87,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton">
+    <widget class="QPushButton" name="pushAddToGroup">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -100,7 +100,7 @@
       <string>&gt;&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushButton_2">
+    <widget class="QPushButton" name="pushRemoveFromGroup">
      <property name="geometry">
       <rect>
        <x>270</x>
@@ -113,12 +113,25 @@
       <string>&lt;&lt;</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="pushClear">
+     <property name="geometry">
+      <rect>
+       <x>270</x>
+       <y>270</y>
+       <width>31</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>X</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="tab_3">
     <attribute name="title">
      <string>Schedule</string>
     </attribute>
-    <widget class="QTableView" name="tableView">
+    <widget class="QTableView" name="tableSchedule">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -129,6 +142,19 @@
      </property>
     </widget>
    </widget>
+  </widget>
+  <widget class="QPushButton" name="pushOK">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>500</y>
+     <width>82</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Save</string>
+   </property>
   </widget>
  </widget>
  <resources/>

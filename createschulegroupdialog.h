@@ -2,6 +2,7 @@
 #define CREATESCHULEGROUPDIALOG_H
 
 #include <QDialog>
+#include "Entities/orm.h"
 
 namespace Ui {
 class CreateSchuleGroupDialog;
@@ -17,6 +18,7 @@ public:
 
 private:
     Ui::CreateSchuleGroupDialog *ui;
+    void populateTable();
 };
 
 #endif // CREATESCHULEGROUPDIALOG_H
