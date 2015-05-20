@@ -15,6 +15,9 @@ public:
     explicit ManageFeesDialog(QWidget *parent = 0);
     ~ManageFeesDialog();
 
+private slots:
+    void on_pushSaveSchuleFee_clicked();
+
 private:
     Ui::ManageFeesDialog *ui;
     void populateTable();
