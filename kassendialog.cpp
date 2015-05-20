@@ -11,7 +11,7 @@ KassenDialog::KassenDialog(QWidget *parent) :
     ui(new Ui::KassenDialog)
 {
     ui->setupUi(this);
-    void populateKassenTable();
+    populateKassenTable();
 
 }
 

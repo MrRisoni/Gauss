@@ -44,6 +44,20 @@ ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
 
 ManageSalariesDialog::~ManageSalariesDialog()
 {
+    QAbstractItemModel *mod=ui->tableBase->model();
+    delete mod;
+
+    mod=ui->tableEchelons->model();
+
+    delete mod;
+
+
+    mod=ui->tableSchule->model();
+    delete mod;
+
+    mod=ui->tableUni->model();
+    delete mod;
+
     delete ui;
 }
 

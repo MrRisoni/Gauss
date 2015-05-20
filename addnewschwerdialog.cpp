@@ -25,6 +25,7 @@ void AddNewSchwerDialog::LoadColors() {
      
      */
 
+
     QStandardItemModel *mod=new QStandardItemModel();
 
     mod->setColumnCount(2);
@@ -63,6 +64,8 @@ void AddNewSchwerDialog::LoadColors() {
     q.finish();
 
     ui->tableSchwer->resizeColumnsToContents();
+
+
 }
 
 
@@ -70,7 +73,16 @@ void AddNewSchwerDialog::LoadColors() {
 
 AddNewSchwerDialog::~AddNewSchwerDialog()
 {
+    qDebug() << "deleting memory??";
+
+    QAbstractItemModel *mod=ui->tableSchwer->model();
+
+    delete mod;
+
     delete ui;
+
+
+
 }
 
 

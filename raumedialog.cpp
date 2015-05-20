@@ -26,6 +26,11 @@ RaumeDialog::RaumeDialog(QWidget *parent) :
 
 RaumeDialog::~RaumeDialog()
 {
+    QAbstractItemModel *mod=ui->tableBuildings->model();
+    delete mod;
+
+    mod=ui->tableRooms->model();
+    delete mod;
     delete ui;
 }
 

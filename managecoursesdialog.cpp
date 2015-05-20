@@ -46,6 +46,9 @@ ManageCoursesDialog::ManageCoursesDialog(QWidget *parent) :
 
 ManageCoursesDialog::~ManageCoursesDialog()
 {
+    QAbstractItemModel *mod= ui->tableCourses->model();
+    delete mod;
+
     delete ui;
 }
 
