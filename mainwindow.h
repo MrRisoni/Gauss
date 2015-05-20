@@ -17,7 +17,7 @@
 #include "createschulegroupdialog.h"
 #include "createsprachedialog.h"
 #include "createunidialog.h"
-
+#include "managefeesdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -51,6 +51,7 @@ private slots:
     void createuni();
     void createpsprache();
     void createschule();
+    void manageFees();
 };
 
 #endif // MAINWINDOW_H

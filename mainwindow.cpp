@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionCreate_Uni_Group,SIGNAL(triggered()),this,SLOT(createuni()));
     connect(ui->actionCreate_Sprache_Group,SIGNAL(triggered()),this,SLOT(createpsprache()));
     connect(ui->actionCreate_Schule_Group,SIGNAL(triggered()),this,SLOT(createschule()));
-
+    connect(ui->actionManage_Fee_Schemes,SIGNAL(triggered()),this,SLOT(manageFees()));
 
 
 
@@ -43,6 +43,13 @@ void MainWindow::setDb(const QSqlDatabase &value)
     db = value;
 }
 
+
+void MainWindow::manageFees() {
+    ManageFeesDialog *feedial=new  ManageFeesDialog();
+    feedial->setAttribute(Qt::WA_DeleteOnClose);
+    feedial->show();
+
+}
 
 void MainWindow::addrequest() {
 
