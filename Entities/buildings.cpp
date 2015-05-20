@@ -27,6 +27,16 @@ void Buildings::setName(const QString &value)
 {
     Name = value;
 }
+int Buildings::getRoomsNum() const
+{
+    return RoomsNum;
+}
+
+void Buildings::setRoomsNum(int value)
+{
+    RoomsNum = value;
+}
+
 
 
 

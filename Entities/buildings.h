@@ -14,9 +14,13 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
+    int getRoomsNum() const;
+    void setRoomsNum(int value);
+
 private:
     int BuildingID;
     QString Name;
+    int RoomsNum;
 };
 
 #endif // BUILDINGS_H
