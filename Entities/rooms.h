@@ -2,7 +2,7 @@
 #define ROOMS_H
 
 #include <QString>
-
+#include "buildings.h"
 
 class Rooms
 {
@@ -21,9 +21,13 @@ public:
     int getCapacity() const;
     void setCapacity(int value);
 
+    Buildings getB() const;
+    void setB(const Buildings &value);
+
 private:
     int RoomID;
     int BuildingID;
+    Buildings b;
     QString Name;
     int Capacity;
 };

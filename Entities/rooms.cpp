@@ -45,6 +45,16 @@ void Rooms::setCapacity(int value)
 {
     Capacity = value;
 }
+Buildings Rooms::getB() const
+{
+    return b;
+}
+
+void Rooms::setB(const Buildings &value)
+{
+    b = value;
+}
+
 
 
 
