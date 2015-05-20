@@ -12,3 +12,15 @@ ManageFeesDialog::~ManageFeesDialog()
 {
     delete ui;
 }
+
+
+void ManageFeesDialog::populateTable() {
+    /*Show
+     * CourseID
+     * Name
+     * Latest update date
+     * fee
+     * #Number of times changes
+     * db click on row shows progression :)
+     */
+}

@@ -17,6 +17,7 @@ public:
 
 private:
     Ui::ManageFeesDialog *ui;
+    void populateTable();
 };
 
 #endif // MANAGEFEESDIALOG_H
