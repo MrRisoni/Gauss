@@ -7,6 +7,10 @@ class TeachSprache
 public:
     TeachSprache();
     ~TeachSprache();
+
+private:
+    int TeacherID;
+    int DiplomaID;
 };
 
 #endif // TEACHSPRACHE_H

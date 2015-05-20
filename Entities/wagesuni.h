@@ -13,7 +13,12 @@ public:
 
 private:
     int Teachers;
-
+    int EchelID;
+    Echelon Echel;
+    QDate dat;
+    int CourseID;
+    Courses C;
+    float Wage;
 };
 
 #endif // WAGESUNI_H

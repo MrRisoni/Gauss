@@ -87,7 +87,8 @@ SOURCES += main.cpp\
     absentbuchdialog.cpp \
     Entities/paykassen.cpp \
     raumedialog.cpp \
-    managefeesdialog.cpp
+    managefeesdialog.cpp \
+    Entities/student.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -163,7 +164,8 @@ HEADERS  += mainwindow.h \
     absentbuchdialog.h \
     Entities/paykassen.h \
     raumedialog.h \
-    managefeesdialog.h
+    managefeesdialog.h \
+    Entities/student.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \

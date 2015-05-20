@@ -52,6 +52,7 @@ void ManageFeesDialog::populateTable() {
        QStandardItem *it=new QStandardItem();
        it->setText(c.getName());
        mod->setItem(r,1,it);
+
        r++;
     }
 

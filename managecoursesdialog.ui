@@ -22,6 +22,9 @@
      <height>391</height>
     </rect>
    </property>
+   <property name="alternatingRowColors">
+    <bool>true</bool>
+   </property>
   </widget>
   <widget class="QComboBox" name="comboDepName">
    <property name="geometry">

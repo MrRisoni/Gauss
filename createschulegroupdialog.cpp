@@ -3,7 +3,7 @@
 
 
 #include <QStandardItemModel>
-
+#include <QAbstractTableModel>
 
 CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     QDialog(parent),
@@ -30,13 +30,22 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     }
 
 
-    populateTable();
+    populateTable(ui->comboCourse->currentText());
+    populateStudentsTable(ui->comboCourse->currentText());
 
 
 }
 
+void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
+    //fetch the student who want CourseName
 
-void CreateSchuleGroupDialog::populateTable() {
+    ui->listAll->clear();
+
+}
+
+
+void CreateSchuleGroupDialog::populateTable(QString CourseName) {
+    //fetch the teachers who can teach CourseName
     /* Show
      ProfID
      Name
@@ -65,5 +74,15 @@ void CreateSchuleGroupDialog::populateTable() {
 
 CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
 {
+    QAbstractItemModel *mod =ui->tableTeachers->model();
+    delete mod;
+
     delete ui;
+}
+
+
+void CreateSchuleGroupDialog::on_comboCourse_currentTextChanged(const QString &arg1)
+{
+    populateTable(ui->comboCourse->currentText());
+    populateStudentsTable(ui->comboCourse->currentText());
 }

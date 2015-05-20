@@ -16,6 +16,28 @@ ORM::~ORM()
 
 }
 
+
+QList<Members> ORM::getRequestsSchule(QString CourseName) {
+    QList<Members>  Ms;
+    QSqlQuery q;
+    q.prepare("SELECT M.ADT,M.Name FROM RequestSchule R,Courses C,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND C.CourseID=R.CourseID AND C.CourseName =:cn");
+    q.bindValue(":cn",CourseName);
+    q.exec();
+
+    while (q.next()) {
+
+        Members m=Members();
+        m.setADT(q.value(0).toString());
+        m.setName(q.value(1).toString());
+        Ms.append(m);
+
+    }
+
+    q.finish();
+    return Ms;
+}
+
+
 void ORM::save(Kassen K) {
     QSqlQuery q;
     try {
@@ -35,22 +57,22 @@ void ORM::save(Kassen K) {
 
 QString ORM::generateADT() {
     //generates a 8 digit ADT
-     QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
+    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 
-      QString randomString;
-      for(int i=0; i<2; ++i)
-      {
-          int index = qrand() % possibleCharacters.length();
-          QChar nextChar = possibleCharacters.at(index);
-          randomString.append(nextChar);
-      }
-      int High=9;
-      int Low=0;
-      for (int i=0;i<6;i++) {
-          randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-      }
-      return randomString;
+    QString randomString;
+    for(int i=0; i<2; ++i)
+    {
+        int index = qrand() % possibleCharacters.length();
+        QChar nextChar = possibleCharacters.at(index);
+        randomString.append(nextChar);
+    }
+    int High=9;
+    int Low=0;
+    for (int i=0;i<6;i++) {
+        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+    }
+    return randomString;
 
 }
 
@@ -63,6 +85,17 @@ QString ORM::generateAFM() {
         randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
     }
     return randomString;
+}
+
+
+QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
+    QList<Teacher> Lehren;
+
+    Teacher T;
+
+
+
+    return Lehren;
 }
 
 
@@ -177,11 +210,11 @@ void ORM::saveTeacher(Teacher T) {
 
 
         //15 days off first record is StartDat==EndDat==day of creation
-       q.prepare("INSERT INTO `Erlaubnis` (`TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES (:tid,:sdat,:edat,:left)");
-       q.bindValue(":tid",T.getTeacherID());
-       q.bindValue(":sdat",T.getRegDate());
-       q.bindValue(":edat",T.getRegDate());
-       q.bindValue(":left",15);
+        q.prepare("INSERT INTO `Erlaubnis` (`TeacherID`, `StartDat`, `EndDat`, `DaysLeft`) VALUES (:tid,:sdat,:edat,:left)");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":sdat",T.getRegDate());
+        q.bindValue(":edat",T.getRegDate());
+        q.bindValue(":left",15);
 
 
 
@@ -234,10 +267,10 @@ void ORM::saveTeacher(Teacher T) {
         }
 
 
-       q.prepare("INSERT INTO `Versicherung`  (`TeacherID`, `KasseID`,`AFM`) VALUES (:tid,:kassid,:afm)");
-       q.bindValue(":tid",T.getTeacherID());
-       q.bindValue(":kassid",T.getKasseID());
-       q.bindValue(":afm",T.getAFM());
+        q.prepare("INSERT INTO `Versicherung`  (`TeacherID`, `KasseID`,`AFM`) VALUES (:tid,:kassid,:afm)");
+        q.bindValue(":tid",T.getTeacherID());
+        q.bindValue(":kassid",T.getKasseID());
+        q.bindValue(":afm",T.getAFM());
 
         if (!q.exec())  {
             qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
@@ -266,7 +299,7 @@ void ORM::saveTeacher(Teacher T) {
 
 
 
-       // INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
+        // INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
 
 
         db.commit();
@@ -424,7 +457,7 @@ void ORM::save(Echelon E) {
         q.prepare("INSERT INTO `Echelon`  (`Exp`) VALUES (:jahr)");
         q.bindValue(":jahr",E.getExpYears());
         q.exec();
-         ShowSuccess();
+        ShowSuccess();
 
     }
     catch (exception& ex) {
@@ -450,7 +483,7 @@ void ORM::save(Courses C) {
         q.exec();
         int depid;
         while (q.next()) {
-           depid=q.value(0).toInt();
+            depid=q.value(0).toInt();
         }
 
         qDebug() << "dep id" << depid << " schwer " << C.getSchwerID();
@@ -459,9 +492,9 @@ void ORM::save(Courses C) {
         q.bindValue(":dpid",depid);
         q.bindValue(":name",C.getName());
         q.bindValue(":schwid",C.getSchwerID());
-         q.exec();
+        q.exec();
 
-         ShowSuccess();
+        ShowSuccess();
     }
     catch (exception& ex) {
         qDebug() << "Error " << ex.what() ;
@@ -539,7 +572,7 @@ void ORM::save(FeeSchule fsh) {
         ShowSuccess();
     }
     catch (int ex) {
-      ShowError(q);
+        ShowError(q);
     }
     q.finish();
 }
@@ -595,22 +628,22 @@ QList<Rooms> ORM::getRooms() {
 }
 
 QList<Buildings> ORM::getBuildings() {
- QList<Buildings> Bs;
- QSqlQuery q;
- qDebug() << "Fetching buildings...";
+    QList<Buildings> Bs;
+    QSqlQuery q;
+    qDebug() << "Fetching buildings...";
 
 
 
 
- q.exec("SELECT B.BuildID,B.Address,Count(R.RoomID) FROM Buildings B,Rooms R WHERE B.BuildID=R.BuildID GROUP BY R.BuilDID");
- while (q.next()) {
-     Buildings bls=Buildings();
-     bls.setBuildingID(q.value(0).toInt());
-     bls.setName(q.value(1).toString());
-     bls.setRoomsNum(q.value(2).toInt());
-     Bs.append(bls);
- }
- return Bs;
+    q.exec("SELECT B.BuildID,B.Address,Count(R.RoomID) FROM Buildings B,Rooms R WHERE B.BuildID=R.BuildID GROUP BY R.BuilDID");
+    while (q.next()) {
+        Buildings bls=Buildings();
+        bls.setBuildingID(q.value(0).toInt());
+        bls.setName(q.value(1).toString());
+        bls.setRoomsNum(q.value(2).toInt());
+        Bs.append(bls);
+    }
+    return Bs;
 }
 
 void ORM::save(Buildings B) {
@@ -624,7 +657,7 @@ void ORM::save(Buildings B) {
         ShowSuccess();
     }
     catch (int ex) {
-         ShowError(q);
+        ShowError(q);
     }
     q.finish();
 
@@ -656,7 +689,7 @@ void ORM::save(Rooms R) {
     }
     catch (int ex) {
 
-      ShowError(q);
+        ShowError(q);
     }
     q.finish();
 }
@@ -745,12 +778,12 @@ QList<Schwierigkeit> ORM::getSchwer() {
     QSqlQuery q;
     q.exec("Select SchwerID,Red,Green,Blue From Schwierigkeit");
     while (q.next()) {
-      Schwierigkeit s;
-      s.setSchwerID(q.value(0).toInt());
-      s.setRed(q.value(1).toInt());
-      s.setGreen(q.value(2).toInt());
-      s.setBlue(q.value(3).toInt());
-      L.append(s);
+        Schwierigkeit s;
+        s.setSchwerID(q.value(0).toInt());
+        s.setRed(q.value(1).toInt());
+        s.setGreen(q.value(2).toInt());
+        s.setBlue(q.value(3).toInt());
+        L.append(s);
     }
 
     q.finish();
@@ -789,13 +822,13 @@ void ORM::save(WagesSchule WGS) {
         while (q.next()) {
             WGS.getEchel().setEchelID(q.value(0).toInt());
 
-             WGS.setEchelID(q.value(0).toInt());
-             qDebug() << "EchelonID " << q.value(0).toString() << " years " << WGS.getEchel().getExpYears();
+            WGS.setEchelID(q.value(0).toInt());
+            qDebug() << "EchelonID " << q.value(0).toString() << " years " << WGS.getEchel().getExpYears();
 
         }
 
 
-         //get courseID
+        //get courseID
         qDebug() << "Course Name " << WGS.getC().getName();
 
 
@@ -852,7 +885,7 @@ void ORM::save(BaseWages BW) {
         q.bindValue(":wg",BW.getWage());
         q.exec();
 
-            ShowSuccess();
+        ShowSuccess();
     }
     catch (exception& ex) {
 

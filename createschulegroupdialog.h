@@ -16,9 +16,14 @@ public:
     explicit CreateSchuleGroupDialog(QWidget *parent = 0);
     ~CreateSchuleGroupDialog();
 
+private slots:
+    void on_comboCourse_currentTextChanged(const QString &arg1);
+
 private:
     Ui::CreateSchuleGroupDialog *ui;
-    void populateTable();
+    void populateTable(QString CourseName);
+    void populateStudentsTable(QString CourseName);
+
 };
 
 #endif // CREATESCHULEGROUPDIALOG_H

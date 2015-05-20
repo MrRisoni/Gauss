@@ -7,6 +7,11 @@ class TeachUni
 public:
     TeachUni();
     ~TeachUni();
+
+private:
+    int TeacherID;
+    int CourseID;
+
 };
 
 #endif // TEACHUNI_H

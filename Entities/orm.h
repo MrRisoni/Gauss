@@ -47,6 +47,8 @@ public:
     void save(FeeSchule fsh);
 
 
+    QList<Teacher> getCanTeachThis(QString CourseName);
+    QList<Members> getRequestsSchule(QString CourseName);
     QList<Rooms> getRooms();
     QList<Buildings> getBuildings();
     Members searchStudentByName(QString name);
