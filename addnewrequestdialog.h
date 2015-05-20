@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushSearch_clicked();
 
+    void on_pushAddSchule_clicked();
+
 private:
     Ui::AddNewRequestDialog *ui;
 };
