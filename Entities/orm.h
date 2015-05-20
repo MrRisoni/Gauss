@@ -18,6 +18,7 @@
 #include "requestschule.h"
 #include "buildings.h"
 #include "rooms.h"
+#include "feeschule.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -43,6 +44,7 @@ public:
     void save(RequestSchule rec);
     void save(Buildings B);
     void save(Rooms R);
+    void save(FeeSchule fsh);
 
 
     QList<Rooms> getRooms();

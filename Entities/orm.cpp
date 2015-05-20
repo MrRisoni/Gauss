@@ -515,6 +515,36 @@ void ORM::setDb(const QSqlDatabase &value)
 
 
 
+void ORM::save(FeeSchule fsh) {
+    QSqlQuery q;
+    try {
+        int CourseID=0;
+        q.prepare("SELECT CourseID FROM Courses Where CourseName=:cr");
+        q.bindValue(":cr",fsh.getC().getName());
+        q.exec();
+        while (q.next()) {
+            CourseID=q.value(0).toInt();
+        }
+
+        if (CourseID<=0) {
+            throw 10;
+        }
+
+        q.prepare("INSERT INTO `FeeSchule`  (`Dat`, `CourseID`, `Fee`) VALUES (:dat,:courseid,:fee)");
+        q.bindValue(":dat",fsh.getDat());
+        q.bindValue(":courseid",CourseID);
+        q.bindValue(":fee",fsh.getFee());
+
+        q.exec();
+        ShowSuccess();
+    }
+    catch (int ex) {
+      ShowError(q);
+    }
+    q.finish();
+}
+
+
 
 void ORM::ShowError(QSqlQuery q) {
     QMessageBox msgBox;
