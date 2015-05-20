@@ -117,6 +117,7 @@
       <string>Teachers</string>
      </property>
      <addaction name="actionAdd_Teacher"/>
+     <addaction name="actionShow_Teacher"/>
     </widget>
     <addaction name="menuStudents"/>
     <addaction name="menuTeachers"/>
@@ -257,6 +258,11 @@
   <action name="actionAdd_Requests">
    <property name="text">
     <string>Add Requests</string>
+   </property>
+  </action>
+  <action name="actionShow_Teacher">
+   <property name="text">
+    <string>Show Teacher</string>
    </property>
   </action>
  </widget>

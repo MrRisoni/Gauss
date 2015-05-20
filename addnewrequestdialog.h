@@ -15,6 +15,9 @@ public:
     explicit AddNewRequestDialog(QWidget *parent = 0);
     ~AddNewRequestDialog();
 
+private slots:
+    void on_pushSearch_clicked();
+
 private:
     Ui::AddNewRequestDialog *ui;
 };
