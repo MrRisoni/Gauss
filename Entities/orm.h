@@ -15,6 +15,9 @@
 #include "days.h"
 #include "hours.h"
 #include "kassen.h"
+#include "requestschule.h"
+#include "buildings.h"
+#include "rooms.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -37,9 +40,14 @@ public:
     void saveStudent(Members m);
     void save(Kassen K);
     void saveTeacher(Teacher T);
+    void save(RequestSchule rec);
+    void save(Buildings B);
+    void save(Rooms R);
 
 
-
+    QList<Rooms> getRooms();
+    QList<Buildings> getBuildings();
+    Members searchStudentByName(QString name);
     QList<Schwierigkeit> getSchwer();
     QList<Departments> getDeps();
     QList<Echelon> getEchels();

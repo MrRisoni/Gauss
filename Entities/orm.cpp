@@ -525,6 +525,168 @@ void ORM::ShowError(QSqlQuery q) {
     q.finish();
 }
 
+
+
+Members ORM::searchStudentByName(QString name) {
+    QSqlQuery q;
+    Members m;
+    q.exec("SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'");
+    while (q.next()) {
+
+        m.setName(q.value(0).toString());
+        m.setADT(q.value(1).toString());
+    }
+    q.finish();
+    return m;
+}
+
+
+
+QList<Rooms> ORM::getRooms() {
+
+    QList<Rooms> domatia;
+    QSqlQuery q;
+    q.exec("SELECT R.RoomID,B.Address,R.Name,R.Capacity FROM Rooms R,Buildings B WHERE B.BuildID=R.BuildID");
+    while (q.next()) {
+        Rooms r;
+        Buildings bl=Buildings();
+        bl.setName(q.value(1).toString());
+        r.setB(bl);
+        r.setRoomID(q.value(0).toInt());
+
+        r.setCapacity(q.value(3).toInt());
+        r.setName(q.value(2).toString());
+
+
+        domatia.append(r);
+    }
+    q.finish();
+    return domatia;
+}
+
+QList<Buildings> ORM::getBuildings() {
+ QList<Buildings> Bs;
+ QSqlQuery q;
+ qDebug() << "Fetching buildings...";
+
+
+
+
+ q.exec("SELECT B.BuildID,B.Address,Count(R.RoomID) FROM Buildings B,Rooms R WHERE B.BuildID=R.BuildID GROUP BY R.BuilDID");
+ while (q.next()) {
+     Buildings bls=Buildings();
+     bls.setBuildingID(q.value(0).toInt());
+     bls.setName(q.value(1).toString());
+     bls.setRoomsNum(q.value(2).toInt());
+     Bs.append(bls);
+ }
+ return Bs;
+}
+
+void ORM::save(Buildings B) {
+    QSqlQuery q;
+
+    try {
+
+        q.prepare("INSERT INTO `Buildings` (`Address`) VALUES (:adr)");
+        q.bindValue(":adr",B.getName());
+        q.exec();
+        ShowSuccess();
+    }
+    catch (int ex) {
+         ShowError(q);
+    }
+    q.finish();
+
+}
+
+
+void ORM::save(Rooms R) {
+    QSqlQuery q;
+    try {
+        //get buildingind
+        int buildID;
+        q.prepare("SELECT BuildID FROM Buildings WHERE Address=:add");
+        q.bindValue(":add",R.getB().getName());
+        q.exec();
+        while (q.next()) {
+            buildID=q.value(0).toInt();
+        }
+
+        if (buildID<=0) {
+            throw 0;
+        }
+        q.prepare("INSERT INTO `Rooms`  (`BuildID`, `Name`, `Capacity`) VALUES (:bid,:name,:cap)");
+        q.bindValue(":bid",buildID);
+        q.bindValue(":name",R.getName());
+        q.bindValue(":cap",R.getCapacity());
+
+        q.exec();
+        ShowSuccess();
+    }
+    catch (int ex) {
+
+      ShowError(q);
+    }
+    q.finish();
+}
+
+void ORM::save(RequestSchule rec) {
+    QSqlQuery q;
+    try {
+
+        int StudID=0,CourseID=0;
+        q.prepare("SELECT CourseID FROM Courses WHERE CourseName=:cnm");
+        q.bindValue(":cnm",rec.getC().getName());
+        q.exec();
+        while (q.next()) {
+            CourseID = q.value(0).toInt();
+        }
+
+
+
+
+        q.prepare("SELECT MembID FROM Members WHERE Name=:nm");
+        q.bindValue(":nm",rec.getStudent().getName());
+        q.exec();
+        while (q.next()) {
+            StudID = q.value(0).toInt();
+        }
+
+        qDebug() << "CourseID  " << CourseID << " " << StudID ;
+
+        if ((StudID<=0) || (CourseID<=0)) {
+            throw 10;
+
+
+        }
+
+
+        q.prepare("INSERT INTO `RequestSchule`  ( `StudentID`, `CourseID`, `Settled`, `ReqDate`, `Comments`) VALUES (:stid,:cid,'0',:dat,:coms)");
+        q.bindValue(":stid",StudID);
+        q.bindValue(":cid",CourseID);
+        q.bindValue(":dat",rec.getDat());
+        q.bindValue(":coms",rec.getComments());
+
+        if (!q.exec())  {
+            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+            throw 10;
+
+        }
+        ShowSuccess();
+    }
+    catch (int ex) {
+        ShowError(q);
+    }
+
+    q.finish();
+
+
+}
+
+
+
+
 QList<Courses> ORM::getSchuleCourses() {
     QList<Courses> CL;
     QSqlQuery q;
@@ -533,6 +695,11 @@ QList<Courses> ORM::getSchuleCourses() {
     while (q.next()) {
         Courses C=Courses();
         qDebug() << "Schule Course " << q.value(0).toString();
+        Schwierigkeit S=Schwierigkeit();
+        S.setRed(q.value(1).toInt());
+        S.setGreen(q.value(2).toInt());
+        S.setBlue(q.value(3).toInt());
+        C.setS(S);
         C.setName(q.value(0).toString());
         CL.append(C);
     }
