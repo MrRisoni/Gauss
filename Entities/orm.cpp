@@ -19,6 +19,8 @@ ORM::~ORM()
 
 QList<Members> ORM::getRequestsSchule(QString CourseName) {
     QList<Members>  Ms;
+
+    qDebug() << "fetching requests for " << CourseName;
     QSqlQuery q;
     q.prepare("SELECT M.MembID,M.Name FROM RequestSchule R,Courses C,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND C.CourseID=R.CourseID AND C.CourseName =:cn");
     q.bindValue(":cn",CourseName);

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>620</width>
+    <width>805</width>
     <height>542</height>
    </rect>
   </property>
@@ -41,7 +41,7 @@
     <rect>
      <x>10</x>
      <y>60</y>
-     <width>591</width>
+     <width>781</width>
      <height>431</height>
     </rect>
    </property>
@@ -57,7 +57,7 @@
       <rect>
        <x>10</x>
        <y>20</y>
-       <width>561</width>
+       <width>751</width>
        <height>361</height>
       </rect>
      </property>
@@ -66,6 +66,9 @@
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
      </property>
     </widget>
    </widget>
@@ -76,9 +79,9 @@
     <widget class="QPushButton" name="pushAddToGroup">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>380</x>
        <y>130</y>
-       <width>31</width>
+       <width>41</width>
        <height>23</height>
       </rect>
      </property>
@@ -89,9 +92,9 @@
     <widget class="QPushButton" name="pushRemoveFromGroup">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>380</x>
        <y>180</y>
-       <width>31</width>
+       <width>41</width>
        <height>23</height>
       </rect>
      </property>
@@ -102,9 +105,9 @@
     <widget class="QPushButton" name="pushClear">
      <property name="geometry">
       <rect>
-       <x>270</x>
+       <x>380</x>
        <y>270</y>
-       <width>31</width>
+       <width>41</width>
        <height>23</height>
       </rect>
      </property>
@@ -117,7 +120,7 @@
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>231</width>
+       <width>341</width>
        <height>361</height>
       </rect>
      </property>
@@ -137,9 +140,9 @@
     <widget class="QTableView" name="tableGroup">
      <property name="geometry">
       <rect>
-       <x>320</x>
+       <x>440</x>
        <y>20</y>
-       <width>231</width>
+       <width>321</width>
        <height>361</height>
       </rect>
      </property>
@@ -148,6 +151,9 @@
      </property>
      <property name="dragDropMode">
       <enum>QAbstractItemView::DropOnly</enum>
+     </property>
+     <property name="defaultDropAction">
+      <enum>Qt::CopyAction</enum>
      </property>
      <property name="alternatingRowColors">
       <bool>true</bool>
@@ -169,7 +175,7 @@
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>551</width>
+       <width>741</width>
        <height>381</height>
       </rect>
      </property>
@@ -179,7 +185,7 @@
   <widget class="QPushButton" name="pushOK">
    <property name="geometry">
     <rect>
-     <x>520</x>
+     <x>710</x>
      <y>500</y>
      <width>82</width>
      <height>23</height>

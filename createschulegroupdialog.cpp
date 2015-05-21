@@ -32,6 +32,7 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
 
 
 
+   GroupModel= new  QStandardItemModel();
 
 
 }
@@ -76,6 +77,9 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
 
     }
 
+
+    ui->tableAll->setModel(AllModel);
+    ui->tableAll->resizeColumnsToContents();
 
 }
 
@@ -143,6 +147,7 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
 
     mod->setHorizontalHeaderLabels(headers);
     ui->tableTeachers->setModel(mod);
+    ui->tableTeachers->resizeColumnsToContents();
 
 }
 
@@ -157,16 +162,60 @@ CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
 void CreateSchuleGroupDialog::on_comboCourse_currentTextChanged(const QString &arg1)
 {
     populateTable(ui->comboCourse->currentText());
-    //populateStudentsTable(ui->comboCourse->currentText());
+    populateStudentsTable(ui->comboCourse->currentText());
 }
 
 void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
 {
+    //fetch selection from other tabel
+
+
+
+    QModelIndexList indexList =  ui->tableAll->selectionModel()->selectedRows();
+    for (QModelIndex inx : indexList) {
+
+
+
+        RowGroup++;
+        QStandardItem *itID= new QStandardItem();
+
+        //get the ID
+        QAbstractItemModel* model = ui->tableAll->model();
+         QModelIndex idex =  model->index(inx.row(), 0);
+
+
+        itID->setText(ui->tableAll->model()->data(idex).toString());
+        GroupModel->setItem(RowGroup,0,itID);
+
+        //get the Name
+        idex =  model->index(inx.row(), 1);
+
+
+        QStandardItem *itName= new QStandardItem();
+        itName->setText(ui->tableAll->model()->data(idex).toString());
+        GroupModel->setItem(RowGroup,1,itName);
+
+
+   }
+
+
+
+
+
+    ui->tableGroup->setModel(GroupModel);
+
+    ui->tableGroup->resizeColumnsToContents();
+
+    //remove selected items from tableAll:)
+
+
 
 }
 
 void CreateSchuleGroupDialog::on_pushRemoveFromGroup_clicked()
 {
+
+
 
 }
 

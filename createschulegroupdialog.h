@@ -32,7 +32,7 @@ private:
     Ui::CreateSchuleGroupDialog *ui;
     void populateTable(QString CourseName);
     void populateStudentsTable(QString CourseName);
-
+    QStandardItemModel *GroupModel;
     int RowAll=0;
     int RowGroup=0;
 
