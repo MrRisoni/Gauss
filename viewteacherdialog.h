@@ -15,6 +15,9 @@ public:
     explicit ViewTeacherDialog(QWidget *parent = 0);
     ~ViewTeacherDialog();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
     Ui::ViewTeacherDialog *ui;
 };

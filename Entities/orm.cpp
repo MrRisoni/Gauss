@@ -16,6 +16,39 @@ ORM::~ORM()
 
 }
 
+Teacher ORM::searchteacherByname(QString name) {
+    Teacher L;
+    QSqlQuery q;
+
+
+
+
+     QString s = "SELECT MembID,Name FROM Members WHERE  Name LIKE '%" + name + "%'";
+     qDebug() << s;
+
+    q.exec(s);
+
+     int mid;
+    while (q.next()) {
+        mid=q.value(0).toInt();
+        L.setMembID(q.value(0).toInt());
+        L.setName(q.value(1).toString());
+    }
+
+    qDebug() << mid << " " << L.getName() << " " << L.getMembID();
+
+    q.prepare("SELECT Pic FROM Faces Where MembID=:mid");
+    q.bindValue(":mid",mid);
+    q.exec();
+    while (q.next()) {
+        L.setPhoto(q.value(0).toByteArray());
+    }
+
+    q.finish();
+    return L;
+}
+
+
 
 QList<Members> ORM::getRequestsSchule(QString CourseName) {
     QList<Members>  Ms;
@@ -686,6 +719,10 @@ void ORM::ShowError(QSqlQuery q) {
 Members ORM::searchStudentByName(QString name) {
     QSqlQuery q;
     Members m;
+
+    QString s="SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'";
+     qDebug() << s;
+
     q.exec("SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'");
     while (q.next()) {
 

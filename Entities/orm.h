@@ -70,6 +70,7 @@ public:
     QList<Rooms> getRooms();
     QList<Buildings> getBuildings();
     Members searchStudentByName(QString name);
+    Teacher searchteacherByname(QString name);
     QList<Schwierigkeit> getSchwer();
     QList<Departments> getDeps();
     QList<Echelon> getEchels();
