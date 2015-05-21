@@ -2,8 +2,8 @@
 #define ORM_H
 
 
+#include "tablestructs.h"
 
-#include "schwierigkeit.h"
 #include "departments.h"
 #include "courses.h"
 #include "echelon.h"
@@ -53,6 +53,9 @@ public:
     void saveSprache(Groups g);
 
 
+    // get TableModels code
+    QList<ManageCourseTable>  getManageCourseTable();
+    //
 
     QList<Teacher> getCanTeachUni(QString DepName, QString CourseName);
     QList<Members> getRequestsUni(QString DepName, QString CourseName);

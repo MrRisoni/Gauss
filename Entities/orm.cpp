@@ -83,6 +83,69 @@ QString ORM::generateADT() {
 }
 
 
+
+QList<ManageCourseTable>  ORM::getManageCourseTable() {
+    QList<ManageCourseTable> mngTable;
+
+    QSqlQuery q;
+
+    try {
+
+
+
+        //gets CourseID,CourseName,DepName Select C.CourseID,C.CourseName, D.DepName,S.Red,S.Green,S.Blue From Courses C,Departments D ,Schwierigkeit S Where D.DepID=C.DepID AND S.SchwerID=C.Schwer ORDER BY C.CourseName
+
+
+        //gets Count : Select CourseID,Count(TeacherID) FROM TeachOther GROUP BY CourseID
+
+
+
+        //gets open requests
+        //zero requests!!!
+
+        //repeat for uni requests
+        QString s="SELECT ALPHA.CourseID,ALPHA.CourseName,ALPHA.DepName,BRAVO.CNT,ALPHA.Red,ALPHA.Green,ALPHA.Blue FROM (Select C.CourseID,C.CourseName, D.DepName ,S.Red,S.Green,S.Blue From Courses C,Departments D,Schwierigkeit S Where D.DepID=C.DepID AND S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN (Select CourseID,Count(TeacherID) as CNT FROM TeachOther GROUP BY CourseID ) AS BRAVO ON ALPHA.CourseID=BRAVO.CourseID";
+
+        if (!q.exec(s)) {
+            throw 10;
+        }
+
+        while (q.next()) {
+            ManageCourseTable c;
+
+            c.CourseID=q.value(0).toInt();
+            c.CourseName=q.value(1).toString();
+            c.DepName=q.value(2).toString();
+            c.NumGroups=0;
+            c.NumOpenRequests=0;
+            c.NumStudents=0;
+            c.NumTeachers=q.value(3).toInt();
+             Schwierigkeit schw;
+             schw.setRed(q.value(4).toInt());
+             schw.setGreen(q.value(5).toInt());
+             schw.setBlue(q.value(6).toInt());
+            c.Schwer=schw;
+
+            mngTable.append(c);
+
+
+        }
+
+
+
+
+        ShowSuccess();
+    }
+    catch (int ex) {
+        ShowError(q);
+    }
+
+    q.finish();
+
+    return mngTable;
+}
+
+
 QString ORM::generateAFM() {
     QString randomString;
     int High=9;
@@ -111,7 +174,7 @@ QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
         daskalos.setSalary(0);
         daskalos.setCurrentGroups(0);
         daskalos.setTeachingHours(0);
-        daskalos.setEndOfContract(QDate::currentDate());
+        daskalos.setEndOfContract(daskalos.calcEOC());
 
         qDebug() << "fetched teacher " << QString::number(daskalos.getTeacherID()) << " " << daskalos.getName() << " " << daskalos.getEndOfContract().toString() << daskalos.getSalary() << daskalos.getTeachingHours() << daskalos.getCurrentGroups();
 

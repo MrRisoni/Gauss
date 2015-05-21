@@ -166,7 +166,8 @@ HEADERS  += mainwindow.h \
     raumedialog.h \
     managefeesdialog.h \
     Entities/student.h \
-    Entities/ontotites.h
+    Entities/ontotites.h \
+    Entities/tablestructs.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \

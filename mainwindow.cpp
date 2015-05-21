@@ -24,7 +24,7 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionCreate_Sprache_Group,SIGNAL(triggered()),this,SLOT(createpsprache()));
     connect(ui->actionCreate_Schule_Group,SIGNAL(triggered()),this,SLOT(createschule()));
     connect(ui->actionManage_Fee_Schemes,SIGNAL(triggered()),this,SLOT(manageFees()));
-
+    connect(ui->actionShow_Teacher,SIGNAL(triggered()),this,SLOT(showTeacher()));
 
 
 }
@@ -43,6 +43,12 @@ void MainWindow::setDb(const QSqlDatabase &value)
     db = value;
 }
 
+
+void MainWindow::showTeacher() {
+    ViewTeacherDialog *viewTeach = new ViewTeacherDialog();
+    viewTeach->setAttribute(Qt::WA_DeleteOnClose);
+    viewTeach->show();
+}
 
 void MainWindow::manageFees() {
     ManageFeesDialog *feedial=new  ManageFeesDialog();
