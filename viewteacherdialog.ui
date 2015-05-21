@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -610,7 +610,7 @@ QPushButton:pressed {
         </rect>
        </property>
       </widget>
-      <widget class="QComboBox" name="comboWhatToShow">
+      <widget class="QComboBox" name="comboPayType">
        <property name="geometry">
         <rect>
          <x>120</x>
@@ -1046,14 +1046,27 @@ QPushButton:pressed {
     </widget>
    </widget>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="lineName">
    <property name="geometry">
     <rect>
      <x>140</x>
      <y>20</y>
-     <width>421</width>
+     <width>371</width>
      <height>23</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>20</y>
+     <width>91</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Search</string>
    </property>
   </widget>
  </widget>

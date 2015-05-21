@@ -101,6 +101,16 @@ void Members::setADT(const QString &value)
 {
     ADT = value;
 }
+int Members::getMembID() const
+{
+    return MembID;
+}
+
+void Members::setMembID(int value)
+{
+    MembID = value;
+}
+
 
 
 

@@ -14,6 +14,9 @@ public:
     void setEnsembleID(int value);
 
 
+    QList<int> getMeliID() const;
+    void setMeliID(const QList<int> &value);
+
 private:
     int EnsembleID;
     QList<int> meliID;

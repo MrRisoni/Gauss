@@ -21,6 +21,7 @@
 #include "buildings.h"
 #include "rooms.h"
 #include "feeschule.h"
+#include "groups.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -47,10 +48,22 @@ public:
     void save(Buildings B);
     void save(Rooms R);
     void save(FeeSchule fsh);
+    void saveSchule(Groups g);
+    void saveUni(Groups g);
+    void saveSprache(Groups g);
+
+
+
+    QList<Teacher> getCanTeachUni(QString DepName, QString CourseName);
+    QList<Members> getRequestsUni(QString DepName, QString CourseName);
+
 
 
     QList<Teacher> getCanTeachThis(QString CourseName);
     QList<Members> getRequestsSchule(QString CourseName);
+
+
+
     QList<Rooms> getRooms();
     QList<Buildings> getBuildings();
     Members searchStudentByName(QString name);

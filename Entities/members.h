@@ -44,7 +44,11 @@ public:
 
 
 
+    int getMembID() const;
+    void setMembID(int value);
+
 private:
+    int MembID;
     QString Name;
     QString FName;
     QString MName;

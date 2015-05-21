@@ -20,16 +20,20 @@ ORM::~ORM()
 QList<Members> ORM::getRequestsSchule(QString CourseName) {
     QList<Members>  Ms;
     QSqlQuery q;
-    q.prepare("SELECT M.ADT,M.Name FROM RequestSchule R,Courses C,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND C.CourseID=R.CourseID AND C.CourseName =:cn");
+    q.prepare("SELECT M.MembID,M.Name FROM RequestSchule R,Courses C,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND C.CourseID=R.CourseID AND C.CourseName =:cn");
     q.bindValue(":cn",CourseName);
     q.exec();
 
     while (q.next()) {
 
         Members m=Members();
-        m.setADT(q.value(0).toString());
+        m.setMembID(q.value(0).toInt());
         m.setName(q.value(1).toString());
         Ms.append(m);
+
+
+        qDebug() << QString::number(m.getMembID()) << " " << m.getName();
+
 
     }
 
@@ -98,18 +102,27 @@ QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
     q.exec(s);
 
     while (q.next()) {
-        Teacher T;
+        Teacher daskalos;
 
-        T.setTeacherID(q.value(0).toInt());
-        T.setName(q.value(1).toString());
-        T.setSalary(0);
-        T.setCurrentGroups(0);
-        T.setTeachingHours(0);
-        T.setEndOfContract(T.calcEOC());
+        daskalos.setTeacherID(q.value(0).toInt());
+        daskalos.setName(q.value(1).toString());
+        daskalos.setSalary(0);
+        daskalos.setCurrentGroups(0);
+        daskalos.setTeachingHours(0);
+        daskalos.setEndOfContract(QDate::currentDate());
 
-        Lehren.append(T);
+        qDebug() << "fetched teacher " << QString::number(daskalos.getTeacherID()) << " " << daskalos.getName() << " " << daskalos.getEndOfContract().toString() << daskalos.getSalary() << daskalos.getTeachingHours() << daskalos.getCurrentGroups();
+
+
+        Lehren.append(daskalos);
+
+        qDebug() << "appended";
+
+
     }
     q.finish();
+
+    qDebug() << "return model";
     return Lehren;
 }
 

@@ -22,11 +22,32 @@ public:
 
 
 
+    QString getTeacherID() const;
+    void setTeacherID(const QString &value);
+
+    QString getTeacherName() const;
+    void setTeacherName(const QString &value);
+
+    QList<QString> getMeliID() const;
+    void setMeliID(const QList<QString> &value);
+
+    QString getCourseName() const;
+    void setCourseName(const QString &value);
+
+    int getEnsembleID() const;
+    void setEnsembleID(int value);
+
 private:
     int GroupID;
-    int teacherID;
-    QList<int> meliID;
+    QString teacherID;
+    QString TeacherName;
+    int EnsembleID;
+
+    QList<QString> meliID;
     int courseID;
+    QString CourseName;
+    QString DepName;
+    QString LangName;
     QDate StartDate;
     bool Active;
     int EduType;

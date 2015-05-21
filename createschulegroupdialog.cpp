@@ -30,8 +30,8 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     }
 
 
-    populateTable(ui->comboCourse->currentText());
-    populateStudentsTable(ui->comboCourse->currentText());
+
+
 
 
 }
@@ -39,7 +39,43 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
 void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
     //fetch the student who want CourseName
 
-    ui->listAll->clear();
+    qDebug() << "populating Students table";
+    RowAll=0;
+    RowGroup=0;
+    /*Show
+     * StudentID
+     * ADT
+     * Name
+     */
+    QStringList headers;
+    headers.append("StudID");
+    headers.append("Name");
+
+    QStandardItemModel *AllModel = new QStandardItemModel();
+    QStandardItemModel *GroupModel=new QStandardItemModel();
+
+
+    AllModel->setHorizontalHeaderLabels(headers);
+    GroupModel->setHorizontalHeaderLabels(headers);
+
+    ORM o=ORM();
+    QList<Members> mathites = o.getRequestsSchule(ui->comboCourse->currentText());
+
+    for (Members m : mathites) {
+        QStandardItem *itID = new QStandardItem();
+        itID->setText(QString::number(m.getMembID()));
+
+        AllModel->setItem(RowAll,0,itID);
+
+        QStandardItem *itName = new QStandardItem();
+        itName->setText(m.getName());
+        AllModel->setItem(RowAll,1,itName);
+
+        RowAll++;
+
+
+    }
+
 
 }
 
@@ -66,6 +102,7 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
     headers.append("Mobile");
 
     QStandardItemModel *mod = new QStandardItemModel();
+
 
     ORM o =ORM();
     QList<Teacher> profs= o.getCanTeachThis(CourseName);
@@ -111,8 +148,7 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
 
 CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
 {
-    QAbstractItemModel *mod =ui->tableTeachers->model();
-    delete mod;
+
 
     delete ui;
 }
@@ -121,5 +157,20 @@ CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
 void CreateSchuleGroupDialog::on_comboCourse_currentTextChanged(const QString &arg1)
 {
     populateTable(ui->comboCourse->currentText());
-    populateStudentsTable(ui->comboCourse->currentText());
+    //populateStudentsTable(ui->comboCourse->currentText());
+}
+
+void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
+{
+
+}
+
+void CreateSchuleGroupDialog::on_pushRemoveFromGroup_clicked()
+{
+
+}
+
+void CreateSchuleGroupDialog::on_pushClear_clicked()
+{
+
 }
