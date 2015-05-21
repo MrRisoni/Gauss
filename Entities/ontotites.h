@@ -1,10 +1,21 @@
 namespace GaussDB {
 
 
-struct Absent {
-    int StudentID;
-    Student st;
-    History h;
+#include <QString>
+#include <QDate>
+
+
+
+class Geschichte {
+    int HistID;
+    int GroupID;
+    QDate dat;
+    QString Hour;
+    float Duration;
+    int RoomID;
 };
+
+
+
 
 }

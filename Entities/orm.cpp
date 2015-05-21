@@ -90,11 +90,26 @@ QString ORM::generateAFM() {
 
 QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
     QList<Teacher> Lehren;
-
-    Teacher T;
-
+    QSqlQuery q;
 
 
+    QString s="SELECT M.MembID,M.Name From Members M,Courses C,TeachOther T WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND C.CourseName='"+ CourseName+"'";
+    qDebug() << s;
+    q.exec(s);
+
+    while (q.next()) {
+        Teacher T;
+
+        T.setTeacherID(q.value(0).toInt());
+        T.setName(q.value(1).toString());
+        T.setSalary(0);
+        T.setCurrentGroups(0);
+        T.setTeachingHours(0);
+        T.setEndOfContract(T.calcEOC());
+
+        Lehren.append(T);
+    }
+    q.finish();
     return Lehren;
 }
 

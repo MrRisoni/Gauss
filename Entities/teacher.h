@@ -67,6 +67,14 @@ public:
 
 
 
+    QDate calcEOC(); //fetch end of contract
+
+
+    float getSalary() const;
+    void setSalary(float value);
+
+    int getTeachingHours() const;
+    void setTeachingHours(int value);
 
 private:
     int TeacherID;
@@ -77,10 +85,11 @@ private:
     Kassen Versichern;
     PayKassen payKasse;
     QList<Unavailable> UnAvailability;
-
+    float Salary;
     int KasseID;
     QDate EndOfContract;
     QString AFM; //Greek SSN
+    int TeachingHours; // teaching hours for a lesson
 
 
     int TotalGroups;
@@ -88,6 +97,10 @@ private:
     int CurrentGroups;
     int CurrentStudents;
     int TotalHours;
+
+
+
+
 
 
 

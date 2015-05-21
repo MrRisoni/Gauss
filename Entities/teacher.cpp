@@ -1,5 +1,9 @@
 #include "teacher.h"
 
+
+#include <QSqlQuery>
+#include <QVariant>
+
 Teacher::Teacher():
     Members()
 {
@@ -28,6 +32,45 @@ void Teacher::setCanTeach(const QList<Courses> &value)
 {
     CanTeach = value;
 }
+
+
+
+QDate Teacher::calcEOC() {
+    //fetch end of contract
+    QSqlQuery q;
+    q.prepare("SELECT MAX(End) FROM `Contract` WHERE TeacherID=:tid");
+    q.bindValue(":tid",this->getTeacherID());
+    q.exec();
+    while (q.next()) {
+        this->setEndOfContract(q.value(0).toDate());
+    }
+    q.finish();
+    return getEndOfContract();
+}
+
+
+
+float Teacher::getSalary() const
+{
+    return Salary;
+}
+
+void Teacher::setSalary(float value)
+{
+    Salary = value;
+}
+int Teacher::getTeachingHours() const
+{
+    return TeachingHours;
+}
+
+void Teacher::setTeachingHours(int value)
+{
+    TeachingHours = value;
+}
+
+;
+
 
 QByteArray Teacher::getPhoto() const
 {
