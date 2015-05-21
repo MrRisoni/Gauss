@@ -1,7 +1,9 @@
 #ifndef ENSEMBLES_H
 #define ENSEMBLES_H
 
-#include "student.h"
+
+#include <QList>
+
 
 class Ensembles
 {
@@ -11,12 +13,10 @@ public:
     int getEnsembleID() const;
     void setEnsembleID(int value);
 
-    QList<Student> getMeli() const;
-    void setMeli(const QList<Student> &value);
 
 private:
     int EnsembleID;
-    QList<Student> meli;
+    QList<int> meliID;
 };
 
 #endif // ENSEMBLES_H

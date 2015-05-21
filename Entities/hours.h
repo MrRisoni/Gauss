@@ -1,6 +1,7 @@
 #ifndef HOURS_H
 #define HOURS_H
 
+
 #include <QString>
 
 class Hours

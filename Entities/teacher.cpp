@@ -154,38 +154,8 @@ int Teacher::getTotalHours() const
 void Teacher::setTotalHours(int value)
 {
     TotalHours = value;
-}
-QList<Groups> Teacher::getHasTaught() const
-{
-    return HasTaught;
-}
 
-void Teacher::setHasTaught(const QList<Groups> &value)
-{
-    HasTaught = value;
 }
-QList<History> Teacher::getTeachingHistory() const
-{
-    return TeachingHistory;
-}
-
-void Teacher::setTeachingHistory(const QList<History> &value)
-{
-    TeachingHistory = value;
-}
-QList<Erlaubnis> Teacher::getErlaubHistory() const
-{
-    return ErlaubHistory;
-}
-
-void Teacher::setErlaubHistory(const QList<Erlaubnis> &value)
-{
-    ErlaubHistory = value;
-}
-
-
-
-
 
 
 

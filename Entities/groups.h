@@ -1,11 +1,7 @@
 #ifndef GROUPS_H
 #define GROUPS_H
 
-#include "courses.h"
-#include "ensembles.h"
-#include "student.h"
 #include <QDate>
-#include "teacher.h"
 
 class Groups
 {
@@ -24,14 +20,13 @@ public:
     int getEduType() const;
     void setEduType(int value);
 
-    Teacher getTeacher() const;
-    void setTeacher(const Teacher &value);
+
 
 private:
     int GroupID;
-    Teacher teacher;
-    QList<Student> meli;
-    Courses course;
+    int teacherID;
+    QList<int> meliID;
+    int courseID;
     QDate StartDate;
     bool Active;
     int EduType;

@@ -1,7 +1,8 @@
 #ifndef FUNDS_H
 #define FUNDS_H
 
-#include "student.h"
+#include <QDate>
+
 
 class Funds
 {
@@ -9,8 +10,6 @@ public:
     Funds();
     ~Funds();
 
-    Student getStud() const;
-    void setStud(const Student &value);
 
     QDate getDat() const;
     void setDat(const QDate &value);
@@ -20,7 +19,7 @@ public:
     void setFee(float value);
 
 private:
-    Student  stud;
+    int  studID;
     QDate dat;
     float fee;
 

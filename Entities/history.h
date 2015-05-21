@@ -1,9 +1,9 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
-#include "rooms.h"
-#include "groups.h"
 #include <QDate>
+#include <QString>
+#include "rooms.h"
 
 class History
 {

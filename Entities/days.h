@@ -1,6 +1,7 @@
 #ifndef DAYS_H
 #define DAYS_H
 
+
 #include <QString>
 
 class Days

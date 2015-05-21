@@ -1,7 +1,8 @@
 #ifndef FACES_H
 #define FACES_H
 
-#include "teacher.h"
+
+#include <QByteArray>
 
 class Faces
 {
@@ -11,12 +12,10 @@ public:
     int getFaceID() const;
     void setFaceID(int value);
 
-    Teacher getT() const;
-    void setT(const Teacher &value);
 
 private:
     int FaceID;
-    Teacher T;
+    int TeacherID;
     QByteArray pic;
 };
 

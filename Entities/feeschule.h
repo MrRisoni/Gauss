@@ -9,14 +9,15 @@ class FeeSchule
 public:
     FeeSchule();
     ~FeeSchule();
-    Courses getC() const;
-    void setC(const Courses &value);
 
     QDate getDat() const;
     void setDat(const QDate &value);
 
     float getFee() const;
     void setFee(float value);
+
+    Courses getC() const;
+    void setC(const Courses &value);
 
 private:
     Courses C;

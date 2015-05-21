@@ -9,15 +9,9 @@ Payments::~Payments()
 {
 
 }
-Teacher Payments::getTeacher() const
-{
-    return teacher;
-}
 
-void Payments::setTeacher(const Teacher &value)
-{
-    teacher = value;
-}
+
+
 QDate Payments::getDat() const
 {
     return dat;

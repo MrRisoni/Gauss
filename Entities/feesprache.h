@@ -1,16 +1,14 @@
 #ifndef FEESPRACHE_H
 #define FEESPRACHE_H
 
-#include "diplomas.h"
 
+#include <QDate>
 
 class FeeSprache
 {
 public:
     FeeSprache();
     ~FeeSprache();
-    Diplomas getDiplo() const;
-    void setDiplo(const Diplomas &value);
 
     QDate getDat() const;
     void setDat(const QDate &value);
@@ -19,7 +17,7 @@ public:
     void setFee(float value);
 
 private:
-    Diplomas diplo;
+    int diploID;
     QDate dat;
     float fee;
 

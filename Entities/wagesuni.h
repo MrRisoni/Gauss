@@ -2,6 +2,10 @@
 #define WAGESUNI_H
 
 
+#include "echelon.h"
+#include "courses.h"
+#include <QDate>
+
 class WagesUni
 {
 public:

@@ -2,15 +2,15 @@
 #define ERLAUBNIS_H
 
 
-#include "teacher.h"
+#include <QDate>
+
 
 class Erlaubnis
 {
 public:
     Erlaubnis();
     ~Erlaubnis();
-    Teacher getT() const;
-    void setT(const Teacher &value);
+
 
     QDate getStartDate() const;
     void setStartDate(const QDate &value);
@@ -22,7 +22,7 @@ public:
     void setDaysLeft(int value);
 
 private:
-    Teacher T;
+    int TeacherID;
     QDate StartDate;
     QDate EndDate;
     int DaysLeft;

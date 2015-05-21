@@ -1,6 +1,7 @@
 #ifndef DEPARTMENTS_H
 #define DEPARTMENTS_H
 
+
 #include <QString>
 
 class Departments

@@ -1,8 +1,8 @@
 #ifndef REQUESTUNI_H
 #define REQUESTUNI_H
 
-#include "courses.h"
-#include "student.h"
+#include <QDate>
+#include <QString>
 
 class RequestUni
 {
@@ -11,10 +11,8 @@ public:
     ~RequestUni();
 
 private:
-    Courses C;
     int CourseID;
-    int StudentID;
-    Student student;
+    int studentID;
     QDate dat;
     QString comments;
 

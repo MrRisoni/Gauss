@@ -4,7 +4,6 @@
 #include <QDate>
 #include "echelon.h"
 
-
 class BaseWages
 {
 public:

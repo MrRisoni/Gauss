@@ -1,9 +1,9 @@
 #ifndef REQUESTSCHULE_H
 #define REQUESTSCHULE_H
 
-
 #include "courses.h"
 #include "members.h"
+#include <QDate>
 
 
 class RequestSchule

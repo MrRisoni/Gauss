@@ -1,7 +1,7 @@
 #ifndef ROOMS_H
 #define ROOMS_H
 
-#include <QString>
+
 #include "buildings.h"
 
 class Rooms

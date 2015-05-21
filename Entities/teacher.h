@@ -1,16 +1,12 @@
 #ifndef TEACHER_H
 #define TEACHER_H
 
-#include "courses.h"
-#include "basewages.h"
-#include "unavailable.h"
 #include "kassen.h"
-#include "members.h"
+#include "unavailable.h"
 #include "paykassen.h"
-#include "groups.h"
-#include "history.h"
-#include "payments.h"
-#include "erlaubnis.h"
+#include "members.h"
+#include "basewages.h"
+#include "courses.h"
 
 class Teacher : public Members
 {
@@ -68,14 +64,9 @@ public:
     int getTotalHours() const;
     void setTotalHours(int value);
 
-    QList<Groups> getHasTaught() const;
-    void setHasTaught(const QList<Groups> &value);
 
-    QList<History> getTeachingHistory() const;
-    void setTeachingHistory(const QList<History> &value);
 
-    QList<Erlaubnis> getErlaubHistory() const;
-    void setErlaubHistory(const QList<Erlaubnis> &value);
+
 
 private:
     int TeacherID;
@@ -97,20 +88,6 @@ private:
     int CurrentGroups;
     int CurrentStudents;
     int TotalHours;
-
-
-
-    //we need a history of teaching
-    QList<Groups> HasTaught;
-
-    QList<History> TeachingHistory;
-
-    //payment history
-    QList<Payments> PayHistory;
-
-    //erlaubnis history
-    QList<Erlaubnis> ErlaubHistory;
-
 
 
 

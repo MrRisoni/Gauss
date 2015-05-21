@@ -1,9 +1,9 @@
 #ifndef WAGESSCHULE_H
 #define WAGESSCHULE_H
 
-#include "echelon.h"
 #include "courses.h"
 #include <QDate>
+#include "echelon.h"
 
 class WagesSchule
 {

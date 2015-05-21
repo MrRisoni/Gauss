@@ -1,10 +1,11 @@
 #ifndef COURSES_H
 #define COURSES_H
 
-
 #include <QString>
-#include "schwierigkeit.h"
 #include "departments.h"
+#include "schwierigkeit.h"
+
+
 
 class Courses
 {

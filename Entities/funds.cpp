@@ -9,15 +9,7 @@ Funds::~Funds()
 {
 
 }
-Student Funds::getStud() const
-{
-    return stud;
-}
 
-void Funds::setStud(const Student &value)
-{
-    stud = value;
-}
 QDate Funds::getDat() const
 {
     return dat;

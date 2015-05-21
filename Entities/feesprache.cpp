@@ -9,15 +9,9 @@ FeeSprache::~FeeSprache()
 {
 
 }
-Diplomas FeeSprache::getDiplo() const
-{
-    return diplo;
-}
 
-void FeeSprache::setDiplo(const Diplomas &value)
-{
-    diplo = value;
-}
+
+
 QDate FeeSprache::getDat() const
 {
     return dat;

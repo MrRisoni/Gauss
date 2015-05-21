@@ -2,15 +2,16 @@
 #define PAYMENTS_H
 
 
-#include "teacher.h"
+#include <QString>
+#include <QDate>
+
 
 class Payments
 {
 public:
     Payments();
     ~Payments();
-    Teacher getTeacher() const;
-    void setTeacher(const Teacher &value);
+
 
     QDate getDat() const;
     void setDat(const QDate &value);
@@ -22,7 +23,7 @@ public:
     void setPayType(const QString &value);
 
 private:
-    Teacher teacher;
+    int teacherID;
     QDate dat;
     float Money;
     QString PayType;

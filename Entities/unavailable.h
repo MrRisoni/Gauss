@@ -1,8 +1,9 @@
 #ifndef UNAVAILABLE_H
 #define UNAVAILABLE_H
 
+
 #include "days.h"
-#include  "hours.h"
+#include "hours.h"
 
 class Unavailable
 {

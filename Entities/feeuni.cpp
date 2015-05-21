@@ -9,15 +9,8 @@ FeeUni::~FeeUni()
 {
 
 }
-Courses FeeUni::getC() const
-{
-    return C;
-}
 
-void FeeUni::setC(const Courses &value)
-{
-    C = value;
-}
+
 QDate FeeUni::getDat() const
 {
     return dat;

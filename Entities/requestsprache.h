@@ -1,8 +1,10 @@
 #ifndef REQUESTSPRACHE_H
 #define REQUESTSPRACHE_H
 
-#include "student.h"
-#include "diplomas.h"
+
+#include <QDate>
+#include <QString>
+
 
 class RequestSprache
 {
@@ -11,10 +13,10 @@ public:
     ~RequestSprache();
 
 private:
-    Diplomas diplo;
+    int diploID;
     int DiplomaID;
     int StudentID;
-    Student student;
+    int studentID;
     QDate dat;
     QString comments;
 };

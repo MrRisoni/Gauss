@@ -45,16 +45,6 @@ void Groups::setEduType(int value)
 {
     EduType = value;
 }
-Teacher Groups::getTeacher() const
-{
-    return teacher;
-}
-
-void Groups::setTeacher(const Teacher &value)
-{
-    teacher = value;
-}
-
 
 
 

@@ -165,7 +165,8 @@ HEADERS  += mainwindow.h \
     Entities/paykassen.h \
     raumedialog.h \
     managefeesdialog.h \
-    Entities/student.h
+    Entities/student.h \
+    Entities/ontotites.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \

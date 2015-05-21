@@ -1,8 +1,11 @@
 #ifndef VERSICHERUNG_H
 #define VERSICHERUNG_H
 
+
+#include <QDate>
 #include "teacher.h"
 #include "kassen.h"
+
 
 class Versicherung
 {

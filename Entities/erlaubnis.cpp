@@ -9,15 +9,9 @@ Erlaubnis::~Erlaubnis()
 {
 
 }
-Teacher Erlaubnis::getT() const
-{
-    return T;
-}
 
-void Erlaubnis::setT(const Teacher &value)
-{
-    T = value;
-}
+
+
 QDate Erlaubnis::getStartDate() const
 {
     return StartDate;
