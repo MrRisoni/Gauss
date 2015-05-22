@@ -40,6 +40,16 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
 void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
     //fetch the student who want CourseName
 
+    //fix memory leaks
+    QAbstractItemModel *modelo = ui->tableAll->model();
+    delete modelo;
+
+
+
+    modelo=ui->tableGroup->model();
+    delete modelo;
+
+
     qDebug() << "populating Students table";
     RowAll=0;
     RowGroup=0;
@@ -85,6 +95,19 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
 
 
 void CreateSchuleGroupDialog::populateTable(QString CourseName) {
+
+    //fix memory leaks
+
+    QAbstractItemModel *modelo = ui->tableTeachers->model();
+    delete modelo;
+
+    modelo=ui->tableAll->model();
+    delete modelo;
+
+    modelo=ui->tableGroup->model();
+    delete modelo;
+
+
     QStandardItemModel *mod = new QStandardItemModel();
 
 
@@ -92,17 +115,6 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
     SchuleTeacherMVC profs= o.getCanTeachSchuleMVC(CourseName);
 
     mod->setHorizontalHeaderLabels(profs.SchuleTeacherViewHeaders);
-
-        QString ProfID;
-        QString Name;
-        QString Monthy_Base_Salary;
-        QString Groups;
-        QString Hours_for_this_lesson;
-        QString Current_Groups;
-        QString End_of_Contract;
-        QString Mobile;
-
-
 
 
     int r=0;
@@ -155,9 +167,22 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
 
 CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
 {
+    //fix memory leaks
+
+    QAbstractItemModel *mod = ui->tableTeachers->model();
+    delete mod;
+
+    mod=ui->tableAll->model();
+    delete mod;
+
+    mod=ui->tableGroup->model();
+    delete mod;
 
 
     delete ui;
+
+    qDebug() << "deleted";
+
 }
 
 
@@ -223,5 +248,9 @@ void CreateSchuleGroupDialog::on_pushRemoveFromGroup_clicked()
 
 void CreateSchuleGroupDialog::on_pushClear_clicked()
 {
+    QAbstractItemModel *mod = ui->tableGroup->model();
+    delete mod;
+
+
 
 }
