@@ -94,7 +94,7 @@ public:
 
     FeeSchuleMVC  getManageFeeSchuleMVC();
 
-    SchuleTeacherMVC getCanTeachSchuleMVC();
+    SchuleTeacherMVC getCanTeachSchuleMVC(QString CourseName);
 
 
 private:
