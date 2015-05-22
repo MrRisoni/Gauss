@@ -74,6 +74,8 @@ void ManageCoursesDialog::on_pushSaveCourses_clicked()
 
         O.save(C);
     }
+
+    populateTable();
 }
 
 
@@ -87,6 +89,8 @@ void ManageCoursesDialog::populateTable() {
       #Students
       #Groups
       #Open Requests
+      PaySchemes?
+      Fee Update
       */
 
     QStandardItemModel *mod=new QStandardItemModel();
@@ -98,6 +102,8 @@ void ManageCoursesDialog::populateTable() {
     headerLabs.append("#Students");
     headerLabs.append("#Groups");
     headerLabs.append("# Open Requests");
+    headerLabs.append("PaySchemes");
+    headerLabs.append("Fee Update");
 
     mod->setHorizontalHeaderLabels(headerLabs);
 
@@ -148,6 +154,33 @@ void ManageCoursesDialog::populateTable() {
         itRequests->setText(QString::number(cour.NumOpenRequests));
         mod->setItem(row,6,itRequests);
 
+
+        QStandardItem *itPayScheme= new QStandardItem();
+        itPayScheme->setText(cour.PaySchemes);
+        mod->setItem(row,7,itPayScheme);
+        if (cour.PaySchemes!="OK") {
+            //if equals to NEVER set to red
+            col.setRed(255);
+            col.setBlue(0);
+            col.setGreen(0);
+            br.setColor(col);
+            itPayScheme->setBackground(col);
+        }
+
+
+        QStandardItem *itFeeDate= new QStandardItem();
+        itFeeDate->setText(cour.FeeUpdate);
+        mod->setItem(row,8,itFeeDate);
+
+
+        if (cour.FeeUpdate=="NEVER") {
+            //if equals to NEVER set to red
+            col.setRed(255);
+            col.setBlue(0);
+            col.setGreen(0);
+            br.setColor(col);
+            itFeeDate->setBackground(col);
+        }
 
 
         row++;

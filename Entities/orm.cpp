@@ -121,6 +121,8 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
     QList<ManageCourseTable> mngTable;
 
     QSqlQuery q;
+    QSqlQuery q2;
+
 
     try {
 
@@ -129,28 +131,97 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
         //gets CourseID,CourseName,DepName Select C.CourseID,C.CourseName, D.DepName,S.Red,S.Green,S.Blue From Courses C,Departments D ,Schwierigkeit S Where D.DepID=C.DepID AND S.SchwerID=C.Schwer ORDER BY C.CourseName
 
 
+
         //gets Count : Select CourseID,Count(TeacherID) FROM TeachOther GROUP BY CourseID
+
+        //takes into account  lessons that are not taught by anyone
+        //IT is not taken into account if someone leavers the school
+        //
 
 
 
         //gets open requests
         //zero requests!!!
 
+
+
         //repeat for uni requests
-        QString s="SELECT ALPHA.CourseID,ALPHA.CourseName,ALPHA.DepName,BRAVO.CNT,ALPHA.Red,ALPHA.Green,ALPHA.Blue FROM (Select C.CourseID,C.CourseName, D.DepName ,S.Red,S.Green,S.Blue From Courses C,Departments D,Schwierigkeit S Where D.DepID=C.DepID AND S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN (Select CourseID,Count(TeacherID) as CNT FROM TeachOther GROUP BY CourseID ) AS BRAVO ON ALPHA.CourseID=BRAVO.CourseID";
+        QString s="SELECT ALPHA.CourseID,ALPHA.CourseName,ALPHA.DepName,BRAVO.CNT,ALPHA.Red,ALPHA.Green,ALPHA.Blue FROM ";
+        s+= " (Select C.CourseID,C.CourseName, D.DepName ,S.Red,S.Green,S.Blue From Courses C,Departments D,Schwierigkeit S Where D.DepID=C.DepID AND ";
+          s+=" S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN ( Select CourseID,Count(TeacherID) as CNT FROM TeachOther " ;
+        s+=" GROUP BY CourseID UNION Select CourseID,0 AS CNT From Courses WHERE CourseID NOT IN (Select CourseID From TeachOther) ) AS BRAVO ";
+        s+="ON ALPHA.CourseID=BRAVO.CourseID  ORDER BY ALPHA.CourseName ASC";
+
+        qDebug() << s;
 
         if (!q.exec(s)) {
             throw 10;
         }
 
         while (q.next()) {
+
+            qDebug() << "-----------------------";
             ManageCourseTable c;
 
             c.CourseID=q.value(0).toInt();
             c.CourseName=q.value(1).toString();
             c.DepName=q.value(2).toString();
-            c.NumGroups=0;
-            c.NumOpenRequests=0;
+
+            //query the db to get the # groups
+            //JOIN WITH THE ABOVE QUERY
+            s="SELECT COUNT(GroupID) FROM Groups WHERE CourseID='"+ QString::number(c.CourseID)+"'";
+
+            qDebug() << s;
+            q2.exec(s);
+            while (q2.next()) {
+                c.NumGroups=q2.value(0).toInt();
+
+            }
+
+            //query the db to get the open requests
+            //JOIN WITH THE ABOVE QUERY
+            s="SELECT COUNT(RequestID) FROM RequestSchule WHERE Settled=0 AND CourseID='"+ QString::number(c.CourseID)+"'";
+            qDebug() << s;
+            q2.exec(s);
+
+            while (q2.next()) {
+               c.NumOpenRequests=q2.value(0).toInt();
+
+            }
+
+            //query to see if there are as many payschemes as active echelons...
+
+            //count the echel ids that do not exist in the wages
+            QString s="Select Count(EchelID) From Echelon Where Active=1 AND EchelID NOT IN (SELECT DISTINCT(EchelID) FROM `WagesSchule` WHERE CourseID='"+ QString::number(c.CourseID)+"')";
+            qDebug() << s;
+
+            q2.exec(s);
+            while (q2.next()) {
+                qDebug() << "echel wage count " << q2.value(0).toInt();
+                if (q2.value(0).toInt()>0) {
+                    c.PaySchemes="NOT SET";
+                }
+                else {
+                    c.PaySchemes="OK";
+                }
+            }
+
+
+            //find the latest update of the fee
+            s= "SELECT MAX(Dat) FROM `FeeSchule` WHERE CourseID='"+ QString::number(c.CourseID)+"'";
+
+            qDebug() << s;
+            q2.exec(s);
+
+
+            while (q2.next()) {
+                c.FeeUpdate=q2.value(0).toString();
+                //if empty set to NEVER
+                if (c.FeeUpdate.length()==0) {
+                    c.FeeUpdate="NEVER";
+                }
+            }
+
             c.NumStudents=0;
             c.NumTeachers=q.value(3).toInt();
              Schwierigkeit schw;
@@ -167,7 +238,6 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
 
 
 
-        ShowSuccess();
     }
     catch (int ex) {
         ShowError(q);
@@ -175,6 +245,7 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
 
     q.finish();
 
+    q2.finish();
     return mngTable;
 }
 
@@ -884,7 +955,7 @@ QList<Courses> ORM::getSchuleCourses() {
     QList<Courses> CL;
     QSqlQuery q;
 
-    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID=1 ");
+    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID=1 ORDER BY C.CourseName  ASC");
     while (q.next()) {
         Courses C=Courses();
         qDebug() << "Schule Course " << q.value(0).toString();
@@ -1105,7 +1176,7 @@ QList<Echelon> ORM::getEchels() {
     QList<Echelon> Ech;
 
     QSqlQuery q;
-    q.exec("Select Exp From Echelon");
+    q.exec("Select Exp From Echelon Where Active=1");
     while (q.next()) {
         Echelon c=Echelon();
         c.setExpYears(q.value(0).toInt());
