@@ -6,8 +6,11 @@
 using namespace std;
 
 
+
+
 ORM::ORM()
 {
+
 
 }
 
@@ -23,12 +26,12 @@ Teacher ORM::searchteacherByname(QString name) {
 
 
 
-     QString s = "SELECT MembID,Name FROM Members WHERE  Name LIKE '%" + name + "%'";
-     qDebug() << s;
+    QString s = "SELECT MembID,Name FROM Members WHERE  Name LIKE '%" + name + "%'";
+    qDebug() << s;
 
     q.exec(s);
 
-     int mid;
+    int mid;
     while (q.next()) {
         mid=q.value(0).toInt();
         L.setMembID(q.value(0).toInt());
@@ -148,7 +151,7 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
         //repeat for uni requests
         QString s="SELECT ALPHA.CourseID,ALPHA.CourseName,ALPHA.DepName,BRAVO.CNT,ALPHA.Red,ALPHA.Green,ALPHA.Blue FROM ";
         s+= " (Select C.CourseID,C.CourseName, D.DepName ,S.Red,S.Green,S.Blue From Courses C,Departments D,Schwierigkeit S Where D.DepID=C.DepID AND ";
-          s+=" S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN ( Select CourseID,Count(TeacherID) as CNT FROM TeachOther " ;
+        s+=" S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN ( Select CourseID,Count(TeacherID) as CNT FROM TeachOther " ;
         s+=" GROUP BY CourseID UNION Select CourseID,0 AS CNT From Courses WHERE CourseID NOT IN (Select CourseID From TeachOther) ) AS BRAVO ";
         s+="ON ALPHA.CourseID=BRAVO.CourseID  ORDER BY ALPHA.CourseName ASC";
 
@@ -185,7 +188,7 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
             q2.exec(s);
 
             while (q2.next()) {
-               c.NumOpenRequests=q2.value(0).toInt();
+                c.NumOpenRequests=q2.value(0).toInt();
 
             }
 
@@ -224,10 +227,10 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
 
             c.NumStudents=0;
             c.NumTeachers=q.value(3).toInt();
-             Schwierigkeit schw;
-             schw.setRed(q.value(4).toInt());
-             schw.setGreen(q.value(5).toInt());
-             schw.setBlue(q.value(6).toInt());
+            Schwierigkeit schw;
+            schw.setRed(q.value(4).toInt());
+            schw.setGreen(q.value(5).toInt());
+            schw.setBlue(q.value(6).toInt());
             c.Schwer=schw;
 
             mngTable.append(c);
@@ -792,7 +795,7 @@ Members ORM::searchStudentByName(QString name) {
     Members m;
 
     QString s="SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'";
-     qDebug() << s;
+    qDebug() << s;
 
     q.exec("SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'");
     while (q.next()) {
@@ -946,6 +949,77 @@ void ORM::save(RequestSchule rec) {
     q.finish();
 
 
+}
+
+
+FeeSchuleMVC  ORM::getManageFeeSchuleMVC() {
+
+    FeeSchuleMVC mvc;
+
+
+    QStringList headers;
+    headers.append("CourseID");
+    headers.append("Name");
+    headers.append("Latest update");
+    headers.append("Fee");
+    headers.append("#Changes");
+    headers.append("Debt");
+    headers.append("Profit");
+
+    QSqlQuery q;
+
+    QString s;
+
+    /*SQL QUERY EXPLANTION
+     -get CID,Name : Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC
+
+
+
+      -get changes,latest :
+
+        SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID
+
+
+
+     -these courses don't have a fee yet : Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule)
+
+
+    /* UNION Courses have have a fee and courses that dont
+    Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION
+
+    SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID
+
+    FINAL QUERY
+
+    */
+
+
+    s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID ";
+    qDebug() << s;
+
+    q.exec(s);
+
+    QList<FeeSchuleTable> fee_model;
+
+    while (q.next()) {
+        FeeSchuleTable fst;
+
+        fst.CourseID=q.value(0).toString();
+        fst.Name=q.value(1).toString();
+        fst.Changes=q.value(2).toString();
+        fst.LastUpdate=q.value(3).toString();
+        fst.Fee="0";
+        fst.Debt="0";
+        fst.Profit="0";
+
+
+        fee_model.append(fst);
+    }
+    mvc.FeeViewHeaders=headers;
+    mvc.FeeModel=fee_model;
+
+    q.finish();
+    return mvc;
 }
 
 

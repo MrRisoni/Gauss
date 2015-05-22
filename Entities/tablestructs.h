@@ -4,7 +4,7 @@
 #include <QString>
 #include <QDate>
 #include "schwierigkeit.h"
-
+#include <QStringList>
 
 // i think it is wise to create struct for each TableModel
 
@@ -32,6 +32,18 @@ struct FeeSchuleTable {
     QString Profit; //how much money have we won from that course
     QString Debt; // how much money the students have not paid us
 };
+
+
+// it may be wise to return the string headers for the table as well...
+//---------------------------------------------------------------
+struct FeeSchuleMVC {
+     QStringList FeeViewHeaders;
+     QList<FeeSchuleTable> FeeModel;
+};
+
+//---------------------------------------------------------------
+
+
 
 
 

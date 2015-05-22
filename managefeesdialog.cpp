@@ -26,32 +26,28 @@ ManageFeesDialog::~ManageFeesDialog()
 
 
 void ManageFeesDialog::populateTable() {
-    /*Show
-     * CourseID
-     * Name
-     * Latest update date
-     * fee
-     * #Number of times changes
-     * db click on row shows progression :)
-     */
-    QStringList headers;
-    headers.append("CourseID");
-    headers.append("Name");
-    headers.append("Latest update");
-    headers.append("Fee");
-    headers.append("#Changes");
+
 
     QStandardItemModel *mod= new QStandardItemModel();
-    mod->setHorizontalHeaderLabels(headers);
 
 
     ORM o=ORM();
     int r=0;
-    QList<Courses> cs=o.getSchuleCourses();
-    for (Courses c : cs) {
+
+
+
+    FeeSchuleMVC feemvc=o.getManageFeeSchuleMVC();
+      mod->setHorizontalHeaderLabels(feemvc.FeeViewHeaders);
+
+    for (FeeSchuleTable fee : feemvc.FeeModel) {
        QStandardItem *it=new QStandardItem();
-       it->setText(c.getName());
+       it->setText(fee.Name);
        mod->setItem(r,1,it);
+
+
+       QStandardItem *itID=new QStandardItem();
+       itID->setText(fee.CourseID);
+       mod->setItem(r,0,itID);
 
        r++;
     }

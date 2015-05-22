@@ -90,15 +90,10 @@ public:
     void setDb(const QSqlDatabase &value);
 
 
-    // it may be wise to return the string headers for the table as well...
-    //---------------------------------------------------------------
-    struct FeeSchuleMVC {
-         QStringList FeeViewHeaders;
-         QList<FeeSchuleTable> FeeModel;
-    };
+
+
     FeeSchuleMVC  getManageFeeSchuleMVC();
 
-    //---------------------------------------------------------------
 
 private:
     void ShowError(QSqlQuery q);
