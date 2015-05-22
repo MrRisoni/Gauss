@@ -45,7 +45,22 @@ struct FeeSchuleMVC {
 
 
 
+struct SchuleTeacher {
+    QString ProfID;
+    QString Name;
+    QString Monthy_Base_Salary;
+    QString Groups;
+    QString Hours_for_this_lesson;
+    QString Current_Groups;
+    QString End_of_Contract;
+    QString Mobile;
+};
 
+
+struct SchuleTeacherMVC {
+        QStringList SchuleTeacherViewHeaders;
+        QList<SchuleTeacher> SchuleTeacherModel;
+};
 
 #endif // TABLESTRUCTS
 

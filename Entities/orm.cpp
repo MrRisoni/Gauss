@@ -264,9 +264,70 @@ QString ORM::generateAFM() {
 }
 
 
+
+SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
+
+    SchuleTeacherMVC mvc;
+    QStringList headers;
+    headers.append("ProfID");
+    headers.append("Name");
+    headers.append("Monthy Salary");
+    headers.append("#Groups");
+    headers.append("#Hours for this lesson");
+    headers.append("#Current Groups");
+    headers.append("End of Contract");
+    headers.append("Mobile");
+
+
+    mvc.SchuleTeacherViewHeaders=headers;
+
+
+    QString s="SELECT M.MembID,M.Name From Members M,Courses C,TeachOther T WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND C.CourseName='"+ CourseName+"'";
+    qDebug() << s;
+    q.exec(s);
+
+    QList<SchuleTeacher> Lehren;
+
+    while (q.next()) {
+        SchuleTeacher daskalos;
+
+        daskalos.ProfID=q.value(0).toString();
+        daskalos.End_of_Contract=
+
+        daskalos.setTeacherID(.toInt());
+        daskalos.setName(q.value(1).toString());
+        daskalos.setSalary(0);
+        daskalos.setCurrentGroups(0);
+        daskalos.setTeachingHours(0);
+        daskalos.setEndOfContract(daskalos.calcEOC());
+
+        qDebug() << "fetched teacher " << QString::number(daskalos.getTeacherID()) << " " << daskalos.getName() << " " << daskalos.getEndOfContract().toString() << daskalos.getSalary() << daskalos.getTeachingHours() << daskalos.getCurrentGroups();
+
+
+        Lehren.append(daskalos);
+
+        qDebug() << "appended";
+
+
+    }
+    q.finish();
+
+    mvc.SchuleTeacherModel=Lehren;
+
+    return mvc;
+}
+
+
+
+
+
 QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
     QList<Teacher> Lehren;
     QSqlQuery q;
+
+
+
+
 
 
     QString s="SELECT M.MembID,M.Name From Members M,Courses C,TeachOther T WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND C.CourseName='"+ CourseName+"'";

@@ -94,6 +94,8 @@ public:
 
     FeeSchuleMVC  getManageFeeSchuleMVC();
 
+    SchuleTeacherMVC getCanTeachSchuleMVC();
+
 
 private:
     void ShowError(QSqlQuery q);

@@ -40,15 +40,26 @@ void ManageFeesDialog::populateTable() {
       mod->setHorizontalHeaderLabels(feemvc.FeeViewHeaders);
 
     for (FeeSchuleTable fee : feemvc.FeeModel) {
-       QStandardItem *it=new QStandardItem();
-       it->setText(fee.Name);
-       mod->setItem(r,1,it);
+
+        QStandardItem *itID=new QStandardItem();
+        itID->setText(fee.CourseID);
+        mod->setItem(r,0,itID);
 
 
-       QStandardItem *itID=new QStandardItem();
-       itID->setText(fee.CourseID);
-       mod->setItem(r,0,itID);
 
+        QStandardItem *it=new QStandardItem();
+        it->setText(fee.Name);
+        mod->setItem(r,1,it);
+
+
+       QStandardItem *itUpdate =new QStandardItem();
+       itUpdate->setText(fee.LastUpdate);
+       mod->setItem(r,2,itUpdate);
+
+
+       QStandardItem *itChanges =new QStandardItem();
+       itChanges->setText(fee.Changes);
+       mod->setItem(r,4,itChanges);
        r++;
     }
 

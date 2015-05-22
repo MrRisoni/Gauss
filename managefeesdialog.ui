@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Fees Dialog</string>
   </property>
   <widget class="QTabWidget" name="tabWidget">
    <property name="geometry">
@@ -57,7 +57,7 @@
       <rect>
        <x>20</x>
        <y>10</y>
-       <width>591</width>
+       <width>711</width>
        <height>391</height>
       </rect>
      </property>
