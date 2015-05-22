@@ -85,67 +85,69 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
 
 
 void CreateSchuleGroupDialog::populateTable(QString CourseName) {
-    //fetch the teachers who can teach CourseName
-    /* Show
-     ProfID
-     Name
-     Current Montly
-     #Total Groups
-     #Total hours for this lesson
-     #Current Groups
-     #Latest End of contract
-     */
-    QStringList headers;
-    headers.append("ProfID");
-    headers.append("Name");
-    headers.append("Monthy Salary");
-    headers.append("#Groups");
-    headers.append("#Hours for this lesson");
-    headers.append("#Current Groups");
-    headers.append("End of Contract");
-    headers.append("Mobile");
-
     QStandardItemModel *mod = new QStandardItemModel();
 
 
     ORM o =ORM();
-    QList<Teacher> profs= o.getCanTeachThis(CourseName);
+    SchuleTeacherMVC profs= o.getCanTeachSchuleMVC(CourseName);
 
-    qDebug () << "fetched model from db " << profs.size();
+    mod->setHorizontalHeaderLabels(profs.SchuleTeacherViewHeaders);
+
+        QString ProfID;
+        QString Name;
+        QString Monthy_Base_Salary;
+        QString Groups;
+        QString Hours_for_this_lesson;
+        QString Current_Groups;
+        QString End_of_Contract;
+        QString Mobile;
+
+
+
+
     int r=0;
-    for (Teacher p : profs) {
+    for (SchuleTeacher p : profs.SchuleTeacherModel) {
+
         QStandardItem *itID=new QStandardItem();
-        itID->setText(QString::number(p.getTeacherID()));
+        itID->setText(p.ProfID);
         mod->setItem(r,0,itID);
 
         QStandardItem *itName=new QStandardItem();
-        itName->setText(p.getName());
+        itName->setText(p.Name);
         mod->setItem(r,1,itName);
 
         QStandardItem *itSalary=new QStandardItem();
-        itSalary->setText("0");
+        itSalary->setText(p.Monthy_Base_Salary);
         mod->setItem(r,2,itSalary);
 
         QStandardItem *itGroups=new QStandardItem();
-        itGroups->setText("0");
+        itGroups->setText(p.Groups);
         mod->setItem(r,3,itGroups);
 
         QStandardItem *itHours=new QStandardItem();
-        itHours->setText("0");
+        itHours->setText(p.Hours_for_this_lesson);
         mod->setItem(r,4,itHours);
 
         QStandardItem *itCurGroups=new QStandardItem();
-        itCurGroups->setText("0");
+        itCurGroups->setText(p.Current_Groups);
         mod->setItem(r,5,itCurGroups);
 
+
+
         QStandardItem *itEOC=new QStandardItem();
-        itEOC->setText(p.getEndOfContract().toString());
+        itEOC->setText(p.End_of_Contract);
         mod->setItem(r,6,itEOC);
+
+        QStandardItem *itMobile=new QStandardItem();
+        itMobile->setText(p.Mobile);
+        mod->setItem(r,7,itMobile);
+
+
+
 
         r++;
     }
 
-    mod->setHorizontalHeaderLabels(headers);
     ui->tableTeachers->setModel(mod);
     ui->tableTeachers->resizeColumnsToContents();
 

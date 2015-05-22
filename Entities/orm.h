@@ -105,6 +105,7 @@ private:
     QString generateAFM();
     QString generatePhone();
     QString generateMobile();
+    QDate calcEOC(QString tid);
 
 
 

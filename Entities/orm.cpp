@@ -264,6 +264,20 @@ QString ORM::generateAFM() {
 }
 
 
+QDate ORM::calcEOC(QString tid) {
+    //fetch end of contract
+    QSqlQuery q;
+    q.prepare("SELECT MAX(End) FROM `Contract` WHERE TeacherID=:tid");
+    q.bindValue(":tid",tid);
+    q.exec();
+    QDate telos;
+    while (q.next()) {
+        telos=q.value(0).toDate();
+    }
+    q.finish();
+    return telos;
+}
+
 
 SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
 
@@ -281,8 +295,8 @@ SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
 
     mvc.SchuleTeacherViewHeaders=headers;
 
-
-    QString s="SELECT M.MembID,M.Name From Members M,Courses C,TeachOther T WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND C.CourseName='"+ CourseName+"'";
+    QSqlQuery q,q2;
+    QString s="SELECT M.MembID,M.Name,M.Mobile,E.EchelonID From Members M,Courses C,TeachOther T,TeachEchelon E WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND M.MembID=E.TeacherID AND C.CourseName='"+ CourseName+"'";
     qDebug() << s;
     q.exec(s);
 
@@ -292,16 +306,25 @@ SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
         SchuleTeacher daskalos;
 
         daskalos.ProfID=q.value(0).toString();
-        daskalos.End_of_Contract=
+        daskalos.Name=q.value(1).toString();
 
-        daskalos.setTeacherID(.toInt());
-        daskalos.setName(q.value(1).toString());
-        daskalos.setSalary(0);
-        daskalos.setCurrentGroups(0);
-        daskalos.setTeachingHours(0);
-        daskalos.setEndOfContract(daskalos.calcEOC());
+        QString echelid=q.value(3).toString();
 
-        qDebug() << "fetched teacher " << QString::number(daskalos.getTeacherID()) << " " << daskalos.getName() << " " << daskalos.getEndOfContract().toString() << daskalos.getSalary() << daskalos.getTeachingHours() << daskalos.getCurrentGroups();
+        daskalos.Current_Groups="0";
+        daskalos.Hours_for_this_lesson="0";
+        daskalos.Groups="0";
+        daskalos.End_of_Contract=calcEOC(q.value(0).toString()).toString();
+        daskalos.Mobile=q.value(2).toString();
+
+        //needs a fix
+
+        q2.prepare("Select Wages From BaseWages Where EchelID=:echelid AND Dat in (Select MAx(Dat) From BaseWages Where EchelID=:echelid)");
+        q2.bindValue(":echelid",echelid);
+        q2.exec();
+        while (q2.next()) {
+            daskalos.Monthy_Base_Salary=q2.value(0).toString();
+        }
+
 
 
         Lehren.append(daskalos);
@@ -312,6 +335,7 @@ SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
     }
     q.finish();
 
+    q2.finish();
     mvc.SchuleTeacherModel=Lehren;
 
     return mvc;

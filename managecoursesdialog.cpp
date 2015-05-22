@@ -111,8 +111,10 @@ void ManageCoursesDialog::populateTable() {
 
     QList<ManageCourseTable>  tblk = o.getManageCourseTable();
 
+
     int row=0;
     for (ManageCourseTable cour : tblk) {
+
 
         QStandardItem *itCID= new QStandardItem();
         itCID->setText(QString::number(cour.CourseID));
