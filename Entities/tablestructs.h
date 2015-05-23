@@ -70,6 +70,8 @@ struct InstitutModel {
   QString NumTeachers;
   QString NumStudents;
   QString NumGroups;
+  QList<QString> Diplomas; // a list of available diplomas!!!!
+
   
 };
 
@@ -89,6 +91,7 @@ struct LanguageModel {
   QString NumTeachers;
   QString NumStudents;
   QString SuccessRate; //success final exam rate :)
+  QList<QString> Diplomas; // a list of available diplomas!!!!
   
 };
 
@@ -165,13 +168,13 @@ struct KasseModel {
 struct KassenMVC {
   QStringList headers;
   QList<KasseModel> KasseView;
-}
+};
 
 //End KassenDialog
 
 
 //ManageDepsDialog
-QString ManageDepsModel {
+struct ManageDepsModel {
   QString DepID;
   QString Name;
   QString NumTeachers; // how many teacher can teach at least one course from that Department
