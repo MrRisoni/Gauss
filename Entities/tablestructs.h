@@ -8,7 +8,6 @@
 
 // i think it is wise to create struct for each TableModel
 
-
 struct ManageCourseTable {
     int CourseID;
     QString CourseName;
@@ -61,6 +60,151 @@ struct SchuleTeacherMVC {
         QStringList SchuleTeacherViewHeaders;
         QList<SchuleTeacher> SchuleTeacherModel;
 };
+
+
+//AddInstitutDialog
+struct InstitutModel {
+  QString InstitID;
+  QString InsName;
+  QString NumDiplomas;
+  QString NumTeachers;
+  QString NumStudents;
+  QString NumGroups;
+  
+};
+
+struct AddInstitutDialogMVC  {
+  QStringList headers;
+  QList<InstitutModel> InstitutView;
+};
+// End AddInstitutDialog
+
+
+//AddLanguageDialog
+struct LanguageModel {
+  QString LangID;
+  QString Name;
+  QString NumInstituts;
+  QString NumDiplomas;
+  QString NumTeachers;
+  QString NumStudents;
+  QString SuccessRate; //success final exam rate :)
+  
+};
+
+struct AddLanguageDialogMVC {
+  QStringList headers;
+  QList<LanguageModel> LanguageView;
+};
+//End AddLanguageDialog
+
+
+//AddNewSchwerDialog
+struct SchwerModel {
+  QString SchwerID;
+  QString NumCourses;
+  QString red;
+  QString green;
+  QString blue;
+};
+
+struct AddSchwerDialogMVC {
+  QStringList headers;
+  QList<SchwerModel> SchwerView;  
+};
+//End AddNewSchwerDialog
+
+
+
+struct UniTeacher {
+    QString ProfID;
+    QString Name;
+    QString Monthy_Base_Salary;
+    QString Groups;
+    QString Hours_for_this_lesson;
+    QString Current_Groups;
+    QString End_of_Contract;
+    QString Mobile;
+};
+
+
+struct UniTeacherMVC {
+        QStringList headers;
+        QList<UniTeacher> UniTeacherView;
+};
+
+
+
+struct SpracheTeacher {
+    QString ProfID;
+    QString Name;
+    QString Monthy_Base_Salary;
+    QString Groups;
+    QString Hours_for_this_lesson;
+    QString Current_Groups;
+    QString End_of_Contract;
+    QString Mobile;
+};
+
+
+struct SpracheTeacherMVC {
+        QStringList headers;
+        QList<SpracheTeacher> SpracheTeacherView;
+};
+
+//Kassen KassenDialog
+struct KasseModel {
+  QString ID;
+  QString Name;
+  QString NumTeachers;
+  QString Pays; // how much money have we payed in total
+  QString Debt; //how much money do we owe :(
+
+};
+
+struct KassenMVC {
+  QStringList headers;
+  QList<KasseModel> KasseView;
+}
+
+//End KassenDialog
+
+
+//ManageDepsDialog
+QString ManageDepsModel {
+  QString DepID;
+  QString Name;
+  QString NumTeachers; // how many teacher can teach at least one course from that Department
+  QString NumCourses;
+  QString Groups;
+  QString Students;
+  
+};
+
+struct ManageDepsDialogMVC {
+  QStringList headers;
+  QList<ManageDepsModel> ManageDepsView;
+  
+};
+//End ManageDepsDialog
+
+
+struct EchelonModel {
+  QString EchelID;
+  QString Xp;
+  QString NumTeachers;
+};
+
+
+struct EchelonMVC {
+  QStringList headers;
+  QList<EchelonModel> EchelonView;
+};
+
+
+
+
+
 
 #endif // TABLESTRUCTS
 
