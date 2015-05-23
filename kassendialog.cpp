@@ -49,3 +49,8 @@ void KassenDialog::on_pushSave_clicked()
     o.save(K);
 
 }
+
+void KassenDialog::on_tableKassen_doubleClicked(const QModelIndex &index)
+{
+    //show a diagram of how much we have payed wrt time
+}

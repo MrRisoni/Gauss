@@ -71,3 +71,9 @@ void AddNewDiplomaDialog::on_pushSave_clicked()
         O.save(D);
     }
 }
+
+void AddNewDiplomaDialog::on_tableDiplomas_doubleClicked(const QModelIndex &index)
+{
+    //show the success rate and failure rate so far for that diploma
+
+}

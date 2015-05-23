@@ -90,7 +90,7 @@ struct LanguageModel {
   QString NumDiplomas;
   QString NumTeachers;
   QString NumStudents;
-  QString SuccessRate; //success final exam rate :)
+  QString SuccessRate; // total success final exam rate for all diplomas :)
   QList<QString> Diplomas; // a list of available diplomas!!!!
   
 };
@@ -206,7 +206,20 @@ struct EchelonMVC {
 
 
 
+struct DiplomaModel {
+  QString DiploID;
+  QString Name;
+  QString Institut;
+  QString NumTeachers;
+  QString NumStudents;
+  QString SuccessRate; // success final exam rate :)
+  QString SchwerID;
+};
 
+struct DiplomaModelMVC {
+  QStringList headers;
+  QList<DiplomaModel> DiplomaView;
+};
 
 
 #endif // TABLESTRUCTS

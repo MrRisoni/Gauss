@@ -91,7 +91,8 @@ SOURCES += main.cpp\
     Entities/student.cpp \
     qcustomplot.cpp \
     plotdialog.cpp \
-    objektdelegate.cpp
+    objektdelegate.cpp \
+    Business_Intelligence/exportutils.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -174,7 +175,8 @@ HEADERS  += mainwindow.h \
     Entities/tablestructs.h \
     qcustomplot.h \
     plotdialog.h \
-    objektdelegate.h
+    objektdelegate.h \
+    Business_Intelligence/exportutils.h
 
 
 FORMS    += mainwindow.ui \

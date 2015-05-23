@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushSave_clicked();
 
+    void on_tableDiplomas_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::AddNewDiplomaDialog *ui;
 };

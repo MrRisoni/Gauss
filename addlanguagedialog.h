@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushAddSprache_clicked();
 
+    void on_tableSprachen_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::AddLanguageDialog *ui;
 };

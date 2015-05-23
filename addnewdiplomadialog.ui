@@ -6,117 +6,166 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>481</width>
-    <height>296</height>
+    <width>630</width>
+    <height>513</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Add New Diploma Dialog</string>
+   <string>Manage Diplomas</string>
   </property>
-  <widget class="QLabel" name="label">
+  <widget class="QToolBox" name="toolBox">
    <property name="geometry">
     <rect>
-     <x>20</x>
-     <y>30</y>
-     <width>121</width>
-     <height>41</height>
+     <x>10</x>
+     <y>20</y>
+     <width>601</width>
+     <height>461</height>
     </rect>
    </property>
-   <property name="text">
-    <string>Name</string>
+   <property name="currentIndex">
+    <number>0</number>
    </property>
-  </widget>
-  <widget class="QLabel" name="label_2">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>80</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Language</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_3">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>120</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Institut</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="label_4">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>160</y>
-     <width>121</width>
-     <height>41</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Schwer</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="lineDiploma">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>40</y>
-     <width>301</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboSprache">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>90</y>
-     <width>301</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboInstitut">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>130</y>
-     <width>301</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboSchwer">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>170</y>
-     <width>301</width>
-     <height>23</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="pushSave">
-   <property name="geometry">
-    <rect>
-     <x>350</x>
-     <y>230</y>
-     <width>82</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Add</string>
-   </property>
+   <widget class="QWidget" name="page">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>601</width>
+      <height>403</height>
+     </rect>
+    </property>
+    <attribute name="label">
+     <string>View Diplomas</string>
+    </attribute>
+    <widget class="QTableView" name="tableDiplomas">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>561</width>
+       <height>371</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>601</width>
+      <height>403</height>
+     </rect>
+    </property>
+    <attribute name="label">
+     <string>Add Diploma</string>
+    </attribute>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>70</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Language</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>150</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Schwer</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineDiploma">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>30</y>
+       <width>301</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboSprache">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>80</y>
+       <width>301</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboSchwer">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>160</y>
+       <width>301</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QComboBox" name="comboInstitut">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>120</y>
+       <width>301</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushSave">
+     <property name="geometry">
+      <rect>
+       <x>350</x>
+       <y>220</y>
+       <width>82</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Institut</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>121</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
