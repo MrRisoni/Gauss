@@ -19,6 +19,109 @@ ORM::~ORM()
 
 }
 
+void  ORM::save(Diplomas d) {
+    QSqlQuery q;
+    try {
+
+        qDebug() << "saving diploma...";
+        int lid=0,pid=0;
+
+
+        q.prepare("SELECT LangID From Languages Where Name=:nm");
+        q.bindValue(":nm",d.getLanguage());
+        q.exec();
+
+        while (q.next()) {
+            lid = q.value(0).toInt();
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        if (lid<=0) {
+            throw 10;
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        q.prepare("SELECT InstID FROM Instituts Where Name=:nm");
+        q.bindValue(":nm",d.getInstitutName());
+        q.exec();
+
+        while (q.next()) {
+            pid = q.value(0).toInt();
+        }
+
+        qDebug() << "providerIDD " << pid << " " << d.getInstitutName();
+
+
+        q.prepare("INSERT INTO `Diplomas` (`LangID`, `ProvID`, `Name`, `Schwer`) VALUES (:lid,:pid,:name,:schwid)");
+        q.bindValue(":lid",lid);
+        q.bindValue(":pid",pid);
+        q.bindValue(":name",d.getName());
+        q.bindValue(":schwid",d.getSchwerID());
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+
+        ShowSuccess();
+    }
+
+    catch (int ex) {
+        ShowError(q);
+
+    }
+    q.finish();
+}
+
+
+
+AddInstitutDialogMVC  ORM::getAddInstitutMVC() {
+    AddInstitutDialogMVC mvc;
+    QSqlQuery q;
+
+    mvc.headers.append("InstitutID");
+    mvc.headers.append("name");
+    mvc.headers.append("# Diplomas");
+    mvc.headers.append("# Teachers");
+    mvc.headers.append("# Students");
+    mvc.headers.append("# Groups");
+    mvc.headers.append("Diplos");
+
+    QList<InstitutModel> InsList;
+
+
+    q.exec("SELECT * FROM Instituts ");
+    while (q.next()) {
+        InstitutModel mod;
+
+        mod.InstitID=q.value(0).toString();
+        mod.InsName=q.value(1).toString();
+
+        mod.NumDiplomas="0";
+        mod.NumGroups="0";
+        mod.NumStudents="0";
+        mod.NumTeachers="0";
+
+        QList<QString> diplos;
+
+        //fetch available diplomas from db;
+        QSqlQuery q2;
+        q2.exec("SELECT Name FROM DIPLOMAS Where ProvID='"+ mod.InstitID+"'");
+        while (q2.next()) {
+            diplos.append(q2.value(0).toString());
+        }
+        mod.Diplomas=diplos;
+        InsList.append(mod);
+    }
+
+
+    mvc.InstitutView=InsList;
+
+    q.finish();
+    return mvc;
+}
 
 
 
@@ -871,7 +974,8 @@ void ORM::ShowError(QSqlQuery q) {
     QMessageBox msgBox;
     msgBox.setText(q.lastError().text());
     msgBox.setStandardButtons(QMessageBox::Ok);
-    msgBox.setIcon(QMessageBox::Warning);
+    msgBox.setIcon( QMessageBox::Critical);
+
     int ret = msgBox.exec();
     q.finish();
 }

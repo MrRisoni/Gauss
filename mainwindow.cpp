@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionTest_Plot,SIGNAL(triggered()),this,SLOT(showTestPlot()));
     connect(ui->actionMachine_Learning,SIGNAL(triggered()),this,SLOT(MachLearn()));
+    connect(ui->actionManage_Instituts,SIGNAL(triggered()),this,SLOT(manageInstituts()));
+    connect(ui->actionManage_Langugages,SIGNAL(triggered()),this,SLOT(manageLanguages()));
+    connect(ui->actionManage_Diplomas,SIGNAL(triggered()),this,SLOT(manageDiplomas()));
 }
 
 MainWindow::~MainWindow()
@@ -41,12 +44,31 @@ QSqlDatabase MainWindow::getDb() const
 }
 
 
+void MainWindow::manageDiplomas(){
+    AddNewDiplomaDialog *diplo = new AddNewDiplomaDialog();
+    diplo->setAttribute(Qt::WA_DeleteOnClose);
+    diplo->show();
+}
+
+
+void MainWindow::manageLanguages() {
+    AddLanguageDialog *addLang = new AddLanguageDialog();
+    addLang->setAttribute(Qt::WA_DeleteOnClose);
+    addLang->show();
+}
 
 void MainWindow::MachLearn() {
 
 std::string filename = "python2 /home/linguine/Gauss/Business_Intelligence/test.py";
 
 system(filename.c_str());
+}
+
+
+void MainWindow::manageInstituts() {
+    AddInstitutDialog *instdial = new AddInstitutDialog();
+    instdial->setAttribute(Qt::WA_DeleteOnClose);
+    instdial->show();
 }
 
 void MainWindow::showTestPlot() {

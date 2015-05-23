@@ -134,6 +134,7 @@
     <addaction name="actionManage_Instituts"/>
     <addaction name="actionManage_Langugages"/>
     <addaction name="actionManage_Kassen"/>
+    <addaction name="actionManage_Diplomas"/>
    </widget>
    <widget class="QMenu" name="menuStatistics">
     <property name="title">
@@ -275,6 +276,11 @@
   <action name="actionMachine_Learning">
    <property name="text">
     <string>Machine Learning</string>
+   </property>
+  </action>
+  <action name="actionManage_Diplomas">
+   <property name="text">
+    <string>Manage Diplomas</string>
    </property>
   </action>
  </widget>

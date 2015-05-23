@@ -15,18 +15,6 @@ AddLanguageDialog::~AddLanguageDialog()
 
 
 
-/* TO DO
-  Language
-  Instituts
-  #Teachers
-  #Total Groups
-  #Total Active Groups
-  #Total Students
-  #Diplomas ( ComboBox???)
-
-}
- */
-
 void AddLanguageDialog::on_pushAddSprache_clicked()
 {
 

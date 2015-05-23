@@ -53,6 +53,7 @@ public:
     void saveUni(Groups g);
     void saveSprache(Groups g);
     void saveSchuleStudent(Members m);
+    void save(Diplomas d);
 
 
     // get TableModels code
@@ -93,9 +94,19 @@ public:
 
 
 
+
+    //  MVC
+
     FeeSchuleMVC  getManageFeeSchuleMVC();
 
     SchuleTeacherMVC getCanTeachSchuleMVC(QString CourseName);
+
+    AddInstitutDialogMVC  getAddInstitutMVC();
+
+
+
+
+
 
 
 private:

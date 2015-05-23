@@ -15,6 +15,9 @@ public:
     explicit AddNewDiplomaDialog(QWidget *parent = 0);
     ~AddNewDiplomaDialog();
 
+private slots:
+    void on_pushSave_clicked();
+
 private:
     Ui::AddNewDiplomaDialog *ui;
 };

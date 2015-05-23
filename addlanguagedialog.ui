@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>SpracheDialog</string>
   </property>
   <widget class="QTableView" name="tableSprachen">
    <property name="geometry">
@@ -21,6 +21,15 @@
      <width>561</width>
      <height>361</height>
     </rect>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>true</bool>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
    </property>
   </widget>
   <widget class="QPushButton" name="pushAddSprache">
