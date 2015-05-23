@@ -18,10 +18,22 @@ public:
     QString getName() const;
     void setName(const QString &value);
 
+    QString getLanguage() const;
+    void setLanguage(const QString &value);
+
+    QString getInstitutName() const;
+    void setInstitutName(const QString &value);
+
+    QString getSchwerID() const;
+    void setSchwerID(const QString &value);
+
 private:
-    int langID;
+    QString Language;
     int Active;
+    QString InstitutName;
     QString Name;
+    QString SchwerID;
+
 
 };
 

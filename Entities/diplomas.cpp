@@ -31,6 +31,36 @@ void Diplomas::setName(const QString &value)
 {
     Name = value;
 }
+QString Diplomas::getLanguage() const
+{
+    return Language;
+}
+
+void Diplomas::setLanguage(const QString &value)
+{
+    Language = value;
+}
+QString Diplomas::getInstitutName() const
+{
+    return InstitutName;
+}
+
+void Diplomas::setInstitutName(const QString &value)
+{
+    InstitutName = value;
+}
+QString Diplomas::getSchwerID() const
+{
+    return SchwerID;
+}
+
+void Diplomas::setSchwerID(const QString &value)
+{
+    SchwerID = value;
+}
+
+
+
 
 
 
