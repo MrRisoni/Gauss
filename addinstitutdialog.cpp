@@ -19,7 +19,7 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
     ORM o=ORM();
     AddInstitutDialogMVC mvc=o.getAddInstitutMVC();
 
-    QStandardItemModel *model=new QStandardItemModel();
+    QStandardItemModel *model=new QStandardItemModel(this);
 
 
     model->setHorizontalHeaderLabels(mvc.headers);
@@ -54,22 +54,6 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
 
 
 
-        //add a combo box
-        ObjektDelegate *cib=new ObjektDelegate();
-
-        QComboBox *box=new QComboBox();
-        box->addItem("dfdfdf");
-        box->addItem("dfdfdfdfdfddf");
-        box->addItem("dfdfdfddfdf");
-        box->addItem("ddfdf");
-
-        QModelIndex inx = model->index(r,6);
-
-
-
-        cib->setModelData(box,model,inx);
-
-
 
 
         r++;
@@ -77,6 +61,17 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
 
     ui->tableInstituts->setModel(model);
     ui->tableInstituts->resizeColumnsToContents();
+
+
+    //add a combo box
+
+    ObjektDelegate *cib=new ObjektDelegate(this);
+    ui->tableInstituts->setItemDelegateForColumn(6,cib);
+
+
+    ui->tableInstituts->resizeColumnsToContents();
+
+
 }
 
 AddInstitutDialog::~AddInstitutDialog()
