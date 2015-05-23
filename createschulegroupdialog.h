@@ -34,7 +34,6 @@ private:
     void populateStudentsTable(QString CourseName);
     QStandardItemModel *GroupModel;
     int RowAll=0;
-    int RowGroup=-1;
 
 };
 

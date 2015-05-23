@@ -137,32 +137,14 @@
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
     </widget>
-    <widget class="QTableView" name="tableGroup">
+    <widget class="QListWidget" name="listGroup">
      <property name="geometry">
       <rect>
-       <x>440</x>
+       <x>450</x>
        <y>20</y>
-       <width>321</width>
+       <width>201</width>
        <height>361</height>
       </rect>
-     </property>
-     <property name="editTriggers">
-      <set>QAbstractItemView::NoEditTriggers</set>
-     </property>
-     <property name="dragDropMode">
-      <enum>QAbstractItemView::DropOnly</enum>
-     </property>
-     <property name="defaultDropAction">
-      <enum>Qt::CopyAction</enum>
-     </property>
-     <property name="alternatingRowColors">
-      <bool>true</bool>
-     </property>
-     <property name="selectionMode">
-      <enum>QAbstractItemView::SingleSelection</enum>
-     </property>
-     <property name="selectionBehavior">
-      <enum>QAbstractItemView::SelectRows</enum>
      </property>
     </widget>
    </widget>

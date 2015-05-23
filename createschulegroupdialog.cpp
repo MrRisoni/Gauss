@@ -46,13 +46,11 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
 
 
 
-    modelo=ui->tableGroup->model();
-    delete modelo;
+
 
 
     qDebug() << "populating Students table";
     RowAll=0;
-    RowGroup=0;
     /*Show
      * StudentID
      * ADT
@@ -63,11 +61,9 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
     headers.append("Name");
 
     QStandardItemModel *AllModel = new QStandardItemModel();
-    QStandardItemModel *GroupModel=new QStandardItemModel();
 
 
     AllModel->setHorizontalHeaderLabels(headers);
-    GroupModel->setHorizontalHeaderLabels(headers);
 
     ORM o=ORM();
     QList<Members> mathites = o.getRequestsSchule(ui->comboCourse->currentText());
@@ -101,11 +97,6 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
     QAbstractItemModel *modelo = ui->tableTeachers->model();
     delete modelo;
 
-    modelo=ui->tableAll->model();
-    delete modelo;
-
-    modelo=ui->tableGroup->model();
-    delete modelo;
 
 
     QStandardItemModel *mod = new QStandardItemModel();
@@ -175,8 +166,7 @@ CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
     mod=ui->tableAll->model();
     delete mod;
 
-    mod=ui->tableGroup->model();
-    delete mod;
+
 
 
     delete ui;
@@ -203,24 +193,28 @@ void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
 
 
 
-        RowGroup++;
-        QStandardItem *itID= new QStandardItem();
+        QListWidgetItem *it=new QListWidgetItem();
 
         //get the ID
         QAbstractItemModel* model = ui->tableAll->model();
          QModelIndex idex =  model->index(inx.row(), 0);
 
 
-        itID->setText(ui->tableAll->model()->data(idex).toString());
-        GroupModel->setItem(RowGroup,0,itID);
+         //check for duplicates
+         QString new_studentID=ui->tableAll->model()->data(idex).toString();
+         bool found=false;
 
-        //get the Name
-        idex =  model->index(inx.row(), 1);
+         for (int q=0;q<ui->listGroup->count();q++) {
+                 QListWidgetItem* itm = ui->listGroup->item(q);
+                 if (itm->text()==new_studentID) {
+                     found = true;
+                 }
+        }
+        if (found==false) {
+            ui->listGroup->addItem(new_studentID);
+            }
 
 
-        QStandardItem *itName= new QStandardItem();
-        itName->setText(ui->tableAll->model()->data(idex).toString());
-        GroupModel->setItem(RowGroup,1,itName);
 
 
    }
@@ -229,11 +223,7 @@ void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
 
 
 
-    ui->tableGroup->setModel(GroupModel);
 
-    ui->tableGroup->resizeColumnsToContents();
-
-    //remove selected items from tableAll:)
 
 
 
@@ -248,8 +238,7 @@ void CreateSchuleGroupDialog::on_pushRemoveFromGroup_clicked()
 
 void CreateSchuleGroupDialog::on_pushClear_clicked()
 {
-    QAbstractItemModel *mod = ui->tableGroup->model();
-    delete mod;
+   ui->listGroup->clear();
 
 
 
