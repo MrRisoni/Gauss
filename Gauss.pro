@@ -6,7 +6,7 @@
 
 QT       += core gui sql
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 TARGET = Gauss
 TEMPLATE = app
@@ -88,7 +88,9 @@ SOURCES += main.cpp\
     Entities/paykassen.cpp \
     raumedialog.cpp \
     managefeesdialog.cpp \
-    Entities/student.cpp
+    Entities/student.cpp \
+    qcustomplot.cpp \
+    plotdialog.cpp
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -167,7 +169,9 @@ HEADERS  += mainwindow.h \
     managefeesdialog.h \
     Entities/student.h \
     Entities/ontotites.h \
-    Entities/tablestructs.h
+    Entities/tablestructs.h \
+    qcustomplot.h \
+    plotdialog.h
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \
@@ -191,7 +195,8 @@ FORMS    += mainwindow.ui \
     kassendialog.ui \
     absentbuchdialog.ui \
     raumedialog.ui \
-    managefeesdialog.ui
+    managefeesdialog.ui \
+    plotdialog.ui
 
     
 CONFIG +=   c++11
