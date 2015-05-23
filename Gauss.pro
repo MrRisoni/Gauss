@@ -90,7 +90,9 @@ SOURCES += main.cpp\
     managefeesdialog.cpp \
     Entities/student.cpp \
     qcustomplot.cpp \
-    plotdialog.cpp
+    plotdialog.cpp \
+    objektdelegate.cpp
+
 
 HEADERS  += mainwindow.h \
     addinstitutdialog.h \
@@ -171,7 +173,9 @@ HEADERS  += mainwindow.h \
     Entities/ontotites.h \
     Entities/tablestructs.h \
     qcustomplot.h \
-    plotdialog.h
+    plotdialog.h \
+    objektdelegate.h
+
 
 FORMS    += mainwindow.ui \
     addinstitutdialog.ui \

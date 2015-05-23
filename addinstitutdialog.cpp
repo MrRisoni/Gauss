@@ -5,6 +5,8 @@
 
 #include "Entities/orm.h"
 #include <QStandardItemModel>
+#include "objektdelegate.h"
+#include <QAbstractItemDelegate>
 
 
 AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
@@ -53,9 +55,22 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
 
 
         //add a combo box
-        QStandardItem *itDiploCombo = new QStandardItem();
-        itDiploCombo->setText(view.NumGroups);
-        model->setItem(r,6,itDiploCombo);
+        ObjektDelegate *cib=new ObjektDelegate();
+
+        QComboBox *box=new QComboBox();
+        box->addItem("dfdfdf");
+        box->addItem("dfdfdfdfdfddf");
+        box->addItem("dfdfdfddfdf");
+        box->addItem("ddfdf");
+
+        QModelIndex inx = model->index(r,6);
+
+
+
+        cib->setModelData(box,model,inx);
+
+
+
 
         r++;
     }
