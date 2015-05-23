@@ -19,6 +19,7 @@
 #include "createunidialog.h"
 #include "managefeesdialog.h"
 #include "viewteacherdialog.h"
+#include "plotdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -54,6 +55,8 @@ private slots:
     void createschule();
     void manageFees();
     void showTeacher();
+    void showTestPlot();
+    void MachLearn();
 };
 
 #endif // MAINWINDOW_H

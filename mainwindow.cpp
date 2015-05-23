@@ -27,6 +27,8 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionShow_Teacher,SIGNAL(triggered()),this,SLOT(showTeacher()));
 
 
+    connect(ui->actionTest_Plot,SIGNAL(triggered()),this,SLOT(showTestPlot()));
+    connect(ui->actionMachine_Learning,SIGNAL(triggered()),this,SLOT(MachLearn()));
 }
 
 MainWindow::~MainWindow()
@@ -36,6 +38,21 @@ MainWindow::~MainWindow()
 QSqlDatabase MainWindow::getDb() const
 {
     return db;
+}
+
+
+
+void MainWindow::MachLearn() {
+
+std::string filename = "python2 /home/linguine/Gauss/Business_Intelligence/test.py";
+
+system(filename.c_str());
+}
+
+void MainWindow::showTestPlot() {
+    PlotDialog *plotdial= new PlotDialog();
+    plotdial->setAttribute(Qt::WA_DeleteOnClose);
+    plotdial->show();
 }
 
 void MainWindow::setDb(const QSqlDatabase &value)

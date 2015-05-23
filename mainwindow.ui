@@ -139,6 +139,8 @@
     <property name="title">
      <string>Statistics</string>
     </property>
+    <addaction name="actionTest_Plot"/>
+    <addaction name="actionMachine_Learning"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -263,6 +265,16 @@
   <action name="actionShow_Teacher">
    <property name="text">
     <string>Show Teacher</string>
+   </property>
+  </action>
+  <action name="actionTest_Plot">
+   <property name="text">
+    <string>test Plot</string>
+   </property>
+  </action>
+  <action name="actionMachine_Learning">
+   <property name="text">
+    <string>Machine Learning</string>
    </property>
   </action>
  </widget>
