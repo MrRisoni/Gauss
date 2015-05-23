@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Student Dialog</string>
   </property>
   <widget class="QLabel" name="label_6">
    <property name="geometry">
@@ -75,7 +75,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>Department</string>
+    <string>School</string>
    </property>
   </widget>
   <widget class="QLineEdit" name="lineMName">
@@ -177,16 +177,6 @@
      <y>229</y>
      <width>181</width>
      <height>21</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QComboBox" name="comboDep">
-   <property name="geometry">
-    <rect>
-     <x>120</x>
-     <y>309</y>
-     <width>351</width>
-     <height>23</height>
     </rect>
    </property>
   </widget>
@@ -318,6 +308,19 @@
      <width>121</width>
      <height>21</height>
     </rect>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="checkSchule">
+   <property name="geometry">
+    <rect>
+     <x>120</x>
+     <y>310</y>
+     <width>251</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Schule Student?</string>
    </property>
   </widget>
  </widget>

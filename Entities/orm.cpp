@@ -19,6 +19,9 @@ ORM::~ORM()
 
 }
 
+
+
+
 Teacher ORM::searchteacherByname(QString name) {
     Teacher L;
     QSqlQuery q;
@@ -1225,6 +1228,78 @@ void ORM::save(WagesSchule WGS) {
 }
 
 
+void ORM::saveSchule(Groups g) {
+    QSqlQuery q;
+
+    try {
+
+        qDebug() << "attempting to save schule group";
+        int CID=-1;
+        //query for courseID
+        q.prepare("SELECT CourseID FROM Courses WHERE CourseName=:name AND DepID=1");
+        q.bindValue(":name",g.getCourseName());
+        q.exec();
+        while (q.next()) {
+            CID=q.value(0).toInt();
+        }
+
+        if (CID<=0) {
+            throw 10;
+        }
+
+
+        q.prepare("INSERT INTO `Groups`  (`TeacherID`, `CourseID`, `StartDate`) VALUES (:tid,:cid,:sdat)");
+        q.bindValue(":tid",g.getTeacherID());
+        q.bindValue(":cid",CID);
+        q.bindValue(":sdat",g.getStartDate());
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+        int GroupID;
+        q.exec("SELECT MAX(GroupID) FROM Groups");
+        while (q.next()) {
+            GroupID=q.value(0).toInt();
+        }
+
+
+        if (GroupID<=0) {
+            throw 10;
+        }
+
+        for (QString SID : g.getMeliID()) {
+            q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`) VALUES (:gid,:sid)");
+            q.bindValue(":gid",GroupID);
+            q.bindValue(":sid",SID);
+
+            if (!q.exec()) {
+                throw 10;
+            }
+            //set Request Setted= 1
+
+            qDebug() << "deleting request for " << SID;
+            QString s="UPDATE `RequestSchule` SET `Settled`=1  WHERE CourseID='"+ QString::number(CID)+"' AND StudentID='"+ SID+"' ";
+            qDebug() << s;
+            q.exec(s);
+
+
+            if (!q.exec()) {
+                throw 10;
+            }
+        }
+
+
+        ShowSuccess();
+    }
+    catch (int ex) {
+        ShowError(q);
+
+    }
+
+    q.finish();
+
+}
 
 
 void ORM::save(BaseWages BW) {
@@ -1259,11 +1334,15 @@ void ORM::save(BaseWages BW) {
 }
 
 
-void ORM::saveStudent(Members m) {
+void ORM::saveSchuleStudent(Members m) {
     QSqlQuery q;
     try {
 
-        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'1',:rdate,:bdate,'0','0')");
+        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'2',:rdate,:bdate,'0','0',:adt)");
+
+
+
+
 
 
         qDebug() << "name " << m.getName();
@@ -1272,12 +1351,56 @@ void ORM::saveStudent(Members m) {
         q.bindValue(":fname",m.getFName());
         q.bindValue(":mname",m.getMName());
         q.bindValue(":adres",m.getAddress());
-        q.bindValue(":phone",m.getPhone());
-        q.bindValue(":mobile",m.getMobile());
+        q.bindValue(":phone",generatePhone());
+        q.bindValue(":mobile",generateMobile());
         q.bindValue(":email",m.getEmail());
         q.bindValue(":rdate",m.getRegDate());
         q.bindValue(":bdate",m.getBirthDate());
+        q.bindValue(":adt",generateADT());
+        q.exec();
 
+        ShowSuccess();
+
+    }
+    catch (exception& ex) {
+
+
+        qDebug() << "Error " << ex.what() ;
+
+        ShowError(q);
+    }
+
+
+    q.finish();
+
+
+}
+
+
+
+void ORM::saveStudent(Members m) {
+    QSqlQuery q;
+    try {
+
+        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'1',:rdate,:bdate,'0','0',:adt)");
+
+
+
+
+
+
+        qDebug() << "name " << m.getName();
+        q.bindValue(":name",m.getName());
+
+        q.bindValue(":fname",m.getFName());
+        q.bindValue(":mname",m.getMName());
+        q.bindValue(":adres",m.getAddress());
+        q.bindValue(":phone",generatePhone());
+        q.bindValue(":mobile",generateMobile());
+        q.bindValue(":email",m.getEmail());
+        q.bindValue(":rdate",m.getRegDate());
+        q.bindValue(":bdate",m.getBirthDate());
+        q.bindValue(":adt",generateADT());
         q.exec();
 
         ShowSuccess();

@@ -32,7 +32,7 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
 
 
 
-   GroupModel= new  QStandardItemModel();
+    GroupModel= new  QStandardItemModel();
 
 
 }
@@ -197,27 +197,27 @@ void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
 
         //get the ID
         QAbstractItemModel* model = ui->tableAll->model();
-         QModelIndex idex =  model->index(inx.row(), 0);
+        QModelIndex idex =  model->index(inx.row(), 0);
 
 
-         //check for duplicates
-         QString new_studentID=ui->tableAll->model()->data(idex).toString();
-         bool found=false;
+        //check for duplicates
+        QString new_studentID=ui->tableAll->model()->data(idex).toString();
+        bool found=false;
 
-         for (int q=0;q<ui->listGroup->count();q++) {
-                 QListWidgetItem* itm = ui->listGroup->item(q);
-                 if (itm->text()==new_studentID) {
-                     found = true;
-                 }
+        for (int q=0;q<ui->listGroup->count();q++) {
+            QListWidgetItem* itm = ui->listGroup->item(q);
+            if (itm->text()==new_studentID) {
+                found = true;
+            }
         }
         if (found==false) {
             ui->listGroup->addItem(new_studentID);
-            }
+        }
 
 
 
 
-   }
+    }
 
 
 
@@ -238,8 +238,46 @@ void CreateSchuleGroupDialog::on_pushRemoveFromGroup_clicked()
 
 void CreateSchuleGroupDialog::on_pushClear_clicked()
 {
-   ui->listGroup->clear();
+    ui->listGroup->clear();
 
 
+
+}
+
+void CreateSchuleGroupDialog::on_pushOK_clicked()
+{
+    Groups G=Groups();
+    G.setActive(1);
+    G.setCourseName(ui->comboCourse->currentText());
+    QList<QString> meliid;
+
+    for (int q=0;q<ui->listGroup->count();q++) {
+        QListWidgetItem* itm = ui->listGroup->item(q);
+        meliid.append(itm->text());
+        qDebug() << "studentID " << itm->text();
+    }
+
+    G.setMeliID(meliid);
+    G.setStartDate(QDate::currentDate());
+    //get selection from Qtable View
+
+
+    QModelIndexList indexList =  ui->tableTeachers->selectionModel()->selectedRows();
+    for (QModelIndex inx : indexList) {
+
+
+        //get the ID
+        QAbstractItemModel* model = ui->tableTeachers->model();
+        QModelIndex idex =  model->index(inx.row(), 0);
+        QString teacherID=ui->tableTeachers->model()->data(idex).toString();
+        G.setTeacherID(teacherID);
+        qDebug() << "teacherID " << teacherID;
+    }
+
+
+
+
+    ORM o= ORM();
+    o.saveSchule(G);
 
 }

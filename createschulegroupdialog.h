@@ -28,6 +28,8 @@ private slots:
 
     void on_pushClear_clicked();
 
+    void on_pushOK_clicked();
+
 private:
     Ui::CreateSchuleGroupDialog *ui;
     void populateTable(QString CourseName);

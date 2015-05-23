@@ -52,6 +52,7 @@ public:
     void saveSchule(Groups g);
     void saveUni(Groups g);
     void saveSprache(Groups g);
+    void saveSchuleStudent(Members m);
 
 
     // get TableModels code
