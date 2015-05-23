@@ -70,7 +70,7 @@ struct InstitutModel {
   QString NumTeachers;
   QString NumStudents;
   QString NumGroups;
-  QList<QString> Diplomas; // a list of available diplomas!!!!
+  QString DiplomaTitles; // a list of available diplomas join by EOL!!!!
 
   
 };

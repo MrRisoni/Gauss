@@ -87,7 +87,6 @@ AddInstitutDialogMVC  ORM::getAddInstitutMVC() {
     mvc.headers.append("# Teachers");
     mvc.headers.append("# Students");
     mvc.headers.append("# Groups");
-    mvc.headers.append("Diplos");
 
     QList<InstitutModel> InsList;
 
@@ -99,20 +98,27 @@ AddInstitutDialogMVC  ORM::getAddInstitutMVC() {
         mod.InstitID=q.value(0).toString();
         mod.InsName=q.value(1).toString();
 
-        mod.NumDiplomas="0";
         mod.NumGroups="0";
         mod.NumStudents="0";
         mod.NumTeachers="0";
 
-        QList<QString> diplos;
+        QString diplos="";
 
         //fetch available diplomas from db;
         QSqlQuery q2;
-        q2.exec("SELECT Name FROM DIPLOMAS Where ProvID='"+ mod.InstitID+"'");
+        QString s= "SELECT Name FROM Diplomas Where ProvID='"+ mod.InstitID+"'";
+        qDebug() << s;
+        q2.exec(s);
+        int c=0;
         while (q2.next()) {
-            diplos.append(q2.value(0).toString());
+            diplos+= q2.value(0).toString() + " \n";
+            q2.value(0).toString();
+            c++;
         }
-        mod.Diplomas=diplos;
+        mod.DiplomaTitles=diplos;
+        mod.NumDiplomas=QString::number(c);
+
+        qDebug() << diplos;
         InsList.append(mod);
     }
 

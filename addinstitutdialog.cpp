@@ -39,6 +39,8 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
         itDiplomas->setText(view.NumDiplomas);
         model->setItem(r,2,itDiplomas);
 
+        itDiplomas->setToolTip(view.DiplomaTitles);
+
         QStandardItem *itTeachers = new QStandardItem();
         itTeachers->setText(view.NumTeachers);
         model->setItem(r,3,itTeachers);
@@ -60,16 +62,7 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
     }
 
     ui->tableInstituts->setModel(model);
-    ui->tableInstituts->resizeColumnsToContents();
-
-
-    //add a combo box
-
-    ObjektDelegate *cib=new ObjektDelegate(this);
-    ui->tableInstituts->setItemDelegateForColumn(6,cib);
-
-
-    ui->tableInstituts->resizeColumnsToContents();
+    ui->tableInstituts->resizeColumnsToContents();   
 
 
 }

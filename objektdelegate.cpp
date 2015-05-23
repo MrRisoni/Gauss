@@ -17,7 +17,12 @@ QWidget* ObjektDelegate::createEditor( QWidget *parent, const QStyleOptionViewIt
 {
     (void ) option;
     (void ) index;
-    return new QComboBox(parent) ;
+    QComboBox *bx= new QComboBox(parent);
+    bx->addItem("C2");
+    bx->addItem("C1");
+    return bx;
+
+    // return new QComboBox(parent) ;
 
 }
 
