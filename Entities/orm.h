@@ -54,6 +54,7 @@ public:
     void saveSprache(Groups g);
     void saveSchuleStudent(Members m);
     void save(Diplomas d);
+    void save(Payments p);
 
 
     // get TableModels code

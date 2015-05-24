@@ -47,7 +47,8 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
     Payments pay=Payments();
     pay.setDat(QDate::currentDate());
     pay.setMoney(ui->linePoso->text().toFloat());
-    pay.setTeacherName(ui->lineName->text());
+    pay.setTeacherName(ui->labName->text());
+    pay.setPayType(ui->comboSelectPayType->currentText());
 
     ORM O=ORM();
     O.save(pay);

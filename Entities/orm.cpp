@@ -34,22 +34,30 @@ KassenMVC ORM::getKassenMVC() {
     mvc.headers.append("Debt");
 
 
+    //create temporary tables
+    GET HOW MUCH MONEY HAVE WE PAYED FOR EACH Kasse
+    select V.KasseID,SUM(P.Amount) As Cost FROM Payments P,Versicherung V Where V.TeacherID=P.TeacherID Group BY V.KasseID
+
+
     QString s;
     s="SELECT Alpha.KasseID , Tango.Name,Alpha.Plithos FROM (SELECT KasseID,Count(KasseID) AS Plithos FROM ";
     s+=" Versicherung Group By KasseID) As Alpha INNER JOIN (SELECT K.KasseID,K.Name From Kassen K) AS ";
     s+=" Tango ON Alpha.KasseID=Tango.KasseID ";
 
+
     qDebug() << s;
 
+    */
 
+    QString s;
+
+
+    qDebug() << s;
     q.exec(s);
 
 
-/*
-    //how much money have we spent on versicherung SELECT KassenID, TeacherID,Sum(Amount) FROM Payments Where PayTypeID=3 GROUP BY TeacherID
-// tough query
 
-*/
+
     while (q.next()) {
         KasseModel k=KasseModel();
 
@@ -59,14 +67,65 @@ KassenMVC ORM::getKassenMVC() {
         k.Pays="43453";
         k.Debt="0";
 
-          mvc.KasseView.append(k);
+        mvc.KasseView.append(k);
 
-        };
+    };
 
 
 
     q.finish();
     return mvc;
+}
+
+
+void ORM::save(Payments p) {
+    QSqlQuery q;
+
+    try {
+        qDebug() << "trying to save payment";
+        int ptype=0,tid=0;
+        q.prepare("SELECT MembID FROM Members Where Name=:nm");
+        q.bindValue(":nm",p.getTeacherName());
+        q.exec();
+        while (q.next()) {
+            tid=q.value(0).toInt();
+        }
+
+        //get pay type id
+        qDebug() << p.getTeacherName() << " " << tid;
+
+        q.prepare("SELECT PayTypeID FROM PayType Where Comment=:com");
+        q.bindValue(":com",p.getPayType());
+        q.exec();
+        while (q.next()) {
+            ptype=q.value(0).toInt();
+        }
+
+        qDebug() << p.getPayType() << " " << ptype;
+        if ((tid<=0) || (ptype<=0)) {
+            throw 10;
+        }
+
+        q.prepare("INSERT INTO `Payments`  (`TeacherID`, `Dat`, `Amount`,  `PayTypeID`) VALUES (:tid,:dat,:euro,:ptid)");
+        q.bindValue(":tid",tid);
+        q.bindValue(":dat",p.getDat());
+        q.bindValue(":euro",p.getMoney());
+        q.bindValue(":ptid",ptype);
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+
+
+
+        ShowSuccess();
+    }
+    catch (int ex) {
+        ShowError(q);
+    }
+
+    q.finish();
 }
 
 void  ORM::save(Diplomas d) {
