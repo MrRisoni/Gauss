@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 23, 2015 at 10:02 AM
+-- Generation Time: May 24, 2015 at 05:37 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.8
 
@@ -214,8 +214,31 @@ CREATE TABLE IF NOT EXISTS `Diplomas` (
   `ProvID` int(11) NOT NULL COMMENT 'institut provider',
   `Name` varchar(45) NOT NULL,
   `Schwer` tinyint(4) NOT NULL COMMENT 'higherr is more difficult',
-  `Active` tinyint(1) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='diplomas and levels';
+  `Active` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf32 COMMENT='diplomas and levels';
+
+--
+-- Dumping data for table `Diplomas`
+--
+
+INSERT INTO `Diplomas` (`DiplID`, `LangID`, `ProvID`, `Name`, `Schwer`, `Active`) VALUES
+(2, 6, 1, 'Zertifikat C2', 10, 1),
+(3, 6, 1, 'Zertifikat C1', 9, 1),
+(4, 6, 1, 'Zertifikat B2', 11, 1),
+(5, 6, 1, 'Zertifikat B1', 13, 1),
+(6, 5, 4, 'Dalf SB C2', 10, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Dropout`
+--
+
+CREATE TABLE IF NOT EXISTS `Dropout` (
+  `GroupID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `Dat` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='a student may decide to drop from a group we need to know when';
 
 -- --------------------------------------------------------
 
@@ -1232,6 +1255,13 @@ ALTER TABLE `Diplomas`
   ADD KEY `Schwer` (`Schwer`);
 
 --
+-- Indexes for table `Dropout`
+--
+ALTER TABLE `Dropout`
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `StudentID` (`StudentID`);
+
+--
 -- Indexes for table `Echelon`
 --
 ALTER TABLE `Echelon`
@@ -1591,7 +1621,7 @@ ALTER TABLE `Departments`
 -- AUTO_INCREMENT for table `Diplomas`
 --
 ALTER TABLE `Diplomas`
-  MODIFY `DiplID` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `DiplID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT for table `Echelon`
 --
@@ -1835,6 +1865,13 @@ ALTER TABLE `Diplomas`
   ADD CONSTRAINT `Diplomas_ibfk_1` FOREIGN KEY (`Schwer`) REFERENCES `Schwierigkeit` (`SchwerID`),
   ADD CONSTRAINT `fklangid` FOREIGN KEY (`LangID`) REFERENCES `Languages` (`LangID`),
   ADD CONSTRAINT `fkprovid` FOREIGN KEY (`ProvID`) REFERENCES `Instituts` (`InstID`);
+
+--
+-- Constraints for table `Dropout`
+--
+ALTER TABLE `Dropout`
+  ADD CONSTRAINT `fkkropid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
+  ADD CONSTRAINT `flsid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Ensembles`
