@@ -7,7 +7,6 @@ using namespace std;
 
 
 
-
 ORM::ORM()
 {
 
@@ -26,53 +25,71 @@ KassenMVC ORM::getKassenMVC() {
 
     KassenMVC mvc;
 
-    QSqlQuery q;
-    mvc.headers.append("ID");
-    mvc.headers.append("Name");
-    mvc.headers.append("#Teachers");
-    mvc.headers.append("Pays");
-    mvc.headers.append("Debt");
+    QSqlQuery q,q2;
 
 
-    //create temporary tables
-    GET HOW MUCH MONEY HAVE WE PAYED FOR EACH Kasse
-    select V.KasseID,SUM(P.Amount) As Cost FROM Payments P,Versicherung V Where V.TeacherID=P.TeacherID Group BY V.KasseID
+    try {
+        mvc.headers.append("ID");
+        mvc.headers.append("Name");
+        mvc.headers.append("#Teachers");
+        mvc.headers.append("Pays");
+        mvc.headers.append("Debt");
 
 
-    QString s;
-    s="SELECT Alpha.KasseID , Tango.Name,Alpha.Plithos FROM (SELECT KasseID,Count(KasseID) AS Plithos FROM ";
-    s+=" Versicherung Group By KasseID) As Alpha INNER JOIN (SELECT K.KasseID,K.Name From Kassen K) AS ";
-    s+=" Tango ON Alpha.KasseID=Tango.KasseID ";
+        //create temporary tables
+        // GET HOW MUCH MONEY HAVE WE PAYED FOR EACH Kas
+        QString s="CREATE TEMPORARY TABLE SicherGeld ";
+
+        s+=" Select V.KasseID,SUM(P.Amount) As Kost FROM Payments P,Versicherung V Where V.TeacherID=P.TeacherID Group BY V.KasseID";
 
 
-    qDebug() << s;
-
-    */
-
-    QString s;
+        qDebug() << s;
 
 
-    qDebug() << s;
-    q.exec(s);
+        if (!q.exec(s)){
+            throw 10;
+        }
 
 
 
+        qDebug() << "-------------------";
 
-    while (q.next()) {
-        KasseModel k=KasseModel();
-
-        k.ID=q.value(0).toString();
-        k.Name=q.value(1).toString();
-        k.NumTeachers=q.value(2).toString();
-        k.Pays="43453";
-        k.Debt="0";
-
-        mvc.KasseView.append(k);
-
-    };
+        s="CREATE TEMPORARY TABLE KassenCount ";
+        s+=" SELECT Alpha.KasseID , Tango.Name,Alpha.Plithos FROM (SELECT KasseID,Count(KasseID) AS Plithos FROM ";
+        s+=" Versicherung Group By KasseID) As Alpha INNER JOIN (SELECT K.KasseID,K.Name From Kassen K) AS ";
+        s+=" Tango ON Alpha.KasseID=Tango.KasseID ";
 
 
+        qDebug() << s;
+        if (!q.exec(s)){
+            throw 10;
+        }
 
+        //join now
+        s="SELECT S.KasseID,K.Name,K.Plithos,S.Kost FROM  SicherGeld S,KassenCount K  WHERE S.KasseID=K.KasseID";
+        qDebug() << s;
+        if (!q.exec(s)){
+            throw 10;
+        }
+
+
+        while (q.next()) {
+            KasseModel k=KasseModel();
+
+            k.ID=q.value(0).toString();
+            k.Name=q.value(1).toString();
+            k.NumTeachers=q.value(2).toString();
+            k.Pays=q.value(3).toString();
+            k.Debt="0";
+
+            mvc.KasseView.append(k);
+
+        }
+    }
+
+    catch (int ex) {
+        ShowError(q);
+    }
     q.finish();
     return mvc;
 }
