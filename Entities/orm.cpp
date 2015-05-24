@@ -19,6 +19,56 @@ ORM::~ORM()
 
 }
 
+
+
+KassenMVC ORM::getKassenMVC() {
+
+
+    KassenMVC mvc;
+
+    QSqlQuery q;
+    mvc.headers.append("ID");
+    mvc.headers.append("Name");
+    mvc.headers.append("#Teachers");
+    mvc.headers.append("Pays");
+    mvc.headers.append("Debt");
+
+
+    QString s;
+    s="SELECT Alpha.KasseID , Tango.Name,Alpha.Plithos FROM (SELECT KasseID,Count(KasseID) AS Plithos FROM ";
+    s+=" Versicherung Group By KasseID) As Alpha INNER JOIN (SELECT K.KasseID,K.Name From Kassen K) AS ";
+    s+=" Tango ON Alpha.KasseID=Tango.KasseID ";
+
+    qDebug() << s;
+
+
+    q.exec(s);
+
+
+/*
+    //how much money have we spent on versicherung SELECT KassenID, TeacherID,Sum(Amount) FROM Payments Where PayTypeID=3 GROUP BY TeacherID
+// tough query
+
+*/
+    while (q.next()) {
+        KasseModel k=KasseModel();
+
+        k.ID=q.value(0).toString();
+        k.Name=q.value(1).toString();
+        k.NumTeachers=q.value(2).toString();
+        k.Pays="43453";
+        k.Debt="0";
+
+          mvc.KasseView.append(k);
+
+        };
+
+
+
+    q.finish();
+    return mvc;
+}
+
 void  ORM::save(Diplomas d) {
     QSqlQuery q;
     try {

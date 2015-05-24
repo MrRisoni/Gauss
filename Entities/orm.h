@@ -22,13 +22,13 @@
 #include "rooms.h"
 #include "feeschule.h"
 #include "groups.h"
+#include "payments.h"
 
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
 #include <QSqlDatabase>
-#include <tuple>
 
 class ORM
 {
@@ -104,7 +104,7 @@ public:
     AddInstitutDialogMVC  getAddInstitutMVC();
 
 
-
+    KassenMVC getKassenMVC();
 
 
 

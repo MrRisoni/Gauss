@@ -39,6 +39,16 @@ void Payments::setPayType(const QString &value)
 {
     PayType = value;
 }
+QString Payments::getTeacherName() const
+{
+    return TeacherName;
+}
+
+void Payments::setTeacherName(const QString &value)
+{
+    TeacherName = value;
+}
+
 
 
 

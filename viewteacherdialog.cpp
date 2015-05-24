@@ -9,6 +9,10 @@ ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
     ui(new Ui::ViewTeacherDialog)
 {
     ui->setupUi(this);
+
+    //combo paytype
+
+    ui->comboSelectPayType->addItem("ΑΣΦΑΛΙΣΗ");
 }
 
 ViewTeacherDialog::~ViewTeacherDialog()
@@ -37,3 +41,14 @@ void ViewTeacherDialog::on_pushButton_clicked()
 
 }
 
+
+void ViewTeacherDialog::on_pushAddAmount_clicked()
+{
+    Payments pay=Payments();
+    pay.setDat(QDate::currentDate());
+    pay.setMoney(ui->linePoso->text().toFloat());
+    pay.setTeacherName(ui->lineName->text());
+
+    ORM O=ORM();
+    O.save(pay);
+}

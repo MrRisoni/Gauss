@@ -22,8 +22,12 @@ public:
     QString getPayType() const;
     void setPayType(const QString &value);
 
+    QString getTeacherName() const;
+    void setTeacherName(const QString &value);
+
 private:
     int teacherID;
+    QString TeacherName;
     QDate dat;
     float Money;
     QString PayType;
