@@ -30,7 +30,8 @@
 	border-color: rgb(80, 147, 255);
 	border-style: solid;
 	border-width: 2px;
-	border-radius : 15px;
+	border-radius : 15px;	
+	background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(170, 170, 255, 255), stop:1 rgba(255, 255, 255, 255));
 }</string>
    </property>
    <property name="frameShape">
@@ -48,7 +49,7 @@
       <x>20</x>
       <y>20</y>
       <width>281</width>
-      <height>191</height>
+      <height>171</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -194,6 +195,144 @@
       <set>Qt::AlignCenter</set>
      </property>
     </widget>
+    <widget class="QLineEdit" name="lineDate">
+     <property name="geometry">
+      <rect>
+       <x>90</x>
+       <y>80</y>
+       <width>181</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">border-color: black;
+border-style: solid;
+border-width: 1px;
+border-top-right-radius : 15px;
+border-bottom-right-radius : 15px;
+
+</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>85</y>
+       <width>61</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>6</pointsize>
+       <underline>true</underline>
+      </font>
+     </property>
+     <property name="text">
+      <string>ΗΜΕΡΟΜΗΝΙΑ</string>
+     </property>
+    </widget>
+    <widget class="QFrame" name="frameMoney">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>120</y>
+       <width>251</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#frameMoney {
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	border-radius : 15px;		
+	background-color: rgb(255, 255, 255);
+
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_2">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>81</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>STIX</family>
+        <pointsize>14</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>ΠΟΣΟ €</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineAmount">
+      <property name="geometry">
+       <rect>
+        <x>100</x>
+        <y>10</y>
+        <width>131</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">#lineAmount{
+	background-color: rgb(255, 230, 252);
+
+}</string>
+      </property>
+      <property name="frame">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="helpLabel">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>71</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#helpLabel {
+	border-width: 1px;
+	border-color	:	black;
+	border-style : solid;
+	border-top-left-radius : 15px;
+	border-bottom-left-radius : 15px;
+	background-color: rgb(255, 255, 255);
+}
+</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+    </widget>
+    <zorder>helpLabel</zorder>
+    <zorder>pliromiLabel</zorder>
+    <zorder>lineDate</zorder>
+    <zorder>label</zorder>
+    <zorder>frameMoney</zorder>
    </widget>
   </widget>
  </widget>
