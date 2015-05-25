@@ -220,7 +220,10 @@ struct DiplomaModel {
   QString NumTeachers;
   QString NumStudents;
   QString SuccessRate; // success final exam rate :)
-  QString SchwerID;
+  QString SuccessGrade; //avg of pass grades
+  QString red;
+  QString green;
+  QString blue;
 };
 
 struct DiplomaModelMVC {

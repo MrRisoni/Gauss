@@ -23,12 +23,15 @@
 #include "feeschule.h"
 #include "groups.h"
 #include "payments.h"
+#include "paytype.h"
 
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
 #include <QMessageBox>
 #include <QSqlDatabase>
+#include <QComboBox>
+
 
 class ORM
 {
@@ -82,6 +85,12 @@ public:
     QList<Departments> getDeps();
     QList<Echelon> getEchels();
     QList<Courses> getSchuleCourses();
+
+    //return a combo box with rgb schwierigkeit colors :)
+    QList<Courses> getUniCourses(QString DepName);
+    QComboBox* getComboUniCourses(QString DepName);
+
+
     QList<Languages> getSprachen();
     QList<Diplomas> getDiplomas();
     QList<Courses> getSpecialCourses(QString DepName);
@@ -90,6 +99,7 @@ public:
     QList<Hours> getHours();
     QList<WagesSchule> getWagesSchule();
     QList<Kassen> getKassen();
+    QList<PayType> getPayTypes();
 
 
     QSqlDatabase getDb() const;
@@ -111,7 +121,7 @@ public:
     KassenMVC getKassenMVC();
 
 
-
+    DiplomaModelMVC getDiplomaMVC();
 
 private:
     void ShowError(QSqlQuery q);

@@ -1388,6 +1388,55 @@ FeeSchuleMVC  ORM::getManageFeeSchuleMVC() {
 }
 
 
+QComboBox* getComboUniCourses(QString DepName) {
+    QSqlQuery q;
+
+    QComboBox *box=new QComboBox();
+    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID IN (SELECT DepID FROM Departments Where DepName='"+ DepName+"') ORDER BY C.CourseName  ASC");
+    int row=0;
+    while (q.next()) {
+        qDebug() << "Uni Course " << q.value(0).toString() << " @ " << DepName;
+
+        QColor col;
+
+        col.setRed(q.value(1).toInt());
+        col.setGreen(q.value(2).toInt());
+        col.setBlue(q.value(3).toInt());
+        box->addItem(q.value(0).toString());
+
+        box->setItemData(row,col,Qt::ForegroundRole);
+        row++;
+
+
+
+    }
+    q.finish();
+
+    return box;
+}
+
+QList<Courses> ORM::getUniCourses(QString DepName) {
+    QList<Courses> CL;
+    QSqlQuery q;
+
+    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID IN (SELECT DepID FROM Departments Where DepName='"+ DepName+"') ORDER BY C.CourseName  ASC");
+    while (q.next()) {
+        Courses C=Courses();
+        qDebug() << "Uni Course " << q.value(0).toString() << " @ " << DepName;
+        Schwierigkeit S=Schwierigkeit();
+        S.setRed(q.value(1).toInt());
+        S.setGreen(q.value(2).toInt());
+        S.setBlue(q.value(3).toInt());
+        C.setS(S);
+        C.setName(q.value(0).toString());
+        CL.append(C);
+    }
+    q.finish();
+    qDebug() << "Uni Courses " << CL.size();
+    return CL;
+}
+
+
 
 
 QList<Courses> ORM::getSchuleCourses() {
@@ -1439,6 +1488,8 @@ QList<Departments> ORM::getDeps() {
         Departments dep=Departments();
         dep.setDepID(q.value(0).toInt());
         dep.setDepName(q.value(1).toString());
+
+        qDebug() << "departments " << q.value(1).toString();
         D.append(dep);
     }
 
@@ -1447,6 +1498,21 @@ QList<Departments> ORM::getDeps() {
 }
 
 
+QList<PayType> ORM::getPayTypes() {
+    QList<PayType> Ps;
+    QSqlQuery q;
+    q.exec("SELECT * FROM PayType");
+    while (q.next()) {
+        PayType p = PayType();
+        qDebug () << "pay type " << q.value(1).toString();
+        p.setComment(q.value(1).toString());
+
+        Ps.append(p);
+    }
+
+    q.finish();
+    return Ps;
+}
 
 
 void ORM::save(WagesSchule WGS) {
@@ -1744,3 +1810,33 @@ QList<Echelon> ORM::getEchels() {
     q.finish();
     return Ech;
 }
+
+
+
+
+
+DiplomaModelMVC ORM::getDiplomaMVC() {
+    DiplomaModelMVC mvc;
+    mvc.headers.append("DiploID");
+    mvc.headers.append("Name");
+    mvc.headers.append("Institit");
+    mvc.headers.append("# Teachers");
+    mvc.headers.append("# Students");
+    mvc.headers.append("% SuccessRate");
+    mvc.headers.append("# SuccessGrade");
+
+    QSqlQuery q;
+    q.exec();
+    while (q.next()) {
+        DiplomaModel mod= DiplomaModel();
+
+
+        mvc.DiplomaView.append(mod);
+    }
+
+
+    q.finish();
+    return mvc;
+}
+
+
