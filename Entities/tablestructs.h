@@ -8,6 +8,13 @@
 
 // i think it is wise to create struct for each TableModel
 
+
+
+struct TimeTableHeaders {
+    QStringList horHeaders;
+    QStringList verHeaders;
+};
+
 struct ManageCourseTable {
     int CourseID;
     QString CourseName;
@@ -221,6 +228,26 @@ struct DiplomaModelMVC {
   QList<DiplomaModel> DiplomaView;
 };
 
+
+struct GroupsDialogModel {
+    QString GroupID;
+    QString CourseName;
+    QString TeacherName;
+    QString NumStudents;
+    QList<QString> Students;
+    QString created;
+    QString HoursPerWeek;
+    QString Debts;//how much do we owe the professor
+    QString Profits ;// how much money have we earned from the fees
+    QString Schulden; // how much money must be payed by the students
+    QString AverageStuffe; // in schule mündlich tests take place every now and the
+};
+
+
+struct GroupsDialogMVC {
+    QStringList headers;
+    QList<GroupsDialogModel> group_model;
+};
 
 #endif // TABLESTRUCTS
 
