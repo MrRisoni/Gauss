@@ -240,7 +240,9 @@ struct GroupsDialogModel {
     QString Debts;//how much do we owe the professor
     QString Profits ;// how much money have we earned from the fees
     QString Schulden; // how much money must be payed by the students
-    QString AverageStuffe; // in schule mündlich tests take place every now and the
+    QString AverageStuffe; // in schule mündlich tests take place every now and then
+    QString EndsOn; //end of unterricht
+    QString TotHours; // total Unterrichtstuden
 };
 
 
