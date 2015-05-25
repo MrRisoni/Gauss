@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>726</width>
-    <height>563</height>
+    <height>571</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,7 +22,7 @@
      <x>10</x>
      <y>10</y>
      <width>701</width>
-     <height>451</height>
+     <height>521</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -47,7 +47,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>20</y>
+      <y>60</y>
       <width>281</width>
       <height>171</height>
      </rect>
@@ -360,84 +360,20 @@ border-bottom-right-radius : 15px;
     <property name="frameShadow">
      <enum>QFrame::Raised</enum>
     </property>
-    <widget class="QFrame" name="frameSerial">
-     <property name="geometry">
-      <rect>
-       <x>199</x>
-       <y>10</y>
-       <width>161</width>
-       <height>41</height>
-      </rect>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">#frameSerial {
-	border-color: rgb(80, 147, 255);
-	border-style: solid;
-	border-width: 2px;
-	border-radius : 15px;
-	background-color: rgb(255, 230, 252);
-	
-}</string>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::StyledPanel</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Raised</enum>
-     </property>
-     <widget class="QLabel" name="label_3">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>0</y>
-        <width>31</width>
-        <height>51</height>
-       </rect>
-      </property>
-      <property name="font">
-       <font>
-        <family>STIX</family>
-        <pointsize>16</pointsize>
-        <weight>75</weight>
-        <bold>true</bold>
-       </font>
-      </property>
-      <property name="text">
-       <string>No</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineSerial">
-      <property name="geometry">
-       <rect>
-        <x>40</x>
-        <y>10</y>
-        <width>101</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
-      <property name="frame">
-       <bool>false</bool>
-      </property>
-     </widget>
-    </widget>
     <widget class="QLabel" name="labelStamp">
      <property name="geometry">
       <rect>
-       <x>50</x>
-       <y>60</y>
-       <width>261</width>
-       <height>131</height>
+       <x>20</x>
+       <y>20</y>
+       <width>331</width>
+       <height>171</height>
       </rect>
      </property>
      <property name="styleSheet">
       <string notr="true">#labelStamp{
-	border-color: rgb(80, 147, 255);
+	border-color: black;
 	border-style: solid;
 	border-width: 2px;
-	border-radius : 15px;
 	background-color : white;
 	
 }</string>
@@ -450,6 +386,134 @@ border-bottom-right-radius : 15px;
      </property>
     </widget>
    </widget>
+   <widget class="QFrame" name="frameSerial">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>10</y>
+      <width>231</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#frameSerial {
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	border-radius : 15px;
+	background-color: rgb(255, 230, 252);
+	
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QLabel" name="label_3">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>0</y>
+       <width>31</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <family>STIX</family>
+       <pointsize>16</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string>No</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineSerial">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>10</y>
+       <width>171</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="frame">
+      <bool>false</bool>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QLabel" name="labelPayer">
+    <property name="geometry">
+     <rect>
+      <x>440</x>
+      <y>420</y>
+      <width>121</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#labelPayer{
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	background-color: rgb(255, 230, 252);
+	border-radius : 15px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string>Payer</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="labelReceiver">
+    <property name="geometry">
+     <rect>
+      <x>570</x>
+      <y>420</y>
+      <width>121</width>
+      <height>81</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#labelReceiver{
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	background-color: rgb(255, 230, 252);
+	border-radius : 15px;
+
+}</string>
+    </property>
+    <property name="text">
+     <string>Receiver</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="pushPrint">
+   <property name="geometry">
+    <rect>
+     <x>630</x>
+     <y>540</y>
+     <width>82</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Print</string>
+   </property>
   </widget>
  </widget>
  <resources/>
