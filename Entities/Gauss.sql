@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 24, 2015 at 04:16 PM
+-- Generation Time: May 25, 2015 at 07:30 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.8
 
@@ -265,24 +265,6 @@ INSERT INTO `Echelon` (`EchelID`, `Exp`, `Active`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `EduTypes`
---
-
-CREATE TABLE IF NOT EXISTS `EduTypes` (
-  `EduID` tinyint(4) NOT NULL,
-  `Description` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `EduTypes`
---
-
-INSERT INTO `EduTypes` (`EduID`, `Description`) VALUES
-(1, 'Group');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `Ensembles`
 --
 
@@ -440,7 +422,6 @@ CREATE TABLE IF NOT EXISTS `FeeSprache` (
 CREATE TABLE IF NOT EXISTS `FeeUni` (
   `FareID` int(11) NOT NULL,
   `Dat` date NOT NULL,
-  `EduType` tinyint(11) NOT NULL COMMENT '1 is solo v 2 is group group university',
   `CourseID` int(11) NOT NULL COMMENT 'not all course have the same fee e.g. very difficult courses have higher fees',
   `Fee` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
@@ -470,14 +451,14 @@ CREATE TABLE IF NOT EXISTS `Groups` (
   `CourseID` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `Active` tinyint(4) NOT NULL DEFAULT '1',
-  `Edu` tinyint(4) NOT NULL DEFAULT '1' COMMENT '1 is univ 2 is school 3 is language'
+  `LessTypeID` tinyint(4) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf32;
 
 --
 -- Dumping data for table `Groups`
 --
 
-INSERT INTO `Groups` (`GroupID`, `TeacherID`, `CourseID`, `StartDate`, `Active`, `Edu`) VALUES
+INSERT INTO `Groups` (`GroupID`, `TeacherID`, `CourseID`, `StartDate`, `Active`, `LessTypeID`) VALUES
 (8, 28, 28, '2015-05-23', 1, 1);
 
 -- --------------------------------------------------------
@@ -607,6 +588,27 @@ INSERT INTO `Languages` (`LangID`, `Name`) VALUES
 (9, 'Ιταλικά'),
 (10, 'Αραβικά'),
 (11, 'Κινέζικα');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `LessonType`
+--
+
+CREATE TABLE IF NOT EXISTS `LessonType` (
+  `TypeID` tinyint(4) NOT NULL,
+  `Description` varchar(10) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `LessonType`
+--
+
+INSERT INTO `LessonType` (`TypeID`, `Description`) VALUES
+(1, 'Schule'),
+(2, 'Uni'),
+(3, 'Sprache'),
+(4, 'Skype');
 
 -- --------------------------------------------------------
 
@@ -764,14 +766,13 @@ INSERT INTO `PayType` (`PayTypeID`, `Comment`) VALUES
 CREATE TABLE IF NOT EXISTS `Permament` (
   `PermaID` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL DEFAULT '0',
-  `Type` tinyint(4) NOT NULL COMMENT '1 univ 2 skype 3 school 4 language',
   `DayID` tinyint(4) NOT NULL,
-  `RoomID` tinyint(4) NOT NULL,
   `HourID` tinyint(4) NOT NULL,
+  `RoomID` tinyint(4) NOT NULL,
   `StartsOn` date NOT NULL,
   `EndsOn` date NOT NULL,
   `Active` tinyint(4) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='courses that take part every week ';
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='uni and schule courses that take part every week ';
 
 -- --------------------------------------------------------
 
@@ -1198,7 +1199,6 @@ CREATE TABLE IF NOT EXISTS `WagesUni` (
   `WageUniID` int(11) NOT NULL,
   `EchelID` int(11) NOT NULL,
   `Dat` date NOT NULL,
-  `EduType` tinyint(11) NOT NULL COMMENT '1 is solo v 2 is group group university',
   `CourseID` int(11) NOT NULL COMMENT 'not all course have the same fee e.g. very difficult courses have higher fees',
   `Wage` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
@@ -1285,12 +1285,6 @@ ALTER TABLE `Echelon`
   ADD PRIMARY KEY (`EchelID`);
 
 --
--- Indexes for table `EduTypes`
---
-ALTER TABLE `EduTypes`
-  ADD PRIMARY KEY (`EduID`);
-
---
 -- Indexes for table `Ensembles`
 --
 ALTER TABLE `Ensembles`
@@ -1346,8 +1340,7 @@ ALTER TABLE `FeeSprache`
 --
 ALTER TABLE `FeeUni`
   ADD PRIMARY KEY (`FareID`),
-  ADD KEY `CourseID` (`CourseID`),
-  ADD KEY `EduType` (`EduType`);
+  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `Funds`
@@ -1363,7 +1356,8 @@ ALTER TABLE `Groups`
   ADD PRIMARY KEY (`GroupID`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `CourseID` (`CourseID`),
-  ADD KEY `Edu` (`Edu`);
+  ADD KEY `Edu` (`LessTypeID`),
+  ADD KEY `Edu_2` (`LessTypeID`);
 
 --
 -- Indexes for table `History`
@@ -1397,6 +1391,12 @@ ALTER TABLE `Kassen`
 --
 ALTER TABLE `Languages`
   ADD PRIMARY KEY (`LangID`);
+
+--
+-- Indexes for table `LessonType`
+--
+ALTER TABLE `LessonType`
+  ADD PRIMARY KEY (`TypeID`);
 
 --
 -- Indexes for table `Members`
@@ -1441,8 +1441,7 @@ ALTER TABLE `Permament`
   ADD KEY `GroupID` (`GroupID`),
   ADD KEY `DayID` (`DayID`),
   ADD KEY `RoomID` (`RoomID`),
-  ADD KEY `HourID` (`HourID`),
-  ADD KEY `Type` (`Type`);
+  ADD KEY `HourID` (`HourID`);
 
 --
 -- Indexes for table `RequestSchule`
@@ -1587,7 +1586,6 @@ ALTER TABLE `WagesSprache`
 ALTER TABLE `WagesUni`
   ADD PRIMARY KEY (`WageUniID`),
   ADD KEY `EchelID` (`EchelID`),
-  ADD KEY `EduType` (`EduType`),
   ADD KEY `CourseID` (`CourseID`);
 
 --
@@ -1644,11 +1642,6 @@ ALTER TABLE `Diplomas`
 --
 ALTER TABLE `Echelon`
   MODIFY `EchelID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
---
--- AUTO_INCREMENT for table `EduTypes`
---
-ALTER TABLE `EduTypes`
-  MODIFY `EduID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `Ensembles`
 --
@@ -1719,6 +1712,11 @@ ALTER TABLE `Kassen`
 --
 ALTER TABLE `Languages`
   MODIFY `LangID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT for table `LessonType`
+--
+ALTER TABLE `LessonType`
+  MODIFY `TypeID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Members`
 --
@@ -1939,8 +1937,7 @@ ALTER TABLE `FeeSprache`
 -- Constraints for table `FeeUni`
 --
 ALTER TABLE `FeeUni`
-  ADD CONSTRAINT `fecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-  ADD CONSTRAINT `fkedu` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`);
+  ADD CONSTRAINT `fecourseid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
 
 --
 -- Constraints for table `Funds`
@@ -1952,8 +1949,9 @@ ALTER TABLE `Funds`
 -- Constraints for table `Groups`
 --
 ALTER TABLE `Groups`
+  ADD CONSTRAINT `Groups_ibfk_1` FOREIGN KEY (`LessTypeID`) REFERENCES `LessonType` (`TypeID`),
   ADD CONSTRAINT `csrid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-  ADD CONSTRAINT `edyy` FOREIGN KEY (`Edu`) REFERENCES `EduTypes` (`EduID`),
+  ADD CONSTRAINT `edyy` FOREIGN KEY (`LessTypeID`) REFERENCES `LessonType` (`TypeID`),
   ADD CONSTRAINT `teach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
@@ -1989,7 +1987,6 @@ ALTER TABLE `Payments`
 ALTER TABLE `Permament`
   ADD CONSTRAINT `fkday` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
   ADD CONSTRAINT `fkhour` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`),
-  ADD CONSTRAINT `fktype` FOREIGN KEY (`Type`) REFERENCES `EduTypes` (`EduID`),
   ADD CONSTRAINT `gropu` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
   ADD CONSTRAINT `room` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
 
@@ -2102,7 +2099,6 @@ ALTER TABLE `WagesSprache`
 -- Constraints for table `WagesUni`
 --
 ALTER TABLE `WagesUni`
-  ADD CONSTRAINT `fkedy` FOREIGN KEY (`EduType`) REFERENCES `EduTypes` (`EduID`),
   ADD CONSTRAINT `fkhird` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`),
   ADD CONSTRAINT `fkuci` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`);
 
