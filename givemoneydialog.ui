@@ -178,9 +178,12 @@
      </property>
      <property name="styleSheet">
       <string notr="true">#pliromiLabel {
-	background-color: rgb(255, 85,0);
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
 	border-top-left-radius : 15px;
 	border-top-right-radius : 15px;
+	background-color: rgb(255, 85,0);
 }
 </string>
      </property>
