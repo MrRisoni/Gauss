@@ -18,6 +18,9 @@ ORM::~ORM()
 
 }
 
+TimeTableHeaders ORM::getTimeTableHeaders() {
+
+}
 
 
 KassenMVC ORM::getKassenMVC() {

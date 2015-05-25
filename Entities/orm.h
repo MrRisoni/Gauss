@@ -71,6 +71,9 @@ public:
 
 
 
+   TimeTableHeaders getTimeTableHeaders();
+
+
     QList<Rooms> getRooms();
     QList<Buildings> getBuildings();
     Members searchStudentByName(QString name);

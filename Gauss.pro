@@ -92,7 +92,8 @@ SOURCES += main.cpp\
     qcustomplot.cpp \
     plotdialog.cpp \
     objektdelegate.cpp \
-    Business_Intelligence/exportutils.cpp
+    Business_Intelligence/exportutils.cpp \
+    showgroupsdialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -176,7 +177,8 @@ HEADERS  += mainwindow.h \
     qcustomplot.h \
     plotdialog.h \
     objektdelegate.h \
-    Business_Intelligence/exportutils.h
+    Business_Intelligence/exportutils.h \
+    showgroupsdialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -202,7 +204,8 @@ FORMS    += mainwindow.ui \
     absentbuchdialog.ui \
     raumedialog.ui \
     managefeesdialog.ui \
-    plotdialog.ui
+    plotdialog.ui \
+    showgroupsdialog.ui
 
     
 CONFIG +=   c++11
