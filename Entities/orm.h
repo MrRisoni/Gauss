@@ -106,7 +106,7 @@ public:
     SchuleTeacherMVC getCanTeachSchuleMVC(QString CourseName);
 
     AddInstitutDialogMVC  getAddInstitutMVC();
-
+    AddSchwerDialogMVC getSchwerMVC();
 
     KassenMVC getKassenMVC();
 
