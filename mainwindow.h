@@ -23,6 +23,8 @@
 #include "addinstitutdialog.h"
 #include "addlanguagedialog.h"
 #include "addnewdiplomadialog.h"
+#include "givemoneydialog.h"
+#include "receivemoneydialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -63,6 +65,9 @@ private slots:
     void manageInstituts();
     void manageLanguages();
     void manageDiplomas();
+    void giveMoneyReceipt();
+    void takeMoneyReceipt();
+
 
 };
 

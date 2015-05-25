@@ -32,6 +32,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionManage_Instituts,SIGNAL(triggered()),this,SLOT(manageInstituts()));
     connect(ui->actionManage_Langugages,SIGNAL(triggered()),this,SLOT(manageLanguages()));
     connect(ui->actionManage_Diplomas,SIGNAL(triggered()),this,SLOT(manageDiplomas()));
+
+    connect(ui->actionGive_Receipt,SIGNAL(triggered()),this,SLOT(giveMoneyReceipt()));
+    connect(ui->actionTake_Money,SIGNAL(triggered()),this,SLOT(takeMoneyReceipt()));
 }
 
 MainWindow::~MainWindow()
@@ -44,7 +47,19 @@ QSqlDatabase MainWindow::getDb() const
 }
 
 
-void MainWindow::manageDiplomas(){
+void MainWindow::giveMoneyReceipt() {
+    GiveMoneyDialog *gief = new GiveMoneyDialog();
+    gief->setAttribute(Qt::WA_DeleteOnClose);
+    gief->show();
+}
+
+void MainWindow::takeMoneyReceipt() {
+    ReceiveMoneyDialog *rec = new ReceiveMoneyDialog();
+    rec->setAttribute(Qt::WA_DeleteOnClose);
+    rec->show();
+}
+
+void MainWindow::manageDiplomas() {
     AddNewDiplomaDialog *diplo = new AddNewDiplomaDialog();
     diplo->setAttribute(Qt::WA_DeleteOnClose);
     diplo->show();
@@ -59,9 +74,9 @@ void MainWindow::manageLanguages() {
 
 void MainWindow::MachLearn() {
 
-std::string filename = "python2 /home/linguine/Gauss/Business_Intelligence/test.py";
+    std::string filename = "python2 /home/linguine/Gauss/Business_Intelligence/test.py";
 
-system(filename.c_str());
+    system(filename.c_str());
 }
 
 
@@ -179,7 +194,7 @@ void MainWindow::manageDeps() {
 
 
 void MainWindow::addSchwer() {
-   AddNewSchwerDialog *sch=new AddNewSchwerDialog();
-   sch->setAttribute(Qt::WA_DeleteOnClose);
-   sch->show();
+    AddNewSchwerDialog *sch=new AddNewSchwerDialog();
+    sch->setAttribute(Qt::WA_DeleteOnClose);
+    sch->show();
 }

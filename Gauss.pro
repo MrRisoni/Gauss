@@ -95,7 +95,11 @@ SOURCES += main.cpp\
     Business_Intelligence/exportutils.cpp \
     showgroupsdialog.cpp \
     givemoneydialog.cpp \
-    receivemoneydialog.cpp
+    receivemoneydialog.cpp \
+    showstudentsdialog.cpp \
+    showteachersdialog.cpp \
+    Entities/paytype.cpp \
+    Entities/receipt.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -182,7 +186,11 @@ HEADERS  += mainwindow.h \
     Business_Intelligence/exportutils.h \
     showgroupsdialog.h \
     givemoneydialog.h \
-    receivemoneydialog.h
+    receivemoneydialog.h \
+    showstudentsdialog.h \
+    showteachersdialog.h \
+    Entities/paytype.h \
+    Entities/receipt.h
 
 
 FORMS    += mainwindow.ui \
@@ -211,7 +219,9 @@ FORMS    += mainwindow.ui \
     plotdialog.ui \
     showgroupsdialog.ui \
     givemoneydialog.ui \
-    receivemoneydialog.ui
+    receivemoneydialog.ui \
+    showstudentsdialog.ui \
+    showteachersdialog.ui
 
     
 CONFIG +=   c++11

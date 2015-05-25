@@ -20,6 +20,10 @@ private slots:
 
     void on_pushAddAmount_clicked();
 
+    void on_comboDeps_currentIndexChanged(const QString &arg1);
+
+    void on_pushAddCourse_clicked();
+
 private:
     Ui::ViewTeacherDialog *ui;
 };

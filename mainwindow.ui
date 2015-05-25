@@ -126,6 +126,13 @@
     <property name="title">
      <string>Utilities</string>
     </property>
+    <widget class="QMenu" name="menuReceipts">
+     <property name="title">
+      <string>Receipts</string>
+     </property>
+     <addaction name="actionGive_Receipt"/>
+     <addaction name="actionTake_Money"/>
+    </widget>
     <addaction name="actionSchwer_Levels"/>
     <addaction name="actionManage_Departments"/>
     <addaction name="actionManage_Courses"/>
@@ -135,6 +142,7 @@
     <addaction name="actionManage_Langugages"/>
     <addaction name="actionManage_Kassen"/>
     <addaction name="actionManage_Diplomas"/>
+    <addaction name="menuReceipts"/>
    </widget>
    <widget class="QMenu" name="menuStatistics">
     <property name="title">
@@ -281,6 +289,16 @@
   <action name="actionManage_Diplomas">
    <property name="text">
     <string>Manage Diplomas</string>
+   </property>
+  </action>
+  <action name="actionGive_Receipt">
+   <property name="text">
+    <string>Give Money</string>
+   </property>
+  </action>
+  <action name="actionTake_Money">
+   <property name="text">
+    <string>Take Money</string>
    </property>
   </action>
  </widget>

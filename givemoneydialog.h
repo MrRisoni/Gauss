@@ -15,6 +15,9 @@ public:
     explicit GiveMoneyDialog(QWidget *parent = 0);
     ~GiveMoneyDialog();
 
+private slots:
+    void on_pushPrint_clicked();
+
 private:
     Ui::GiveMoneyDialog *ui;
 };
