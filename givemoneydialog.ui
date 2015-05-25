@@ -334,6 +334,122 @@ border-bottom-right-radius : 15px;
     <zorder>label</zorder>
     <zorder>frameMoney</zorder>
    </widget>
+   <widget class="QFrame" name="stampNoFrame">
+    <property name="geometry">
+     <rect>
+      <x>310</x>
+      <y>20</y>
+      <width>371</width>
+      <height>211</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">#stampNoFrame {
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	border-radius : 15px;
+	background-color: rgb(216, 224, 255);
+
+	
+}</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <widget class="QFrame" name="frameSerial">
+     <property name="geometry">
+      <rect>
+       <x>199</x>
+       <y>10</y>
+       <width>161</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#frameSerial {
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	border-radius : 15px;
+	background-color: rgb(255, 230, 252);
+	
+}</string>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <widget class="QLabel" name="label_3">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>0</y>
+        <width>31</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>STIX</family>
+        <pointsize>16</pointsize>
+        <weight>75</weight>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>No</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="lineSerial">
+      <property name="geometry">
+       <rect>
+        <x>40</x>
+        <y>10</y>
+        <width>101</width>
+        <height>23</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="frame">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QLabel" name="labelStamp">
+     <property name="geometry">
+      <rect>
+       <x>50</x>
+       <y>60</y>
+       <width>261</width>
+       <height>131</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#labelStamp{
+	border-color: rgb(80, 147, 255);
+	border-style: solid;
+	border-width: 2px;
+	border-radius : 15px;
+	background-color : white;
+	
+}</string>
+     </property>
+     <property name="text">
+      <string>Insert Stamp Here</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </widget>
   </widget>
  </widget>
  <resources/>
