@@ -28,32 +28,41 @@ void AddNewSchwerDialog::LoadColors() {
 
     QStandardItemModel *mod=new QStandardItemModel();
 
-    mod->setColumnCount(2);
 
-    mod->setHorizontalHeaderItem(0,new QStandardItem("Schwer ID"));
-    mod->setHorizontalHeaderItem(1,new QStandardItem("#Courses"));
+    ORM O=ORM();
 
-    QSqlQuery q;
+    AddSchwerDialogMVC mvc=O.getSchwerMVC();
 
-    q.exec("Select * From Schwierigkeit");
+    mod->setHorizontalHeaderLabels(mvc.headers);
+
+
     int row=0;
-    while (q.next()) {
-        QStandardItem *it=new QStandardItem();
-        it->setText(q.value(0).toString());
-        int red=q.value(1).toInt();
-        int green=q.value(2).toInt();
-        int blue=q.value(3).toInt();
+
+    for (SchwerModel m : mvc.SchwerView) {
+        QStandardItem *itID=new QStandardItem();
+        itID->setText(m.SchwerID);
+
+
+
         QBrush br;
         QColor col;
 
-        col.setRed(red);
-        col.setBlue(blue);
-        col.setGreen(green);
+        col.setRed(m.red.toInt());
+        col.setBlue(m.blue.toInt());
+        col.setGreen(m.green.toInt());
 
         br.setColor(col);
         br.setStyle(Qt::SolidPattern);
-        it->setBackground(br);
-        mod->setItem(row,0,it);
+        itID->setBackground(br);
+        mod->setItem(row,0,itID);
+
+
+
+
+        QStandardItem *itNumCourses=new QStandardItem();
+        itNumCourses->setText(m.NumCourses);
+        mod->setItem(row,1,itNumCourses);
+
         row++;
     }
 
@@ -61,7 +70,7 @@ void AddNewSchwerDialog::LoadColors() {
 
 
     ui->tableSchwer->setModel(mod);
-    q.finish();
+
 
     ui->tableSchwer->resizeColumnsToContents();
 
