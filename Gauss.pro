@@ -93,7 +93,9 @@ SOURCES += main.cpp\
     plotdialog.cpp \
     objektdelegate.cpp \
     Business_Intelligence/exportutils.cpp \
-    showgroupsdialog.cpp
+    showgroupsdialog.cpp \
+    givemoneydialog.cpp \
+    receivemoneydialog.cpp
 
 
 HEADERS  += mainwindow.h \
@@ -178,7 +180,9 @@ HEADERS  += mainwindow.h \
     plotdialog.h \
     objektdelegate.h \
     Business_Intelligence/exportutils.h \
-    showgroupsdialog.h
+    showgroupsdialog.h \
+    givemoneydialog.h \
+    receivemoneydialog.h
 
 
 FORMS    += mainwindow.ui \
@@ -205,7 +209,9 @@ FORMS    += mainwindow.ui \
     raumedialog.ui \
     managefeesdialog.ui \
     plotdialog.ui \
-    showgroupsdialog.ui
+    showgroupsdialog.ui \
+    givemoneydialog.ui \
+    receivemoneydialog.ui
 
     
 CONFIG +=   c++11
