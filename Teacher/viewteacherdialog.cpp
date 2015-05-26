@@ -46,6 +46,12 @@ void ViewTeacherDialog::on_pushButton_clicked()
 
    ui->labProfile->setPixmap(L.getPixie().scaled(w,h,Qt::KeepAspectRatio));
 
+
+   //set signature
+
+   ui->labSignature->setPixmap(L.getSignaturePixie());
+
+
 }
 
 
