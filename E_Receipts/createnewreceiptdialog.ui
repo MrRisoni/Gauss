@@ -448,7 +448,7 @@ border-bottom-right-radius : 15px;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">#pliromiLabel {
+      <string notr="true">#eispraxiLabel {
 	border-color: rgb(80, 147, 255);
 	border-style: solid;
 	border-width: 2px;
