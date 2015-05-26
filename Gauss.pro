@@ -99,8 +99,9 @@ SOURCES += main.cpp\
     myCSP/variable.cpp \
     Student/viewstudentdialog.cpp \
     Uni/createunidialog.cpp \
-    E_Receipts/symvasidialog.cpp \
-    E_Receipts/createnewreceiptdialog.cpp
+    E_Receipts/createnewreceiptdialog.cpp \
+    Schule/manageschuletestsdialog.cpp \
+    Sprache/managesprachetestsdialog.cpp
 
 
 
@@ -191,8 +192,9 @@ HEADERS  += Entities/absent.h  \
     Teacher/showteachersdialog.h \
     Teacher/viewteacherdialog.h \
     Uni/createunidialog.h \
-    E_Receipts/symvasidialog.h \
-    E_Receipts/createnewreceiptdialog.h
+    E_Receipts/createnewreceiptdialog.h \
+    Schule/manageschuletestsdialog.h \
+    Sprache/managesprachetestsdialog.h
 
 
 
@@ -226,8 +228,9 @@ FORMS    += Artif_Intel/plotdialog.ui \
     Student/showstudentsdialog.ui \
     Student/viewstudentdialog.ui \
     Student/addnewstudentdialog.ui \
-    E_Receipts/symvasidialog.ui \
-    E_Receipts/createnewreceiptdialog.ui
+    E_Receipts/createnewreceiptdialog.ui \
+    Schule/manageschuletestsdialog.ui \
+    Sprache/managesprachetestsdialog.ui
 
     
 CONFIG +=   c++11

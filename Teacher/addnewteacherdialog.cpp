@@ -281,3 +281,8 @@ void AddNewTeacherDialog::on_pushLoadPic_clicked()
 
 
 }
+
+void AddNewTeacherDialog::on_pushESymvasis_clicked()
+{
+
+}
