@@ -106,7 +106,7 @@ public:
     void setDb(const QSqlDatabase &value);
 
 
-
+    QString getSetFacesPath();
 
 
     //  MVC
