@@ -123,6 +123,8 @@ public:
 
     DiplomaModelMVC getDiplomaMVC();
 
+    QPixmap getSignaturePic(QString TeacherID);
+
 private:
     void ShowError(QSqlQuery q);
     void ShowSuccess();
