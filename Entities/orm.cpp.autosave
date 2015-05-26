@@ -322,6 +322,9 @@ Teacher ORM::searchteacherByname(QString name) {
     qDebug() << mid << " " << L.getName() << " " << L.getMembID();
 
 
+    QString FacesPath = getSetFacesPath();
+
+    
     q.prepare("SELECT Pic FROM Faces Where MembID=:mid");
     q.bindValue(":mid",mid);
     q.exec();
