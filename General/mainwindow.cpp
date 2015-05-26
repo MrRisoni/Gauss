@@ -48,13 +48,16 @@ QSqlDatabase MainWindow::getDb() const
 
 
 void MainWindow::giveMoneyReceipt() {
-    GiveMoneyDialog *gief = new GiveMoneyDialog();
+
+    CreateNewReceiptDialog *gief = new CreateNewReceiptDialog();
+    gief->setReceiptType(-1);
     gief->setAttribute(Qt::WA_DeleteOnClose);
     gief->show();
 }
 
 void MainWindow::takeMoneyReceipt() {
-    ReceiveMoneyDialog *rec = new ReceiveMoneyDialog();
+    CreateNewReceiptDialog *rec = new CreateNewReceiptDialog();
+    rec->setReceiptType(1);
     rec->setAttribute(Qt::WA_DeleteOnClose);
     rec->show();
 }

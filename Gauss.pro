@@ -79,12 +79,10 @@ SOURCES += main.cpp\
     Teacher/showteachersdialog.cpp \
     Teacher/viewteacherdialog.cpp \
     Sprache/createsprachedialog.cpp \
-    E_Receipts/givemoneydialog.cpp \
     E_Receipts/kassendialog.cpp \
     E_Receipts/managefeesdialog.cpp \
     E_Receipts/managesalariesdialog.cpp \
     E_Receipts/receiptviewerdialog.cpp \
-    E_Receipts/receivemoneydialog.cpp \
     General/absentbuchdialog.cpp \
     General/addnewrequestdialog.cpp \
     General/addnewschwerdialog.cpp \
@@ -101,7 +99,8 @@ SOURCES += main.cpp\
     myCSP/variable.cpp \
     Student/viewstudentdialog.cpp \
     Uni/createunidialog.cpp \
-    E_Receipts/symvasidialog.cpp
+    E_Receipts/symvasidialog.cpp \
+    E_Receipts/createnewreceiptdialog.cpp
 
 
 
@@ -161,12 +160,10 @@ HEADERS  += Entities/absent.h  \
     Artif_Intel/plotdialog.h \
     Artif_Intel/qcustomplot.h \
     Artif_Intel/statisticsdialog.h \
-    E_Receipts/givemoneydialog.h \
     E_Receipts/kassendialog.h \
     E_Receipts/managefeesdialog.h \
     E_Receipts/managesalariesdialog.h \
     E_Receipts/receiptviewerdialog.h \
-    E_Receipts/receivemoneydialog.h \
     General/absentbuchdialog.h \
     General/addnewrequestdialog.h \
     General/addnewschwerdialog.h \
@@ -194,7 +191,8 @@ HEADERS  += Entities/absent.h  \
     Teacher/showteachersdialog.h \
     Teacher/viewteacherdialog.h \
     Uni/createunidialog.h \
-    E_Receipts/symvasidialog.h
+    E_Receipts/symvasidialog.h \
+    E_Receipts/createnewreceiptdialog.h
 
 
 
@@ -202,12 +200,10 @@ HEADERS  += Entities/absent.h  \
 
 FORMS    += Artif_Intel/plotdialog.ui \
     Artif_Intel/statisticsdialog.ui \
-    E_Receipts/givemoneydialog.ui \
     E_Receipts/kassendialog.ui \
     E_Receipts/managefeesdialog.ui \
     E_Receipts/managesalariesdialog.ui \
     E_Receipts/receiptviewerdialog.ui \
-    E_Receipts/receivemoneydialog.ui \
     General/absentbuchdialog.ui \
     General/addnewrequestdialog.ui \
     General/addnewschwerdialog.ui \
@@ -230,7 +226,8 @@ FORMS    += Artif_Intel/plotdialog.ui \
     Student/showstudentsdialog.ui \
     Student/viewstudentdialog.ui \
     Student/addnewstudentdialog.ui \
-    E_Receipts/symvasidialog.ui
+    E_Receipts/symvasidialog.ui \
+    E_Receipts/createnewreceiptdialog.ui
 
     
 CONFIG +=   c++11

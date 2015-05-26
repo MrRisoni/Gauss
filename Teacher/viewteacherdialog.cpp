@@ -3,7 +3,7 @@
 
 #include "Entities/orm.h"
 #include <QBuffer>
-#include "E_Receipts/givemoneydialog.h"
+#include "E_Receipts/createnewreceiptdialog.h"
 
 ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -67,7 +67,8 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
     O.save(pay);
 
 
-    GiveMoneyDialog *gief= new GiveMoneyDialog();
+    CreateNewReceiptDialog *gief= new CreateNewReceiptDialog();
+    gief->setReceiptType(-1);
     gief->setAttribute(Qt::WA_DeleteOnClose);
     gief->show();
     //fill in the blanks

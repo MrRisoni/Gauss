@@ -23,8 +23,7 @@
 #include "Sprache/addinstitutdialog.h"
 #include "Sprache/addlanguagedialog.h"
 #include "Sprache/addnewdiplomadialog.h"
-#include "E_Receipts/givemoneydialog.h"
-#include "E_Receipts/receivemoneydialog.h"
+#include "E_Receipts/createnewreceiptdialog.h"
 
 namespace Ui {
 class MainWindow;
