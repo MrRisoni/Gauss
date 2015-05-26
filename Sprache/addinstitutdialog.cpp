@@ -5,8 +5,6 @@
 
 #include "Entities/orm.h"
 #include <QStandardItemModel>
-#include "objektdelegate.h"
-#include <QAbstractItemDelegate>
 
 
 AddInstitutDialog::AddInstitutDialog(QWidget *parent) :

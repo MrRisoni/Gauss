@@ -74,7 +74,7 @@ void MainWindow::manageLanguages() {
 
 void MainWindow::MachLearn() {
 
-    std::string filename = "python2 /home/linguine/Gauss/Business_Intelligence/test.py";
+    std::string filename = "python2  /home/linguine/Gauss/Artif_Intel/test.py";
 
     system(filename.c_str());
 }
