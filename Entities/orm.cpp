@@ -321,13 +321,13 @@ Teacher ORM::searchteacherByname(QString name) {
 
     qDebug() << mid << " " << L.getName() << " " << L.getMembID();
 
+    QString FilePath = getSetFacesPath();
 
-    q.prepare("SELECT Pic FROM Faces Where MembID=:mid");
-    q.bindValue(":mid",mid);
-    q.exec();
-    while (q.next()) {
-        L.setPhoto(q.value(0).toByteArray());
-    }
+    qDebug() << "loading image " << FilePath + QString::number(mid) + ".jpg";
+    QPixmap p;
+
+    p.load(FilePath + QString::number(mid) + ".jpg");
+    L.setPixie(p);
 
     q.finish();
     return L;
@@ -746,7 +746,7 @@ QString ORM::getSetFacesPath() {
     qWarning() << val;
     QJsonDocument dok = QJsonDocument::fromJson(val.toUtf8());
     QJsonObject setFilePath = dok.object();
-    QString FilePath = setFilePath.value(QString("appName")).toString();
+    QString FilePath = setFilePath.value(QString("Faces")).toString() + "/";
 
     qDebug() << "faces path " << FilePath;
 
