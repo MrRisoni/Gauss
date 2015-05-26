@@ -68,6 +68,16 @@ void Teacher::setTeachingHours(int value)
 {
     TeachingHours = value;
 }
+QPixmap Teacher::getPixie() const
+{
+    return pixie;
+}
+
+void Teacher::setPixie(const QPixmap &value)
+{
+    pixie = value;
+}
+
 
 
 

@@ -7,6 +7,7 @@
 #include "members.h"
 #include "basewages.h"
 #include "courses.h"
+#include <QPixmap>
 
 class Teacher : public Members
 {
@@ -78,6 +79,9 @@ public:
 
 
 
+    QPixmap getPixie() const;
+    void setPixie(const QPixmap &value);
+
 private:
     int TeacherID;
     BaseWages base_wages;
@@ -100,6 +104,7 @@ private:
     int CurrentStudents;
     int TotalHours;
 
+    QPixmap pixie;
 
     QByteArray Signature;
 
