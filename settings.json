@@ -1,3 +1,7 @@
 {
-  "Faces": "/home/linguine/GaussData/Faces"
+  "Faces": "/home/linguine/GaussData/Faces",
+  "Signature_Dims": {
+    "Cols" : 150,
+    "Rows" : 60,
+  }
 } 
