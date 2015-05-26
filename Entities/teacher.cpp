@@ -77,6 +77,16 @@ void Teacher::setPixie(const QPixmap &value)
 {
     pixie = value;
 }
+QPixmap Teacher::getSignaturePixie() const
+{
+    return SignaturePixie;
+}
+
+void Teacher::setSignaturePixie(const QPixmap &value)
+{
+    SignaturePixie = value;
+}
+
 
 
 

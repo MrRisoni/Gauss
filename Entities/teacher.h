@@ -82,6 +82,9 @@ public:
     QPixmap getPixie() const;
     void setPixie(const QPixmap &value);
 
+    QPixmap getSignaturePixie() const;
+    void setSignaturePixie(const QPixmap &value);
+
 private:
     int TeacherID;
     BaseWages base_wages;
@@ -107,6 +110,7 @@ private:
     QPixmap pixie;
 
     QByteArray Signature;
+    QPixmap SignaturePixie;
 
 
 
