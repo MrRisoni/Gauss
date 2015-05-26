@@ -38,14 +38,13 @@ void ViewTeacherDialog::on_pushButton_clicked()
 
     qDebug() << "setting image..." << L.getPhoto().size();
 
-    QPixmap p;
-    p.loadFromData(L.getPhoto());
+
 
     int w = ui->labProfile->width();
     int h = ui->labProfile->height();
 
 
-   ui->labProfile->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+   ui->labProfile->setPixmap(L.getPixie().scaled(w,h,Qt::KeepAspectRatio));
 
 }
 
