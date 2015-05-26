@@ -13,215 +13,220 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        mainwindow.cpp \
-    addinstitutdialog.cpp \
-    addlanguagedialog.cpp \
-    addnewdiplomadialog.cpp \
-    addnewrequestdialog.cpp \
-    addnewschwerdialog.cpp \
-    addnewstudentdialog.cpp \
-    addnewteacherdialog.cpp \
-    createschulegroupdialog.cpp \
-    createsprachedialog.cpp \
-    createunidialog.cpp \
-    logindialog.cpp \
-    managedepsdialog.cpp \
-    managesalariesdialog.cpp \
-    statisticsdialog.cpp \
-    viewstudentdialog.cpp \
-    viewteacherdialog.cpp \
-    Entities/absent.cpp \
-    Entities/basewages.cpp \
-    Entities/buildings.cpp \
-    Entities/canceled.cpp \
-    Entities/contract.cpp \
-    Entities/courses.cpp \
-    Entities/days.cpp \
-    Entities/departments.cpp \
-    Entities/diplomas.cpp \
-    Entities/echelon.cpp \
-    Entities/edutypes.cpp \
-    Entities/ensembles.cpp \
-    Entities/erlaubnis.cpp \
-    Entities/examschule.cpp \
-    Entities/examsprache.cpp \
-    Entities/faces.cpp \
-    Entities/feeschule.cpp \
-    Entities/feesprache.cpp \
-    Entities/feeuni.cpp \
-    Entities/funds.cpp \
-    Entities/groups.cpp \
-    Entities/history.cpp \
-    Entities/hours.cpp \
-    Entities/instituts.cpp \
-    Entities/kassen.cpp \
-    Entities/languages.cpp \
-    Entities/members.cpp \
-    Entities/membtypes.cpp \
-    Entities/payments.cpp \
-    Entities/permament.cpp \
-    Entities/requestschule.cpp \
-    Entities/requestsprache.cpp \
-    Entities/requestuni.cpp \
-    Entities/rooms.cpp \
-    Entities/schedule.cpp \
-    Entities/schwierigkeit.cpp \
-    Entities/teachother.cpp \
-    Entities/teachsprache.cpp \
-    Entities/teachuni.cpp \
-    Entities/times.cpp \
-    Entities/unavailable.cpp \
-    Entities/versicherung.cpp \
-    Entities/wagesuni.cpp \
-    Entities/wagessprache.cpp \
-    Entities/wagesschule.cpp \
-    Entities/orm.cpp \
-    addsprachescheduledialog.cpp \
-    managecoursesdialog.cpp \
-    myCSP/cspsolver.cpp \
-    myCSP/node.cpp \
-    myCSP/point.cpp \
-    myCSP/variable.cpp \
-    Entities/teacher.cpp \
-    kassendialog.cpp \
-    absentbuchdialog.cpp \
-    Entities/paykassen.cpp \
-    raumedialog.cpp \
-    managefeesdialog.cpp \
-    Entities/student.cpp \
-    qcustomplot.cpp \
-    plotdialog.cpp \
-    objektdelegate.cpp \
-    Business_Intelligence/exportutils.cpp \
-    showgroupsdialog.cpp \
-    givemoneydialog.cpp \
-    receivemoneydialog.cpp \
-    showstudentsdialog.cpp \
-    showteachersdialog.cpp \
-    Entities/paytype.cpp \
-    Entities/receipt.cpp
+  Artif_Intel/exportutils.cpp \
+  Artif_Intel/plotdialog.cpp \
+  Artif_Intel/qcustomplot.cpp  \
+  Artif_Intel/statisticsdialog.cpp  \
+  Entities/absent.cpp  \
+  Entities/basewages.cpp  \
+  Entities/buildings.cpp \
+  Entities/canceled.cpp \
+  Entities/contract.cpp \
+  Entities/courses.cpp \
+  Entities/days.cpp \
+  Entities/departments.cpp \
+  Entities/diplomas.cpp \
+  Entities/echelon.cpp \
+  Entities/edutypes.cpp \
+  Entities/ensembles.cpp \
+  Entities/erlaubnis.cpp \
+  Entities/examschule.cpp \
+  Entities/examsprache.cpp \
+  Entities/faces.cpp \
+  Entities/feeschule.cpp \
+  Entities/feesprache.cpp \
+  Entities/feeuni.cpp \
+  Entities/funds.cpp \
+  Entities/groups.cpp \
+  Entities/history.cpp \
+  Entities/hours.cpp \
+  Entities/instituts.cpp \
+  Entities/kassen.cpp \
+  Entities/languages.cpp \
+  Entities/members.cpp \
+  Entities/membtypes.cpp \
+  Entities/orm.cpp \
+  Entities/paykassen.cpp
+  Entities/payments.cpp
+Entities/paytype.cpp
+Entities/permament.cpp
+Entities/receipt.cpp
+Entities/requestschule.cpp
+Entities/requestsprache.cpp
+Entities/requestuni.cpp
+Entities/rooms.cpp
+Entities/schedule.cpp
+Entities/schwierigkeit.cpp
+Entities/student.cpp
+Entities/teacher.cpp
+Entities/teachother.cpp
+Entities/teachsprache.cpp
+Entities/teachuni.cpp
+Entities/times.cpp
+Entities/unavailable.cpp
+Entities/versicherung.cpp
+Entities/wagesschule.cpp
+Entities/wagessprache.cpp
+Entities/wagesuni.cpp
+Schule/createschulegroupdialog.cpp
+Sprache/addititutdialog.cpp
+Sprache/addlanguagedialog.cpp
+Sprache/addsprachescheduledialog.cpp
+Sprache/addnewdiplomadialog.cpp
+Student/addnewstudentdialog.cpp
+Student/showstudentsdialog.cpp
+Teacher/addnewteacherdialog.cpp
+Teacher/showteachersdialog.cpp
+Teacher/viewteacherdialog.cpp
+Sprache/createsprachedialog.cpp
+E_Receipts/givemoneydialog.cpp
+E_Receipts/kassendialog.cpp
+E_Receipts/managefeesdialog.cpp
+E_Receipts/managesalariesdialog.cpp
+E_Receipts/receiptviewerdialog.cpp
+E_Receipts/receivemoneydialog.cpp
+General/absentbuchdialog.cpp
+General/addnewrequestdialog.cpp
+General/addnewschwerdialog.cpp
+General/logindialog.cpp
+General/mainwindow.cpp
+General/managecoursesdialog.cpp
+General/managedepsdialog.cpp
+General/objektdelegate.cpp
+General/raumedialog.cpp
+General/showgroupsdialog.cpp
+myCSP/cspsolver.cpp
+myCSP/node.cpp
+myCSP/point.cpp
+myCSP/variable.cpp
+Student/viewstudentdialog.cpp
+Uni/createunidialog.cpp
 
 
-HEADERS  += mainwindow.h \
-    addinstitutdialog.h \
-    addlanguagedialog.h \
-    addnewdiplomadialog.h \
-    addnewrequestdialog.h \
-    addnewschwerdialog.h \
-    addnewstudentdialog.h \
-    addnewteacherdialog.h \
-    createschulegroupdialog.h \
-    createsprachedialog.h \
-    createunidialog.h \
-    logindialog.h \
-    managedepsdialog.h \
-    managesalariesdialog.h \
-    statisticsdialog.h \
-    viewstudentdialog.h \
-    viewteacherdialog.h \
-    Entities/absent.h \
-    Entities/basewages.h \
-    Entities/buildings.h \
-    Entities/canceled.h \
-    Entities/contract.h \
-    Entities/courses.h \
-    Entities/days.h \
-    Entities/departments.h \
-    Entities/diplomas.h \
-    Entities/echelon.h \
-    Entities/edutypes.h \
-    Entities/ensembles.h \
-    Entities/erlaubnis.h \
-    Entities/examschule.h \
-    Entities/examsprache.h \
-    Entities/faces.h \
-    Entities/feeschule.h \
-    Entities/feesprache.h \
-    Entities/feeuni.h \
-    Entities/funds.h \
-    Entities/groups.h \
-    Entities/history.h \
-    Entities/hours.h \
-    Entities/instituts.h \
-    Entities/kassen.h \
-    Entities/languages.h \
-    Entities/members.h \
-    Entities/membtypes.h \
-    Entities/payments.h \
-    Entities/permament.h \
-    Entities/requestschule.h \
-    Entities/requestsprache.h \
-    Entities/requestuni.h \
-    Entities/rooms.h \
-    Entities/schedule.h \
-    Entities/schwierigkeit.h \
-    Entities/teachother.h \
-    Entities/teachsprache.h \
-    Entities/teachuni.h \
-    Entities/times.h \
-    Entities/unavailable.h \
-    Entities/versicherung.h \
-    Entities/wagesuni.h \
-    Entities/wagessprache.h \
-    Entities/wagesschule.h \
-    Entities/orm.h \
-    addsprachescheduledialog.h \
-    managecoursesdialog.h \
-    myCSP/cspsolver.h \
-    myCSP/node.h \
-    myCSP/point.h \
-    myCSP/variable.h \
-    Entities/teacher.h \
-    kassendialog.h \
-    absentbuchdialog.h \
-    Entities/paykassen.h \
-    raumedialog.h \
-    managefeesdialog.h \
-    Entities/student.h \
-    Entities/ontotites.h \
-    Entities/tablestructs.h \
-    qcustomplot.h \
-    plotdialog.h \
-    objektdelegate.h \
-    Business_Intelligence/exportutils.h \
-    showgroupsdialog.h \
-    givemoneydialog.h \
-    receivemoneydialog.h \
-    showstudentsdialog.h \
-    showteachersdialog.h \
-    Entities/paytype.h \
-    Entities/receipt.h
+
+HEADERS  += Entities/absent.h
+Entities/basewages.h
+Entities/buildings.h
+Entities/canceled.h
+Entities/contract.h
+Entities/courses.h
+Entities/days.h
+Entities/departments.h
+Entities/diplomas.h
+Entities/echelon.h
+Entities/edutypes.h
+Entities/ensembles.h
+Entities/erlaubnis.h
+Entities/examschule.h
+Entities/examsprache.h
+Entities/faces.h
+Entities/feeschule.h
+Entities/feesprache.h
+Entities/feeuni.h
+Entities/funds.h
+Entities/groups.h
+Entities/history.h
+Entities/hours.h
+Entities/instituts.h
+Entities/kassen.h
+Entities/languages.h
+Entities/members.h
+Entities/membtypes.h
+Entities/orm.h
+Entities/paykassen.h
+Entities/payments.h
+Entities/paytype.h
+Entities/permament.h
+Entities/receipt.h
+Entities/requestschule.h
+Entities/requestsprache.h
+Entities/requestuni.h
+Entities/rooms.h
+Entities/schedule.h
+Entities/schwierigkeit.h
+Entities/student.h
+Entities/tablestructs.h
+Entities/teacher.h
+Entities/teachother.h
+Entities/teachsprache.h
+Entities/teachuni.h
+Entities/times.h
+Entities/unavailable.h
+Entities/versicherung.h
+Entities/wagesschule.h
+Entities/wagessprache.h
+Entities/wagesuni.h
+Artif_Intel/exportutils.h
+Artif_Intel/plotdialog.h
+Artif_Intel/qcustomplot.h
+Artif_Intel/statisticsdialog.h
+E_Receipts/givemoneydialog.h
+E_Receipts/kassendialog.h
+E_Receipts/managefeesdialog.h
+E_Receipts/managesalariesdialog.h
+E_Receipts/receiptviewerdialog.h
+E_Receipts/receivemoneydialog.h
+General/absentbuchdialog.h
+General/addnewrequestdialog.h
+General/addnewschwerdialog.h
+General/logindialog.h
+General/mainwindow.h
+General/managecoursesdialog.h
+General/managedepsdialog.h
+General/objektdelegate.h
+General/raumedialog.h
+General/showgroupsdialog.h
+myCSP/cspsolver.h
+myCSP/node.h
+myCSP/point.h
+myCSP/variable.h
+Schule/createschulegroupdialog.h
+Sprache/addinstitutdialog.h
+Sprache/addlanguagedialog.h
+Sprache/addnewdiplomadialog.h
+Sprache/addsprachescheduledialog.h
+Sprache/createsprachedialog.h
+Student/addnewstudentdialog.h
+Student/showstudentsdialog.h
+Student/viewstudentdialog.h
+Teacher/addnewteacherdialog.h
+Teacher/showteachersdialog.h
+Teacher/viewteacherdialog.h
+Uni/createunidialog.h
 
 
-FORMS    += mainwindow.ui \
-    addinstitutdialog.ui \
-    addlanguagedialog.ui \
-    addnewdiplomadialog.ui \
-    addnewrequestdialog.ui \
-    addnewschwerdialog.ui \
-    addnewstudentdialog.ui \
-    addnewteacherdialog.ui \
-    createschulegroupdialog.ui \
-    createsprachedialog.ui \
-    createunidialog.ui \
-    logindialog.ui \
-    managedepsdialog.ui \
-    managesalariesdialog.ui \
-    statisticsdialog.ui \
-    viewstudentdialog.ui \
-    viewteacherdialog.ui \
-    addsprachescheduledialog.ui \
-    managecoursesdialog.ui \
-    kassendialog.ui \
-    absentbuchdialog.ui \
-    raumedialog.ui \
-    managefeesdialog.ui \
-    plotdialog.ui \
-    showgroupsdialog.ui \
-    givemoneydialog.ui \
-    receivemoneydialog.ui \
-    showstudentsdialog.ui \
-    showteachersdialog.ui
+
+
+FORMS    += Artif_Intel/plotdialog.ui
+Artif_Intel/statisticsdialog.ui
+E_Receipts/givemoneydialog.ui
+E_Receipts/kassendialog.ui
+E_Receipts/managefeesdialog.ui
+E_Receipts/managesalariesdialog.ui
+E_Receipts/receiptviewerdialog.ui
+E_Receipts/receivemoneydialog.ui
+General/absentbuchdialog.ui
+General/addnewrequestdialog.ui
+General/addnewschwerdialog.ui
+General/logindialog.ui
+General/mainwindow.ui
+General/managecoursesdialog.ui
+General/managedepsdialog.ui
+General/raumedialog.ui
+General/showgroupsdialog.ui
+Schule/createschulegroupdialog.ui
+Sprache/addinstitutdialog.ui
+Sprache/addlanguagedialog.ui
+Sprache/addnewdiplomadialog.ui
+Sprache/addsprachescheduledialog.ui
+Sprache/createsprachedialog.ui
+Uni/createunidialog.ui
+Teacher/viewteacherdialog.ui
+Teacher/showteachersdialog.ui
+Teacher/addnewteacherdialog.ui
+Student/showstudentsdialog.ui
+Student/viewstudentdialog.ui
+Student/addnewstudentdialog.ui
 
     
 CONFIG +=   c++11

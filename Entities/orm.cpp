@@ -377,22 +377,50 @@ void ORM::save(Kassen K) {
 }
 
 QString ORM::generateADT() {
+    //get all the ADTs from the db
+    //adt must be uniquq
+    QSqlQuery q;
+
+    QList<QString> ExistingADTS;
+    q.exec("SELECT ADT FROM Members UNION SELECT ADT FROM Users ORDER BY `ADT` ASC ");
+    while (q.next()) {
+        ExistingADTS.append(q.value(0).toString());
+    }
+
+    bool exists= true;
+
+
     //generates a 8 digit ADT
     QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
 
 
     QString randomString;
-    for(int i=0; i<2; ++i)
-    {
-        int index = qrand() % possibleCharacters.length();
-        QChar nextChar = possibleCharacters.at(index);
-        randomString.append(nextChar);
+
+
+    while (exists==true) {
+
+
+        for(int i=0; i<2; ++i)
+        {
+            int index = qrand() % possibleCharacters.length();
+            QChar nextChar = possibleCharacters.at(index);
+            randomString.append(nextChar);
+        }
+        int High=9;
+        int Low=0;
+        for (int i=0;i<6;i++) {
+            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+        }
+
+        //if random string exists in the db regenerate
+
+
+          exists=ExistingADTS.contains(randomString);
+
+
     }
-    int High=9;
-    int Low=0;
-    for (int i=0;i<6;i++) {
-        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-    }
+
+    q.finish();
     return randomString;
 
 }
@@ -533,12 +561,30 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
 
 
 QString ORM::generateAFM() {
-    QString randomString;
-    int High=9;
-    int Low=0;
-    for (int i=0;i<7;i++) {
-        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+
+
+    QSqlQuery q;
+    QList<QString> ExistingAFMs;
+    q.exec("SELECT AFM FROM Versicherung");
+    while (q.next()) {
+        ExistingAFMs.append(q.value(0).toString());
     }
+
+    bool exists= true;
+    QString randomString;
+
+    while (exists==true) {
+        int High=9;
+        int Low=0;
+        for (int i=0;i<7;i++) {
+            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+        }
+
+        exists=ExistingAFMs.contains(randomString);
+
+    }
+    q.finish();
+
     return randomString;
 }
 

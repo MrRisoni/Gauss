@@ -3,7 +3,7 @@
 
 #include "Entities/orm.h"
 #include <QBuffer>
-#include "givemoneydialog.h"
+#include "E_Receipts/givemoneydialog.h"
 
 ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
     QDialog(parent),

@@ -61,6 +61,8 @@ void KassenDialog::populateKassenTable() {
 
 KassenDialog::~KassenDialog()
 {
+    QAbstractItemModel * mod = ui->tableKassen->model();
+    delete mod;
     delete ui;
 }
 

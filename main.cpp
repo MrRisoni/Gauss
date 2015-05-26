@@ -25,4 +25,9 @@ int main(int argc, char *argv[])
     w.show();
 
     return a.exec();
+
+
+    //destroy db release memory
+    vasi.close();
+    QSqlDatabase::removeDatabase("Gauss");
 }
