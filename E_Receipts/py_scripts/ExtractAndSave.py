@@ -42,7 +42,7 @@ def ToDocument(TeacherID,x_coords, y_coords):
         
         json_string = dumps(python_object)
         new_python_object = json.loads(json_string)
-        print json_string    
+        # print json_string    
         return new_python_object
         
     except Exception as ex:

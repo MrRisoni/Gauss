@@ -15,7 +15,7 @@ def main(TeacherID):
      db = setUpDB()
 
      Dok=db.find_one( { '_id' : int(TeacherID) })
-     print Dok
+     #print Dok
                 
                 
      X,Y = DocumentToClass(Dok)
@@ -29,7 +29,7 @@ def main(TeacherID):
      #cv2.imshow(str(TeacherID),blank)
      #cv2.waitKey()
      #cv2.destroyAllWindows()
-     cv2.imwrite('/tmp/'+ TeacherID +'.png', blank, [cv2.cv.CV_IMWRITE_PNG_COMPRESSION,4])
+     cv2.imwrite('/tmp/sign'+ TeacherID +'.png', blank, [cv2.cv.CV_IMWRITE_PNG_COMPRESSION,4])
 
      
 
@@ -41,7 +41,7 @@ def DocumentToClass(MongoDoc):
    """
    x = MongoDoc['X']
    y = MongoDoc['Y']
-   print x,y
+   # print x,y
    return x,y
 
   
