@@ -197,6 +197,7 @@ HEADERS  += Entities/absent.h  \
 
 
 
+
 FORMS    += Artif_Intel/plotdialog.ui \
     Artif_Intel/statisticsdialog.ui \
     E_Receipts/givemoneydialog.ui \

@@ -69,7 +69,6 @@ void Teacher::setTeachingHours(int value)
     TeachingHours = value;
 }
 
-;
 
 
 QByteArray Teacher::getPhoto() const

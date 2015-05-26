@@ -76,6 +76,8 @@ public:
     int getTeachingHours() const;
     void setTeachingHours(int value);
 
+
+
 private:
     int TeacherID;
     BaseWages base_wages;
@@ -98,6 +100,8 @@ private:
     int CurrentStudents;
     int TotalHours;
 
+
+    QByteArray Signature;
 
 
 
