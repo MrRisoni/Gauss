@@ -43,7 +43,7 @@ public:
     void save(Departments D);
     void save(Courses C);
     void save(Echelon E);
-    void save(BaseWages BW);gen
+    void save(BaseWages BW);
     void save(WagesSchule WGS);
     void saveStudent(Members m);
     void save(Kassen K);
