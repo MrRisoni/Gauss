@@ -398,6 +398,53 @@ void ORM::save(Kassen K) {
     q.finish();
 }
 
+
+
+QString ORM::generateRandomString(int digits) {
+    return "";
+}
+
+QString ORM::generateAMKA() {
+
+    QSqlQuery q;
+
+    QList<QString> ExistingADTS;
+    q.exec("SELECT AMKA FROM Versicherung");
+    while (q.next()) {
+        ExistingADTS.append(q.value(0).toString());
+    }
+
+    bool exists= true;
+
+
+
+
+    QString randomString;
+
+
+    while (exists==true) {
+
+
+
+        int High=9;
+        int Low=0;
+        for (int i=0;i<12;i++) {
+            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+        }
+
+        //if random string exists in the db regenerate
+
+
+          exists=ExistingADTS.contains(randomString);
+
+
+    }
+
+    q.finish();
+    return randomString;
+}
+
+
 QString ORM::generateADT() {
     //get all the ADTs from the db
     //adt must be uniquq

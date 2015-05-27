@@ -43,7 +43,7 @@ public:
     void save(Departments D);
     void save(Courses C);
     void save(Echelon E);
-    void save(BaseWages BW);
+    void save(BaseWages BW);gen
     void save(WagesSchule WGS);
     void saveStudent(Members m);
     void save(Kassen K);
@@ -133,6 +133,8 @@ private:
     QString generateAFM();
     QString generatePhone();
     QString generateMobile();
+    QString generateAMKA();
+    QString generateRandomString(int digits);
     QDate calcEOC(QString tid);
 
 

@@ -6,6 +6,17 @@ ShowTeachersDialog::ShowTeachersDialog(QWidget *parent) :
     ui(new Ui::ShowTeachersDialog)
 {
     ui->setupUi(this);
+    /*
+     * teacherid
+     * name
+     * address
+     * #courses + #diplomas
+     * Courses tooltip
+     * salary
+     * total money payed
+     * debt
+     * xp years
+     */
 }
 
 ShowTeachersDialog::~ShowTeachersDialog()
