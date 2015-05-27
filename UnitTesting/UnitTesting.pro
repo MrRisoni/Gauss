@@ -18,7 +18,11 @@ TEMPLATE = app
 SOURCES += main.cpp \
     saludboost.cpp \
     haloboost.cpp \
-    std_base_salary.cpp
+    std_base_salary.cpp \
+    qt_base_salary.cpp
 
 
 LIBS+= -lboost_unit_test_framework
+
+HEADERS += \
+    salary_structs.h
