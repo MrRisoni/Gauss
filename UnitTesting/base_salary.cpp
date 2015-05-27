@@ -9,7 +9,8 @@
 #include <math.h>
 #include <QDebug>
 
-
+// compile
+// 
 using namespace std;
 
 
