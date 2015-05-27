@@ -1,22 +1,14 @@
 
 
-
-generate AMKA
-
-
-C++ date
-
 calculate wages and fees :) unit testing 
 UNIT TESTING
 
 
 
-ΣΥΝΕΔΡΙΕΣ, συναντήσεις των γονιών με τους καθηγητές και τη Γραμματεία
+ΣΥΝΕΔΡΙΕΣ, συναντήσεις των γονιών με τους καθηγητές
 
 
 
-
-αλλα εξοδα (αγορα χαρτιου μαρκαδορων επιστεκυες ....)
 
 
 code schule group schedule 

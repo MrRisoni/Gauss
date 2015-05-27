@@ -3,7 +3,8 @@ CONFIG += console
 CONFIG -= app_bundle
 QT += core
 
-SOURCES += main.cpp
+SOURCES += main.cpp \
+    anothertest.cpp
 
 include(deployment.pri)
 qtcAddDeployment()
