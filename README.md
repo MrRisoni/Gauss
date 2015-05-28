@@ -11,5 +11,5 @@ The biggest app i have ever developed!
 
 - Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql ( webui branch )
 
-- Simple Document Management System : Python , MongoDB ( pydms branch )
+- Simple Document Management System : PHP , Postgres ( pydms branch )
 
