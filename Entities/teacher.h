@@ -89,7 +89,11 @@ private:
     int TeacherID;
     BaseWages base_wages;
     QList<Courses> CanTeach;
+
+
     Echelon Ech;
+
+
     QByteArray photo;
     Kassen Versichern;
     PayKassen payKasse;
@@ -113,6 +117,8 @@ private:
     QPixmap SignaturePixie;
 
 
+    //history of echelon
+    QList<TeachEchel> AscentHistory;
 
 
 
