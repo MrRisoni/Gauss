@@ -12,7 +12,7 @@
 #include <QDebug>
 #include <QDate>
 #include <QList>
-#include "salary_structs.h"
+#include "old_salary_structs.h"
 
 
 

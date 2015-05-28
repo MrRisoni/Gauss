@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <QDate>
-#include "salary_structs.h"
+#include "old_salary_structs.h"
 
 
 

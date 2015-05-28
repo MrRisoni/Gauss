@@ -25,4 +25,5 @@ SOURCES += main.cpp \
 LIBS+= -lboost_unit_test_framework
 
 HEADERS += \
-    salary_structs.h
+    old_salary_structs.h \
+    new_salary_structs.h
