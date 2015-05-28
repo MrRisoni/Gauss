@@ -13,3 +13,6 @@ The biggest app i have ever developed!
 
 - Simple Document Management System : PHP , Postgres ( pydms branch )
 
+  A total of 72 tables :)
+  
+  http://mrrisoni.github.io/Gauss/
