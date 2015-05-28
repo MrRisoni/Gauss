@@ -3,7 +3,7 @@
 #   define BOOST_TEST_MODULE Main
 #endif
 #include <boost/test/unit_test.hpp>
-#include "salary_structs.h"
+#include "old_salary_structs.h"
 
 
 BOOST_AUTO_TEST_SUITE(hola_test)
