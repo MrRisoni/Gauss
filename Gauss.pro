@@ -101,7 +101,8 @@ SOURCES += main.cpp\
     Uni/createunidialog.cpp \
     E_Receipts/createnewreceiptdialog.cpp \
     Schule/manageschuletestsdialog.cpp \
-    Sprache/managesprachetestsdialog.cpp
+    Sprache/managesprachetestsdialog.cpp \
+    Entities/teachechel.cpp
 
 
 
@@ -194,7 +195,8 @@ HEADERS  += Entities/absent.h  \
     Uni/createunidialog.h \
     E_Receipts/createnewreceiptdialog.h \
     Schule/manageschuletestsdialog.h \
-    Sprache/managesprachetestsdialog.h
+    Sprache/managesprachetestsdialog.h \
+    Entities/teachechel.h
 
 
 
