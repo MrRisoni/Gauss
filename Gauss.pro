@@ -93,17 +93,21 @@ SOURCES += main.cpp\
     General/objektdelegate.cpp \
     General/raumedialog.cpp \
     General/showgroupsdialog.cpp \
-    myCSP/cspsolver.cpp \
-    myCSP/node.cpp \
-    myCSP/point.cpp \
-    myCSP/variable.cpp \
     Student/viewstudentdialog.cpp \
     Uni/createunidialog.cpp \
     E_Receipts/createnewreceiptdialog.cpp \
     Schule/manageschuletestsdialog.cpp \
     Sprache/managesprachetestsdialog.cpp \
     Entities/teachechel.cpp \
-    General/geldrechen.cpp
+    General/geldrechen.cpp \
+    General/checkcompleteddialog.cpp \
+    E_Receipts/managediscountsdialog.cpp \
+    Entities/discount.cpp \
+    Entities/discounttype.cpp \
+    Entities/schulediscipline.cpp \
+    Schule/managedisciplinesdialog.cpp \
+    General/zeitwandel.cpp \
+    General/addtemporarylessondialog.cpp
 
 
 
@@ -177,10 +181,6 @@ HEADERS  += Entities/absent.h  \
     General/objektdelegate.h \
     General/raumedialog.h \
     General/showgroupsdialog.h \
-    myCSP/cspsolver.h \
-    myCSP/node.h \
-    myCSP/point.h \
-    myCSP/variable.h \
     Schule/createschulegroupdialog.h \
     Sprache/addinstitutdialog.h \
     Sprache/addlanguagedialog.h \
@@ -198,7 +198,15 @@ HEADERS  += Entities/absent.h  \
     Schule/manageschuletestsdialog.h \
     Sprache/managesprachetestsdialog.h \
     Entities/teachechel.h \
-    General/geldrechen.h
+    General/geldrechen.h \
+    General/checkcompleteddialog.h \
+    E_Receipts/managediscountsdialog.h \
+    Entities/discount.h \
+    Entities/discounttype.h \
+    Entities/schulediscipline.h \
+    Schule/managedisciplinesdialog.h \
+    General/zeitwandel.h \
+    General/addtemporarylessondialog.h
 
 
 
@@ -234,7 +242,11 @@ FORMS    += Artif_Intel/plotdialog.ui \
     Student/addnewstudentdialog.ui \
     E_Receipts/createnewreceiptdialog.ui \
     Schule/manageschuletestsdialog.ui \
-    Sprache/managesprachetestsdialog.ui
+    Sprache/managesprachetestsdialog.ui \
+    General/checkcompleteddialog.ui \
+    E_Receipts/managediscountsdialog.ui \
+    Schule/managedisciplinesdialog.ui \
+    General/addtemporarylessondialog.ui
 
     
 CONFIG +=   c++11
