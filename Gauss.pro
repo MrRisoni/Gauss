@@ -100,7 +100,6 @@ SOURCES += main.cpp\
     Sprache/managesprachetestsdialog.cpp \
     Entities/teachechel.cpp \
     General/geldrechen.cpp \
-    General/checkcompleteddialog.cpp \
     E_Receipts/managediscountsdialog.cpp \
     Entities/discount.cpp \
     Entities/discounttype.cpp \
@@ -199,7 +198,6 @@ HEADERS  += Entities/absent.h  \
     Sprache/managesprachetestsdialog.h \
     Entities/teachechel.h \
     General/geldrechen.h \
-    General/checkcompleteddialog.h \
     E_Receipts/managediscountsdialog.h \
     Entities/discount.h \
     Entities/discounttype.h \
@@ -243,7 +241,6 @@ FORMS    += Artif_Intel/plotdialog.ui \
     E_Receipts/createnewreceiptdialog.ui \
     Schule/manageschuletestsdialog.ui \
     Sprache/managesprachetestsdialog.ui \
-    General/checkcompleteddialog.ui \
     E_Receipts/managediscountsdialog.ui \
     Schule/managedisciplinesdialog.ui \
     General/addtemporarylessondialog.ui
