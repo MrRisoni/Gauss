@@ -254,6 +254,41 @@ struct GroupsDialogMVC {
     QList<GroupsDialogModel> group_model;
 };
 
+
+
+// ManageDiscountModel
+
+struct DiscountModel {
+    QString DiscountID;
+    QString Name;
+    QString percent;
+    QString LastUpdated;
+    QString TimesUpdated;
+    QString NumStudents;
+
+};
+
+struct DiscountDialogMVC {
+    QStringList headers;
+    QList<DiplomaModel> disc_model;
+};
+
+
+
+
+struct SchuleDisciplineModel {
+    QString ID;
+    QString Name;
+    QString NumStudents;
+    QString ActiveStudents;
+};
+
+
+struct SchuleDisciplineMVC {
+    QStringList headers;
+    QList<SchuleDisciplineModel> schuledisc_model;
+};
+
 #endif // TABLESTRUCTS
 
 
