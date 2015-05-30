@@ -17,24 +17,38 @@
 
 
 
-float CalcDiscount(QList<MonthlyFee> fees,QList<Discount> disc_monats,QDate Expires) {
+float CalcDiscount(QList<MonthlyFee> fees,QList<Discount> disc_monats,QDate Expires,QList<Lesson> mathimata) {
     // accumulated fees for each month , latest discounts for each month , expired date for the discount
     float total_discount=0;
+
+
 
     for (MonthlyFee monat : fees) {
         //for each month
         //find the discount for that month
-        for (Discount disc :disc_monats ) {
-            if (disc.MonthID==monat.MonthID) {
-                total_discount -= disc.disc
+        for (Discount disc : disc_monats ) {
+
+            //calculate seperately the expired month !!!!
+
+            if ((disc.dat.year()==monat.dat.year()) && (disc.dat.month()==monat.dat.month())) {
+
+                //check for expire
+                if ((Expires.year()!=monat.dat.year()) && (Expires.month()!=monat.dat.month()) ) {
+                     total_discount -= disc.disc;
+                }
+                //if they are the same ?????
+                //calculate fee for that date
+                total_discount += CalculateFeeForThisDate(Expires,mathimata);
             }
         }
     }
 
-    return total; //assert negative
+    return total_discount; //assert negative
 
 
 }
+
+
 
 
 QList<MonthlyFee> CalculateSchuleFee(QList<FeeSchule> SchuleSchemes,QList<Lesson> mathimata) {
