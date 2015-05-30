@@ -3,9 +3,9 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 28, 2015 at 06:27 AM
--- Server version: 10.0.17-MariaDB
--- PHP Version: 5.6.8
+-- Generation Time: May 30, 2015 at 10:58 AM
+-- Server version: 10.0.19-MariaDB
+-- PHP Version: 5.6.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -31,6 +31,34 @@ CREATE TABLE IF NOT EXISTS `Absent` (
   `StudentID` int(11) NOT NULL,
   `HistID` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='show when a student was absent';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `AccedFees`
+--
+
+CREATE TABLE IF NOT EXISTS `AccedFees` (
+  `AccID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `Amount` float NOT NULL,
+  `Von` date NOT NULL COMMENT 'begins from the first day of every month',
+  `Bis` date NOT NULL COMMENT '30 days apart from Von'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated fees for students for each month';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `AccedPayments`
+--
+
+CREATE TABLE IF NOT EXISTS `AccedPayments` (
+  `AccID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `Amount` float NOT NULL,
+  `Von` date NOT NULL COMMENT 'begins from the first day of every month',
+  `Bis` date NOT NULL COMMENT '30 days apart from Von'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated payments for profs for each month';
 
 -- --------------------------------------------------------
 
@@ -240,19 +268,6 @@ INSERT INTO `Diplomas` (`DiplID`, `LangID`, `ProvID`, `Name`, `Schwer`, `Active`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `DiscData`
---
-
-CREATE TABLE IF NOT EXISTS `DiscData` (
-  `StudentID` int(11) NOT NULL,
-  `DiscID` tinyint(3) unsigned NOT NULL,
-  `MobileFather` varchar(10) NOT NULL,
-  `MobileMother` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='discipline of students and phones of parents';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `Disciplines`
 --
 
@@ -275,15 +290,36 @@ INSERT INTO `Disciplines` (`DiscID`, `Name`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Discounts`
+-- Table structure for table `Discount`
 --
 
-CREATE TABLE IF NOT EXISTS `Discounts` (
+CREATE TABLE IF NOT EXISTS `Discount` (
   `DiscID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
   `CatID` tinyint(3) unsigned NOT NULL,
+  `Reduce` float NOT NULL,
   `Dat` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='monthly discount only latest value is valid';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `DiscountCats`
+--
+
+CREATE TABLE IF NOT EXISTS `DiscountCats` (
+  `SpecialID` tinyint(3) unsigned NOT NULL,
+  `Description` varchar(30) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='ειδικές κατηγορίες : πχ τριτεκνοι ορφανα ';
+
+--
+-- Dumping data for table `DiscountCats`
+--
+
+INSERT INTO `DiscountCats` (`SpecialID`, `Description`) VALUES
+(1, 'ΤΡΙΤΕΚΝΟΙ'),
+(2, 'ΠΟΛΥΤΕΚΝΟΙ'),
+(3, 'ΟΡΦΑΝΑ'),
+(4, 'ΑΝΑΠΗΡΙΑ');
 
 -- --------------------------------------------------------
 
@@ -689,8 +725,6 @@ CREATE TABLE IF NOT EXISTS `Members` (
   `MembTypeID` tinyint(11) DEFAULT NULL,
   `RegDate` date DEFAULT NULL,
   `BirthDate` date NOT NULL,
-  `TotHours` float NOT NULL DEFAULT '0',
-  `TotPaidHours` float NOT NULL DEFAULT '0' COMMENT 'pososto tot hours poy exoun plirwthei / xrwstane',
   `ADT` varchar(8) CHARACTER SET utf8 NOT NULL COMMENT 'ausweisID'
 ) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf32;
 
@@ -698,25 +732,25 @@ CREATE TABLE IF NOT EXISTS `Members` (
 -- Dumping data for table `Members`
 --
 
-INSERT INTO `Members` (`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`, `ADT`) VALUES
-(1, 'ΠΑΡΙΣΗΣ ΝΙΚΟΛΑΟΣ', 'dfdfdf', 'dffdfd', 'dfdfdf', 'dfdfd', 'dfdfd', 'dfdfd????', 2, '2015-04-21', '1997-05-01', 0, 0, 'GZ458903'),
-(2, 'ΔΕΔΕΔΑΚΗ ΕΛΕΝΗ', '????', '??????', '?????', '??', '???', '?????', 1, '2015-04-21', '1990-08-21', 0, 0, 'AX890433'),
-(3, 'ΣΙΜΟΥ ΦΛΩΡΑ', 'γφγφ', 'γφγφγ', 'γφγφ', 'φγφγφ', 'γφγφ', 'γφγφγφ', 1, '2015-04-21', '1970-01-01', 0, 0, 'ZJ458902'),
-(4, 'Φράγκος Άρης', 'Πέτρος', 'Σοφία', 'Ζαβλάνι 12', '2610773601', '6947128400', 'arisf@gmail.com', 1, '2015-04-21', '1970-01-01', 0, 0, 'KQ500734'),
-(5, 'ΠΑΠΑΔΟΠΟΥΛΟΣ ΣΠΥΡΟΣ', 'Κωνσταντίνος', 'Ακριβή', '1212', 'δφγ', 'δφ', '1212121', 2, '2015-04-20', '1998-12-22', 0, 0, 'QJ563312'),
-(6, 'Μπισδίκης Χρήστος', 'Ανδρέας', 'Άννα', 'Φραγκοκλησσιάς 8 , Μαρούσι', '2107882431', '6956009812', 'bischris@gmail.com', 1, '2015-04-21', '1991-08-09', 0, 0, 'LP563478'),
-(7, 'ΓΙΑΒΟΡΔΙΟΣ ΕΛΕΥΘΕΡΙΟΣ', 'ΚΩΝΣΤΑΝΤΙΝΟΣ', 'ΜΑΡΙΑ', 'ΜΕΣΣΗΝΙΑΣ 14 ΓΕΡΑΚΑΣ', '2122424', '46464', 'giavord@hotmail.com', 2, '2015-05-13', '1999-10-22', 0, 0, 'YR348754'),
-(23, 'ΔΗΜΑΝΚΗ ΑΙΚΑΤΕΡΙΝΗ', 'ΓΕΩΡΓΙΟΣ', 'ΣΟΦΙΑ', 'ΙΩΝΙΑΣ 45 ΓΕΡΑΚΑΣ', '2103015578', '6901989317', 'dimanki@gmail.com', 5, '2015-05-19', '1981-05-19', 0, 0, 'GK798191'),
-(24, 'ΜΟΛΛΑ ΕΙΡΗΝΗ', 'ΖΩΗΣ', 'ΕΥΘΥΜΙΑ', ' ΑΓΙΑΣ ΛΑΥΡΑΣ 24 ΑΓΙΑ ΠΑΡΑΣΚΕΥΗ', '2108019893', '6917070336', 'mollair@gmail.com', 5, '2015-05-20', '1980-06-18', 0, 0, 'TX301557'),
-(25, 'ΔΗΜΑ ΑΙΚΑΤΕΡΙΝΗ', 'ΠΕΤΡΟΣ', 'ΑΛΕΞΑΝΔΡΑ', 'ΜΕΓΑ ΒΑΣΙΛΕΙΟΥ 45 ΚΙΦΗΣΙΑΣ', '2105780198', '6993170703', 'katjadima@gmail.com', 5, '2015-05-20', '1984-06-30', 0, 0, 'ST913015'),
-(26, 'ΙΩΑΝΝΑ ΘΕΟΔΩΡΟΥ', 'ΠΑΝΑΓΙΩΤΗΣ', 'ΝΕΚΤΑΡΙΑ', 'ΙΩΣΗΦΙΝΑΣ 45,ΠΑΛΛΗΝΗ', '2101557801', '6998931707', 'theoio@gmail.com', 5, '2015-05-20', '1986-04-07', 0, 0, 'RZ819130'),
-(27, 'ΜΑΛΕΝΑ ΤΣΟΠΑΝΙΔΟΥ', 'ΙΩΑΝΝΗΣ', 'ELENA', 'ΑΡΓΟΥΣ 34,ΑΓΙΑ ΠΑΡΑΣΚΕΥΗ', '2101557801', '6998931707', 'tsopmalena@hotmail.com', 5, '2015-05-21', '1988-04-19', 0, 0, 'RZ819130'),
-(28, 'ΑΛΕΞΑΝΔΡΑ ΠΑΛΑΙΟΛΟΓΟΥ', 'ΘΕΟΦΡΑΣΤΟΣ', 'ΑΓΛΑΙΑ', 'ΜΕΣΣΟΠΟΤΑΜΙΑΣ 56 ΘΡΑΚΟΜΑΚΕΔΟΝΕΣ', '2101557801', '6998931707', 'palaiolalexia@gmail.com', 5, '2015-05-21', '1984-06-19', 0, 0, 'RZ819130'),
-(29, 'ΕΥΓΕΝΙΑ ΑΜΑΛΙΑΔΟΥ', 'ΘΕΟΔΟΣΙΟΣ', 'ΑΝΝΑ', 'ΚΟΛΟΚΥΝΘΟΥΣ 56 , ΜΑΡΟΥΣΙ', '2105780198', '6993170703', 'euegeamal@gmail.com', 5, '2015-05-21', '1984-03-14', 0, 0, 'ST913015'),
-(30, 'ΛΗΝΑ ΒΑΛΜΑΣ', 'ΙΩΑΝΝΗΣ', 'ΑΔΑΜΑΝΤΙΑ', 'ΜΠΟΥΜΠΟΥΛΙΝΑΣ 45 , ΧΟΛΑΡΓΟΣ', '2101557801', '6998931707', 'valmas@gmail.com', 5, '2015-05-22', '1979-05-17', 0, 0, 'RZ819130'),
-(34, 'ΕΛΕΥΘΕΡΙΑ ΑΝΑΣΤΑΣΟΠΟΥΛΟΥ', 'ΠΟΛΥΠΈΡΧΩΝ', 'ΞΕΝΊΑ', 'ΣΤΑΘΑ 15, ΑΘΗΝΑ', '2108179831', '6926798191', 'anastasop@gmail.com', 2, '2015-05-23', '1999-04-07', 0, 0, 'RK155780'),
-(35, 'ΑΔΑΜΑΝΤΙΟΣ ΚΟΡΑΗΣ', 'ΑΝΆΡΓΥΡΟΣ', 'ΘΕΟΔΟΣΊΑ', 'ΜΥΡΙΟΦΥΤΟΥ 45 ,ΑΙΓΑΛΕΩ', '2107983126', '6979819130', 'korais@gmail.com', 2, '2015-05-23', '1997-03-02', 0, 0, 'NR578019'),
-(36, 'ΜΑΙΡΗ ΣΟΥΙΦΤ', 'JACOB', 'ΕΛΙΣΣΑΒΕΤ', 'ΟΘΩΝΑΣ 56 , ΟΜΟΝΟΙΑ', '2105780198', '6993170703', '', 5, '2015-05-25', '1983-07-22', 0, 0, 'ST913015');
+INSERT INTO `Members` (`MembID`, `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `ADT`) VALUES
+(1, 'ΠΑΡΙΣΗΣ ΝΙΚΟΛΑΟΣ', 'dfdfdf', 'dffdfd', 'dfdfdf', 'dfdfd', 'dfdfd', 'dfdfd????', 2, '2015-04-21', '1997-05-01', 'GZ458903'),
+(2, 'ΔΕΔΕΔΑΚΗ ΕΛΕΝΗ', '????', '??????', '?????', '??', '???', '?????', 1, '2015-04-21', '1990-08-21', 'AX890433'),
+(3, 'ΣΙΜΟΥ ΦΛΩΡΑ', 'γφγφ', 'γφγφγ', 'γφγφ', 'φγφγφ', 'γφγφ', 'γφγφγφ', 1, '2015-04-21', '1970-01-01', 'ZJ458902'),
+(4, 'Φράγκος Άρης', 'Πέτρος', 'Σοφία', 'Ζαβλάνι 12', '2610773601', '6947128400', 'arisf@gmail.com', 1, '2015-04-21', '1970-01-01', 'KQ500734'),
+(5, 'ΠΑΠΑΔΟΠΟΥΛΟΣ ΣΠΥΡΟΣ', 'Κωνσταντίνος', 'Ακριβή', '1212', 'δφγ', 'δφ', '1212121', 2, '2015-04-20', '1998-12-22', 'QJ563312'),
+(6, 'Μπισδίκης Χρήστος', 'Ανδρέας', 'Άννα', 'Φραγκοκλησσιάς 8 , Μαρούσι', '2107882431', '6956009812', 'bischris@gmail.com', 1, '2015-04-21', '1991-08-09', 'LP563478'),
+(7, 'ΓΙΑΒΟΡΔΙΟΣ ΕΛΕΥΘΕΡΙΟΣ', 'ΚΩΝΣΤΑΝΤΙΝΟΣ', 'ΜΑΡΙΑ', 'ΜΕΣΣΗΝΙΑΣ 14 ΓΕΡΑΚΑΣ', '2122424', '46464', 'giavord@hotmail.com', 2, '2015-05-13', '1999-10-22', 'YR348754'),
+(23, 'ΔΗΜΑΝΚΗ ΑΙΚΑΤΕΡΙΝΗ', 'ΓΕΩΡΓΙΟΣ', 'ΣΟΦΙΑ', 'ΙΩΝΙΑΣ 45 ΓΕΡΑΚΑΣ', '2103015578', '6901989317', 'dimanki@gmail.com', 5, '2015-05-19', '1981-05-19', 'GK798191'),
+(24, 'ΜΟΛΛΑ ΕΙΡΗΝΗ', 'ΖΩΗΣ', 'ΕΥΘΥΜΙΑ', ' ΑΓΙΑΣ ΛΑΥΡΑΣ 24 ΑΓΙΑ ΠΑΡΑΣΚΕΥΗ', '2108019893', '6917070336', 'mollair@gmail.com', 5, '2015-05-20', '1980-06-18', 'TX301557'),
+(25, 'ΔΗΜΑ ΑΙΚΑΤΕΡΙΝΗ', 'ΠΕΤΡΟΣ', 'ΑΛΕΞΑΝΔΡΑ', 'ΜΕΓΑ ΒΑΣΙΛΕΙΟΥ 45 ΚΙΦΗΣΙΑΣ', '2105780198', '6993170703', 'katjadima@gmail.com', 5, '2015-05-20', '1984-06-30', 'ST913015'),
+(26, 'ΙΩΑΝΝΑ ΘΕΟΔΩΡΟΥ', 'ΠΑΝΑΓΙΩΤΗΣ', 'ΝΕΚΤΑΡΙΑ', 'ΙΩΣΗΦΙΝΑΣ 45,ΠΑΛΛΗΝΗ', '2101557801', '6998931707', 'theoio@gmail.com', 5, '2015-05-20', '1986-04-07', 'RZ819130'),
+(27, 'ΜΑΛΕΝΑ ΤΣΟΠΑΝΙΔΟΥ', 'ΙΩΑΝΝΗΣ', 'ELENA', 'ΑΡΓΟΥΣ 34,ΑΓΙΑ ΠΑΡΑΣΚΕΥΗ', '2101557801', '6998931707', 'tsopmalena@hotmail.com', 5, '2015-05-21', '1988-04-19', 'RZ819130'),
+(28, 'ΑΛΕΞΑΝΔΡΑ ΠΑΛΑΙΟΛΟΓΟΥ', 'ΘΕΟΦΡΑΣΤΟΣ', 'ΑΓΛΑΙΑ', 'ΜΕΣΣΟΠΟΤΑΜΙΑΣ 56 ΘΡΑΚΟΜΑΚΕΔΟΝΕΣ', '2101557801', '6998931707', 'palaiolalexia@gmail.com', 5, '2015-05-21', '1984-06-19', 'RZ819130'),
+(29, 'ΕΥΓΕΝΙΑ ΑΜΑΛΙΑΔΟΥ', 'ΘΕΟΔΟΣΙΟΣ', 'ΑΝΝΑ', 'ΚΟΛΟΚΥΝΘΟΥΣ 56 , ΜΑΡΟΥΣΙ', '2105780198', '6993170703', 'euegeamal@gmail.com', 5, '2015-05-21', '1984-03-14', 'ST913015'),
+(30, 'ΛΗΝΑ ΒΑΛΜΑΣ', 'ΙΩΑΝΝΗΣ', 'ΑΔΑΜΑΝΤΙΑ', 'ΜΠΟΥΜΠΟΥΛΙΝΑΣ 45 , ΧΟΛΑΡΓΟΣ', '2101557801', '6998931707', 'valmas@gmail.com', 5, '2015-05-22', '1979-05-17', 'RZ819130'),
+(34, 'ΕΛΕΥΘΕΡΙΑ ΑΝΑΣΤΑΣΟΠΟΥΛΟΥ', 'ΠΟΛΥΠΈΡΧΩΝ', 'ΞΕΝΊΑ', 'ΣΤΑΘΑ 15, ΑΘΗΝΑ', '2108179831', '6926798191', 'anastasop@gmail.com', 2, '2015-05-23', '1999-04-07', 'RK155780'),
+(35, 'ΑΔΑΜΑΝΤΙΟΣ ΚΟΡΑΗΣ', 'ΑΝΆΡΓΥΡΟΣ', 'ΘΕΟΔΟΣΊΑ', 'ΜΥΡΙΟΦΥΤΟΥ 45 ,ΑΙΓΑΛΕΩ', '2107983126', '6979819130', 'korais@gmail.com', 2, '2015-05-23', '1997-03-02', 'NR578019'),
+(36, 'ΜΑΙΡΗ ΣΟΥΙΦΤ', 'JACOB', 'ΕΛΙΣΣΑΒΕΤ', 'ΟΘΩΝΑΣ 56 , ΟΜΟΝΟΙΑ', '2105780198', '6993170703', '', 5, '2015-05-25', '1983-07-22', 'ST913015');
 
 -- --------------------------------------------------------
 
@@ -829,13 +863,23 @@ INSERT INTO `PayType` (`PayTypeID`, `Comment`) VALUES
 CREATE TABLE IF NOT EXISTS `Permament` (
   `PermaID` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL DEFAULT '0',
-  `DayID` tinyint(4) NOT NULL,
-  `HourID` tinyint(4) NOT NULL,
   `RoomID` tinyint(4) NOT NULL,
   `StartsOn` date NOT NULL,
-  `EndsOn` date NOT NULL,
-  `Active` tinyint(4) NOT NULL DEFAULT '1'
+  `EndsOn` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='uni and schule courses that take part every week ';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `PermaTimes`
+--
+
+CREATE TABLE IF NOT EXISTS `PermaTimes` (
+  `TimesID` int(11) NOT NULL,
+  `PermaID` int(11) NOT NULL,
+  `DayID` tinyint(4) NOT NULL,
+  `HourID` tinyint(4) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='schedule hours and days for diplomas';
 
 -- --------------------------------------------------------
 
@@ -1008,6 +1052,20 @@ CREATE TABLE IF NOT EXISTS `Schedule` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `Schuler`
+--
+
+CREATE TABLE IF NOT EXISTS `Schuler` (
+  `SchulerID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `DiscipleID` tinyint(3) unsigned NOT NULL,
+  `FatherMobile` varchar(10) NOT NULL,
+  `MotherMobile` varchar(10) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='schuler table';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `Schwierigkeit`
 --
 
@@ -1032,23 +1090,16 @@ INSERT INTO `Schwierigkeit` (`SchwerID`, `Red`, `Green`, `Blue`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `SpecialCats`
+-- Table structure for table `SpecialFees`
 --
 
-CREATE TABLE IF NOT EXISTS `SpecialCats` (
-  `SpecialID` tinyint(3) unsigned NOT NULL,
-  `Description` varchar(30) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='ειδικές κατηγορίες : πχ τριτεκνοι ορφανα ';
-
---
--- Dumping data for table `SpecialCats`
---
-
-INSERT INTO `SpecialCats` (`SpecialID`, `Description`) VALUES
-(1, 'ΤΡΙΤΕΚΝΟΙ'),
-(2, 'ΠΟΛΥΤΕΚΝΟΙ'),
-(3, 'ΟΡΦΑΝΑ'),
-(4, 'ΑΝΑΠΗΡΙΑ');
+CREATE TABLE IF NOT EXISTS `SpecialFees` (
+  `DiscID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `CatID` tinyint(3) unsigned NOT NULL,
+  `Created` date NOT NULL,
+  `Expires` date NOT NULL COMMENT 'discount expires at some date'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='discount scheme for schuler';
 
 -- --------------------------------------------------------
 
@@ -1203,7 +1254,7 @@ CREATE TABLE IF NOT EXISTS `Times` (
   `SchedID` int(11) NOT NULL,
   `DayID` tinyint(4) NOT NULL,
   `HourID` tinyint(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='schedule hours and days';
+) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='schedule hours and days for diplomas';
 
 -- --------------------------------------------------------
 
@@ -1381,6 +1432,20 @@ ALTER TABLE `Absent`
   ADD KEY `HistID` (`HistID`);
 
 --
+-- Indexes for table `AccedFees`
+--
+ALTER TABLE `AccedFees`
+  ADD PRIMARY KEY (`AccID`),
+  ADD KEY `StudentID` (`StudentID`);
+
+--
+-- Indexes for table `AccedPayments`
+--
+ALTER TABLE `AccedPayments`
+  ADD PRIMARY KEY (`AccID`),
+  ADD KEY `StudentID` (`TeacherID`);
+
+--
 -- Indexes for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -1437,25 +1502,23 @@ ALTER TABLE `Diplomas`
   ADD KEY `Schwer` (`Schwer`);
 
 --
--- Indexes for table `DiscData`
---
-ALTER TABLE `DiscData`
-  ADD KEY `DiscID` (`DiscID`),
-  ADD KEY `StudentID` (`StudentID`);
-
---
 -- Indexes for table `Disciplines`
 --
 ALTER TABLE `Disciplines`
   ADD PRIMARY KEY (`DiscID`);
 
 --
--- Indexes for table `Discounts`
+-- Indexes for table `Discount`
 --
-ALTER TABLE `Discounts`
+ALTER TABLE `Discount`
   ADD PRIMARY KEY (`DiscID`),
-  ADD KEY `CatID` (`CatID`),
-  ADD KEY `StudentID` (`StudentID`);
+  ADD KEY `CatID` (`CatID`);
+
+--
+-- Indexes for table `DiscountCats`
+--
+ALTER TABLE `DiscountCats`
+  ADD PRIMARY KEY (`SpecialID`);
 
 --
 -- Indexes for table `Dropout`
@@ -1632,9 +1695,17 @@ ALTER TABLE `PayType`
 ALTER TABLE `Permament`
   ADD PRIMARY KEY (`PermaID`),
   ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `RoomID` (`RoomID`);
+
+--
+-- Indexes for table `PermaTimes`
+--
+ALTER TABLE `PermaTimes`
+  ADD PRIMARY KEY (`TimesID`),
   ADD KEY `DayID` (`DayID`),
-  ADD KEY `RoomID` (`RoomID`),
-  ADD KEY `HourID` (`HourID`);
+  ADD KEY `HourID` (`HourID`),
+  ADD KEY `SchedID` (`PermaID`),
+  ADD KEY `PermaID` (`PermaID`);
 
 --
 -- Indexes for table `Receipts`
@@ -1696,16 +1767,28 @@ ALTER TABLE `Schedule`
   ADD KEY `DiploID` (`DiploID`);
 
 --
+-- Indexes for table `Schuler`
+--
+ALTER TABLE `Schuler`
+  ADD PRIMARY KEY (`SchulerID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `DiscipleID` (`DiscipleID`);
+
+--
 -- Indexes for table `Schwierigkeit`
 --
 ALTER TABLE `Schwierigkeit`
   ADD PRIMARY KEY (`SchwerID`);
 
 --
--- Indexes for table `SpecialCats`
+-- Indexes for table `SpecialFees`
 --
-ALTER TABLE `SpecialCats`
-  ADD PRIMARY KEY (`SpecialID`);
+ALTER TABLE `SpecialFees`
+  ADD PRIMARY KEY (`DiscID`),
+  ADD UNIQUE KEY `StudentID_3` (`StudentID`),
+  ADD KEY `CatID` (`CatID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `StudentID_2` (`StudentID`);
 
 --
 -- Indexes for table `TeachEchelon`
@@ -1826,6 +1909,16 @@ ALTER TABLE `WagesUni`
 ALTER TABLE `Absent`
   MODIFY `AbsID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `AccedFees`
+--
+ALTER TABLE `AccedFees`
+  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `AccedPayments`
+--
+ALTER TABLE `AccedPayments`
+  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -1871,10 +1964,10 @@ ALTER TABLE `Diplomas`
 ALTER TABLE `Disciplines`
   MODIFY `DiscID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `Discounts`
+-- AUTO_INCREMENT for table `DiscountCats`
 --
-ALTER TABLE `Discounts`
-  MODIFY `DiscID` int(11) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `DiscountCats`
+  MODIFY `SpecialID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
 -- AUTO_INCREMENT for table `Echelon`
 --
@@ -1996,6 +2089,11 @@ ALTER TABLE `PayType`
 ALTER TABLE `Permament`
   MODIFY `PermaID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `PermaTimes`
+--
+ALTER TABLE `PermaTimes`
+  MODIFY `TimesID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `Receipts`
 --
 ALTER TABLE `Receipts`
@@ -2041,10 +2139,10 @@ ALTER TABLE `Schedule`
 ALTER TABLE `Schwierigkeit`
   MODIFY `SchwerID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
 --
--- AUTO_INCREMENT for table `SpecialCats`
+-- AUTO_INCREMENT for table `SpecialFees`
 --
-ALTER TABLE `SpecialCats`
-  MODIFY `SpecialID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+ALTER TABLE `SpecialFees`
+  MODIFY `DiscID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `TeachEchelon`
 --
@@ -2127,6 +2225,12 @@ ALTER TABLE `Absent`
   ADD CONSTRAINT `fkstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
+-- Constraints for table `AccedFees`
+--
+ALTER TABLE `AccedFees`
+  ADD CONSTRAINT `AccedFees_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+
+--
 -- Constraints for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -2160,18 +2264,10 @@ ALTER TABLE `Diplomas`
   ADD CONSTRAINT `fkprovid` FOREIGN KEY (`ProvID`) REFERENCES `Instituts` (`InstID`);
 
 --
--- Constraints for table `DiscData`
+-- Constraints for table `Discount`
 --
-ALTER TABLE `DiscData`
-  ADD CONSTRAINT `DiscData_ibfk_1` FOREIGN KEY (`DiscID`) REFERENCES `Disciplines` (`DiscID`),
-  ADD CONSTRAINT `DiscData_ibfk_2` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
-
---
--- Constraints for table `Discounts`
---
-ALTER TABLE `Discounts`
-  ADD CONSTRAINT `Discounts_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `SpecialCats` (`SpecialID`),
-  ADD CONSTRAINT `Discounts_ibfk_2` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+ALTER TABLE `Discount`
+  ADD CONSTRAINT `Discount_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `DiscountCats` (`SpecialID`);
 
 --
 -- Constraints for table `Dropout`
@@ -2277,10 +2373,14 @@ ALTER TABLE `Payments`
 -- Constraints for table `Permament`
 --
 ALTER TABLE `Permament`
-  ADD CONSTRAINT `fkday` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
-  ADD CONSTRAINT `fkhour` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`),
-  ADD CONSTRAINT `gropu` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
+  ADD CONSTRAINT `Permament_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
   ADD CONSTRAINT `room` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
+
+--
+-- Constraints for table `PermaTimes`
+--
+ALTER TABLE `PermaTimes`
+  ADD CONSTRAINT `PermaTimes_ibfk_1` FOREIGN KEY (`PermaID`) REFERENCES `Permament` (`PermaID`);
 
 --
 -- Constraints for table `Receipts`
@@ -2322,6 +2422,20 @@ ALTER TABLE `Rooms`
 --
 ALTER TABLE `Schedule`
   ADD CONSTRAINT `fkdiplo` FOREIGN KEY (`DiploID`) REFERENCES `Diplomas` (`DiplID`);
+
+--
+-- Constraints for table `Schuler`
+--
+ALTER TABLE `Schuler`
+  ADD CONSTRAINT `Schuler_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `Schuler_ibfk_2` FOREIGN KEY (`DiscipleID`) REFERENCES `Disciplines` (`DiscID`);
+
+--
+-- Constraints for table `SpecialFees`
+--
+ALTER TABLE `SpecialFees`
+  ADD CONSTRAINT `SpecialFees_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `DiscountCats` (`SpecialID`),
+  ADD CONSTRAINT `SpecialFees_ibfk_2` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `TeachEchelon`

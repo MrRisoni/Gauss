@@ -1,20 +1,33 @@
 
+ΣΥΝΕΔΡΙΕΣ, συναντήσεις των γονιών με τους καθηγητές
+code schule group 
+code create time schedule for that group
+
+
+
+
+
+
+
+
+
+
+code history
+code timetable to show group
+
+
 
 calculate wages and fees :) unit testing 
 UNIT TESTING
 
 
 
-ΣΥΝΕΔΡΙΕΣ, συναντήσεις των γονιών με τους καθηγητές
 
 
 
 
 
-code schule group schedule 
-code timetable to show group
-code permemant ??
-code history
+
 
 
 
