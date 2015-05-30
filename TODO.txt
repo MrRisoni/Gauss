@@ -1,19 +1,38 @@
 
-ΣΥΝΕΔΡΙΕΣ, συναντήσεις των γονιών με τους καθηγητές
+
+
+
 code schule group 
 code create time schedule for that group
+add to permament 
 
 
+Create  before hand for all the period the weekly lessons 
 
 
+------------------------------------------------
+
+add temporary lesson to history
 
 
-
-
-
-
-code history
+------------------------------------------------
 code timetable to show group
+
+------------------------------------------------
+
+
+accumulated fees ????????????????????????????
+
+
+
+
+
+
+
+
+------------------------------------------------
+
+
 
 
 
