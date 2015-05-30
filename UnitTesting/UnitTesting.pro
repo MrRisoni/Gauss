@@ -16,14 +16,18 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp \
-    saludboost.cpp \
-    haloboost.cpp \
-    std_base_salary.cpp \
-    qt_base_salary.cpp
+    qt_base_salary.cpp \
+    oldcode/haloboost.cpp \
+    oldcode/saludboost.cpp \
+    oldcode/std_base_salary.cpp \
+    fee_Unicalculator.cpp \
+    schulefee.cpp
 
 
 LIBS+= -lboost_unit_test_framework
 
 HEADERS += \
     old_salary_structs.h \
-    new_salary_structs.h
+    new_salary_structs.h \
+    oldcode/old_salary_structs.h \
+    feestructs.h

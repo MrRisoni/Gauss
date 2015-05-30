@@ -12,8 +12,7 @@
 #include <QDebug>
 #include <QDate>
 #include <QList>
-#include "old_salary_structs.h"
-
+#include "oldcode/old_salary_structs.h"
 
 
 using namespace std;

@@ -8,6 +8,7 @@
 #include "basewages.h"
 #include "courses.h"
 #include <QPixmap>
+#include "teachechel.h"
 
 class Teacher : public Members
 {

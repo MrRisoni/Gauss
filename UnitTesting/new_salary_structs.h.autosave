@@ -5,12 +5,6 @@
 #include <QDate>
 
 
-//only the last discount for each  month counts
-struct Discount {
-  float disc;
-  QDate dat;
-};
-
 
 
 struct EchelUpdate {
@@ -30,12 +24,7 @@ struct BaseWages {
 };
 
 
-struct FeeSchule {
-    //how much was the wage for EchelID and CourseID at that date
-    int CourseID;
-    QDate dat;
-    float wage;
-};
+
 
 
 struct WageUni {
