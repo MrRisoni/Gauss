@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 30, 2015 at 10:58 AM
+-- Generation Time: May 30, 2015 at 08:27 PM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -100,18 +100,6 @@ CREATE TABLE IF NOT EXISTS `Buildings` (
 INSERT INTO `Buildings` (`BuildID`, `Address`) VALUES
 (1, 'ΜΕΣΣΗΝΙΑΣ ΚΑΙ ΣΟΥΛΙΟΥ 4, ΓΕΡΑΚΑΣ'),
 (2, 'ΦΡΑΓΚΟΚΛΗΣΣΙΑΣ 15 , ΜΑΡΟΥΣΙ');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Canceled`
---
-
-CREATE TABLE IF NOT EXISTS `Canceled` (
-  `CancID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `Dat` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='canceled courses';
 
 -- --------------------------------------------------------
 
@@ -570,7 +558,8 @@ CREATE TABLE IF NOT EXISTS `History` (
   `Dat` date NOT NULL,
   `StartHourID` tinyint(4) NOT NULL,
   `Duration` float NOT NULL,
-  `RoomID` tinyint(4) NOT NULL COMMENT 'roomid=0 gia ta monima '
+  `RoomID` tinyint(4) NOT NULL COMMENT 'roomid=0 gia ta monima ',
+  `Valid` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -706,6 +695,20 @@ INSERT INTO `LessonType` (`TypeID`, `Description`) VALUES
 (2, 'Uni'),
 (3, 'Sprache'),
 (4, 'Skype');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `Meeting`
+--
+
+CREATE TABLE IF NOT EXISTS `Meeting` (
+  `MeetID` int(11) NOT NULL,
+  `SchulerID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `Dat` date NOT NULL,
+  `Comments` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -863,7 +866,6 @@ INSERT INTO `PayType` (`PayTypeID`, `Comment`) VALUES
 CREATE TABLE IF NOT EXISTS `Permament` (
   `PermaID` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL DEFAULT '0',
-  `RoomID` tinyint(4) NOT NULL,
   `StartsOn` date NOT NULL,
   `EndsOn` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='uni and schule courses that take part every week ';
@@ -878,7 +880,8 @@ CREATE TABLE IF NOT EXISTS `PermaTimes` (
   `TimesID` int(11) NOT NULL,
   `PermaID` int(11) NOT NULL,
   `DayID` tinyint(4) NOT NULL,
-  `HourID` tinyint(4) NOT NULL
+  `HourID` tinyint(4) NOT NULL,
+  `RoomID` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='schedule hours and days for diplomas';
 
 -- --------------------------------------------------------
@@ -1459,13 +1462,6 @@ ALTER TABLE `Buildings`
   ADD PRIMARY KEY (`BuildID`);
 
 --
--- Indexes for table `Canceled`
---
-ALTER TABLE `Canceled`
-  ADD PRIMARY KEY (`CancID`),
-  ADD KEY `GroupID` (`GroupID`);
-
---
 -- Indexes for table `Contract`
 --
 ALTER TABLE `Contract`
@@ -1655,6 +1651,14 @@ ALTER TABLE `LessonType`
   ADD PRIMARY KEY (`TypeID`);
 
 --
+-- Indexes for table `Meeting`
+--
+ALTER TABLE `Meeting`
+  ADD PRIMARY KEY (`MeetID`),
+  ADD KEY `SchulerID` (`SchulerID`),
+  ADD KEY `TeacherID` (`TeacherID`);
+
+--
 -- Indexes for table `Members`
 --
 ALTER TABLE `Members`
@@ -1694,8 +1698,7 @@ ALTER TABLE `PayType`
 --
 ALTER TABLE `Permament`
   ADD PRIMARY KEY (`PermaID`),
-  ADD KEY `GroupID` (`GroupID`),
-  ADD KEY `RoomID` (`RoomID`);
+  ADD KEY `GroupID` (`GroupID`);
 
 --
 -- Indexes for table `PermaTimes`
@@ -1705,7 +1708,8 @@ ALTER TABLE `PermaTimes`
   ADD KEY `DayID` (`DayID`),
   ADD KEY `HourID` (`HourID`),
   ADD KEY `SchedID` (`PermaID`),
-  ADD KEY `PermaID` (`PermaID`);
+  ADD KEY `PermaID` (`PermaID`),
+  ADD KEY `RoomID` (`RoomID`);
 
 --
 -- Indexes for table `Receipts`
@@ -1929,11 +1933,6 @@ ALTER TABLE `BaseWages`
 ALTER TABLE `Buildings`
   MODIFY `BuildID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
--- AUTO_INCREMENT for table `Canceled`
---
-ALTER TABLE `Canceled`
-  MODIFY `CancID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `Contract`
 --
 ALTER TABLE `Contract`
@@ -2058,6 +2057,11 @@ ALTER TABLE `Languages`
 --
 ALTER TABLE `LessonType`
   MODIFY `TypeID` tinyint(4) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT for table `Meeting`
+--
+ALTER TABLE `Meeting`
+  MODIFY `MeetID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Members`
 --
@@ -2237,12 +2241,6 @@ ALTER TABLE `BaseWages`
   ADD CONSTRAINT `fkechelid` FOREIGN KEY (`EchelID`) REFERENCES `Echelon` (`EchelID`);
 
 --
--- Constraints for table `Canceled`
---
-ALTER TABLE `Canceled`
-  ADD CONSTRAINT `fkgroupid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
-
---
 -- Constraints for table `Contract`
 --
 ALTER TABLE `Contract`
@@ -2351,6 +2349,13 @@ ALTER TABLE `History`
   ADD CONSTRAINT `group` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
 
 --
+-- Constraints for table `Meeting`
+--
+ALTER TABLE `Meeting`
+  ADD CONSTRAINT `Meeting_ibfk_1` FOREIGN KEY (`SchulerID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `Meeting_ibfk_2` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+
+--
 -- Constraints for table `Members`
 --
 ALTER TABLE `Members`
@@ -2373,14 +2378,16 @@ ALTER TABLE `Payments`
 -- Constraints for table `Permament`
 --
 ALTER TABLE `Permament`
-  ADD CONSTRAINT `Permament_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-  ADD CONSTRAINT `room` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
+  ADD CONSTRAINT `Permament_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
 
 --
 -- Constraints for table `PermaTimes`
 --
 ALTER TABLE `PermaTimes`
-  ADD CONSTRAINT `PermaTimes_ibfk_1` FOREIGN KEY (`PermaID`) REFERENCES `Permament` (`PermaID`);
+  ADD CONSTRAINT `PermaTimes_ibfk_1` FOREIGN KEY (`PermaID`) REFERENCES `Permament` (`PermaID`),
+  ADD CONSTRAINT `PermaTimes_ibfk_2` FOREIGN KEY (`DayID`) REFERENCES `Days` (`DayID`),
+  ADD CONSTRAINT `PermaTimes_ibfk_3` FOREIGN KEY (`HourID`) REFERENCES `Hours` (`HourID`),
+  ADD CONSTRAINT `PermaTimes_ibfk_4` FOREIGN KEY (`RoomID`) REFERENCES `Rooms` (`RoomID`);
 
 --
 -- Constraints for table `Receipts`
