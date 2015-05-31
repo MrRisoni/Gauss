@@ -1,21 +1,22 @@
-#include "objektdelegate.h"
+#include "roomitemdelegate.h"
+
 #include <QSqlQuery>
 
 
-ObjektDelegate::ObjektDelegate(QObject *parent)
-    : QStyledItemDelegate(parent)
+RoomItemDelegate::RoomItemDelegate(QObject *parent)
+    : RoomItemDelegate(parent)
 {
 }
 
 
 //https://wiki.qt.io/Combo_Boxes_in_Item_Views
 
-ObjektDelegate::~ObjektDelegate()
+RoomItemDelegate::~RoomItemDelegate()
 {
 }
 
 
-QWidget* ObjektDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const
+QWidget* RoomItemDelegate::createEditor( QWidget *parent, const QStyleOptionViewItem &option, const QModelIndex &index ) const
 {
     (void ) option;
     (void ) index;
@@ -34,7 +35,7 @@ QWidget* ObjektDelegate::createEditor( QWidget *parent, const QStyleOptionViewIt
 
 }
 
-void ObjektDelegate::setEditorData ( QWidget *editor, const QModelIndex &index ) const
+void RoomItemDelegate::setEditorData ( QWidget *editor, const QModelIndex &index ) const
 {
 
   QComboBox *box = static_cast<QComboBox*> (editor);
@@ -42,7 +43,7 @@ void ObjektDelegate::setEditorData ( QWidget *editor, const QModelIndex &index )
 
 }
 
-void ObjektDelegate::setModelData ( QWidget *editor, QAbstractItemModel *model, const QModelIndex &index ) const
+void RoomItemDelegate::setModelData ( QWidget *editor, QAbstractItemModel *model, const QModelIndex &index ) const
 {
    QComboBox *cb = qobject_cast<QComboBox*>(editor);
    model->setData(index,cb->currentText());
@@ -51,10 +52,9 @@ void ObjektDelegate::setModelData ( QWidget *editor, QAbstractItemModel *model, 
 
 
 
-void ObjektDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const {
+void RoomItemDelegate::updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const {
 
     editor->setGeometry(option.rect);
     (void) index;
 
 }
-

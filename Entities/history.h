@@ -39,6 +39,7 @@ private:
     float Duration;
     int RoomID;
     Rooms R;
+    bool Active;
 
 };
 

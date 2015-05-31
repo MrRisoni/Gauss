@@ -1,9 +1,15 @@
 #include "createschulegroupdialog.h"
 #include "ui_createschulegroupdialog.h"
 
+/* Fetches requests for Schule
+ * Fetches teacher that can teach those courses
+ * Creates a schedule for the permament
+ */
+
 
 #include <QStandardItemModel>
 #include <QAbstractTableModel>
+#include "General/objektdelegate.h"
 
 CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     QDialog(parent),
@@ -41,6 +47,10 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     TimeTableHeaders HEADS= o .getTimeTableHeaders();
     ScheduleModel->setHorizontalHeaderLabels(HEADS.horHeaders);
     ScheduleModel->setVerticalHeaderLabels(HEADS.verHeaders);
+
+    // try to add a delegate for rooms
+    ObjektDelegate *obj = new ObjektDelegate();
+    ui->tableSchedule->setItemDelegate(obj);
 
     ui->tableSchedule->setModel(ScheduleModel);
 
@@ -193,7 +203,7 @@ void CreateSchuleGroupDialog::on_comboCourse_currentTextChanged(const QString &a
 
 void CreateSchuleGroupDialog::on_pushAddToGroup_clicked()
 {
-    //fetch selection from other tabel
+    //fetch selection from other tabe of students
 
 
 
@@ -284,9 +294,29 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
     }
 
 
+    // Show the created schedule
+    qDebug() << "CLICKED SCHEDULE INDICES";
+    // http://stackoverflow.com/questions/5927499/how-to-get-selected-rows-in-qtableview
 
 
-    ORM o= ORM();
-    o.saveSchule(G);
+
+    QModelIndexList scheduleIndexList = ui->tableSchedule->selectionModel()->selectedIndexes();
+
+    for (QModelIndex inx :  scheduleIndexList) {
+        qDebug() << "selected  schedule indices " << inx.row() << " " << inx.column() << " room " << ui->tableSchedule->model()->data(inx).toString();
+    }
+
+
+
+    //create permament
+
+
+    //create a permatimes array
+
+
+
+
+    //ORM o= ORM();
+    //o.saveSchule(G);
 
 }

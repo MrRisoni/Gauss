@@ -29,9 +29,13 @@ TimeTableHeaders ORM::getTimeTableHeaders() {
         headers.horHeaders.append(q.value(0).toString());
     }
 
+    QStringList tmp; //show the hours like 0900-0930 it is human friendly
     q.exec("SELECT HourN From Hours");
     while (q.next()) {
-        headers.verHeaders.append(q.value(0).toString());
+        tmp.append(q.value(0).toString());
+    }
+    for (int i=0 ; i <tmp.size()-1;i++) {
+        headers.verHeaders.append(tmp.at(i)+ "-" + tmp.at(i+1));
     }
 
     q.finish();

@@ -106,7 +106,9 @@ SOURCES += main.cpp\
     Entities/schulediscipline.cpp \
     Schule/managedisciplinesdialog.cpp \
     General/zeitwandel.cpp \
-    General/addtemporarylessondialog.cpp
+    General/addtemporarylessondialog.cpp \
+    Entities/permatimes.cpp \
+    General/roomitemdelegate.cpp
 
 
 
@@ -204,7 +206,9 @@ HEADERS  += Entities/absent.h  \
     Entities/schulediscipline.h \
     Schule/managedisciplinesdialog.h \
     General/zeitwandel.h \
-    General/addtemporarylessondialog.h
+    General/addtemporarylessondialog.h \
+    Entities/permatimes.h \
+    General/roomitemdelegate.h
 
 
 

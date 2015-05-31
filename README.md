@@ -11,7 +11,7 @@ The biggest app i have ever developed!
 
 - Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql ( webui branch  that will have to wait  :((( )
 
-- Simple pseudo Document Management System : Python ,PyQt, MongoDB ( pydms branch )
+- Simple pseudo Document Management System : Python ,PyQt, MongoDB
 
   A total of 75 tables :)
   
