@@ -35,6 +35,15 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     GroupModel= new  QStandardItemModel();
 
 
+
+    //populate the hours and days
+    ScheduleModel = new QStandardItemModel();
+    TimeTableHeaders HEADS= o .getTimeTableHeaders();
+    ScheduleModel->setHorizontalHeaderLabels(HEADS.horHeaders);
+    ScheduleModel->setVerticalHeaderLabels(HEADS.verHeaders);
+
+    ui->tableSchedule->setModel(ScheduleModel);
+
 }
 
 void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
@@ -167,7 +176,7 @@ CreateSchuleGroupDialog::~CreateSchuleGroupDialog()
     delete mod;
 
 
-
+    delete ScheduleModel;
 
     delete ui;
 

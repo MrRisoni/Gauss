@@ -11,6 +11,8 @@
 
 
 struct TimeTableHeaders {
+    //horizontal is date
+    //vertical is hour
     QStringList horHeaders;
     QStringList verHeaders;
 };

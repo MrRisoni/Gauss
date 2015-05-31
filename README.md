@@ -9,9 +9,9 @@ The biggest app i have ever developed!
 
 - Desktop app for the directors and secretaries : Qt,C++,MySQL,MongoDB,Python ( master branch )
 
-- Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql ( webui branch )
+- Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql ( webui branch  that will have to wait  :((( )
 
-- Simple Document Management System : PHP , Postgres ( pydms branch )
+- Simple pseudo Document Management System : Python ,PyQt, MongoDB ( pydms branch )
 
   A total of 75 tables :)
   

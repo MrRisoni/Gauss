@@ -35,6 +35,8 @@ private:
     void populateTable(QString CourseName);
     void populateStudentsTable(QString CourseName);
     QStandardItemModel *GroupModel;
+    QStandardItemModel *ScheduleModel;
+
     int RowAll=0;
 
 };

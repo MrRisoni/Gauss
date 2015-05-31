@@ -22,6 +22,20 @@ ORM::~ORM()
 
 TimeTableHeaders ORM::getTimeTableHeaders() {
 
+    TimeTableHeaders headers;
+    QSqlQuery q;
+    q.exec("SELECT DayName From Days");
+    while (q.next()) {
+        headers.horHeaders.append(q.value(0).toString());
+    }
+
+    q.exec("SELECT HourN From Hours");
+    while (q.next()) {
+        headers.verHeaders.append(q.value(0).toString());
+    }
+
+    q.finish();
+    return headers;
 }
 
 
