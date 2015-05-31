@@ -1,0 +1,34 @@
+{
+  _id : hex 
+  Title : string
+  Description : text
+  Path : string 
+  Metatags : array of strings
+  Author : UserID
+  DocType : I
+  Created : datetime
+  Modified : datetime
+  Size : in kbs
+  Von : datetime
+  Bis : datetime
+  
+  
+   Modifications: [ array of subdocuments 
+     Com : text
+     Zeit : datetime
+  ]
+  
+  CanRead: [] an array of user IDs
+  Comments: [ array of subdocuments 
+     UserID : hex
+     Com : string
+     Zeit : datetime
+  ]
+  
+  Downloads: [ array of subdocuments 
+     UserID : hex
+     Zeit : datetime
+  ]
+  
+  
+}
