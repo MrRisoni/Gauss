@@ -313,6 +313,12 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
 
     QModelIndexList scheduleIndexList = ui->tableSchedule->selectionModel()->selectedIndexes();
 
+
+    //ADD A DAY ONLY ONCE!!!!!!!!!!!!!!!
+    //THE NUMBER OF SELECTED ROWS PER COL IS THE DURATION
+
+
+
     for (QModelIndex inx :  scheduleIndexList) {
         qDebug() << "selected  schedule indices " << inx.row() << " " << inx.column() << " room " << ui->tableSchedule->model()->data(inx).toString();
 
@@ -320,7 +326,7 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
         pr.setDayID(inx.column());
         pr.setHourID(inx.row());
         pr.setRoom(ui->tableSchedule->model()->data(inx).toString());
-
+        pr.setDiarkeia();
        Programma.append(pr);
 
 

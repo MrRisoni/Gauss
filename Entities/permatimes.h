@@ -24,11 +24,15 @@ public:
     QString getRoom() const;
     void setRoom(const QString &value);
 
+    float getDiarkeia() const;
+    void setDiarkeia(float value);
+
 private:
     int PermaID;
     int DayID;
     int HourID;
     int RoomID;
+    float Diarkeia;
     QString Room;
 };
 

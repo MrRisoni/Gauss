@@ -1872,19 +1872,22 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         }
 
 
-        QList<QDate> FutureDates = calcFutureHistory(MeresIDs,Perma.getStarts(),Perma.getEnds());
+        Zukunuft FutureDatesRoomsHours = createFutureDatesAndRooms(Programma,Perma.getStarts(),Perma.getEnds());
 
-        for (int w=0;w<Programma.size();w++) {
+        qDebug() << "generated days" << FutureDatesRoomsHours.FutureHourIDs.size() ;
+
+        for (int w=0;FutureDatesRoomsHours.FutureJulianDays.size();w++ ) {
             s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`) VALUES (:grid, :dat , :shourid , :dur , :rid)";
             qDebug() << s;
             q.prepare(s);
             q.bindValue(":grid",GroupID);
-            q.bindValue(":dat",FutureDates.at(w));
-            q.bindValue(":shourid",Programma.at(w).getHourID());
-            q.bindValue(":dur",2); // this is in hours
-            q.bindValue(":rid",Programma[w].getRoomID());
+            q.bindValue(":dat",QDate::fromJulianDay(FutureDatesRoomsHours.FutureJulianDays.at(w)));
+            q.bindValue(":shourid",FutureDatesRoomsHours.FutureHourIDs.at(w));
+            q.bindValue(":dur",FutureDatesRoomsHours.Durations.at(w));
+            q.bindValue(":rid",FutureDatesRoomsHours.FutureRoomIDs.at(w));
             //copy to history until the end
             q.exec();
+            qDebug() << "mera " << QDate::fromJulianDay(FutureDatesRoomsHours.FutureJulianDays.at(w));
         }
 
         ShowSuccess();
@@ -1899,57 +1902,71 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
 }
 
-QList<QDate> ORM::calcFutureHistory(QList<int> DayIDs, QDate startDate, QDate endDate) {
-    //calculates futures dates for history
-
-
-    //qDebug() << "************** COPY TO HISTORY TEST **************";
-       //creates a list of dates , whoose id is DayID, starting from today until endDate
-       QList<QDate> V;
-
-       QStringList StringDays;
-
-
-    QSqlQuery q;
-    q.exec("SELECT DayName From Days");
-    while (q.next()) {
-        StringDays.append(q.value(0).toString());
-    }
-
-
-    q.finish();
+Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate) {
 
 
 
-   //this test is supposed to start at Sunday 31/05/15
-       int TodayID =StringDays.indexOf(QDate::longDayName(QDate::currentDate().dayOfWeek()));
+       //qDebug() << "************** COPY TO HISTORY TEST **************";
+         //creates a list of dates , whoose id is DayID, starting from today until endDate
+         std::vector<long> V;
+         std::vector<int> Domatia;
+         std::vector<int> Ores;
+        std::vector<float> Diarkeia;
 
 
-       //qDebug() << TodayID;
 
-       //DayID ==1 is sunday
-       int duration = endDate.toJulianDay() - startDate.toJulianDay();
+         Zukunuft Mellon;
 
-       long StartJul =startDate.toJulianDay(); // the start day in julian day
+         //dont return QDates boost does not know how to output QDate and
+         // i don't know how to tell Boost how to print one
 
-       for (long i=TodayID;i<duration;i++) {
-           //all days must be equal to DayIDs
-
-           int nextday = i % 7 ; //seven are the days of the week
-           //in 15 days from now there will be again the same TodayID because the modulo will be zero
-
-           //check if next day exists in the list
-           if (DayIDs.contains(nextday)==true) {
-               //create a day from startJul
-               V.append(QDate::fromJulianDay(StartJul));
-              // qDebug() << "out " << QDate::fromJulianDay(StartJul);
-
+         QStringList StringDays;
+         QSqlQuery q;
+           q.exec("SELECT DayName From Days");
+           while (q.next()) {
+               StringDays.append(q.value(0).toString());
            }
 
-           StartJul++;
-       }
 
-       return V;
+     //this test is supposed to start at Sunday 31/05/15
+         int TodayID = StringDays.indexOf(QDate::longDayName(QDate::currentDate().dayOfWeek()));
+
+
+         //qDebug() << TodayID;
+
+         //DayID ==1 is sunday
+         int duration = endDate.toJulianDay() - startDate.toJulianDay();
+
+         long StartJul =startDate.toJulianDay(); // the start day in julian day
+
+         for (long i=TodayID;i<duration;i++) {
+             //all days must be equal to DayIDs
+
+             int nextday = i % 7 ; //seven are the days of the week
+             //in 15 days from now there will be again the same TodayID because the modulo will be zero
+
+             //check if next day exists in the list Settings
+
+             for (Permatimes p : Settings) {
+                 if (p.getDayID()==nextday) {
+                     //create a day from startJul
+                     V.push_back(QDate::fromJulianDay(StartJul).toJulianDay());
+                     // qDebug() << "out " << QDate::fromJulianDay(StartJul);
+                     Ores.push_back(p.getHourID());
+                     Domatia.push_back(p.getRoomID());
+                     Diarkeia.push_back(p.getDiarkeia());
+                 }
+             }
+
+             StartJul++;
+         }
+
+
+         Mellon.FutureHourIDs=Ores;
+         Mellon.FutureJulianDays=V;
+         Mellon.FutureRoomIDs=Domatia;
+         return Mellon;
+
 
 
 }

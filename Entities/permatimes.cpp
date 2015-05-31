@@ -49,6 +49,16 @@ void Permatimes::setRoom(const QString &value)
 {
     Room = value;
 }
+float Permatimes::getDiarkeia() const
+{
+    return Diarkeia;
+}
+
+void Permatimes::setDiarkeia(float value)
+{
+    Diarkeia = value;
+}
+
 
 
 

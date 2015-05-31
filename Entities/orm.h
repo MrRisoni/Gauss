@@ -35,6 +35,16 @@
 #include <QComboBox>
 
 
+
+struct Zukunuft{
+    std::vector<long> FutureJulianDays;
+    std::vector<int> FutureRoomIDs;
+    std::vector<int> FutureHourIDs;
+    std::vector<float> Durations;
+};
+
+
+
 class ORM
 {
 public:
@@ -128,7 +138,9 @@ public:
     QPixmap getSignaturePic(QString TeacherID);
 
 
-    QList<QDate> calcFutureHistory(QList<int> DayIDs, QDate startDate, QDate endDate);
+
+
+    Zukunuft createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate);
 
 private:
     void ShowError(QSqlQuery q);
