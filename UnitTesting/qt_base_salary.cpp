@@ -9,9 +9,7 @@
 #include <limits>
 #include <stdlib.h>
 #include <math.h>
-#include <QDebug>
-#include <QDate>
-#include <QList>
+
 #include "oldcode/old_salary_structs.h"
 
 

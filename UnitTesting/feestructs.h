@@ -1,8 +1,9 @@
 #ifndef FEESTRUCTS_H
 #define FEESTRUCTS_H
 
+#include <QDebug>
 #include <QDate>
-
+#include <QList>
 
 
 

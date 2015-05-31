@@ -2,8 +2,9 @@
 #define NEW_SALARY_STRUCTS
 
 
+#include <QDebug>
 #include <QDate>
-
+#include <QList>
 
 
 
