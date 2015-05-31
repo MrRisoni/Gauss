@@ -6,6 +6,9 @@ class ZeitWandel
 {
 public:
     ZeitWandel();
+    void populateSchuleTable();
+private:
+    void setSchuleHeaders();
 };
 
 #endif // ZEITWANDEL_H

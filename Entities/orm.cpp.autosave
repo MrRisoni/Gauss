@@ -1831,6 +1831,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
         qDebug() << "maximum permament ID " << PermaID;
 
+        qDebug() << "Programma size " << Programma.size();
         //insert to perma times
         for (int z=0;z<Programma.size();z++) {
 
@@ -1874,7 +1875,9 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
         QList<QDate> FutureDates = calcFutureHistory(MeresIDs,Perma.getStarts(),Perma.getEnds());
 
-        for (int w=0;w<Programma.size();w++) {
+        qDebug() << "Future days are " << FutureDates.size();
+        
+        for (int w=0;w<FutureDates.size();w++) {
             s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`) VALUES (:grid, :dat , :shourid , :dur , :rid)";
             qDebug() << s;
             q.prepare(s);

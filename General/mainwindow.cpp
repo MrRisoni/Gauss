@@ -35,6 +35,10 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionGive_Receipt,SIGNAL(triggered()),this,SLOT(giveMoneyReceipt()));
     connect(ui->actionTake_Money,SIGNAL(triggered()),this,SLOT(takeMoneyReceipt()));
+
+
+
+
 }
 
 MainWindow::~MainWindow()

@@ -4,7 +4,7 @@
 
 
 RoomItemDelegate::RoomItemDelegate(QObject *parent)
-    : RoomItemDelegate(parent)
+    : QStyledItemDelegate(parent)
 {
 }
 

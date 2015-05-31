@@ -40,6 +40,16 @@ void Permatimes::setRoomID(int value)
 {
     RoomID = value;
 }
+QString Permatimes::getRoom() const
+{
+    return Room;
+}
+
+void Permatimes::setRoom(const QString &value)
+{
+    Room = value;
+}
+
 
 
 

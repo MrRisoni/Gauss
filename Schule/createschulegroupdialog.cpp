@@ -9,7 +9,7 @@
 
 #include <QStandardItemModel>
 #include <QAbstractTableModel>
-#include "General/objektdelegate.h"
+#include "General/roomitemdelegate.h"
 
 CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     QDialog(parent),
@@ -36,7 +36,7 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     }
 
 
-
+    //SCHULE TABLE MODEL
 
     GroupModel= new  QStandardItemModel();
 
@@ -48,8 +48,12 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     ScheduleModel->setHorizontalHeaderLabels(HEADS.horHeaders);
     ScheduleModel->setVerticalHeaderLabels(HEADS.verHeaders);
 
+
+
+
+
     // try to add a delegate for rooms
-    ObjektDelegate *obj = new ObjektDelegate();
+    RoomItemDelegate *obj = new RoomItemDelegate();
     ui->tableSchedule->setItemDelegate(obj);
 
     ui->tableSchedule->setModel(ScheduleModel);
@@ -294,9 +298,16 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
     }
 
 
+
+
     // Show the created schedule
     qDebug() << "CLICKED SCHEDULE INDICES";
     // http://stackoverflow.com/questions/5927499/how-to-get-selected-rows-in-qtableview
+
+
+    //create a permatimes array
+    QList<Permatimes> Programma;
+
 
 
 
@@ -304,19 +315,28 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
 
     for (QModelIndex inx :  scheduleIndexList) {
         qDebug() << "selected  schedule indices " << inx.row() << " " << inx.column() << " room " << ui->tableSchedule->model()->data(inx).toString();
+
+        Permatimes pr= Permatimes();
+        pr.setDayID(inx.column());
+        pr.setHourID(inx.row());
+        pr.setRoom(ui->tableSchedule->model()->data(inx).toString());
+
+       Programma.append(pr);
+
+
     }
 
 
 
+
     //create permament
+    Permament p =Permament();
+    p.setStarts(QDate::currentDate());
+    p.setEnds(QDate::currentDate().addDays(ui->lineDuration->text().toInt()));
+    qDebug() << "end date " << QDate::currentDate().addDays(ui->lineDuration->text().toInt());
 
 
-    //create a permatimes array
-
-
-
-
-    //ORM o= ORM();
-    //o.saveSchule(G);
+    ORM o= ORM();
+    o.saveSchule(G,p,Programma);
 
 }

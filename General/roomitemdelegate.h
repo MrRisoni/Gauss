@@ -5,6 +5,7 @@
 #include <QModelIndex>
 #include <QObject>
 #include <QComboBox>
+#include <QFontComboBox>
 #include <QSize>
 
 #include <QStyledItemDelegate>
@@ -27,5 +28,5 @@ protected:
     virtual void setModelData ( QWidget *editor, QAbstractItemModel *model, const QModelIndex &index ) const;
     virtual void updateEditorGeometry(QWidget *editor, const QStyleOptionViewItem &option, const QModelIndex &index) const;
 
-
+};
 #endif // ROOMITEMDELEGATE_H

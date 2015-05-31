@@ -2,6 +2,7 @@
 
 ZeitWandel::ZeitWandel()
 {
+    //setup heads for timetable
 
 }
 

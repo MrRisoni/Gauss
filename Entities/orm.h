@@ -24,6 +24,8 @@
 #include "groups.h"
 #include "payments.h"
 #include "paytype.h"
+#include "permament.h"
+#include "permatimes.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -52,7 +54,7 @@ public:
     void save(Buildings B);
     void save(Rooms R);
     void save(FeeSchule fsh);
-    void saveSchule(Groups g);
+    void saveSchule(Groups g, Permament Perma, QList<Permatimes> Programma);
     void saveUni(Groups g);
     void saveSprache(Groups g);
     void saveSchuleStudent(Members m);
@@ -124,6 +126,9 @@ public:
     DiplomaModelMVC getDiplomaMVC();
 
     QPixmap getSignaturePic(QString TeacherID);
+
+
+    QList<QDate> calcFutureHistory(QList<int> DayIDs, QDate startDate, QDate endDate);
 
 private:
     void ShowError(QSqlQuery q);

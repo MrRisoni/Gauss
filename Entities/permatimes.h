@@ -2,6 +2,9 @@
 #define PERMATIMES_H
 
 
+#include <QString>
+
+
 class Permatimes
 {
 public:
@@ -18,11 +21,15 @@ public:
     int getRoomID() const;
     void setRoomID(int value);
 
+    QString getRoom() const;
+    void setRoom(const QString &value);
+
 private:
     int PermaID;
     int DayID;
     int HourID;
     int RoomID;
+    QString Room;
 };
 
 #endif // PERMATIMES_H
