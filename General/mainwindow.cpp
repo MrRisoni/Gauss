@@ -35,7 +35,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     connect(ui->actionGive_Receipt,SIGNAL(triggered()),this,SLOT(giveMoneyReceipt()));
     connect(ui->actionTake_Money,SIGNAL(triggered()),this,SLOT(takeMoneyReceipt()));
-
+    connect(ui->actionShow_All_Groups,SIGNAL(triggered()),this,SLOT(showAllGroups()));
 
 
 
@@ -48,6 +48,14 @@ MainWindow::~MainWindow()
 QSqlDatabase MainWindow::getDb() const
 {
     return db;
+}
+
+
+
+void MainWindow::showAllGroups() {
+    ShowGroupsDialog *grp = new ShowGroupsDialog();
+    grp->setAttribute(Qt::WA_DeleteOnClose);
+    grp->show();
 }
 
 

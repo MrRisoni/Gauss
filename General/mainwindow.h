@@ -24,6 +24,7 @@
 #include "Sprache/addlanguagedialog.h"
 #include "Sprache/addnewdiplomadialog.h"
 #include "E_Receipts/createnewreceiptdialog.h"
+#include "showgroupsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -66,6 +67,7 @@ private slots:
     void manageDiplomas();
     void giveMoneyReceipt();
     void takeMoneyReceipt();
+    void showAllGroups();
 
 
 };

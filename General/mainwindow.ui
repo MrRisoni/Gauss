@@ -160,6 +160,7 @@
     <addaction name="actionCreate_Sprache_Group"/>
     <addaction name="actionBuildings_and_Rooms"/>
     <addaction name="actionAdd_Requests"/>
+    <addaction name="actionShow_All_Groups"/>
    </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
@@ -195,7 +196,7 @@
   </action>
   <action name="actionAdd_Student">
    <property name="icon">
-    <iconset resource="piges.qrc">
+    <iconset resource="../piges.qrc">
      <normaloff>:/icons/icons/student.png</normaloff>:/icons/icons/student.png</iconset>
    </property>
    <property name="text">
@@ -204,7 +205,7 @@
   </action>
   <action name="actionAdd_Teacher">
    <property name="icon">
-    <iconset resource="piges.qrc">
+    <iconset resource="../piges.qrc">
      <normaloff>:/icons/icons/professor.png</normaloff>:/icons/icons/professor.png</iconset>
    </property>
    <property name="text">
@@ -301,10 +302,15 @@
     <string>Take Money</string>
    </property>
   </action>
+  <action name="actionShow_All_Groups">
+   <property name="text">
+    <string>Show All Groups</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
-  <include location="piges.qrc"/>
+  <include location="../piges.qrc"/>
  </resources>
  <connections/>
 </ui>
