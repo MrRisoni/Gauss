@@ -1,21 +1,20 @@
 
 
+------------------------------------------------
 
 
-code create time schedule for that group
-add to permament 
-
-
-Create  before hand for all the period the weekly lessons in the history table
+MVC namespace refactor 
 
 
 ------------------------------------------------
 
+code timetable 
+
+
+
+
+------------------------------------------------
 add temporary lesson to history
-
-
-------------------------------------------------
-code timetable to show group
 
 ------------------------------------------------
 

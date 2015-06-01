@@ -108,7 +108,8 @@ SOURCES += main.cpp\
     General/zeitwandel.cpp \
     General/addtemporarylessondialog.cpp \
     Entities/permatimes.cpp \
-    General/roomitemdelegate.cpp
+    General/roomitemdelegate.cpp \
+    Entities/backend.cpp
 
 
 
