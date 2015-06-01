@@ -3,10 +3,9 @@
 
 
 #include <QColorDialog>
-#include <QStandardItem>
-#include <QStandardItemModel>
 #include <QAbstractItemModel>
-#include <QSqlQuery>
+#include  "../backend.h"
+
 
 AddNewSchwerDialog::AddNewSchwerDialog(QWidget *parent) :
     QDialog(parent),
@@ -26,50 +25,50 @@ void AddNewSchwerDialog::LoadColors() {
      */
 
 
-    QStandardItemModel *mod=new QStandardItemModel();
+    //QStandardItemModel *mod=new QStandardItemModel();
 
 
-    ORM O=ORM();
+//    ORM O=ORM();
 
-    AddSchwerDialogMVC mvc=O.getSchwerMVC();
+//    AddSchwerDialogMVC mvc=O.getSchwerMVC();
 
-    mod->setHorizontalHeaderLabels(mvc.headers);
-
-
-    int row=0;
-
-    for (SchwerModel m : mvc.SchwerView) {
-        QStandardItem *itID=new QStandardItem();
-        itID->setText(m.SchwerID);
+//    mod->setHorizontalHeaderLabels(mvc.headers);
 
 
+//    int row=0;
 
-        QBrush br;
-        QColor col;
-
-        col.setRed(m.red.toInt());
-        col.setBlue(m.blue.toInt());
-        col.setGreen(m.green.toInt());
-
-        br.setColor(col);
-        br.setStyle(Qt::SolidPattern);
-        itID->setBackground(br);
-        mod->setItem(row,0,itID);
+//    for (SchwerModel m : mvc.SchwerView) {
+//        QStandardItem *itID=new QStandardItem();
+//        itID->setText(m.SchwerID);
 
 
 
+//        QBrush br;
+//        QColor col;
 
-        QStandardItem *itNumCourses=new QStandardItem();
-        itNumCourses->setText(m.NumCourses);
-        mod->setItem(row,1,itNumCourses);
+//        col.setRed(m.red.toInt());
+//        col.setBlue(m.blue.toInt());
+//        col.setGreen(m.green.toInt());
 
-        row++;
-    }
+//        br.setColor(col);
+//        br.setStyle(Qt::SolidPattern);
+//        itID->setBackground(br);
+//        mod->setItem(row,0,itID);
 
 
 
 
-    ui->tableSchwer->setModel(mod);
+//        QStandardItem *itNumCourses=new QStandardItem();
+//        itNumCourses->setText(m.NumCourses);
+//        mod->setItem(row,1,itNumCourses);
+
+//        row++;
+//    }
+
+
+
+
+    ui->tableSchwer->setModel(MVC::getGeneral_SchwierigModel());
 
 
     ui->tableSchwer->resizeColumnsToContents();

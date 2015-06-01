@@ -1,6 +1,6 @@
 #include "showgroupsdialog.h"
 #include "ui_showgroupsdialog.h"
-#include "../backend.cpp"
+#include "../backend.h"
 
 
 ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
@@ -9,8 +9,7 @@ ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
 {
     ui->setupUi(this);
 
-
-    ui->tableAllGroups->setModel(MVC::getGeneral_ShowGroup_View());
+    ui->tableAllGroups->setModel(MVC::getGeneral_ShowGroup_Model());
 
 }
 
