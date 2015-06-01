@@ -8,16 +8,40 @@
 #include <QVariant>
 #include <QStandardItem>
 #include <QStandardItemModel>
+#include <QColor>
+#include <QBrush>
 
 namespace MVC { //nested namespaces ???
+
+
+
+struct RGBColor {
+    int Red;
+    int Green;
+    int Blue;
+    //cell coordinates
+    int x;
+    int y;
+};
+
+
+
+
+QStandardItemModel* makeModel(QStringList headers,QList<QStringList> data,QList<RGBColor> coldata);
+    //universal QStandardItemModel maker
+    /* INPUT :
+     * horizontal header labels
+     * cell data : a string list for every row : all rows have equal length
+     * color data : backround color data for cells
+     * OUTPUT a model with headers and colored data
+     */
+
+
 
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
 
-
-
-
-struct General_ShowGroup {
+struct General_ShowGroupModel {
     QString GroupID;
     QString CourseName;
     QString Starts;
@@ -32,29 +56,31 @@ struct General_ShowGroup {
     QString Deficit; // how much money do the students owe to us
 };
 
-struct General_ShowGroupsMVC {
-    QList<General_ShowGroup> Model;
-    QStringList headers;
+
+
+
+QStandardItemModel* getGeneral_ShowGroup_Model();
+
+
+
+//***************************      MODEL FOR GENERAL/Schwierigkeit       ***************************
+
+
+
+struct SchwierigModel {
+  QString SchwerID;
+  QString NumCourses;
+  QString red;
+  QString green;
+  QString blue;
 };
 
 
-General_ShowGroupsMVC getGeneral_ShowGroup_Model();
-QStandardItemModel* getGeneral_ShowGroup_View();
-
-
-//                          ----------------------------------------------------
 
 
 
 
-
-
-
-
-
-
-
-
+QStandardItemModel* getGeneral_SchwierigModel();
 
 
 
