@@ -1884,7 +1884,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             q.bindValue(":perid",PermaID);
             q.bindValue(":did",Programma.at(z).getDayID());
             q.bindValue(":shid",Programma.at(z).getStartHourID());
-            q.bindValue(":dur",Programma.at(z).getDur());
+            q.bindValue(":dur",Programma.at(z).getDiarkeia());
             q.bindValue(":rid",Programma.at(z).getRoomID());
 
             qDebug () << s;

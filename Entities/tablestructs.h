@@ -291,6 +291,12 @@ struct SchuleDisciplineMVC {
     QList<SchuleDisciplineModel> schuledisc_model;
 };
 
+
+
+
+
+
+
 #endif // TABLESTRUCTS
 
 

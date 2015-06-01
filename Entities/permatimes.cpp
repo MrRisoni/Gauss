@@ -52,15 +52,8 @@ void Permatimes::setDiarkeia(float value)
 {
     Diarkeia = value;
 }
-float Permatimes::getDur() const
-{
-    return Dur;
-}
 
-void Permatimes::setDur(float value)
-{
-    Dur = value;
-}
+
 int Permatimes::getStartHourID() const
 {
     return StartHourID;
