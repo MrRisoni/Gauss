@@ -108,23 +108,7 @@ struct AddLanguageDialogMVC {
   QStringList headers;
   QList<LanguageModel> LanguageView;
 };
-//End AddLanguageDialog
 
-
-//AddNewSchwerDialog
-struct SchwerModel {
-  QString SchwerID;
-  QString NumCourses;
-  QString red;
-  QString green;
-  QString blue;
-};
-
-struct AddSchwerDialogMVC {
-  QStringList headers;
-  QList<SchwerModel> SchwerView;  
-};
-//End AddNewSchwerDialog
 
 
 

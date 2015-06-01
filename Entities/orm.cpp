@@ -239,43 +239,6 @@ void  ORM::save(Diplomas d) {
 }
 
 
-AddSchwerDialogMVC ORM::getSchwerMVC() {
-    AddSchwerDialogMVC mvc;
-
-    mvc.headers.append("SchwerID");
-    mvc.headers.append("# Courses");
-
-    QSqlQuery q;
-
-    //get schwerid,color
-    QString s="SELECT SchwerID,Red,Green,Blue,Plithos FROM (SELECT SchwerID,Red,Green, ";
-    s+=" BLUE FROM Schwierigkeit) AS Stuffe INNER JOIN ";
-    s+="  (SELECT Schwer,Count(Schwer) As Plithos From Courses Group By Schwer) ";
-    s+=" AS Kursen ON Kursen.Schwer = Stuffe.SchwerID ";
-
-    qDebug() << s;
-
-
-    q.exec(s);
-
-    while (q.next()) {
-        SchwerModel mod=SchwerModel();
-        mod.SchwerID=q.value(0).toString();
-        mod.red=q.value(1).toString();
-        mod.green=q.value(2).toString();
-        mod.blue=q.value(3).toString();
-        mod.NumCourses=q.value(4).toString();
-
-        mvc.SchwerView.append(mod);
-
-    }
-
-
-
-    q.finish();
-    return mvc;
-}
-
 
 
 AddInstitutDialogMVC  ORM::getAddInstitutMVC() {
