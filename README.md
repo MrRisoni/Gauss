@@ -7,11 +7,11 @@ Die größte App, die ich je bis heute  entwickelt habe!
 
 The biggest app i have ever developed!
 
-- Desktop app for the directors and secretaries : Qt,C++,MySQL,MongoDB,Python ( master branch )
+- Desktop app for the directors and secretaries : Qt,C++,MySQL,MongoDB,Python 
 
-- Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql ( webui branch  that will have to wait  :((( )
+- Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql (  that will have to wait  :((( )
 
-- Simple pseudo Document Management System : Python ,PyQt, MongoDB
+- Simple pseudo Document Management System : Python ,PyQt, MongoDB ( dmslite )
 
   A total of 75 tables :)
   

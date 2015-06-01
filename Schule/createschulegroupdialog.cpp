@@ -314,13 +314,18 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
     QModelIndexList scheduleIndexList = ui->tableSchedule->selectionModel()->selectedIndexes();
 
 
-    //ADD A DAY ONLY ONCE!!!!!!!!!!!!!!!
-    //THE NUMBER OF SELECTED ROWS PER COL IS THE DURATION
+     //ADD A DAY ONLY ONCE!!!!!!!!!!!!!!!
+     //THE NUMBER OF SELECTED ROWS PER COL IS THE DURATION
+
+     //use a map key is column value number of rows for that column
+     std::map<int,float> Lexiko
 
 
 
     for (QModelIndex inx :  scheduleIndexList) {
         qDebug() << "selected  schedule indices " << inx.row() << " " << inx.column() << " room " << ui->tableSchedule->model()->data(inx).toString();
+
+    }
 
         Permatimes pr= Permatimes();
         pr.setDayID(inx.column());
