@@ -22,15 +22,9 @@ void Permatimes::setDayID(int value)
 {
     DayID = value;
 }
-int Permatimes::getHourID() const
-{
-    return HourID;
-}
 
-void Permatimes::setHourID(int value)
-{
-    HourID = value;
-}
+
+
 int Permatimes::getRoomID() const
 {
     return RoomID;
@@ -58,6 +52,26 @@ void Permatimes::setDiarkeia(float value)
 {
     Diarkeia = value;
 }
+float Permatimes::getDur() const
+{
+    return Dur;
+}
+
+void Permatimes::setDur(float value)
+{
+    Dur = value;
+}
+int Permatimes::getStartHourID() const
+{
+    return StartHourID;
+}
+
+void Permatimes::setStartHourID(int value)
+{
+    StartHourID = value;
+}
+
+
 
 
 

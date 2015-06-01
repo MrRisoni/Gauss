@@ -15,8 +15,7 @@ public:
     int getDayID() const;
     void setDayID(int value);
 
-    int getHourID() const;
-    void setHourID(int value);
+
 
     int getRoomID() const;
     void setRoomID(int value);
@@ -27,10 +26,17 @@ public:
     float getDiarkeia() const;
     void setDiarkeia(float value);
 
+    float getDur() const;
+    void setDur(float value);
+
+    int getStartHourID() const;
+    void setStartHourID(int value);
+
 private:
     int PermaID;
     int DayID;
-    int HourID;
+    int StartHourID;
+    float Dur;
     int RoomID;
     float Diarkeia;
     QString Room;

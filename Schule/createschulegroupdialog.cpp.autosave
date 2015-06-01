@@ -343,13 +343,13 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
             ColIDs.append(inx.column()+1);
             StartHour.append(inx.row()+1);
             //append duration
-            Dur.append(0.5);
+            Dur.append(0.5f);
             RoomName.append(ui->tableSchedule->model()->data(inx).toString());
         }
         else {
             qDebug() << " updated duration for day  " << inx.column() +1 ;
             //update duration value
-            Dur[colpos] += 0.5;
+            Dur[colpos] += 0.5f;
 
         }
     }

@@ -4,11 +4,15 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 
+QSqlDatabase vasi;
+
+
+
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    QSqlDatabase vasi;
 
     vasi= QSqlDatabase::addDatabase("QMYSQL");
     vasi.setHostName("localhost");

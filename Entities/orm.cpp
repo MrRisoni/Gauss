@@ -7,6 +7,7 @@
 
 using namespace std;
 
+extern QSqlDatabase vasi;
 
 
 ORM::ORM()
@@ -122,6 +123,8 @@ void ORM::save(Payments p) {
     QSqlQuery q;
 
     try {
+        vasi.transaction();
+
         qDebug() << "trying to save payment";
         int ptype=0,tid=0;
         q.prepare("SELECT MembID FROM Members Where Name=:nm");
@@ -159,9 +162,13 @@ void ORM::save(Payments p) {
 
 
 
+        vasi.commit();
+
         ShowSuccess();
     }
     catch (int ex) {
+        vasi.rollback();
+
         ShowError(q);
     }
 
@@ -171,6 +178,8 @@ void ORM::save(Payments p) {
 void  ORM::save(Diplomas d) {
     QSqlQuery q;
     try {
+
+        vasi.transaction();
 
         qDebug() << "saving diploma...";
         int lid=0,pid=0;
@@ -214,10 +223,15 @@ void  ORM::save(Diplomas d) {
         }
 
 
+        vasi.commit();
+
         ShowSuccess();
     }
 
     catch (int ex) {
+
+        vasi.rollback();
+
         ShowError(q);
 
     }
@@ -856,6 +870,9 @@ void ORM::saveTeacher(Teacher T) {
     QSqlQuery q;
     try {
 
+        vasi.transaction();
+
+
         T.setAFM(generateAFM());
         T.setADT(generateADT());
         T.setPhone(generatePhone());
@@ -902,7 +919,6 @@ void ORM::saveTeacher(Teacher T) {
         qDebug() << "KasseID " << T.getKasseID() << " " << QString::number(T.getVersichern().getKasseID()) << " " << T.getVersichern().getName();
 
 
-        db.transaction();
         //query the db to get the base wages
 
         q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,'0','0',:adt)");
@@ -1033,13 +1049,15 @@ void ORM::saveTeacher(Teacher T) {
         // INSERT INTO `Unavailable`(`UnavailID`, `TeacherID`, `DayID`, `HourID`, `Duration`) VALUES ([value-1],[value-2],[value-3],[value-4],[value-5])
 
 
-        db.commit();
+        vasi.commit();
+
         ShowSuccess();
     }
     catch (int ex) {
+        vasi.rollback();
+
         qDebug () << "Error saving teacher on step " << ex;
         ShowError(q);
-        db.rollback();
     }
     q.finish();
 }
@@ -1744,6 +1762,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
     try {
 
+        vasi.transaction();
         qDebug() << "attempting to save schule group";
         int CID=-1;
         //query for courseID
@@ -1780,9 +1799,10 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         }
 
         for (QString SID : g.getMeliID()) {
-            q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`) VALUES (:gid,:sid)");
+            q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`,`Added`) VALUES (:gid,:sid,:dat)");
             q.bindValue(":gid",GroupID);
             q.bindValue(":sid",SID);
+            q.bindValue(":dat",QDate::currentDate());
 
             if (!q.exec()) {
                 throw 10;
@@ -1804,9 +1824,11 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         //ADD USEFUL COMMENTS!!!!!!!!!!!!!1
         QString s;
 
+
         //insert into permament
         int PermaID=0;
         s= "INSERT INTO `Permament` (`GroupID`, `StartsOn`, `EndsOn`) VALUES (:grid,:start,:end)";
+        qDebug () << s;
         q.prepare(s);
         q.bindValue(":grid",GroupID);
         q.bindValue(":start",Perma.getStarts());
@@ -1831,8 +1853,11 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
         qDebug() << "maximum permament ID " << PermaID;
 
+           qDebug() << "Querying for room names " ;
+
         //insert to perma times
         for (int z=0;z<Programma.size();z++) {
+
 
 
 
@@ -1843,42 +1868,53 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             while (q2.next()) {
                 roomid= q2.value(0).toInt();
             }
-            qDebug() << "Room Name " << Programma.at(z).getRoom() << " RoomID " << roomid;
-             Programma[z].setRoomID(roomid);
+
+            Programma[z].setRoomID(roomid);
+
+
+            qDebug() << "Room Name " << Programma.at(z).getRoom() << " RoomID " << roomid << " " << Programma[z].getRoomID();
+
 
             if (roomid<=0) {
                 throw 10;
             }
 
-            s = "INSERT INTO `PermaTimes` (`PermaID`, `DayID`, `HourID`, `RoomID`) VALUES (:perid,:did,:hid,:rid)";
+            s = "INSERT INTO `PermaTimes` (`PermaID`, `DayID`, `StartHourID`, `Duration`,`RoomID`) VALUES (:perid,:did,:shid,:dur,:rid)";
             q.prepare(s);
             q.bindValue(":perid",PermaID);
             q.bindValue(":did",Programma.at(z).getDayID());
-            q.bindValue(":hid",Programma.at(z).getHourID());
+            q.bindValue(":shid",Programma.at(z).getStartHourID());
+            q.bindValue(":dur",Programma.at(z).getDur());
             q.bindValue(":rid",Programma.at(z).getRoomID());
 
             qDebug () << s;
+
             if (!q.exec()) {
                 throw 10;
             }
 
+
+            qDebug() << "inserted record to perma times";
         }
 
-        QList<int> MeresIDs; // add the unique day ids
-        for (int w=0;w<Programma.size();w++) {
-            if (MeresIDs.contains(Programma.at(w).getDayID())==false) {
-                MeresIDs.append(Programma.at(w).getDayID());
-            }
-        }
+
 
 
         Zukunuft FutureDatesRoomsHours = createFutureDatesAndRooms(Programma,Perma.getStarts(),Perma.getEnds());
 
-        qDebug() << "generated days" << FutureDatesRoomsHours.FutureHourIDs.size() ;
+        qDebug() << "generated days " << FutureDatesRoomsHours.FutureJulianDays.size() ;
+        qDebug() << "generated start hours " << FutureDatesRoomsHours.FutureHourIDs.size() ;
+        qDebug() << "generated durations " << FutureDatesRoomsHours.Durations.size() ;
+        qDebug() << "generated rooms " << FutureDatesRoomsHours.FutureRoomIDs.size() ;
 
-        for (int w=0;FutureDatesRoomsHours.FutureJulianDays.size();w++ ) {
+
+
+        int StundeID=1;
+        for (int w=0;w<FutureDatesRoomsHours.FutureJulianDays.size();w++ ) {
+            qDebug() << "---------------------------";
             s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`) VALUES (:grid, :dat , :shourid , :dur , :rid)";
             qDebug() << s;
+
             q.prepare(s);
             q.bindValue(":grid",GroupID);
             q.bindValue(":dat",QDate::fromJulianDay(FutureDatesRoomsHours.FutureJulianDays.at(w)));
@@ -1887,13 +1923,23 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             q.bindValue(":rid",FutureDatesRoomsHours.FutureRoomIDs.at(w));
             //copy to history until the end
             q.exec();
+            qDebug() << "groupid " << GroupID ;
             qDebug() << "mera " << QDate::fromJulianDay(FutureDatesRoomsHours.FutureJulianDays.at(w));
+            qDebug() << "ora " << FutureDatesRoomsHours.FutureHourIDs.at(w);
+            qDebug() << "domatio " << FutureDatesRoomsHours.FutureRoomIDs.at(w);
+            qDebug() << "diarkeia " << FutureDatesRoomsHours.Durations.at(w);
+            qDebug() << "stundeID " << StundeID;
+            StundeID++;
         }
+
+        vasi.commit();
+
 
         ShowSuccess();
     }
     catch (int ex) {
 
+        vasi.rollback();
         ShowError(q);
 
     }
@@ -1952,8 +1998,16 @@ Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDa
                      //create a day from startJul
                      V.push_back(QDate::fromJulianDay(StartJul).toJulianDay());
                      // qDebug() << "out " << QDate::fromJulianDay(StartJul);
-                     Ores.push_back(p.getHourID());
+                     Ores.push_back(p.getStartHourID());
+
+
+
+
                      Domatia.push_back(p.getRoomID());
+
+
+
+
                      Diarkeia.push_back(p.getDiarkeia());
                  }
              }
@@ -1965,6 +2019,7 @@ Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDa
          Mellon.FutureHourIDs=Ores;
          Mellon.FutureJulianDays=V;
          Mellon.FutureRoomIDs=Domatia;
+         Mellon.Durations=Diarkeia;
          return Mellon;
 
 
@@ -2008,6 +2063,7 @@ void ORM::saveSchuleStudent(Members m) {
     QSqlQuery q;
     try {
 
+        vasi.transaction();
         q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'2',:rdate,:bdate,'0','0',:adt)");
 
 
@@ -2029,11 +2085,14 @@ void ORM::saveSchuleStudent(Members m) {
         q.bindValue(":adt",generateADT());
         q.exec();
 
+        vasi.commit();
+
         ShowSuccess();
 
     }
     catch (exception& ex) {
 
+        vasi.rollback();
 
         qDebug() << "Error " << ex.what() ;
 
@@ -2052,6 +2111,7 @@ void ORM::saveStudent(Members m) {
     QSqlQuery q;
     try {
 
+        vasi.transaction();
         q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'1',:rdate,:bdate,'0','0',:adt)");
 
 
@@ -2073,11 +2133,13 @@ void ORM::saveStudent(Members m) {
         q.bindValue(":adt",generateADT());
         q.exec();
 
+        vasi.commit();
         ShowSuccess();
 
     }
     catch (exception& ex) {
 
+        vasi.rollback();
 
         qDebug() << "Error " << ex.what() ;
 
@@ -2095,6 +2157,9 @@ void ORM::save(Schwierigkeit schw) {
 
 
     try {
+
+        vasi.transaction();
+
         qDebug() << "saving object schw";
         QString s="INSERT INTO `Schwierigkeit`  ( `Red`, `Green`, `Blue`) VALUES (:r,:g,:b)";
         q.prepare(s);
@@ -2106,6 +2171,7 @@ void ORM::save(Schwierigkeit schw) {
 
 
 
+        vasi.commit();
 
 
 
@@ -2113,6 +2179,7 @@ void ORM::save(Schwierigkeit schw) {
     catch (exception& ex) {
 
 
+        vasi.rollback();
         qDebug() << "Error " << ex.what() ;
 
         ShowError(q);

@@ -3,7 +3,7 @@
 
 
 #include <QList>
-
+#include <QDate>
 
 class Ensembles
 {
@@ -20,6 +20,8 @@ public:
 private:
     int EnsembleID;
     QList<int> meliID;
+    QList<QDate> DateAdded; // we can add new members to group this will increase the complexity of the fee
+    //calculation algorithm
 };
 
 #endif // ENSEMBLES_H
