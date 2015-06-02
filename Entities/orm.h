@@ -26,6 +26,8 @@
 #include "paytype.h"
 #include "permament.h"
 #include "permatimes.h"
+#include "discipline.h"
+#include "discounttype.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -67,7 +69,7 @@ public:
     void saveSchule(Groups g, Permament Perma, QList<Permatimes> Programma);
     void saveUni(Groups g);
     void saveSprache(Groups g);
-    void saveSchuleStudent(Members m);
+    void saveSchuleStudent(Members m, QString kateuthinsi, QString specialcat);
     void save(Diplomas d);
     void save(Payments p);
 
@@ -75,6 +77,10 @@ public:
     // get TableModels code
     QList<ManageCourseTable>  getManageCourseTable();
     //
+
+
+    QList<Discipline> getDisciplines();
+    QList<DiscountType> getDiscountTypes();
 
     QList<Teacher> getCanTeachUni(QString DepName, QString CourseName);
     QList<Members> getRequestsUni(QString DepName, QString CourseName);

@@ -23,6 +23,7 @@ AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
 
     }
 
+    file.close();
     file.setFileName(":names/female.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
@@ -31,6 +32,21 @@ AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
             ui->lineMName->setText(onomata.takeAt(qrand() % onomata.size()).toUpper());
 
     }
+    file.close();
+
+
+    //fetch disciplines
+    ORM o = ORM();
+    for (Discipline d : o.getDisciplines()) {
+         ui->comboDiscipline->addItem(d.getName());
+    }
+
+
+
+    for (DiscountType dt : o.getDiscountTypes()) {
+        ui->comboSpecialCats->addItem(dt.getDescription());
+    }
+
 }
 
 AddNewStudentDialog::~AddNewStudentDialog()
@@ -57,7 +73,7 @@ void AddNewStudentDialog::on_pushAddStudent_clicked()
 
         ORM O=ORM();
         if (ui->checkSchule->checkState()==Qt::Checked) {
-            O.saveSchuleStudent(m);
+            O.saveSchuleStudent(m,ui->comboDiscipline->currentText(),ui->comboSpecialCats->currentText());
 
         }
         else {
@@ -66,3 +82,8 @@ void AddNewStudentDialog::on_pushAddStudent_clicked()
     }
 }
 
+
+void AddNewStudentDialog::on_checkSchule_clicked()
+{
+
+}

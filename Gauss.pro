@@ -109,7 +109,8 @@ SOURCES += main.cpp\
     General/addtemporarylessondialog.cpp \
     Entities/permatimes.cpp \
     General/roomitemdelegate.cpp \
-    mvc.cpp
+    mvc.cpp \
+    Entities/discipline.cpp
 
 
 
@@ -210,7 +211,8 @@ HEADERS  += Entities/absent.h  \
     General/addtemporarylessondialog.h \
     Entities/permatimes.h \
     General/roomitemdelegate.h \
-    mvc.h
+    mvc.h \
+    Entities/discipline.h
 
 
 

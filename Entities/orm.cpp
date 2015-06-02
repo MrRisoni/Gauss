@@ -1924,12 +1924,13 @@ void ORM::save(BaseWages BW) {
 }
 
 
-void ORM::saveSchuleStudent(Members m) {
+
+void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
     QSqlQuery q;
     try {
 
         vasi.transaction();
-        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'2',:rdate,:bdate,'0','0',:adt)");
+        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'2',:rdate,:bdate,:adt)");
 
 
 
@@ -1937,8 +1938,8 @@ void ORM::saveSchuleStudent(Members m) {
 
 
         qDebug() << "name " << m.getName();
-        q.bindValue(":name",m.getName());
 
+        q.bindValue(":name",m.getName());
         q.bindValue(":fname",m.getFName());
         q.bindValue(":mname",m.getMName());
         q.bindValue(":adres",m.getAddress());
@@ -1950,16 +1951,86 @@ void ORM::saveSchuleStudent(Members m) {
         q.bindValue(":adt",generateADT());
         q.exec();
 
+        //
+        int StudID=0;
+        q.exec("SELECT MAX(MembID) FROM Members");
+        while (q.next()) {
+            StudID=q.value(0).toInt();
+        }
+
+
+        qDebug() << "MemberID " << StudID;
+
+        if (StudID<=0) {
+            throw 10;
+        }
+
+
+
+        int DiscID=0;
+
+        q.exec("SELECT DiscID FROM Disciplines WHERE NAME ='"+ kateuthinsi +"'");
+        while (q.next()) {
+            DiscID = q.value(0).toInt();
+        }
+
+
+        qDebug() << "disciplineid " << DiscID;
+
+        if (DiscID<=0) {
+            throw 10;
+        }
+
+
+
+        q.prepare("INSERT INTO `Schuler` ( `StudentID`, `DiscipleID`, `FatherMobile`, `MotherMobile`) VALUES (:sid,:did,:dad,:mom)");
+        q.bindValue(":sid",StudID);
+        q.bindValue(":did",DiscID);
+        q.bindValue(":dad",generateMobile());
+        q.bindValue(":mom",generateMobile());
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+       //special category
+       if (specialcat.length()>1) {
+
+           int spcatid=0;
+
+           q.exec("SELECT SpecialID FROM DiscountCats Where Description='"+ specialcat+"'");
+           while (q.next()) {
+               spcatid=q.value(0).toInt();
+           }
+
+           qDebug() << "special category " << spcatid;
+
+           if (spcatid<=0) {
+            throw 10;
+           }
+
+           q.prepare("INSERT INTO `SpecialFees` ( `StudentID`, `CatID`, `Created`, `Expires`) VALUES (:sid,:catid,:start,:exp)");
+           q.bindValue(":sid",StudID);
+           q.bindValue(":catid",spcatid);
+           q.bindValue(":start",QDate::currentDate());
+           q.bindValue(":exp",QDate::currentDate().addDays(365));
+
+
+           if (!q.exec()) {
+               throw 10;
+           }
+       }
+
         vasi.commit();
 
         ShowSuccess();
 
     }
-    catch (exception& ex) {
+    catch (int ex) {
 
         vasi.rollback();
 
-        qDebug() << "Error " << ex.what() ;
+        qDebug() << "Error " ;
 
         ShowError(q);
     }
@@ -2071,3 +2142,34 @@ QList<Echelon> ORM::getEchels() {
 }
 
 
+QList<Discipline> ORM::getDisciplines() {
+    QSqlQuery q;
+    QList<Discipline> Discs;
+    q.exec("SELECT * FROM Disciplines");
+    while (q.next()) {
+        Discipline D=Discipline();
+        D.setDiscID(q.value(0).toInt());
+        D.setName(q.value(1).toString());
+        Discs.append(D);
+    }
+
+    q.finish();
+    return Discs;
+}
+
+
+
+QList<DiscountType> ORM::getDiscountTypes() {
+    QSqlQuery q;
+    QList<DiscountType> D;
+
+    q.exec("SELECT * FROM DiscountCats");
+    while (q.next()) {
+        DiscountType dt= DiscountType();
+        dt.setDescription(q.value(1).toString());
+        D.append(dt);
+    }
+
+    q.finish();
+    return D;
+}

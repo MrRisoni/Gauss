@@ -18,6 +18,8 @@ public:
 private slots:
     void on_pushAddStudent_clicked();
 
+    void on_checkSchule_clicked();
+
 private:
     Ui::AddNewStudentDialog *ui;
 };

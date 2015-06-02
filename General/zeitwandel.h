@@ -8,7 +8,8 @@ public:
     ZeitWandel();
     void populateSchuleTable();
 private:
-    void setSchuleHeaders();
+    void setSchuleHeaders(int TimeWin); //get days and dates from today until today + TimeWin
+
 };
 
 #endif // ZEITWANDEL_H
