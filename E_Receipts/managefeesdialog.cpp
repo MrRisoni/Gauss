@@ -4,6 +4,7 @@
 
 #include <QStandardItemModel>
 #include "Entities/orm.h"
+#include "../mvc.h"
 
 ManageFeesDialog::ManageFeesDialog(QWidget *parent) :
     QDialog(parent),
@@ -28,44 +29,9 @@ ManageFeesDialog::~ManageFeesDialog()
 void ManageFeesDialog::populateTable() {
 
 
-    QStandardItemModel *mod= new QStandardItemModel();
 
 
-    ORM o=ORM();
-    int r=0;
-
-
-
-    FeeSchuleMVC feemvc=o.getManageFeeSchuleMVC();
-      mod->setHorizontalHeaderLabels(feemvc.FeeViewHeaders);
-
-    for (FeeSchuleTable fee : feemvc.FeeModel) {
-
-        QStandardItem *itID=new QStandardItem();
-        itID->setText(fee.CourseID);
-        mod->setItem(r,0,itID);
-
-
-
-        QStandardItem *it=new QStandardItem();
-        it->setText(fee.Name);
-        mod->setItem(r,1,it);
-
-
-       QStandardItem *itUpdate =new QStandardItem();
-       itUpdate->setText(fee.LastUpdate);
-       mod->setItem(r,2,itUpdate);
-
-
-       QStandardItem *itChanges =new QStandardItem();
-       itChanges->setText(fee.Changes);
-       mod->setItem(r,4,itChanges);
-       r++;
-    }
-
-
-
-    ui->tableCourses->setModel(mod);
+    ui->tableCourses->setModel(MVC::getGeneralManageFees());
 }
 
 void ManageFeesDialog::on_pushSaveSchuleFee_clicked()

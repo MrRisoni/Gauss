@@ -122,7 +122,6 @@ public:
 
     //  MVC
 
-    FeeSchuleMVC  getManageFeeSchuleMVC();
 
     SchuleTeacherMVC getCanTeachSchuleMVC(QString CourseName);
 

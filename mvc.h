@@ -161,5 +161,45 @@ struct BaseWagesModel {
 QStandardItemModel* getReceiptBaseWages();
 
 
+//***************************      MODEL FOR General/ManageCourses       ***************************
+
+
+
+struct ManageCourseTable {
+    int CourseID;
+    QString CourseName;
+    QString DepName;
+    QString NumTeachers;
+    QString NumStudents;
+    QString NumGroups;
+    QString NumOpenRequests;
+    QString PaySchemes; // if  payschemes  exist for all echelons this is equal to Yes
+    QString FeeUpdate ; // last time the fee was updated
+};
+
+QStandardItemModel* getGeneralManageCourses();
+
+
+//***************************      MODEL FOR General/ManageFees       ***************************
+
+
+
+
+struct FeeSchuleTable {
+    QString CourseID;
+    QString Name;
+    QString LastUpdate;
+    QString Fee;
+    QString Changes;
+    QString Profit; //how much money have we won from that course
+    QString Debt; // how much money the students have not paid us
+};
+
+QStandardItemModel* getGeneralManageFees();
+
+
+
+
+
 
 } //END OF NAMESPACE

@@ -254,6 +254,134 @@ QStandardItemModel* MVC::getReceiptBaseWages(){
 
 
 
+QStandardItemModel* MVC::getGeneralManageCourses() {
+
+    QStringList headers;
+    headers.append("CourseID");
+    headers.append("CourseName");
+    headers.append("DepName");
+    headers.append("NumTeachers");
+    headers.append("NumStudents");
+    headers.append("NumGroups");
+    headers.append("NumOpenRequests");
+    headers.append("PaySchemes");
+    headers.append("FeeUpdate");
+
+    QList<QStringList> data ;
+    QList<RGBColor> coldata;
+
+    return makeModel(headers,data,coldata);
+
+}
+
+
+QStandardItemModel* MVC::getGeneralManageFees() {
+
+        QList<QStringList> data;
+        QList<RGBColor> coldata;
+
+
+        QSqlQuery q;
+
+        QString s;
+
+        /*SQL QUERY EXPLANTION
+         -get CID,Name : Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC
+
+
+
+          -get changes,latest :
+
+            SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID
+
+
+
+         -these courses don't have a fee yet : Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule)
+
+
+        /* UNION Courses have have a fee and courses that dont
+        Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION
+
+        SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID
+
+        FINAL QUERY
+
+        */
+
+
+        s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID ";
+        qDebug() << s;
+
+        q.exec(s);
+
+
+
+
+        QStringList headers;
+        headers.append("CourseID");
+        headers.append("Name");
+        headers.append("Latest update");
+        headers.append("Fee");
+        headers.append("#Changes");
+        headers.append("Debt");
+        headers.append("Profit");
+
+
+
+        while (q.next()) {
+
+            QStringList record;
+
+            record.append(q.value(0).toString());
+            record.append(q.value(1).toString());
+            record.append(q.value(2).toString());
+            record.append(q.value(3).toString());
+
+            record.append("0");
+            record.append("0");
+            record.append("0");
+
+
+
+            data.append(record);
+        }
+
+    q.finish();
+
+
+
+    return makeModel(headers,data,coldata);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
