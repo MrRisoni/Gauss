@@ -309,7 +309,7 @@ QStandardItemModel* MVC::getGeneralManageFees() {
         */
 
 
-        s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID ";
+        s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID  ORDER BY Alpha.CourseName ASC" ;
         qDebug() << s;
 
         q.exec(s);
@@ -317,12 +317,17 @@ QStandardItemModel* MVC::getGeneralManageFees() {
 
 
 
+
+
+
+
+
         QStringList headers;
         headers.append("CourseID");
         headers.append("Name");
+        headers.append("#Changes");
         headers.append("Latest update");
         headers.append("Fee");
-        headers.append("#Changes");
         headers.append("Debt");
         headers.append("Profit");
 
@@ -332,12 +337,12 @@ QStandardItemModel* MVC::getGeneralManageFees() {
 
             QStringList record;
 
-            record.append(q.value(0).toString());
-            record.append(q.value(1).toString());
-            record.append(q.value(2).toString());
-            record.append(q.value(3).toString());
+            record.append(q.value(0).toString()); //courseid
+            record.append(q.value(1).toString()); //name
+            record.append(q.value(2).toString()); //#changes
+            record.append(q.value(3).toString()); //updated
 
-            record.append("0");
+            record.append("0"); //fee
             record.append("0");
             record.append("0");
 
@@ -346,7 +351,28 @@ QStandardItemModel* MVC::getGeneralManageFees() {
             data.append(record);
         }
 
-    q.finish();
+
+        //query for fee price
+        s="select Kursen.CourseID,Kursen.Fee FROM (Select CourseID,Fee,Dat From FeeSchule) As Kursen INNER JOIN (Select CourseID,MAX(Dat) As Updat From FeeSchule GROUP BY CourseID ) As Daten ON Daten.CourseID=Kursen.CourseID AND Daten.Updat=Kursen.Dat ";
+        qDebug() << s;
+
+        q.exec(s);
+        while (q.next()) {
+            //search every record of the data
+
+            for (int i=0;i<data.size();i++) {
+
+                if (data.at(i).at(0)==q.value(0).toString()) {
+                   // record.replace(4,q.value(1).toString());
+                    data[i][4]=q.value(1).toString();
+                   // qDebug() << "setting price for courseid " << q.value(0).toString() << " " << q.value(1).toString() << " " << record[4];
+
+                }
+
+            }
+        }
+        q.finish();
+
 
 
 

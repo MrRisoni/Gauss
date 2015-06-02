@@ -32,6 +32,7 @@ void ManageFeesDialog::populateTable() {
 
 
     ui->tableCourses->setModel(MVC::getGeneralManageFees());
+    ui->tableCourses->resizeColumnsToContents();
 }
 
 void ManageFeesDialog::on_pushSaveSchuleFee_clicked()
