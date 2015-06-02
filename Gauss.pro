@@ -109,7 +109,7 @@ SOURCES += main.cpp\
     General/addtemporarylessondialog.cpp \
     Entities/permatimes.cpp \
     General/roomitemdelegate.cpp \
-    backend.cpp
+    mvc.cpp
 
 
 
@@ -210,7 +210,7 @@ HEADERS  += Entities/absent.h  \
     General/addtemporarylessondialog.h \
     Entities/permatimes.h \
     General/roomitemdelegate.h \
-    backend.h
+    mvc.h
 
 
 

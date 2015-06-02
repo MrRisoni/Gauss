@@ -4,7 +4,7 @@
 
 #include <QColorDialog>
 #include <QAbstractItemModel>
-#include  "../backend.h"
+#include  "../mvc.h"
 
 
 AddNewSchwerDialog::AddNewSchwerDialog(QWidget *parent) :

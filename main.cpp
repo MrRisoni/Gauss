@@ -3,10 +3,12 @@
 #include <QMessageBox>
 #include <QSqlDatabase>
 #include <QSqlError>
+#include <QFile>
+#include <QTextStream>
 
 QSqlDatabase vasi;
 
-
+QFile logFile;
 
 
 int main(int argc, char *argv[])
@@ -22,6 +24,13 @@ int main(int argc, char *argv[])
 
     vasi.open();
 
+
+    QFile file( "/tmp/log.txt" );
+    if ( file.open(QIODevice::ReadWrite) )
+    {
+        QTextStream stream( &file );
+        stream << "connected with sql" << endl;
+    }
 
 
     MainWindow w;

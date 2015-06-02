@@ -1,6 +1,6 @@
 #include "showgroupsdialog.h"
 #include "ui_showgroupsdialog.h"
-#include "../backend.h"
+#include  "../mvc.h"
 
 
 ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
