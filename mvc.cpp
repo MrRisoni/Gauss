@@ -20,8 +20,8 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
     headers.append("Hours planned");
     headers.append("Ausgeben");
     headers.append("Einnehmen");
-    headers.append("Schulden");
-    headers.append("Deficit");
+    headers.append("Unser_Schulden");
+    headers.append("Student_Schulden");
 
 
     QList<General_ShowGroupModel> modelo;
@@ -166,10 +166,89 @@ QStandardItemModel* MVC::getGeneral_SchwierigModel() {
 
 
 
+//***************************      MODEL FOR Sprache/ManageDiplomas       ***************************
 
 
 
 
+
+
+
+QStandardItemModel* MVC::getSpracheDiplomas() {
+    QStringList headers;
+
+    headers.append("DiploID");
+    headers.append("Name");
+    headers.append("Institut");
+    headers.append("NumTeachers");
+    headers.append("NumStudents");
+    headers.append("SuccessRate");
+    headers.append("SuccessGrade");
+
+    QList<QStringList> data;
+    QList<RGBColor> coldata;
+
+    return makeModel(headers, data,coldata);
+
+}
+
+
+
+//***************************      MODEL FOR Receipts/ManageSalaries       ***************************
+
+
+QStandardItemModel* MVC::getReceiptEchelons() {
+
+
+    QSqlQuery q;
+    QStringList headers;
+    headers.append("EchelID");
+    headers.append("Xp");
+    headers.append("NumTeachers");
+
+    QList<QStringList> data;
+    QList<RGBColor> coldata;
+
+
+    q.exec("Select EchelID,Exp From Echelon Where Active=1");
+
+    while (q.next()) {
+        QStringList row;
+        row.append(q.value(0).toString());
+        row.append(q.value(1).toString());
+        row.append("0");
+        data.append(row);
+    }
+
+
+    q.finish();
+
+
+
+return makeModel(headers,data,coldata);
+
+
+}
+
+//***************************      MODEL FOR Receipts/BaseWages       ***************************
+
+QStandardItemModel* MVC::getReceiptBaseWages(){
+
+    QStringList headers;
+    headers.append("EchelID");
+    headers.append("Xp");
+    headers.append("Date");
+    headers.append("Wage");
+
+
+    QList<RGBColor> coldata;
+
+    QString s ="Select E.EchelID, E.Exp ,B.Dat, B.Wages FROM Echelon E,BaseWages B Where B.EchelID=E.EchelID ORDER BY E.Exp DESC";\
+
+
+   return makeModel( headers,QueryToList(s), coldata);
+
+}
 
 
 
@@ -188,6 +267,36 @@ QStandardItemModel* MVC::getGeneral_SchwierigModel() {
 
 
 //                          ----------------------------------------------------
+
+
+
+QList<QStringList> MVC::QueryToList(QString qry) {
+    QSqlQuery q;
+    QList<QStringList> data;
+
+    q.exec(qry);
+
+    QSqlRecord rec = q.record();
+
+
+
+    qDebug() << "Number of columns: " << rec.count();
+    while (q.next()) {
+        QStringList record;
+        for (int i=0;i<rec.count();i++) {
+            record.append(q.value(i).toString());
+        }
+        data.append(record);
+    }
+    q.finish();
+
+    return data;
+
+}
+
+
+
+
 
 
 QStandardItemModel* MVC::makeModel(QStringList headers,QList<QStringList> data,QList<RGBColor> coldata) {

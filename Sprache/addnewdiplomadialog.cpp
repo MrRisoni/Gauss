@@ -4,6 +4,7 @@
 
 
 #include "Entities/orm.h"
+#include "../mvc.h"
 
 AddNewDiplomaDialog::AddNewDiplomaDialog(QWidget *parent) :
     QDialog(parent),
@@ -51,6 +52,10 @@ AddNewDiplomaDialog::AddNewDiplomaDialog(QWidget *parent) :
     }
 
 
+
+    //populate table
+    ui->tableDiplomas->setModel(MVC::getSpracheDiplomas());
+    ui->tableDiplomas->resizeColumnsToContents();
 
 }
 

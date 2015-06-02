@@ -18,24 +18,24 @@
     <rect>
      <x>10</x>
      <y>40</y>
-     <width>501</width>
+     <width>541</width>
      <height>331</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>501</width>
+      <width>541</width>
       <height>273</height>
      </rect>
     </property>
     <attribute name="label">
-     <string>Page 1</string>
+     <string>Show Disciplines</string>
     </attribute>
    </widget>
    <widget class="QWidget" name="page_2">
@@ -43,12 +43,12 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>501</width>
+      <width>541</width>
       <height>273</height>
      </rect>
     </property>
     <attribute name="label">
-     <string>Page 2</string>
+     <string>Add Discipline</string>
     </attribute>
    </widget>
   </widget>

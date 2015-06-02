@@ -1041,34 +1041,6 @@ QList<Kassen> ORM::getKassen() {
 }
 
 
-
-QList<BaseWages> ORM::getBaseWages() {
-    QList<BaseWages> BW;
-
-    //return the lastest schemes !!!
-    QSqlQuery q;
-    q.exec("Select E.EchelID, E.Exp ,B.Dat, B.Wages FROM Echelon E,BaseWages B Where B.EchelID=E.EchelID ORDER BY E.Exp DESC");
-    qDebug () << "fetching base wages ...";
-    while (q.next()) {
-
-
-        Echelon e=Echelon();
-        e.setEchelID(q.value(0).toInt());
-        e.setExpYears(q.value(1).toInt());
-
-        qDebug () << "Echelid " << q.value(0).toString() << " xp " << q.value(1).toString();
-        BaseWages b=BaseWages();
-        b.setD(q.value(2).toDate());
-        b.setE(e);
-        b.setWage(q.value(3).toFloat());
-
-        BW.append(b);
-    }
-
-    q.finish();
-    return BW;
-}
-
 QList<Days> ORM::getDays() {
 
     QSqlQuery q;
@@ -2166,34 +2138,6 @@ QList<Echelon> ORM::getEchels() {
     }
     q.finish();
     return Ech;
-}
-
-
-
-
-
-DiplomaModelMVC ORM::getDiplomaMVC() {
-    DiplomaModelMVC mvc;
-    mvc.headers.append("DiploID");
-    mvc.headers.append("Name");
-    mvc.headers.append("Institit");
-    mvc.headers.append("# Teachers");
-    mvc.headers.append("# Students");
-    mvc.headers.append("% SuccessRate");
-    mvc.headers.append("# SuccessGrade");
-
-    QSqlQuery q;
-    q.exec();
-    while (q.next()) {
-        DiplomaModel mod= DiplomaModel();
-
-
-        mvc.DiplomaView.append(mod);
-    }
-
-
-    q.finish();
-    return mvc;
 }
 
 

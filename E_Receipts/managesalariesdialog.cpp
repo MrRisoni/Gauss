@@ -8,6 +8,7 @@
 #include "Entities/courses.h"
 #include "Entities/wagesschule.h"
 #include <QStandardItemModel>
+#include "../mvc.h"
 
 ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
     QDialog(parent),
@@ -44,19 +45,17 @@ ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
 
 ManageSalariesDialog::~ManageSalariesDialog()
 {
-    QAbstractItemModel *mod=ui->tableBase->model();
-    delete mod;
-
-    mod=ui->tableEchelons->model();
-
-    delete mod;
+    delete ui->tableBase->model();
 
 
-    mod=ui->tableSchule->model();
-    delete mod;
+    delete ui->tableEchelons->model();
 
-    mod=ui->tableUni->model();
-    delete mod;
+
+
+    delete ui->tableSchule->model();
+
+
+    delete ui->tableUni->model();
 
     delete ui;
 }
@@ -85,53 +84,11 @@ void ManageSalariesDialog::on_pushNewEchel_clicked()
 }
 
 void ManageSalariesDialog::populateBaseTable() {
-    /*
-     Show
-     EchelID
-     EchelYears
-     #Teachers
-     Dat
-     Wages
-     */
-
-    ORM cppHib=ORM();
-    QStandardItemModel *baseMod = new QStandardItemModel();
-    QStringList headers;
-    headers.append("EchelID");
-    headers.append("XP");
-    headers.append("#Teachers");
-    headers.append("Date");
-    headers.append("Wages");
-    baseMod->setHorizontalHeaderLabels(headers);
-
-    QList<BaseWages> bW=cppHib.getBaseWages();
-
-    int r=0;
-    for (BaseWages b : bW) {
-        QStandardItem *itEchelID=new QStandardItem();
-         itEchelID->setText(QString::number(b.getE().getEchelID()));
-
-        QStandardItem *itXP=new QStandardItem();
-        itXP->setText(QString::number(b.getE().getExpYears()));
 
 
-        QStandardItem *itDat=new QStandardItem();
-        itDat->setText(b.getD().toString());
-
-        QStandardItem *itWages=new QStandardItem();
-        itWages->setText(QString::number(b.getWage()));
-
-        baseMod->setItem(r,0,itEchelID);
-        baseMod->setItem(r,1,itXP);
-        baseMod->setItem(r,3,itDat);
-        baseMod->setItem(r,4,itWages);
-
-        r++;
-
-    }
 
 
-    ui->tableBase->setModel(baseMod);
+    ui->tableBase->setModel(MVC::getReceiptBaseWages());
     ui->tableBase->resizeColumnsToContents();
 
 
@@ -139,46 +96,9 @@ void ManageSalariesDialog::populateBaseTable() {
 
 
 void ManageSalariesDialog::populateEchelTable() {
-    /* Showe
-        EchelID
-        Years
-        #Teachers
-    */
-
-    ORM o = ORM();
 
 
-    QStandardItemModel *echelModel = new QStandardItemModel();
-    QStringList headers;
-    headers.append("EchelID");
-    headers.append("Years");
-    headers.append("#Techers");
-
-    echelModel->setHorizontalHeaderLabels(headers);
-
-    int row=0;
-    QList<Echelon> Ec=o.getEchels();
-
-
-    for (Echelon E: Ec ) {
-
-        QStandardItem *itEchelID = new QStandardItem();
-        QStandardItem *itXP = new QStandardItem();
-        QStandardItem *itTeachers = new QStandardItem();
-
-        itEchelID->setText(QString::number(E.getExpYears()));
-        itXP->setText(QString::number(E.getExpYears()));
-
-
-        echelModel->setItem(row,0,itEchelID);
-        echelModel->setItem(row,1,itXP);
-        echelModel->setItem(row,2,itTeachers);
-
-        row++;
-    }
-
-
-    ui->tableEchelons->setModel(echelModel);
+    ui->tableEchelons->setModel(MVC::getReceiptEchelons());
     ui->tableEchelons->resizeColumnsToContents();
 
 

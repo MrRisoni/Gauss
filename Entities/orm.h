@@ -106,7 +106,6 @@ public:
     QList<Languages> getSprachen();
     QList<Diplomas> getDiplomas();
     QList<Courses> getSpecialCourses(QString DepName);
-    QList<BaseWages> getBaseWages();
     QList<Days> getDays();
     QList<Hours> getHours();
     QList<WagesSchule> getWagesSchule();
@@ -132,7 +131,6 @@ public:
     KassenMVC getKassenMVC();
 
 
-    DiplomaModelMVC getDiplomaMVC();
 
     QPixmap getSignaturePic(QString TeacherID);
 

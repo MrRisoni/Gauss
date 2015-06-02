@@ -6,7 +6,6 @@
 #include "schwierigkeit.h"
 #include <QStringList>
 
-// i think it is wise to create struct for each TableModel
 
 
 
@@ -185,95 +184,10 @@ struct ManageDepsDialogMVC {
 //End ManageDepsDialog
 
 
-struct EchelonModel {
-  QString EchelID;
-  QString Xp;
-  QString NumTeachers;
-};
-
-
-struct EchelonMVC {
-  QStringList headers;
-  QList<EchelonModel> EchelonView;
-};
-
-
-
-struct DiplomaModel {
-  QString DiploID;
-  QString Name;
-  QString Institut;
-  QString NumTeachers;
-  QString NumStudents;
-  QString SuccessRate; // success final exam rate :)
-  QString SuccessGrade; //avg of pass grades
-  QString red;
-  QString green;
-  QString blue;
-};
-
-struct DiplomaModelMVC {
-  QStringList headers;
-  QList<DiplomaModel> DiplomaView;
-};
-
-
-struct GroupsDialogModel {
-    QString GroupID;
-    QString CourseName;
-    QString TeacherName;
-    QString NumStudents;
-    QList<QString> Students;
-    QString created;
-    QString HoursPerWeek;
-    QString Debts;//how much do we owe the professor
-    QString Profits ;// how much money have we earned from the fees
-    QString Schulden; // how much money must be payed by the students
-    QString AverageStuffe; // in schule mündlich tests take place every now and then
-    QString EndsOn; //end of unterricht
-    QString TotHours; // total Unterrichtstuden
-};
-
-
-struct GroupsDialogMVC {
-    QStringList headers;
-    QList<GroupsDialogModel> group_model;
-};
-
-
-
-// ManageDiscountModel
-
-struct DiscountModel {
-    QString DiscountID;
-    QString Name;
-    QString percent;
-    QString LastUpdated;
-    QString TimesUpdated;
-    QString NumStudents;
-
-};
-
-struct DiscountDialogMVC {
-    QStringList headers;
-    QList<DiplomaModel> disc_model;
-};
 
 
 
 
-struct SchuleDisciplineModel {
-    QString ID;
-    QString Name;
-    QString NumStudents;
-    QString ActiveStudents;
-};
-
-
-struct SchuleDisciplineMVC {
-    QStringList headers;
-    QList<SchuleDisciplineModel> schuledisc_model;
-};
 
 
 

@@ -3,6 +3,7 @@
 
 
 #include <QFileDialog>
+#include "../mvc.h"
 
 AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -18,40 +19,8 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
         ui->comboDeps->addItem(d.getDepName());
     }
 
-    //fetch schem
-     QList<BaseWages> bwL=cppHib.getBaseWages();
 
-     QStandardItemModel *mod=new QStandardItemModel();
-     QStringList headers;
-     headers.append("EchelID");
-     headers.append("XP");
-     headers.append("Dat");
-     headers.append("Wages");
-     mod->setHorizontalHeaderLabels(headers);
-
-     int r=0;
-     for (BaseWages b : bwL) {
-         QStandardItem *itEchelID=new QStandardItem();
-          itEchelID->setText(QString::number(b.getE().getEchelID()));
-
-         QStandardItem *itXP=new QStandardItem();
-         itXP->setText(QString::number(b.getE().getExpYears()));
-
-         QStandardItem *itDat=new QStandardItem();
-         itDat->setText(b.getD().toString());
-
-         QStandardItem *itWages=new QStandardItem();
-         itWages->setText(QString::number(b.getWage()));
-
-         mod->setItem(r,0,itEchelID);
-         mod->setItem(r,1,itXP);
-         mod->setItem(r,2,itDat);
-         mod->setItem(r,3,itWages);
-
-         r++;
-
-     }
-     ui->tableSalary->setModel(mod);
+     ui->tableSalary->setModel(MVC::getReceiptBaseWages());
      ui->tableSalary->resizeColumnsToContents();
 
 
