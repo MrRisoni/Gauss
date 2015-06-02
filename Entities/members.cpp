@@ -110,6 +110,16 @@ void Members::setMembID(int value)
 {
     MembID = value;
 }
+QString Members::getRichtung() const
+{
+    return Richtung;
+}
+
+void Members::setRichtung(const QString &value)
+{
+    Richtung = value;
+}
+
 
 
 

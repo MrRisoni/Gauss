@@ -415,6 +415,19 @@
     <string>Special Cat</string>
    </property>
   </widget>
+  <widget class="QPushButton" name="pushBulkInsert">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>610</y>
+     <width>82</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Bulk Insert</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

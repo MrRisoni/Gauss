@@ -395,18 +395,16 @@ void ORM::save(Kassen K) {
 
 
 
-QString ORM::generateRandomString(int digits) {
-    return "";
-}
+
 
 QString ORM::generateAMKA() {
 
     QSqlQuery q;
 
-    QList<QString> ExistingADTS;
+    QList<QString> ExistingAMKAs;
     q.exec("SELECT AMKA FROM Versicherung");
     while (q.next()) {
-        ExistingADTS.append(q.value(0).toString());
+        ExistingAMKAs.append(q.value(0).toString());
     }
 
     bool exists= true;
@@ -419,6 +417,7 @@ QString ORM::generateAMKA() {
 
     while (exists==true) {
 
+        randomString="";
 
 
         int High=9;
@@ -430,7 +429,7 @@ QString ORM::generateAMKA() {
         //if random string exists in the db regenerate
 
 
-          exists=ExistingADTS.contains(randomString);
+        exists=ExistingAMKAs.contains(randomString);
 
 
     }
@@ -460,10 +459,11 @@ QString ORM::generateADT() {
 
     QString randomString;
 
+    srand ( time(NULL) );
 
     while (exists==true) {
 
-
+        randomString="";
         for(int i=0; i<2; ++i)
         {
             int index = qrand() % possibleCharacters.length();
@@ -478,8 +478,8 @@ QString ORM::generateADT() {
 
         //if random string exists in the db regenerate
 
-
-          exists=ExistingADTS.contains(randomString);
+        qDebug() << "new ADT" << randomString;
+        exists=ExistingADTS.contains(randomString);
 
 
     }
@@ -638,6 +638,9 @@ QString ORM::generateAFM() {
     QString randomString;
 
     while (exists==true) {
+
+        randomString="";
+
         int High=9;
         int Low=0;
         for (int i=0;i<7;i++) {
@@ -774,22 +777,73 @@ QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
 
 
 QString ORM::generatePhone() {
-    QString randomString="210";
+    QList<QString> ExistingPhones;
+    QSqlQuery q;
+
+    // i want the app to be realistic
+    //generate a unique mobile
+    //however allow for a few collisions
+
+
+    int Tries =0;
+    q.exec("SELECT Phone FROM Members");
+    while (q.next()) {
+        ExistingPhones.append(q.value(0).toString());
+    }
+
+    QString randomString;
     int High=9;
     int Low=0;
-    for (int i=0;i<7;i++) {
-        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-    }
+
+    srand ( time(NULL) );
+
+    do {
+
+        randomString="210";
+        for (int i=0;i<7;i++) {
+            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+        }
+        qDebug() << "new phone " << randomString;
+
+
+    } while (ExistingPhones.contains(randomString)==false && (Tries>300));
     return randomString;
 }
 
 QString ORM::generateMobile() {
-    QString randomString="69";
+
+    QList<QString> ExistingMobiles;
+    QSqlQuery q;
+
+    // i want the app to be realistic
+    //generate a unique mobile
+    //however allow for a few collisions
+
+    int Tries =0;
+
+    q.exec("SELECT FatherMobile FROM Schuler UNION SELECT MotherMobile FROM Schuler UNION SELECT Mobile FROM Members");
+    while (q.next()) {
+        ExistingMobiles.append(q.value(0).toString());
+    }
+    q.finish();
+
     int High=9;
     int Low=0;
-    for (int i=0;i<8;i++) {
-        randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-    }
+
+    srand ( time(NULL) );
+
+
+    QString randomString;
+
+    do {
+        randomString="69";
+        for (int i=0;i<8;i++) {
+            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
+        }
+        Tries++;
+
+        qDebug() << "new mobile " << randomString;
+    } while (ExistingMobiles.contains(randomString)==false && (Tries>300));
     return randomString;
 }
 
@@ -1279,14 +1333,15 @@ Members ORM::searchStudentByName(QString name) {
     QSqlQuery q;
     Members m;
 
-    QString s="SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'";
+    QString s="SELECT M.Name,M.ADT, D.Name FROM Members M,Disciplines D ,Schuler S WHERE M.MembID = S.StudentID AND  D.DiscID= S.DiscipleID AND M.Name LIKE '%" + name + "%'";
     qDebug() << s;
 
-    q.exec("SELECT Name,ADT FROM Members WHERE Name LIKE '%" + name + "%'");
+    q.exec(s);
     while (q.next()) {
 
         m.setName(q.value(0).toString());
         m.setADT(q.value(1).toString());
+        m.setRichtung(q.value(2).toString());
     }
     q.finish();
     return m;
@@ -1718,7 +1773,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
         qDebug() << "maximum permament ID " << PermaID;
 
-           qDebug() << "Querying for room names " ;
+        qDebug() << "Querying for room names " ;
 
         //insert to perma times
         for (int z=0;z<Programma.size();z++) {
@@ -1817,75 +1872,75 @@ Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDa
 
 
 
-       //qDebug() << "************** COPY TO HISTORY TEST **************";
-         //creates a list of dates , whoose id is DayID, starting from today until endDate
-         std::vector<long> V;
-         std::vector<int> Domatia;
-         std::vector<int> Ores;
-        std::vector<float> Diarkeia;
+    //qDebug() << "************** COPY TO HISTORY TEST **************";
+    //creates a list of dates , whoose id is DayID, starting from today until endDate
+    std::vector<long> V;
+    std::vector<int> Domatia;
+    std::vector<int> Ores;
+    std::vector<float> Diarkeia;
 
 
 
-         Zukunuft Mellon;
+    Zukunuft Mellon;
 
-         //dont return QDates boost does not know how to output QDate and
-         // i don't know how to tell Boost how to print one
+    //dont return QDates boost does not know how to output QDate and
+    // i don't know how to tell Boost how to print one
 
-         QStringList StringDays;
-         QSqlQuery q;
-           q.exec("SELECT DayName From Days");
-           while (q.next()) {
-               StringDays.append(q.value(0).toString());
-           }
-
-
-     //this test is supposed to start at Sunday 31/05/15
-         int TodayID = StringDays.indexOf(QDate::longDayName(QDate::currentDate().dayOfWeek()));
+    QStringList StringDays;
+    QSqlQuery q;
+    q.exec("SELECT DayName From Days");
+    while (q.next()) {
+        StringDays.append(q.value(0).toString());
+    }
 
 
-         //qDebug() << TodayID;
-
-         //DayID ==1 is sunday
-         int duration = endDate.toJulianDay() - startDate.toJulianDay();
-
-         long StartJul =startDate.toJulianDay(); // the start day in julian day
-
-         for (long i=TodayID;i<duration;i++) {
-             //all days must be equal to DayIDs
-
-             int nextday = i % 7 ; //seven are the days of the week
-             //in 15 days from now there will be again the same TodayID because the modulo will be zero
-
-             //check if next day exists in the list Settings
-
-             for (Permatimes p : Settings) {
-                 if (p.getDayID()==nextday) {
-                     //create a day from startJul
-                     V.push_back(QDate::fromJulianDay(StartJul).toJulianDay());
-                     // qDebug() << "out " << QDate::fromJulianDay(StartJul);
-                     Ores.push_back(p.getStartHourID());
+    //this test is supposed to start at Sunday 31/05/15
+    int TodayID = StringDays.indexOf(QDate::longDayName(QDate::currentDate().dayOfWeek()));
 
 
+    //qDebug() << TodayID;
 
+    //DayID ==1 is sunday
+    int duration = endDate.toJulianDay() - startDate.toJulianDay();
 
-                     Domatia.push_back(p.getRoomID());
+    long StartJul =startDate.toJulianDay(); // the start day in julian day
+
+    for (long i=TodayID;i<duration;i++) {
+        //all days must be equal to DayIDs
+
+        int nextday = i % 7 ; //seven are the days of the week
+        //in 15 days from now there will be again the same TodayID because the modulo will be zero
+
+        //check if next day exists in the list Settings
+
+        for (Permatimes p : Settings) {
+            if (p.getDayID()==nextday) {
+                //create a day from startJul
+                V.push_back(QDate::fromJulianDay(StartJul).toJulianDay());
+                // qDebug() << "out " << QDate::fromJulianDay(StartJul);
+                Ores.push_back(p.getStartHourID());
 
 
 
 
-                     Diarkeia.push_back(p.getDiarkeia());
-                 }
-             }
-
-             StartJul++;
-         }
+                Domatia.push_back(p.getRoomID());
 
 
-         Mellon.FutureHourIDs=Ores;
-         Mellon.FutureJulianDays=V;
-         Mellon.FutureRoomIDs=Domatia;
-         Mellon.Durations=Diarkeia;
-         return Mellon;
+
+
+                Diarkeia.push_back(p.getDiarkeia());
+            }
+        }
+
+        StartJul++;
+    }
+
+
+    Mellon.FutureHourIDs=Ores;
+    Mellon.FutureJulianDays=V;
+    Mellon.FutureRoomIDs=Domatia;
+    Mellon.Durations=Diarkeia;
+    return Mellon;
 
 
 
@@ -1949,23 +2004,16 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
         q.bindValue(":rdate",m.getRegDate());
         q.bindValue(":bdate",m.getBirthDate());
         q.bindValue(":adt",generateADT());
-        q.exec();
-
-        //
-        int StudID=0;
-        q.exec("SELECT MAX(MembID) FROM Members");
-        while (q.next()) {
-            StudID=q.value(0).toInt();
-        }
 
 
-        qDebug() << "MemberID " << StudID;
 
-        if (StudID<=0) {
+        if (!q.exec()) {
             throw 10;
         }
 
 
+
+        vasi.commit();
 
         int DiscID=0;
 
@@ -1982,6 +2030,22 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
         }
 
 
+        //
+        int StudID=0;
+        q.exec("SELECT MAX(MembID) FROM Members");
+        while (q.next()) {
+            StudID=q.value(0).toInt();
+        }
+
+        qDebug() << "max memberid MemberID " << StudID;
+
+        if (StudID<=0) {
+            throw 10;
+        }
+
+
+        vasi.transaction();
+
 
         q.prepare("INSERT INTO `Schuler` ( `StudentID`, `DiscipleID`, `FatherMobile`, `MotherMobile`) VALUES (:sid,:did,:dad,:mom)");
         q.bindValue(":sid",StudID);
@@ -1993,37 +2057,41 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
             throw 10;
         }
 
-       //special category
-       if (specialcat.length()>1) {
+        qDebug() << "insert into schuler";
+        //special category
 
-           int spcatid=0;
 
-           q.exec("SELECT SpecialID FROM DiscountCats Where Description='"+ specialcat+"'");
-           while (q.next()) {
-               spcatid=q.value(0).toInt();
-           }
+        int spcatid=0;
 
-           qDebug() << "special category " << spcatid;
+        q.exec("SELECT SpecialID FROM DiscountCats Where Description='"+ specialcat+"'");
+        while (q.next()) {
+            spcatid=q.value(0).toInt();
+        }
 
-           if (spcatid<=0) {
+        qDebug() << "special category " << spcatid;
+
+        if (spcatid<=0) {
             throw 10;
-           }
+        }
 
-           q.prepare("INSERT INTO `SpecialFees` ( `StudentID`, `CatID`, `Created`, `Expires`) VALUES (:sid,:catid,:start,:exp)");
-           q.bindValue(":sid",StudID);
-           q.bindValue(":catid",spcatid);
-           q.bindValue(":start",QDate::currentDate());
-           q.bindValue(":exp",QDate::currentDate().addDays(365));
+        if (spcatid>1) {
+
+            q.prepare("INSERT INTO `SpecialFees` ( `StudentID`, `CatID`, `Created`, `Expires`) VALUES (:sid,:catid,:start,:exp)");
+            q.bindValue(":sid",StudID);
+            q.bindValue(":catid",spcatid);
+            q.bindValue(":start",QDate::currentDate());
+            q.bindValue(":exp",QDate::currentDate().addDays(365));
 
 
-           if (!q.exec()) {
-               throw 10;
-           }
-       }
+            if (!q.exec()) {
+                throw 10;
+            }
 
+        }
         vasi.commit();
 
-        ShowSuccess();
+        qDebug() << "commit student";
+        //ShowSuccess();
 
     }
     catch (int ex) {

@@ -44,7 +44,7 @@ void AddNewRequestDialog::on_pushSearch_clicked()
     ORM o = ORM();
 
     Members m = o.searchStudentByName(ui->lineSearchQuery->text());
-    ui->labelStudentData->setText(m.getName() + " " + m.getADT());
+    ui->labelStudentData->setText(m.getName() + " " + m.getADT() + " " + m.getRichtung());
     //qDebug() << m;
     //serialization m to string
     ui->lineSearchQuery->setText(m.getName());

@@ -20,6 +20,8 @@ private slots:
 
     void on_checkSchule_clicked();
 
+    void on_pushBulkInsert_clicked();
+
 private:
     Ui::AddNewStudentDialog *ui;
 };

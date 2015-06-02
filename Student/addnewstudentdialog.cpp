@@ -15,6 +15,9 @@ AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
 
     QList<QString> onomata;
     QFile file(":names/male.txt");
+    srand ( time(NULL) );
+
+
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
             onomata=QString::fromStdString(file.readAll().toStdString()).split("\n");
@@ -24,6 +27,11 @@ AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
     }
 
     file.close();
+
+    srand ( time(NULL) );
+
+
+
     file.setFileName(":names/female.txt");
     if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
 
@@ -86,4 +94,101 @@ void AddNewStudentDialog::on_pushAddStudent_clicked()
 void AddNewStudentDialog::on_checkSchule_clicked()
 {
 
+}
+
+void AddNewStudentDialog::on_pushBulkInsert_clicked()
+{
+    // read name from file:///home/linguine/names
+    //lower case all names
+    //pick a random number for disciplines
+    //insert only schulern
+    //upper case all
+
+    //pick a random number for discipline 1 to 6
+
+    QList<QString> Richtung;
+    Richtung.append("ΑΝΘΡΩΠΙΣΤΙΚΕΣ");
+    Richtung.append("ΘΕΤΙΚΕΣ");
+    Richtung.append("ΠΛΗΡΟΦΟΡΙΚΗ");
+    Richtung.append("ΥΓΕΙΑ");
+    Richtung.append("ΟΙΚΟΝΟΜΙΚΑ");
+
+
+
+    QList<QString> ekptosi;
+    ekptosi.append("ΚΑΜΙΑ");
+    ekptosi.append("ΠΟΛΥΤΕΚΝΟΙ");
+    ekptosi.append("ΟΡΦΑΝΑ");
+    ekptosi.append("ΤΡΙΤΕΚΝΟΙ");
+
+
+
+     QList<QString> onomata;
+
+    long von=2450450;
+    long bis=2451180;
+
+    qDebug() << "start";
+    QFile NAMES("/home/linguine/names");
+
+    QTextStream in(&NAMES);
+    if(!NAMES.open(QIODevice::ReadOnly)) {
+        qDebug() << "ERRRO";
+    }
+    srand ( time(NULL) );
+
+
+    while(!in.atEnd()) {
+
+
+        QString line = in.readLine();
+
+        qDebug () << line;
+
+        Members m = Members();
+        m.setBirthDate(QDate::fromJulianDay( von + (rand() % (long)(bis - von + 1))));
+        m.setName(line.toUpper());
+        m.setRegDate(QDate::currentDate());
+
+
+
+
+        QFile file(":names/male.txt");
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+            onomata=QString::fromStdString(file.readAll().toStdString()).split("\n");
+
+
+            m.setFName(onomata.takeAt(qrand() % onomata.size()).toUpper());
+        }
+
+        file.close();
+        file.setFileName(":names/female.txt");
+        if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+
+            onomata=QString::fromStdString(file.readAll().toStdString()).split("\n");
+
+            m.setMName(onomata.takeAt(qrand() % onomata.size()).toUpper());
+
+        }
+        file.close();
+
+        m.setAddress("");
+        qDebug() << "birthdate " << m.getBirthDate();
+
+        int kattuxaio=  qrand() % Richtung.size();
+        int orttuxaio = qrand() % ekptosi.size();
+        qDebug() << "random " << kattuxaio << " mikos " << Richtung.size();
+
+        QString richter = Richtung.at(kattuxaio);
+        QString orphana = ekptosi.at(orttuxaio);
+
+        qDebug() << "richtung " << richter << " " << orphana;
+
+        ORM HIB = ORM();
+        qDebug() << "saving.............................................";
+        HIB.saveSchuleStudent(m,richter,orphana);
+    }
+
+    qDebug() << "end";
 }

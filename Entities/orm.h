@@ -153,7 +153,6 @@ private:
     QString generatePhone();
     QString generateMobile();
     QString generateAMKA();
-    QString generateRandomString(int digits);
     QDate calcEOC(QString tid);
 
 

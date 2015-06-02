@@ -47,6 +47,9 @@ public:
     int getMembID() const;
     void setMembID(int value);
 
+    QString getRichtung() const;
+    void setRichtung(const QString &value);
+
 private:
     int MembID;
     QString Name;
@@ -61,7 +64,7 @@ private:
     float TotHours;
     float TotPaidHours;
     QString ADT; // AusweisID
-
+    QString Richtung;
 
 
 };
