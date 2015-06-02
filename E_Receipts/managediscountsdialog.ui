@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>588</width>
-    <height>441</height>
+    <width>543</width>
+    <height>528</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,14 +16,14 @@
   <widget class="QToolBox" name="toolBox">
    <property name="geometry">
     <rect>
-     <x>40</x>
+     <x>20</x>
      <y>40</y>
      <width>501</width>
-     <height>331</height>
+     <height>461</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -31,12 +31,22 @@
       <x>0</x>
       <y>0</y>
       <width>501</width>
-      <height>273</height>
+      <height>403</height>
      </rect>
     </property>
     <attribute name="label">
-     <string>Page 1</string>
+     <string>Discount</string>
     </attribute>
+    <widget class="QTableView" name="tableDiscounts">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>10</y>
+       <width>451</width>
+       <height>371</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_2">
     <property name="geometry">
@@ -44,12 +54,48 @@
       <x>0</x>
       <y>0</y>
       <width>501</width>
-      <height>273</height>
+      <height>403</height>
      </rect>
     </property>
     <attribute name="label">
-     <string>Page 2</string>
+     <string>Add New Discount</string>
     </attribute>
+    <widget class="QLabel" name="label">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>30</y>
+       <width>91</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Description</string>
+     </property>
+    </widget>
+    <widget class="QLineEdit" name="lineEdit">
+     <property name="geometry">
+      <rect>
+       <x>130</x>
+       <y>40</y>
+       <width>271</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton">
+     <property name="geometry">
+      <rect>
+       <x>40</x>
+       <y>90</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Add</string>
+     </property>
+    </widget>
    </widget>
   </widget>
  </widget>

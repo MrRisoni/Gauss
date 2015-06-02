@@ -1,17 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>ShowStudentsDialog</class>
- <widget name="ShowStudentsDialog" class="QDialog">
+ <widget class="QDialog" name="ShowStudentsDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1300</width>
+    <height>656</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <widget class="QTableView" name="tableView">
+   <property name="geometry">
+    <rect>
+     <x>15</x>
+     <y>20</y>
+     <width>1261</width>
+     <height>621</height>
+    </rect>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
