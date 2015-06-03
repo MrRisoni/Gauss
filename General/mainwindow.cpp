@@ -37,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionTake_Money,SIGNAL(triggered()),this,SLOT(takeMoneyReceipt()));
     connect(ui->actionShow_All_Groups,SIGNAL(triggered()),this,SLOT(showAllGroups()));
 
+    connect(ui->actionShow_All_Students,SIGNAL(triggered()),this,SLOT(showAllStudents()));
+    connect(ui->actionView_Student,SIGNAL(triggered()),this,SLOT(showStudent()));
+
 
 
 }
@@ -51,6 +54,25 @@ QSqlDatabase MainWindow::getDb() const
 }
 
 
+
+void MainWindow::warum() {
+    ShowStudentsDialog *war = new ShowStudentsDialog();
+
+}
+
+void MainWindow::showAllStudents(){
+    qDebug() << "show all students";
+    ShowStudentsDialog *showstuds = new ShowStudentsDialog();
+    showstuds->show();
+    qDebug() << "show all students";
+
+}
+
+void MainWindow::showStudent() {
+    ViewStudentDialog *viewstud = new ViewStudentDialog();
+    viewstud->setAttribute(Qt::WA_DeleteOnClose);
+    viewstud->show();
+}
 
 void MainWindow::showAllGroups() {
     ShowGroupsDialog *grp = new ShowGroupsDialog();

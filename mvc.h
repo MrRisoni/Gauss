@@ -37,12 +37,17 @@ QStandardItemModel* makeModel(QStringList headers,QList<QStringList> data,QList<
      * color data : backround color data for cells
      * OUTPUT a model with headers and colored data
      */
+    
+    
+//***************************      MODEL FOR Student/ShowStudents       ***************************
 
-
+QStandardItemModel* getGeneral_ShowStudents_Model();
 
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
-QList<QListWidgetItem*> getGeneral_ShowFutureHistoryDates(QString GroupID);
+
+QList<QListWidgetItem *> getGeneral_ShowFutureHistoryDates(QString GroupID);
+
 
 
 QStandardItemModel* getGeneral_ShowPastHistory(QString GroupID);

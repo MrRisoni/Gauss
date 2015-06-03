@@ -135,6 +135,9 @@
       <string>Students</string>
      </property>
      <addaction name="actionAdd_Student"/>
+     <addaction name="actionView_Student"/>
+     <addaction name="actionShow_All_Students"/>
+     <addaction name="actionWarum"/>
     </widget>
     <widget class="QMenu" name="menuTeachers">
      <property name="title">
@@ -329,6 +332,21 @@
   <action name="actionShow_All_Groups">
    <property name="text">
     <string>Show All Groups</string>
+   </property>
+  </action>
+  <action name="actionView_Student">
+   <property name="text">
+    <string>View Student</string>
+   </property>
+  </action>
+  <action name="actionShow_All_Students">
+   <property name="text">
+    <string>Show All Students</string>
+   </property>
+  </action>
+  <action name="actionWarum">
+   <property name="text">
+    <string>Warum</string>
    </property>
   </action>
  </widget>

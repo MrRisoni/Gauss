@@ -1,5 +1,77 @@
 #include "mvc.h"
 
+
+//***************************      MODEL FOR Student/ShowStudents       ***************************
+
+
+QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
+    QSqlQuery q;
+    QStringList headers;
+    headers.append("StudentID");
+    headers.append("ADT");
+    headers.append("Name");
+    headers.append("Birth-Date");
+    headers.append("Reg-Date");
+    headers.append("Address");
+    headers.append("Mobile");
+    headers.append("Phone");
+    headers.append("Fath Mobile");
+    headers.append("Fath Name");
+
+    headers.append("Mom Mobile");
+    headers.append("Mom Name");
+
+    headers.append("Discipline");
+    headers.append("# Groups");
+    headers.append("# Absencies");
+    headers.append("Special Cat");
+    headers.append("Last lesson");
+    headers.append("Last payed");
+    headers.append("Schulden");
+
+
+    QString s="select M.MembID,M.ADT,M.Name,M.BirthDate,M.RegDate,M.Address,M.Mobile,M.Phone,D.Name, " ;
+    s+=" S.FatherMobile,M.FName,S.MotherMobile,M.MName FROM Members M,Schuler S,Disciplines D ";
+    s+=" Where M.MembTypeID=2 AND S.DiscipleID = D.DiscID AND M.MembID=S.StudentID order BY M.Name ASC";
+
+    QList<QStringList> data;
+
+    q.exec(s);
+    qDebug () << s;
+    while (q.next()) {
+        QStringList record;
+
+        record.append(q.value(0).toString());
+        record.append(q.value(1).toString());
+        record.append(q.value(2).toString());
+        record.append(q.value(3).toString());
+        record.append(q.value(4).toString());
+        record.append(q.value(5).toString());
+        record.append(q.value(6).toString());
+        record.append(q.value(7).toString());
+        record.append(q.value(8).toString());
+        record.append(q.value(9).toString());
+        record.append(q.value(10).toString());
+        record.append(q.value(11).toString());
+         record.append(q.value(12).toString());
+
+
+        data.append(record);
+    }
+
+
+
+
+
+    q.finish();
+    QList<RGBColor> farbe;
+
+    return  MVC::makeModel(headers, data,farbe);
+
+}
+
+
+
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
 QList<QListWidgetItem *> MVC::getGeneral_ShowFutureHistoryDates(QString GroupID) {

@@ -22,7 +22,7 @@ QWidget* RoomItemDelegate::createEditor( QWidget *parent, const QStyleOptionView
     (void ) index;
     QComboBox *bx= new QComboBox(parent);
     QSqlQuery q;
-    q.exec("SELECT Name From Rooms");
+    q.exec("SELECT Name From Rooms ORDER BY NAME ASC");
     while (q.next()) {
         bx->addItem(q.value(0).toString());
     }

@@ -25,6 +25,9 @@
 #include "Sprache/addnewdiplomadialog.h"
 #include "E_Receipts/createnewreceiptdialog.h"
 #include "showgroupsdialog.h"
+#include "Student/showstudentsdialog.h"
+#include "Student/viewstudentdialog.h"
+
 
 namespace Ui {
 class MainWindow;
@@ -60,6 +63,8 @@ private slots:
     void createschule();
     void manageFees();
     void showTeacher();
+    void showStudent();
+    void showAllStudents();
     void showTestPlot();
     void MachLearn();
     void manageInstituts();
@@ -68,6 +73,8 @@ private slots:
     void giveMoneyReceipt();
     void takeMoneyReceipt();
     void showAllGroups();
+    void warum();
+
 
 
 };
