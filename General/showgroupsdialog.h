@@ -15,8 +15,16 @@ public:
     explicit ShowGroupsDialog(QWidget *parent = 0);
     ~ShowGroupsDialog();
 
+private slots:
+    void on_pushCancel_clicked();
+
+    void on_tableAllGroups_doubleClicked(const QModelIndex &index);
+
+    void on_pushAddTempo_clicked();
+
 private:
     Ui::ShowGroupsDialog *ui;
+    QString group_id;
 };
 
 #endif // SHOWGROUPSDIALOG_H

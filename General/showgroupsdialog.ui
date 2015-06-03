@@ -46,6 +46,9 @@
        <height>571</height>
       </rect>
      </property>
+     <property name="toolTip">
+      <string comment="Double click to show details"/>
+     </property>
      <property name="editTriggers">
       <set>QAbstractItemView::NoEditTriggers</set>
      </property>
@@ -82,7 +85,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -91,8 +94,8 @@
       <widget class="QLabel" name="label">
        <property name="geometry">
         <rect>
-         <x>110</x>
-         <y>50</y>
+         <x>30</x>
+         <y>20</y>
          <width>291</width>
          <height>21</height>
         </rect>
@@ -104,24 +107,71 @@
       <widget class="QListWidget" name="listFutureDates">
        <property name="geometry">
         <rect>
-         <x>90</x>
-         <y>80</y>
+         <x>20</x>
+         <y>50</y>
          <width>321</width>
-         <height>371</height>
+         <height>421</height>
         </rect>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::MultiSelection</enum>
        </property>
       </widget>
       <widget class="QPushButton" name="pushCancel">
        <property name="geometry">
         <rect>
-         <x>220</x>
-         <y>480</y>
+         <x>130</x>
+         <y>490</y>
          <width>82</width>
          <height>23</height>
         </rect>
        </property>
        <property name="text">
         <string>Cancel</string>
+       </property>
+      </widget>
+      <widget class="QTableView" name="tablePastLessons">
+       <property name="geometry">
+        <rect>
+         <x>600</x>
+         <y>51</y>
+         <width>601</width>
+         <height>461</height>
+        </rect>
+       </property>
+       <property name="editTriggers">
+        <set>QAbstractItemView::NoEditTriggers</set>
+       </property>
+       <property name="alternatingRowColors">
+        <bool>true</bool>
+       </property>
+       <property name="selectionMode">
+        <enum>QAbstractItemView::SingleSelection</enum>
+       </property>
+       <property name="selectionBehavior">
+        <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>610</x>
+         <y>20</y>
+         <width>591</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Past  lessons</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
      </widget>
@@ -161,14 +211,17 @@
       <widget class="QLabel" name="label_2">
        <property name="geometry">
         <rect>
-         <x>90</x>
+         <x>30</x>
          <y>20</y>
-         <width>181</width>
+         <width>291</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>Pick a date</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
        </property>
       </widget>
       <widget class="QPushButton" name="pushAddTempo">
@@ -187,21 +240,24 @@
       <widget class="QLabel" name="label_3">
        <property name="geometry">
         <rect>
-         <x>510</x>
+         <x>360</x>
          <y>20</y>
-         <width>181</width>
+         <width>861</width>
          <height>21</height>
         </rect>
        </property>
        <property name="text">
         <string>Room Availability</string>
        </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
       </widget>
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
          <x>30</x>
-         <y>310</y>
+         <y>390</y>
          <width>91</width>
          <height>21</height>
         </rect>
@@ -214,100 +270,99 @@
        <property name="geometry">
         <rect>
          <x>140</x>
-         <y>310</y>
+         <y>390</y>
          <width>113</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true"/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>30</x>
+         <y>350</y>
+         <width>91</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Pick hour</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="comboStart">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>350</y>
+         <width>131</width>
          <height>23</height>
         </rect>
        </property>
       </widget>
      </widget>
     </widget>
-    <widget class="QLabel" name="labelSelectedDetails">
-     <property name="geometry">
-      <rect>
-       <x>100</x>
-       <y>575</y>
-       <width>1011</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="palette">
-      <palette>
-       <active>
-        <colorrole role="WindowText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>255</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>0</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </active>
-       <inactive>
-        <colorrole role="WindowText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>255</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>0</red>
-           <green>0</green>
-           <blue>0</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </inactive>
-       <disabled>
-        <colorrole role="WindowText">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>128</red>
-           <green>128</green>
-           <blue>128</blue>
-          </color>
-         </brush>
-        </colorrole>
-        <colorrole role="Text">
-         <brush brushstyle="SolidPattern">
-          <color alpha="255">
-           <red>128</red>
-           <green>128</green>
-           <blue>128</blue>
-          </color>
-         </brush>
-        </colorrole>
-       </disabled>
-      </palette>
-     </property>
-     <property name="font">
-      <font>
-       <family>Sans Serif</family>
-       <pointsize>18</pointsize>
-       <weight>50</weight>
-       <bold>false</bold>
-      </font>
-     </property>
-     <property name="text">
-      <string>selected group details</string>
-     </property>
-    </widget>
    </widget>
+  </widget>
+  <widget class="QLabel" name="labelSelectedDetails">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>650</y>
+     <width>1011</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="palette">
+    <palette>
+     <active>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </active>
+     <inactive>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>0</red>
+         <green>0</green>
+         <blue>255</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </inactive>
+     <disabled>
+      <colorrole role="WindowText">
+       <brush brushstyle="SolidPattern">
+        <color alpha="255">
+         <red>128</red>
+         <green>128</green>
+         <blue>128</blue>
+        </color>
+       </brush>
+      </colorrole>
+     </disabled>
+    </palette>
+   </property>
+   <property name="font">
+    <font>
+     <family>Sans Serif</family>
+     <pointsize>18</pointsize>
+     <weight>50</weight>
+     <bold>false</bold>
+    </font>
+   </property>
+   <property name="text">
+    <string>selected group details</string>
+   </property>
   </widget>
  </widget>
  <resources/>
