@@ -11,6 +11,7 @@
 #include <QColor>
 #include <QBrush>
 #include <QSqlRecord>
+#include <QListWidgetItem>
 
 namespace MVC { //nested namespaces ???
 
@@ -41,9 +42,10 @@ QStandardItemModel* makeModel(QStringList headers,QList<QStringList> data,QList<
 
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
+QList<QListWidgetItem*> getGeneral_ShowFutureHistoryDates(QString GroupID);
 
 
-
+QStandardItemModel* getGeneral_ShowPastHistory(QString GroupID);
 
 QStandardItemModel* getGeneral_ShowGroup_Model();
 

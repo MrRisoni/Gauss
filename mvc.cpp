@@ -2,7 +2,67 @@
 
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
+QList<QListWidgetItem *> MVC::getGeneral_ShowFutureHistoryDates(QString GroupID) {
 
+    QList<QListWidgetItem*> itms;
+
+    QSqlQuery q;
+    QString s="SELECT Dat FROM History WHERE  Valid=1 AND Dat>CURRENT_DATE AND GroupID=:gid ORDER BY Dat ASC ";
+    qDebug () << s;
+    q.prepare(s);
+    q.bindValue(":gid",GroupID);
+    q.exec();
+    while (q.next()) {
+        QListWidgetItem *it= new QListWidgetItem();
+        it->setText(q.value(0).toString());
+
+        itms.append(it);
+    }
+
+
+    q.finish();
+    return itms;
+}
+
+
+
+
+
+QStandardItemModel* MVC::getGeneral_ShowPastHistory(QString GroupID) {
+    QSqlQuery q;
+    QStringList headers;
+    headers.append("Day");
+    headers.append("Date");
+    headers.append("Room");
+    headers.append("Hour");
+    headers.append("Duration");
+    headers.append("#Absent");
+
+    QList<QStringList> data;
+
+    QString s="SELECT DAYNAME(H.Dat), H.Dat , R.Name , S.HourN,H.Duration FROM History H,Rooms R ,Hours S Where S.HourID=H.StartHourID AND H.RoomID=R.RoomID AND H.Valid=1 AND H.GroupID=:gid AND H.Dat<=CURRENT_DATE";
+    qDebug () << s;
+    q.prepare(s);
+    q.bindValue(":gid",GroupID);
+    q.exec();
+    while (q.next()) {
+        QStringList record;
+        record.append(q.value(0).toString());
+        record.append(q.value(1).toString());
+        record.append(q.value(2).toString());
+        record.append(q.value(3).toString());
+        record.append(q.value(4).toString());
+
+        data.append(record);
+
+    }
+
+    QList<RGBColor> farbe;
+
+    q.finish();
+    return  MVC::makeModel(headers, data,farbe);
+
+}
 
 
 QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
