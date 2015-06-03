@@ -6,6 +6,8 @@
 #include <QFile>
 #include <QTextStream>
 
+
+
 QSqlDatabase vasi;
 
 QFile logFile;
