@@ -141,6 +141,13 @@ public:
 
 
 
+    void CancelLesson(QString GroupID,QList<QString> dats);
+    void AddTempLesson(QString GroupID,QDate dat,QString hour,float duration);
+    //check if overlap with add temporary lesson!!!!
+    //bool checkOverlapWithTempLesson()
+
+    //check if overlap with permaments :)
+    //bool QtFoundOverlap(QList<QtFach> ExistingSchedules,QList<QtFach> NewSchedule) {
 
     Zukunuft createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate);
 

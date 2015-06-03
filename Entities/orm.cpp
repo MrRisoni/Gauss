@@ -2241,3 +2241,71 @@ QList<DiscountType> ORM::getDiscountTypes() {
     q.finish();
     return D;
 }
+
+
+
+
+void ORM::CancelLesson(QString GroupID,QList<QString> dats) {
+    QSqlQuery q;
+    for (QString dat : dats) {
+        QString s="UPDATE History SET  Valid=0  WHERE   GroupID='"+ GroupID +"' AND Dat='"+ dat +"'";
+        qDebug() << s;
+        q.exec(s);
+    }
+
+
+
+    q.finish();
+}
+
+
+
+void ORM::AddTempLesson(QString GroupID,QDate dat,QString hour,float duration) {
+    /* ignore overlaps
+     * pick a room at random
+     */
+    QSqlQuery q;
+    try {
+        vasi.transaction();
+        int hourid=0;
+
+        q.prepare("SELECT HourID FROM Hours Where HourN=:hn");
+        q.bindValue(":hn",hour);
+        q.exec();
+        while (q.next()) {
+            hourid=q.value(0).toInt();
+        }
+        if (hourid<=0) {
+            throw 10;
+        }
+
+        int numRooms=0;
+        q.exec("SELECT COUNT(RoomID) FROM Rooms");
+        while (q.next()) {
+            numRooms=q.value(0).toInt();
+        }
+
+        if (numRooms<=0) {
+            throw 10;
+        }
+        srand ( time(NULL) );
+        int randRoom =  qrand() % numRooms+1;
+        q.prepare("INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`) VALUES (:gid,:dt,:sid,:dur,:rid)");
+        q.bindValue(":gid",GroupID);
+        q.bindValue(":dt",dat);
+        q.bindValue(":sid",hourid);
+        q.bindValue(":dur",duration);
+        q.bindValue(":rid",randRoom);
+
+
+
+        q.exec();
+        vasi.commit();
+        ShowSuccess();
+    }
+    catch (int ex) {
+        ShowError(q);
+    }
+    q.finish();
+}
+

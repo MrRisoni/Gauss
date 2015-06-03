@@ -40,6 +40,8 @@ private:
     int RoomID;
     Rooms R;
     bool Active;
+    short StartHour;
+
 
 };
 
