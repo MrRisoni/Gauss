@@ -8,76 +8,111 @@
 QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
 
-    QSqlQuery q;
+    QSqlQuery q,q2;
     QStringList headers;
     headers.append("GroupID");
     headers.append("CourseName");
     headers.append("Starts");
-    headers.append("Ends");
+    headers.append("Schedule Ends");
     headers.append("Teacher");
     headers.append("# Students");
     headers.append("# Hours per week");
-    headers.append("Hours planned");
+    headers.append("Hours remain");
     headers.append("Ausgeben");
     headers.append("Einnehmen");
     headers.append("Unser_Schulden");
     headers.append("Student_Schulden");
 
 
-    QList<General_ShowGroupModel> modelo;
-
+    QList<QStringList> data;
 
     QString s;
-    q.exec("SELECT GroupID FROM Groups ");
+    q.exec("SELECT G.GroupID,C.CourseName,G.StartDate,M.Name FROM Groups G,Courses C,Members M WHERE G.CourseID=C.CourseID AND M.MembID=G.TeacherID AND G.Active=1 ");
     while (q.next()) {
-        General_ShowGroupModel G = General_ShowGroupModel();
-        G.GroupID=q.value(0).toString();
-        qDebug() << G.GroupID;
-        modelo.append(G);
+
+        QStringList record;
+
+        int GroupID=q.value(0).toInt();
+        record.append(q.value(0).toString()); // group ud
+
+        record.append(q.value(1).toString());// course name
+
+        record.append(q.value(2).toString()); // start date
+
+
+        //permatimes table
+        q2.prepare("SELECT PermaID,EndsOn From Permament WHERE GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        int PermaID=0;
+        q2.exec();
+
+        while (q2.next()) {
+            PermaID=q2.value(0).toInt();  //end date
+            record.append(q2.value(1).toString());
+        }
+
+
+
+        record.append(q.value(3).toString()); //teacher;
+
+
+        //num of students
+        //number of students = count(ensembles)- count(non null dropouts)
+        q2.prepare("SELECT Count(StudID) FROM Ensembles WHERE GroupID=:gid AND StudID NOT IN (SELECT StudID FROM Dropout WHERE GroupID=:gid )");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+
+        while (q2.next()) {
+            record.append(q2.value(0).toString());
+        }
+
+
+
+
+
+        //avg hours per week
+       q2.prepare("SELECT SUM(Duration) FROM PermaTimes Where PermaID=:prid");
+       q2.bindValue(":prid",PermaID);
+       q2.exec();
+       while (q2.next()) {
+          record.append(q2.value(0).toString());
+       }
+
+        //hours planned sum all history up to endsOn and valid=1  minus sum done and valid=1
+        q2.prepare("SELECT SUM(Duration) FROM History WHERE GroupID=:gid and Valid=1 AND Dat>CURRENT_DATE");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        while (q2.next()) {
+            record.append(q2.value(0).toString());
+        }
+
+
+
+
+
+
+        //we know the history of these course and the fee/wages therefor we can calucate the expected earnings...
+      record.append("0");
+      record.append("0");
+      record.append("0"); // how much money do we owe in total to the teacher
+      record.append("0"); // how much money do the students owe us
+
+
+
+
+
+          data.append(record);
+
+
     }
-    qDebug() << s;
+
 
 
 
     q.finish();
-
+    q2.finish();
 
     QList<RGBColor> farbe;
-
-    QStandardItemModel *mod = new QStandardItemModel();
-    mod->setHorizontalHeaderLabels(headers);
-
-    int row =0;
-    for (General_ShowGroupModel G : modelo) {
-        QStandardItem *itGroupID = new QStandardItem();
-        itGroupID->setText(G.GroupID);
-        mod->setItem(row,0,itGroupID);
-
-
-    }
-
-    QList<QStringList> data;
-
-    for (General_ShowGroupModel G : modelo) {
-        QStringList record;
-        record.append(G.GroupID);
-
-
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-        record.append("");
-
-
-        data.append(record);
-    }
 
 
     return  MVC::makeModel(headers, data,farbe);

@@ -42,22 +42,6 @@ QStandardItemModel* makeModel(QStringList headers,QList<QStringList> data,QList<
 //***************************      MODEL FOR GENERAL/ShowGroups       ***************************
 
 
-struct General_ShowGroupModel {
-    QString GroupID;
-    QString CourseName;
-    QString Starts;
-    QString Ends;
-    QString Teacher;
-    QString NumStudents;
-    QString HoursPerWeek;
-    QString PlannedHours; //hours to go until group closes
-    QString Ausgeben; //how much money have we given the professor
-    QString Einnehmen; // how much money have we earned from the fees
-    QString Unser_Schulden; // how much money do we owe the professor
-    QString Student_Schulden; // how much money do the students owe to us
-};
-
-
 
 
 
