@@ -22,7 +22,8 @@ SOURCES += main.cpp \
     oldcode/std_base_salary.cpp \
     fee_Unicalculator.cpp \
   # // schulefee.cpp \
-    addpermament.cpp
+    addpermament.cpp \
+    scheduleoverlap.cpp
 
 
 LIBS+= -lboost_unit_test_framework

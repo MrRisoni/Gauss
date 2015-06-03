@@ -13,7 +13,6 @@
 #include "oldcode/old_salary_structs.h"
 
 
-using namespace std;
 
 
 
