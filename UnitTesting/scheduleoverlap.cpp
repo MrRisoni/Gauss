@@ -8,6 +8,7 @@
 #include <boost/test/unit_test.hpp>
 #include <algorithm>
 #include <QList>
+#include <QDate>
 
 //given a list of dates,rooms,hours test overlap algorithm
 //this is the permement table
@@ -50,6 +51,49 @@ bool FoundOverlap(QList<Fach> ExistingSchedules,QList<Fach> NewSchedule) {
 
     return problem;
 }
+
+
+
+
+struct QtFach {
+    QDate dat;
+    short RoomID;
+    short StartHour;
+    float Duration;
+};
+
+
+
+
+
+
+bool QtFoundOverlap(QList<QtFach> ExistingSchedules,QList<QtFach> NewSchedule) {
+    bool problem = false;
+
+    for (QtFach exF : ExistingSchedules) {
+
+        for (QtFach newF : NewSchedule) {
+            //check of dayid
+            if (newF.dat == exF.dat) {
+                //check room id
+                if (newF.RoomID==exF.RoomID) {
+                    //finally check hours
+                    if (SegmentOverpap(newF.StartHour,newF.StartHour+newF.Duration,exF.StartHour,exF.StartHour+exF.Duration)>0) {
+                       //exit since you found at least one overlap
+                        return true;
+
+                    }
+                }
+
+            }
+        }
+    }
+
+
+    return problem;
+}
+
+
 
 
 
@@ -205,5 +249,54 @@ BOOST_AUTO_TEST_CASE(overlap_last)
 
 }
 
+
+
+
+BOOST_AUTO_TEST_CASE(qt_overlap_last)
+{
+
+    QList<QtFach> existing;
+    QList<QtFach> nouveau;
+
+    QtFach exF=QtFach();
+    exF.dat=QDate(2015,06,02);
+    exF.RoomID=12;
+    exF.StartHour=5;
+    exF.Duration=2.5;
+
+    existing.append(exF);
+
+    exF=QtFach();
+    exF.dat=QDate(2015,06,22);
+    exF.RoomID=8;
+    exF.StartHour=6;
+    exF.Duration=4;
+
+    existing.append(exF);
+
+
+    //------------------------
+
+    QtFach newF=QtFach();
+    newF.dat=QDate(2015,06,12);
+    newF.RoomID=12;
+    newF.StartHour=10;
+    newF.Duration=3.5;
+
+    nouveau.append(newF);
+
+    newF=QtFach();
+    newF.dat=QDate(2015,06,22);
+    newF.RoomID=8;
+    newF.StartHour=9;
+    newF.Duration=3.5;
+
+
+    nouveau.append(newF);
+
+
+    BOOST_CHECK_EQUAL(true,QtFoundOverlap(existing,nouveau));
+
+}
 
 BOOST_AUTO_TEST_SUITE_END()
