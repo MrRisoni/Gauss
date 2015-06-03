@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     Entities/permatimes.cpp \
     General/roomitemdelegate.cpp \
     mvc.cpp \
-    Entities/discipline.cpp
+    Entities/discipline.cpp \
+    validator.cpp
 
 
 
@@ -212,7 +213,8 @@ HEADERS  += Entities/absent.h  \
     Entities/permatimes.h \
     General/roomitemdelegate.h \
     mvc.h \
-    Entities/discipline.h
+    Entities/discipline.h \
+    validator.h
 
 
 
@@ -254,6 +256,14 @@ FORMS    += Artif_Intel/plotdialog.ui \
     General/addtemporarylessondialog.ui
 
     
+
+
+
 CONFIG +=   c++11
 
 RESOURCES     = piges.qrc
+
+
+
+
+
