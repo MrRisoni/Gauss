@@ -1353,7 +1353,7 @@ QList<Rooms> ORM::getRooms() {
 
     QList<Rooms> domatia;
     QSqlQuery q;
-    q.exec("SELECT R.RoomID,B.Address,R.Name,R.Capacity FROM Rooms R,Buildings B WHERE B.BuildID=R.BuildID");
+    q.exec("SELECT R.RoomID,B.Address,R.Name,R.Capacity FROM Rooms R,Buildings B WHERE B.BuildID=R.BuildID ORDER BY B.Address ASC , R.Name ASC");
     while (q.next()) {
         Rooms r;
         Buildings bl=Buildings();
@@ -1377,9 +1377,11 @@ QList<Buildings> ORM::getBuildings() {
     qDebug() << "Fetching buildings...";
 
 
+    QString s="SELECT B.BuildID,B.Address,Count(R.RoomID) As Plithos FROM Buildings B,Rooms R ";
+    s+=" WHERE B.BuildID=R.BuildID GROUP BY R.BuilDID UNION SELECT BuildID,Address,0 As Plithos ";
+    s+=" FROM Buildings B WHERE BuildID NOT IN (SELECT BuildID FROM Rooms) ORDER BY Address ASC";
 
-
-    q.exec("SELECT B.BuildID,B.Address,Count(R.RoomID) FROM Buildings B,Rooms R WHERE B.BuildID=R.BuildID GROUP BY R.BuilDID");
+    q.exec(s);
     while (q.next()) {
         Buildings bls=Buildings();
         bls.setBuildingID(q.value(0).toInt());
@@ -1413,7 +1415,7 @@ void ORM::save(Rooms R) {
     try {
         //get buildingind
         int buildID;
-        q.prepare("SELECT BuildID FROM Buildings WHERE Address=:add");
+        q.prepare("SELECT BuildID FROM Buildings WHERE Address=:add  ");
         q.bindValue(":add",R.getB().getName());
         q.exec();
         while (q.next()) {
