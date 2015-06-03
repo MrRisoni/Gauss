@@ -11,6 +11,7 @@ ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
 
     ui->tableAllGroups->setModel(MVC::getGeneral_ShowGroup_Model());
 
+    ui->tableAllGroups->resizeColumnsToContents();
 }
 
 ShowGroupsDialog::~ShowGroupsDialog()

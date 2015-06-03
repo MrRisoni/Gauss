@@ -6,24 +6,27 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1150</width>
-    <height>467</height>
+    <width>1304</width>
+    <height>619</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Active Groups</string>
   </property>
   <widget class="QTableView" name="tableAllGroups">
    <property name="geometry">
     <rect>
      <x>15</x>
      <y>10</y>
-     <width>1121</width>
-     <height>441</height>
+     <width>1271</width>
+     <height>591</height>
     </rect>
    </property>
    <property name="editTriggers">
     <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="alternatingRowColors">
+    <bool>true</bool>
    </property>
    <property name="selectionMode">
     <enum>QAbstractItemView::SingleSelection</enum>
