@@ -40,6 +40,11 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionShow_All_Students,SIGNAL(triggered()),this,SLOT(showAllStudents()));
     connect(ui->actionView_Student,SIGNAL(triggered()),this,SLOT(showStudent()));
 
+    connect(ui->actionSchule_Tests,SIGNAL(triggered()),this,SLOT(SchuleTests()));
+    connect(ui->actionSprache_Tests,SIGNAL(triggered()),this,SLOT(SpracheTests()));
+
+
+
 
 
 
@@ -72,6 +77,18 @@ QSqlDatabase MainWindow::getDb() const
 }
 
 
+void MainWindow::SchuleTests(){
+    ManageSchuleTestsDialog *schTests = new ManageSchuleTestsDialog();
+    schTests->setAttribute(Qt::WA_DeleteOnClose);
+    schTests->show();
+}
+
+
+void MainWindow::SpracheTests() {
+    ManageSpracheTestsDialog *spTests = new ManageSpracheTestsDialog();
+    spTests->setAttribute(Qt::WA_DeleteOnClose);
+    spTests->show();
+}
 
 void MainWindow::warum() {
     ShowStudentsDialog *war = new ShowStudentsDialog();

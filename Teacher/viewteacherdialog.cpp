@@ -35,6 +35,16 @@ void ViewTeacherDialog::on_pushButton_clicked()
     Teacher L = o.searchteacherByname(ui->lineName->text());
 
     ui->labName->setText(L.getName());
+    ui->labAddress->setText(L.getAddress());
+    ui->labADT->setText(L.getADT());
+    ui->labelAFM->setText(L.getAFM());
+    ui->labEndMember->setText(L.getEndOfContract().toString());
+    ui->labMobile->setText(L.getMobile());
+    ui->labPhone->setText(L.getPhone());
+    ui->labMemberSince->setText(L.getRegDate().toString());
+
+
+
 
     qDebug() << "setting image..." << L.getPhoto().size();
 

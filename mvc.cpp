@@ -35,14 +35,15 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
 
 
 
-    QString s="(select M.MembID,M.ADT,M.Name as Namen,M.BirthDate,M.RegDate,M.Address,M.Mobile, " ;
-    s+= " M.Phone, S.FatherMobile,M.FName,S.MotherMobile,M.MName,D.Name,0,0,K.Description FROM ";
-    s+=" Members M,Schuler S,Disciplines D ,SpecialFees SF,DiscountCats K Where M.MembTypeID=2 ";
-    s+=" AND S.DiscipleID = D.DiscID AND M.MembID=S.StudentID AND SF.StudentID=M.MembID AND ";
-    s+=" SF.CatID=K.SpecialID ) UNION (select M.MembID,M.ADT,M.Name as Namen ,M.BirthDate, ";
-    s+=" M.RegDate,M.Address,M.Mobile,M.Phone, S.FatherMobile,M.FName,S.MotherMobile,M.MName, ";
-    s+=" D.Name,0,0,'NONE' FROM Members M,Schuler S,Disciplines D Where M.MembTypeID=2 AND ";
-    s+=" S.DiscipleID = D.DiscID AND M.MembID=S.StudentID ) order by Namen";
+    QString s="(select M.MembID,M.ADT,M.Name as Namen,M.BirthDate,M.RegDate,M.Address,M.Mobile, M.Phone";
+    s+=" , S.FatherMobile,M.FName,S.MotherMobile,M.MName,D.Name,0,0,K.Description FROM Members M,Schuler ";
+    s+=" S,Disciplines D , ";
+    s+=" SpecialFees SF,DiscountCats K Where M.MembTypeID=2 AND S.DiscipleID = D.DiscID ";
+    s+=" AND M.MembID=S.StudentID AND SF.StudentID=M.MembID AND SF.CatID=K.SpecialID ) UNION ";
+    s+=" (select M.MembID,M.ADT,M.Name as Namen ,M.BirthDate, M.RegDate,M.Address,M.Mobile,M.Phone, ";
+    s+=" S.FatherMobile,M.FName,S.MotherMobile,M.MName, D.Name,0,0,'NONE' FROM Members M,Schuler S, ";
+    s+=" Disciplines D Where M.MembTypeID=2 AND S.DiscipleID = D.DiscID AND M.MembID=S.StudentID AND ";
+    s+=" M.MembID NOT IN (SELECT StudentID FROM SpecialFees)) order by Namen";
 
     QList<QStringList> data;
 

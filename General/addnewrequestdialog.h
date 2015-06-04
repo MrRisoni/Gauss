@@ -20,6 +20,8 @@ private slots:
 
     void on_pushAddSchule_clicked();
 
+    void on_pushAddUni_clicked();
+
 private:
     Ui::AddNewRequestDialog *ui;
 };

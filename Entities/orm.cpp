@@ -302,7 +302,7 @@ Teacher ORM::searchteacherByname(QString name) {
 
 
 
-    QString s = "SELECT MembID,Name FROM Members WHERE  Name LIKE '%" + name + "%'";
+    QString s = "SELECT MembID,Name,Address,Phone,Mobile,Email,RegDate,BirthDate,ADT FROM Members WHERE  Name LIKE '%" + name + "%'";
     qDebug() << s;
 
     q.exec(s);
@@ -312,6 +312,13 @@ Teacher ORM::searchteacherByname(QString name) {
         mid=q.value(0).toInt();
         L.setMembID(q.value(0).toInt());
         L.setName(q.value(1).toString());
+        L.setAddress(q.value(2).toString());
+        L.setPhone(q.value(3).toString());
+        L.setMobile(q.value(4).toString());
+        L.setEmail(q.value(5).toString());
+        L.setRegDate(q.value(6).toDate());
+        L.setBirthDate(q.value(7).toDate());
+        L.setADT(q.value(8).toString());
     }
 
     qDebug() << mid << " " << L.getName() << " " << L.getMembID();
@@ -938,7 +945,7 @@ void ORM::saveTeacher(Teacher T) {
 
         //query the db to get the base wages
 
-        q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `TotHours`, `TotPaidHours`,`ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,'0','0',:adt)");
+        q.prepare("INSERT INTO `Members` (`Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:mail,'5',:regdat,:birthdat,:adt)");
         q.bindValue(":name",T.getName());
         q.bindValue(":fname",T.getFName());
         q.bindValue(":mname",T.getMName());
@@ -989,17 +996,6 @@ void ORM::saveTeacher(Teacher T) {
 
         }
 
-        QString FacesPath = getSetFacesPath();
-
-        q.prepare("INSERT INTO `Faces`  (`MembID`, `Pic`) VALUES (:tid,:pic)");
-        q.bindValue(":tid",T.getTeacherID());
-        q.bindValue(":pic",T.getPhoto());
-
-        if (!q.exec())  {
-            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
-            throw 40;
-
-        }
 
 
 
@@ -1471,16 +1467,28 @@ void ORM::save(RequestSchule rec) {
         }
 
 
-        q.prepare("INSERT INTO `RequestSchule`  ( `StudentID`, `CourseID`, `Settled`, `ReqDate`, `Comments`) VALUES (:stid,:cid,'0',:dat,:coms)");
+        int exists =0;
+        q.prepare("Select Count(CourseID) From RequestSchule Where CourseID=:cid AND StudentID=:stid");
         q.bindValue(":stid",StudID);
         q.bindValue(":cid",CourseID);
-        q.bindValue(":dat",rec.getDat());
-        q.bindValue(":coms",rec.getComments());
+        q.exec();
+        while (q.next()) {
+            exists=q.value(0).toInt();
+            qDebug() << "existsing records" << exists;
+        }
+        if (exists==0) {
+            //dont insert if record exists....
+            q.prepare("INSERT INTO `RequestSchule`  ( `StudentID`, `CourseID`, `Settled`, `ReqDate`, `Comments`) VALUES (:stid,:cid,'0',:dat,:coms)");
+            q.bindValue(":stid",StudID);
+            q.bindValue(":cid",CourseID);
+            q.bindValue(":dat",rec.getDat());
+            q.bindValue(":coms",rec.getComments());
 
-        if (!q.exec())  {
-            qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
-            throw 10;
+            if (!q.exec())  {
+                qDebug() << "error.." << q.lastError().driverText() << " " << q.lastError().databaseText();
+                throw 10;
 
+            }
         }
         ShowSuccess();
     }

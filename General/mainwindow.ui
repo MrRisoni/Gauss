@@ -146,10 +146,18 @@
     <addaction name="actionAdd_Requests"/>
     <addaction name="actionShow_All_Groups"/>
    </widget>
+   <widget class="QMenu" name="menuTests">
+    <property name="title">
+     <string>Tests</string>
+    </property>
+    <addaction name="actionSchule_Tests"/>
+    <addaction name="actionSprache_Tests"/>
+   </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
    <addaction name="menuStatistics"/>
    <addaction name="menuGroups"/>
+   <addaction name="menuTests"/>
   </widget>
   <widget class="QToolBar" name="toolBar">
    <property name="windowTitle">
@@ -304,6 +312,16 @@
   <action name="actionWarum">
    <property name="text">
     <string>Warum</string>
+   </property>
+  </action>
+  <action name="actionSchule_Tests">
+   <property name="text">
+    <string>Schule Tests</string>
+   </property>
+  </action>
+  <action name="actionSprache_Tests">
+   <property name="text">
+    <string>Sprache Tests</string>
    </property>
   </action>
  </widget>

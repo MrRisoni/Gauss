@@ -255,3 +255,15 @@ void AddNewTeacherDialog::on_pushESymvasis_clicked()
 {
 
 }
+
+void AddNewTeacherDialog::on_pushLoadPic_2_clicked()
+{
+    QString FileName=QFileDialog::getOpenFileName(this, "Open File", "/tmp/","*.*");
+    QPixmap p(FileName);
+
+    int w = ui->labelSignature->width();
+    int h = ui->labelSignature->height();
+
+ui->labelSignature->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+
+}

@@ -36,6 +36,8 @@ private slots:
 
     void on_pushESymvasis_clicked();
 
+    void on_pushLoadPic_2_clicked();
+
 private:
     Ui::AddNewTeacherDialog *ui;
     QStandardItemModel *coursesModel;

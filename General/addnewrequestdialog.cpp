@@ -67,3 +67,8 @@ void AddNewRequestDialog::on_pushAddSchule_clicked()
     ORM o =ORM();
     o.save(rec);
 }
+
+void AddNewRequestDialog::on_pushAddUni_clicked()
+{
+
+}

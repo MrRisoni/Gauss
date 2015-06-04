@@ -27,7 +27,8 @@
 #include "showgroupsdialog.h"
 #include "Student/showstudentsdialog.h"
 #include "Student/viewstudentdialog.h"
-
+#include "Schule/manageschuletestsdialog.h"
+#include "Sprache/managesprachetestsdialog.h"
 
 namespace Ui {
 class MainWindow;
@@ -75,6 +76,8 @@ private slots:
     void showAllGroups();
     void warum();
 
+    void SchuleTests();
+    void SpracheTests();
 
 
 };
