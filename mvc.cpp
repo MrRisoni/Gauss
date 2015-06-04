@@ -5,7 +5,7 @@
 
 
 QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
-    QSqlQuery q;
+    QSqlQuery q,q2;
     QStringList headers;
     headers.append("StudentID");
     headers.append("ADT");
@@ -17,10 +17,8 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
     headers.append("Phone");
     headers.append("Fath Mobile");
     headers.append("Fath Name");
-
     headers.append("Mom Mobile");
     headers.append("Mom Name");
-
     headers.append("Discipline");
     headers.append("# Groups");
     headers.append("# Absencies");
@@ -30,9 +28,21 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
     headers.append("Schulden");
 
 
-    QString s="select M.MembID,M.ADT,M.Name,M.BirthDate,M.RegDate,M.Address,M.Mobile,M.Phone,D.Name, " ;
-    s+=" S.FatherMobile,M.FName,S.MotherMobile,M.MName FROM Members M,Schuler S,Disciplines D ";
-    s+=" Where M.MembTypeID=2 AND S.DiscipleID = D.DiscID AND M.MembID=S.StudentID order BY M.Name ASC";
+
+
+
+
+
+
+
+    QString s="(select M.MembID,M.ADT,M.Name as Namen,M.BirthDate,M.RegDate,M.Address,M.Mobile, " ;
+    s+= " M.Phone, S.FatherMobile,M.FName,S.MotherMobile,M.MName,D.Name,0,0,K.Description FROM ";
+    s+=" Members M,Schuler S,Disciplines D ,SpecialFees SF,DiscountCats K Where M.MembTypeID=2 ";
+    s+=" AND S.DiscipleID = D.DiscID AND M.MembID=S.StudentID AND SF.StudentID=M.MembID AND ";
+    s+=" SF.CatID=K.SpecialID ) UNION (select M.MembID,M.ADT,M.Name as Namen ,M.BirthDate, ";
+    s+=" M.RegDate,M.Address,M.Mobile,M.Phone, S.FatherMobile,M.FName,S.MotherMobile,M.MName, ";
+    s+=" D.Name,0,0,'NONE' FROM Members M,Schuler S,Disciplines D Where M.MembTypeID=2 AND ";
+    s+=" S.DiscipleID = D.DiscID AND M.MembID=S.StudentID ) order by Namen";
 
     QList<QStringList> data;
 
@@ -41,19 +51,37 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
     while (q.next()) {
         QStringList record;
 
-        record.append(q.value(0).toString());
-        record.append(q.value(1).toString());
-        record.append(q.value(2).toString());
-        record.append(q.value(3).toString());
-        record.append(q.value(4).toString());
-        record.append(q.value(5).toString());
-        record.append(q.value(6).toString());
-        record.append(q.value(7).toString());
-        record.append(q.value(8).toString());
-        record.append(q.value(9).toString());
-        record.append(q.value(10).toString());
-        record.append(q.value(11).toString());
-         record.append(q.value(12).toString());
+        QString studid=q.value(0).toString();
+        record.append(q.value(0).toString()); //studid
+        record.append(q.value(1).toString()); //adt
+        record.append(q.value(2).toString()); //name
+        record.append(q.value(3).toString()); //birth date
+        record.append(q.value(4).toString()); //reg date
+        record.append(q.value(5).toString()); //address
+        record.append(q.value(6).toString()); //mobile
+        record.append(q.value(7).toString()); //phone
+        record.append(q.value(8).toString()); //fath mobile
+        record.append(q.value(9).toString()); // fath name
+        record.append(q.value(10).toString()); //mom mobile
+        record.append(q.value(11).toString()); //mom name
+        record.append(q.value(12).toString()); // discipline
+
+        //query to find the groups
+
+        q2.prepare("Select Count(E.GroupID) From Ensembles E,Groups G Where E.StudID=:sid AND G.GroupID=E.GroupID AND G.Active=1 AND G.GroupID NOT IN (Select GroupID From Dropout Where StudID=:sid)");
+        q2.bindValue(":sid",studid);
+        q2.exec();
+        while (q2.next()) {
+            record.append(q2.value(0).toString()); //# groups
+
+        }
+        record.append("0"); //# absencies
+        record.append(q.value(15).toString()); //special cat
+        record.append("0"); //last lesson
+        record.append("0"); //last payed
+        record.append("0"); //schulden
+
+
 
 
         data.append(record);

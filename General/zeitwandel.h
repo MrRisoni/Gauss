@@ -2,6 +2,7 @@
 #define ZEITWANDEL_H
 
 
+
 class ZeitWandel
 {
 public:

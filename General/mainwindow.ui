@@ -34,9 +34,9 @@
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>20</y>
         <width>1281</width>
-        <height>491</height>
+        <height>521</height>
        </rect>
       </property>
      </widget>
@@ -45,63 +45,14 @@
      <attribute name="title">
       <string>Schule</string>
      </attribute>
-     <widget class="QTableView" name="tableView_3">
+     <widget class="QTableView" name="tableSchule">
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>50</y>
+        <y>20</y>
         <width>1281</width>
-        <height>491</height>
+        <height>521</height>
        </rect>
-      </property>
-     </widget>
-     <widget class="QComboBox" name="comboSchuleRoom">
-      <property name="geometry">
-       <rect>
-        <x>160</x>
-        <y>10</y>
-        <width>211</width>
-        <height>23</height>
-       </rect>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label">
-      <property name="geometry">
-       <rect>
-        <x>20</x>
-        <y>5</y>
-        <width>121</width>
-        <height>31</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Show Room</string>
-      </property>
-     </widget>
-     <widget class="QLabel" name="label_2">
-      <property name="geometry">
-       <rect>
-        <x>410</x>
-        <y>10</y>
-        <width>101</width>
-        <height>21</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>Time Window</string>
-      </property>
-     </widget>
-     <widget class="QLineEdit" name="lineSchuleWindow">
-      <property name="geometry">
-       <rect>
-        <x>530</x>
-        <y>10</y>
-        <width>141</width>
-        <height>23</height>
-       </rect>
-      </property>
-      <property name="toolTip">
-       <string>in days</string>
       </property>
      </widget>
     </widget>

@@ -7,3 +7,5 @@ ZeitWandel::ZeitWandel()
 }
 
 //calculats timetable
+headers are rooms
+columns are hours
