@@ -1,7 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
-
-
+#include "zeitwandel.h"
+#include <tuple>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -42,6 +42,24 @@ MainWindow::MainWindow(QWidget *parent) :
 
 
 
+
+    //show timetable
+    ZeitWandel ZW = ZeitWandel();
+
+    QStandardItemModel *mod;
+    QList<Cell> Zells;
+
+    std::tie(mod,Zells)=ZW.getSchule();
+
+    ui->tableSchule->setModel( mod);
+
+    //set span
+    for (Cell z : Zells) {
+        ui->tableSchule->setSpan(z.row,z.col,z.row_span,1);
+    }
+
+    ui->tableSchule->resizeColumnsToContents();
+    ui->tableSchule->resizeRowsToContents();
 }
 
 MainWindow::~MainWindow()
