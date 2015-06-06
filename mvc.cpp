@@ -169,6 +169,7 @@ QStandardItemModel* MVC::getGeneral_ShowPastHistory(QString GroupID) {
 QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
 
+
     QSqlQuery q,q2;
     QStringList headers;
     headers.append("GroupID");
@@ -179,19 +180,23 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
     headers.append("# Students");
     headers.append("# Hours per week");
     headers.append("Hours remain");
-    headers.append("Ausgeben");
-    headers.append("Einnehmen");
-    headers.append("Unser_Schulden");
-    headers.append("Student_Schulden");
+    headers.append("Ausgeben"); // money we have given the proffessor
+    headers.append("Einnehmen"); // money we have received from students
+    headers.append("Unser_Schulden"); //Geld , das wir dem Lehrer schulden
+    headers.append("Student_Schulden"); // Geld , das die Schuler uns schulden
+    headers.append("Gross salary"); // base wage + course wage
+    headers.append("Fee");
+
 
 
     QList<QStringList> data;
 
     QString s;
-    q.exec("SELECT G.GroupID,C.CourseName,G.StartDate,M.Name FROM Groups G,Courses C,Members M WHERE G.CourseID=C.CourseID AND M.MembID=G.TeacherID AND G.Active=1 ");
+    q.exec("SELECT G.GroupID,C.CourseName,G.StartDate,M.Name,G.BW+G.CW,G.Fee FROM Groups G,Courses C,Members M WHERE G.CourseID=C.CourseID AND M.MembID=G.TeacherID AND G.Active=1 ");
     while (q.next()) {
 
         QStringList record;
+
 
         int GroupID=q.value(0).toInt();
         record.append(q.value(0).toString()); // group ud
@@ -219,12 +224,14 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
         //num of students
         //number of students = count(ensembles)- count(non null dropouts)
-        q2.prepare("SELECT Count(StudID) FROM Ensembles WHERE GroupID=:gid AND StudID NOT IN (SELECT StudID FROM Dropout WHERE GroupID=:gid )");
+        q2.prepare("SELECT Count(StudID) FROM Ensembles WHERE GroupID=:gid AND Dropped< CURRENT_DATE()");
         q2.bindValue(":gid",GroupID);
         q2.exec();
 
         while (q2.next()) {
             record.append(q2.value(0).toString());
+
+            qDebug() << "number of students for " << GroupID << q2.value(0).toString();
         }
 
 
@@ -232,12 +239,13 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
 
         //avg hours per week
-       q2.prepare("SELECT SUM(Duration) FROM PermaTimes Where PermaID=:prid");
-       q2.bindValue(":prid",PermaID);
-       q2.exec();
-       while (q2.next()) {
-          record.append(q2.value(0).toString());
-       }
+        q2.prepare("SELECT SUM(Duration) FROM PermaTimes Where PermaID=:prid");
+        q2.bindValue(":prid",PermaID);
+        q2.exec();
+        while (q2.next()) {
+            qDebug() << "avg hours per week for " << GroupID << q2.value(0).toString();
+            record.append(q2.value(0).toString());
+        }
 
         //hours planned sum all history up to endsOn and valid=1  minus sum done and valid=1
         q2.prepare("SELECT SUM(Duration) FROM History WHERE GroupID=:gid and Valid=1 AND Dat>CURRENT_DATE");
@@ -253,16 +261,36 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
 
         //we know the history of these course and the fee/wages therefor we can calucate the expected earnings...
-      record.append("0");
-      record.append("0");
-      record.append("0"); // how much money do we owe in total to the teacher
-      record.append("0"); // how much money do the students owe us
+
+
+        float Ausgeben=0;
+        q2.prepare("SELECT SUM(Amount) FROM Payments WHERE GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        while (q2.next()) {
+            Ausgeben=q2.value(0).toFloat();
+        }
+        record.append(QString::number(Ausgeben));
+
+        q2.prepare("SELECT SUM(Amount) FROM Funds WHERE GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        float Einkommen=0;
+        while (q2.next()) {
+            Einkommen=q2.value(0).toFloat();
+        }
+        record.append(QString::number(Einkommen)); //einnemhen
+        record.append("0"); // how much money do we owe in total to the teacher
+        record.append("0"); // how much money do the students owe us
+
+        record.append(q.value(4).toString().mid(0,5)); // gross salary
+        record.append(q.value(5).toString().mid(0,5)); //fee
 
 
 
 
 
-          data.append(record);
+        data.append(record);
 
 
     }
@@ -279,6 +307,8 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
     return  MVC::makeModel(headers, data,farbe);
 
 }
+
+
 
 
 
@@ -421,7 +451,7 @@ QStandardItemModel* MVC::getReceiptEchelons() {
 
 
 
-return makeModel(headers,data,coldata);
+    return makeModel(headers,data,coldata);
 
 
 }
@@ -442,7 +472,7 @@ QStandardItemModel* MVC::getReceiptBaseWages(){
     QString s ="Select E.EchelID, E.Exp ,B.Dat, B.Wages FROM Echelon E,BaseWages B Where B.EchelID=E.EchelID ORDER BY E.Exp DESC";\
 
 
-   return makeModel( headers,QueryToList(s), coldata);
+    return makeModel( headers,QueryToList(s), coldata);
 
 }
 
@@ -473,15 +503,15 @@ QStandardItemModel* MVC::getGeneralManageCourses() {
 
 QStandardItemModel* MVC::getGeneralManageFees() {
 
-        QList<QStringList> data;
-        QList<RGBColor> coldata;
+    QList<QStringList> data;
+    QList<RGBColor> coldata;
 
 
-        QSqlQuery q;
+    QSqlQuery q;
 
-        QString s;
+    QString s;
 
-        /*SQL QUERY EXPLANTION
+    /*SQL QUERY EXPLANTION
          -get CID,Name : Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC
 
 
@@ -505,12 +535,10 @@ QStandardItemModel* MVC::getGeneralManageFees() {
         */
 
 
-        s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID  ORDER BY Alpha.CourseName ASC" ;
-        qDebug() << s;
+    s=" Select Alpha.CourseID ,Alpha.CourseName,Charlie.Plithos,Charlie.Latest FROM (Select CourseID,CourseName From Courses Where DepID=1 ORDER BY CourseName ASC) as Alpha INNER JOIN (Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID) AS Charlie WHERE Charlie.CourseID=Alpha.CourseID  ORDER BY Alpha.CourseName ASC" ;
+    qDebug() << s;
 
-        q.exec(s);
-
-
+    q.exec(s);
 
 
 
@@ -518,56 +546,58 @@ QStandardItemModel* MVC::getGeneralManageFees() {
 
 
 
-        QStringList headers;
-        headers.append("CourseID");
-        headers.append("Name");
-        headers.append("#Changes");
-        headers.append("Latest update");
-        headers.append("Fee");
-        headers.append("Debt");
-        headers.append("Profit");
+
+
+    QStringList headers;
+    headers.append("CourseID");
+    headers.append("Name");
+    headers.append("#Changes");
+    headers.append("Latest update");
+    headers.append("Fee");
+    headers.append("Debt");
+    headers.append("Profit");
 
 
 
-        while (q.next()) {
+    while (q.next()) {
 
-            QStringList record;
+        QStringList record;
 
-            record.append(q.value(0).toString()); //courseid
-            record.append(q.value(1).toString()); //name
-            record.append(q.value(2).toString()); //#changes
-            record.append(q.value(3).toString()); //updated
+        record.append(q.value(0).toString()); //courseid
+        record.append(q.value(1).toString()); //name
+        record.append(q.value(2).toString()); //#changes
+        record.append(q.value(3).toString()); //updated
 
-            record.append("0"); //fee
-            record.append("0");
-            record.append("0");
-
-
-
-            data.append(record);
-        }
+        record.append("0"); //fee
+        record.append("0");
+        record.append("0");
 
 
-        //query for fee price
-        s="select Kursen.CourseID,Kursen.Fee FROM (Select CourseID,Fee,Dat From FeeSchule) As Kursen INNER JOIN (Select CourseID,MAX(Dat) As Updat From FeeSchule GROUP BY CourseID ) As Daten ON Daten.CourseID=Kursen.CourseID AND Daten.Updat=Kursen.Dat ";
-        qDebug() << s;
 
-        q.exec(s);
-        while (q.next()) {
-            //search every record of the data
+        data.append(record);
+    }
 
-            for (int i=0;i<data.size();i++) {
 
-                if (data.at(i).at(0)==q.value(0).toString()) {
-                   // record.replace(4,q.value(1).toString());
-                    data[i][4]=q.value(1).toString();
-                   // qDebug() << "setting price for courseid " << q.value(0).toString() << " " << q.value(1).toString() << " " << record[4];
+    //query for fee price
+    s="select Kursen.CourseID,Kursen.Fee FROM (Select CourseID,Fee,Dat From FeeSchule) As Kursen INNER JOIN (Select CourseID,MAX(Dat) As Updat From FeeSchule GROUP BY CourseID ) As Daten ON Daten.CourseID=Kursen.CourseID AND Daten.Updat=Kursen.Dat ";
+    qDebug() << s;
 
-                }
+    q.exec(s);
+    while (q.next()) {
+        //search every record of the data
+
+        for (int i=0;i<data.size();i++) {
+
+            if (data.at(i).at(0)==q.value(0).toString()) {
+                // record.replace(4,q.value(1).toString());
+                data[i][4]=q.value(1).toString();
+                // qDebug() << "setting price for courseid " << q.value(0).toString() << " " << q.value(1).toString() << " " << record[4];
 
             }
+
         }
-        q.finish();
+    }
+    q.finish();
 
 
 
