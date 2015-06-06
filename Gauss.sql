@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 06, 2015 at 06:37 PM
+-- Generation Time: Jun 06, 2015 at 09:34 PM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -648,7 +648,6 @@ CREATE TABLE IF NOT EXISTS `Schwierigkeit` (
 --
 
 CREATE TABLE IF NOT EXISTS `ShouldBePayed` (
-  `AccID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `Amount` float NOT NULL,
   `GroupID` int(11) NOT NULL,
@@ -662,7 +661,6 @@ CREATE TABLE IF NOT EXISTS `ShouldBePayed` (
 --
 
 CREATE TABLE IF NOT EXISTS `ShouldPay` (
-  `AccID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `Amount` float NOT NULL,
   `GroupID` int(11) NOT NULL,
@@ -1236,7 +1234,7 @@ ALTER TABLE `Schwierigkeit`
 -- Indexes for table `ShouldBePayed`
 --
 ALTER TABLE `ShouldBePayed`
-  ADD PRIMARY KEY (`AccID`),
+  ADD PRIMARY KEY (`StudentID`,`GroupID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `GroupID` (`GroupID`);
 
@@ -1244,7 +1242,7 @@ ALTER TABLE `ShouldBePayed`
 -- Indexes for table `ShouldPay`
 --
 ALTER TABLE `ShouldPay`
-  ADD PRIMARY KEY (`AccID`),
+  ADD PRIMARY KEY (`TeacherID`,`GroupID`),
   ADD KEY `StudentID` (`TeacherID`),
   ADD KEY `GroupID` (`GroupID`),
   ADD KEY `TeacherID` (`TeacherID`);
@@ -1602,16 +1600,6 @@ ALTER TABLE `Schuler`
 --
 ALTER TABLE `Schwierigkeit`
   MODIFY `SchwerID` tinyint(4) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ShouldBePayed`
---
-ALTER TABLE `ShouldBePayed`
-  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `ShouldPay`
---
-ALTER TABLE `ShouldPay`
-  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `SpecialFees`
 --
