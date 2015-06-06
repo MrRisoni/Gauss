@@ -12,7 +12,6 @@ The biggest app i have ever developed!
 - Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql (  that will have to wait  :((( )
 
 - Simple pseudo Document Management System : Python ,PyQt, MongoDB ( dmslite )
-- HTML,CSS,Javascript PHP + MongoDB (Sucky branch)
 
   A total of 75 tables :)
   
