@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.4.7
+-- version 4.4.8
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 01, 2015 at 09:53 AM
+-- Generation Time: Jun 06, 2015 at 04:01 PM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -42,8 +42,9 @@ CREATE TABLE IF NOT EXISTS `AccedFees` (
   `AccID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `Amount` float NOT NULL,
-  `Von` date NOT NULL COMMENT 'begins from the first day of every month',
-  `Bis` date NOT NULL COMMENT '30 days apart from Von'
+  `GroupID` int(11) NOT NULL,
+  `Updated` date NOT NULL,
+  `Discount` float NOT NULL COMMENT 'discount at time of creation [0-1]'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated fees for students for each month';
 
 -- --------------------------------------------------------
@@ -56,8 +57,8 @@ CREATE TABLE IF NOT EXISTS `AccedPayments` (
   `AccID` int(11) NOT NULL,
   `TeacherID` int(11) NOT NULL,
   `Amount` float NOT NULL,
-  `Von` date NOT NULL COMMENT 'begins from the first day of every month',
-  `Bis` date NOT NULL COMMENT '30 days apart from Von'
+  `GroupID` int(11) NOT NULL,
+  `Updated` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated payments for profs for each month';
 
 -- --------------------------------------------------------
@@ -155,7 +156,7 @@ CREATE TABLE IF NOT EXISTS `Diplomas` (
 
 CREATE TABLE IF NOT EXISTS `Disciplines` (
   `DiscID` tinyint(3) unsigned NOT NULL,
-  `Name` varchar(22) NOT NULL
+  `Name` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -189,8 +190,9 @@ CREATE TABLE IF NOT EXISTS `DiscountCats` (
 --
 
 CREATE TABLE IF NOT EXISTS `Dropout` (
+  `DropID` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
+  `StudID` int(11) NOT NULL,
   `Dat` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='a student may decide to drop from a group we need to know when';
 
@@ -334,6 +336,7 @@ CREATE TABLE IF NOT EXISTS `FeeUni` (
 CREATE TABLE IF NOT EXISTS `Funds` (
   `FundID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
+  `GroupID` int(11) NOT NULL COMMENT 'we want to know for which group did we got the money',
   `Dat` date NOT NULL,
   `Amount` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='money we received from students';
@@ -350,7 +353,10 @@ CREATE TABLE IF NOT EXISTS `Groups` (
   `CourseID` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `Active` tinyint(4) NOT NULL DEFAULT '1',
-  `LessTypeID` tinyint(4) NOT NULL
+  `LessTypeID` tinyint(4) NOT NULL,
+  `BW` float NOT NULL COMMENT ' base wage at time of creation',
+  `CW` float NOT NULL COMMENT 'course wage at time of creation',
+  `Fee` float NOT NULL COMMENT 'fee at the time of creation'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -449,10 +455,10 @@ CREATE TABLE IF NOT EXISTS `Members` (
   `Name` varchar(80) CHARACTER SET utf8 NOT NULL,
   `FName` varchar(20) CHARACTER SET utf8 NOT NULL,
   `MName` varchar(20) CHARACTER SET utf8 NOT NULL,
-  `Address` varchar(80) CHARACTER SET utf8 NOT NULL,
+  `Address` varchar(80) CHARACTER SET utf8 DEFAULT NULL,
   `Phone` varchar(10) CHARACTER SET utf8 NOT NULL,
   `Mobile` varchar(10) CHARACTER SET utf8 NOT NULL,
-  `EMail` varchar(50) CHARACTER SET utf8 NOT NULL,
+  `EMail` varchar(50) CHARACTER SET utf8 DEFAULT NULL,
   `MembTypeID` tinyint(11) DEFAULT NULL,
   `RegDate` date DEFAULT NULL,
   `BirthDate` date NOT NULL,
@@ -495,7 +501,8 @@ CREATE TABLE IF NOT EXISTS `Payments` (
   `Dat` date NOT NULL,
   `Amount` float unsigned NOT NULL,
   `Comments` varchar(100) DEFAULT NULL COMMENT 'what did we pay him for?',
-  `PayTypeID` tinyint(3) unsigned NOT NULL
+  `PayTypeID` tinyint(3) unsigned NOT NULL,
+  `GroupID` int(11) NOT NULL DEFAULT '0' COMMENT 'for which group lessons was he payed'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='payments to professors';
 
 -- --------------------------------------------------------
@@ -654,7 +661,7 @@ CREATE TABLE IF NOT EXISTS `Schedule` (
 --
 
 CREATE TABLE IF NOT EXISTS `Schuler` (
-  `SchulerID` int(11) NOT NULL,
+  `SchulID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
   `DiscipleID` tinyint(3) unsigned NOT NULL,
   `FatherMobile` varchar(10) NOT NULL,
@@ -910,14 +917,17 @@ ALTER TABLE `Absent`
 --
 ALTER TABLE `AccedFees`
   ADD PRIMARY KEY (`AccID`),
-  ADD KEY `StudentID` (`StudentID`);
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `GroupID` (`GroupID`);
 
 --
 -- Indexes for table `AccedPayments`
 --
 ALTER TABLE `AccedPayments`
   ADD PRIMARY KEY (`AccID`),
-  ADD KEY `StudentID` (`TeacherID`);
+  ADD KEY `StudentID` (`TeacherID`),
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `TeacherID` (`TeacherID`);
 
 --
 -- Indexes for table `BaseWages`
@@ -991,8 +1001,9 @@ ALTER TABLE `DiscountCats`
 -- Indexes for table `Dropout`
 --
 ALTER TABLE `Dropout`
+  ADD PRIMARY KEY (`DropID`),
   ADD KEY `GroupID` (`GroupID`),
-  ADD KEY `StudentID` (`StudentID`);
+  ADD KEY `StudentID` (`StudID`);
 
 --
 -- Indexes for table `Echelon`
@@ -1070,7 +1081,8 @@ ALTER TABLE `FeeUni`
 --
 ALTER TABLE `Funds`
   ADD PRIMARY KEY (`FundID`),
-  ADD KEY `StudentID` (`StudentID`);
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `GroupID` (`GroupID`);
 
 --
 -- Indexes for table `Groups`
@@ -1079,8 +1091,8 @@ ALTER TABLE `Groups`
   ADD PRIMARY KEY (`GroupID`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `CourseID` (`CourseID`),
-  ADD KEY `Edu` (`LessTypeID`),
-  ADD KEY `Edu_2` (`LessTypeID`);
+  ADD KEY `BW` (`BW`),
+  ADD KEY `LessTypeID` (`LessTypeID`);
 
 --
 -- Indexes for table `History`
@@ -1134,6 +1146,7 @@ ALTER TABLE `Meeting`
 --
 ALTER TABLE `Members`
   ADD PRIMARY KEY (`MembID`),
+  ADD UNIQUE KEY `ADT` (`ADT`),
   ADD KEY `MembTypeID` (`MembTypeID`);
 
 --
@@ -1245,7 +1258,8 @@ ALTER TABLE `Schedule`
 -- Indexes for table `Schuler`
 --
 ALTER TABLE `Schuler`
-  ADD PRIMARY KEY (`SchulerID`),
+  ADD PRIMARY KEY (`SchulID`),
+  ADD UNIQUE KEY `StudentID_2` (`StudentID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `DiscipleID` (`DiscipleID`);
 
@@ -1439,6 +1453,11 @@ ALTER TABLE `Disciplines`
 ALTER TABLE `DiscountCats`
   MODIFY `SpecialID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `Dropout`
+--
+ALTER TABLE `Dropout`
+  MODIFY `DropID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `Echelon`
 --
 ALTER TABLE `Echelon`
@@ -1609,6 +1628,11 @@ ALTER TABLE `Rooms`
 ALTER TABLE `Schedule`
   MODIFY `SchedID` int(11) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `Schuler`
+--
+ALTER TABLE `Schuler`
+  MODIFY `SchulID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `Schwierigkeit`
 --
 ALTER TABLE `Schwierigkeit`
@@ -1703,7 +1727,15 @@ ALTER TABLE `Absent`
 -- Constraints for table `AccedFees`
 --
 ALTER TABLE `AccedFees`
-  ADD CONSTRAINT `AccedFees_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `AccedFees_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `AccedFees_ibfk_2` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
+
+--
+-- Constraints for table `AccedPayments`
+--
+ALTER TABLE `AccedPayments`
+  ADD CONSTRAINT `AccedPayments_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
+  ADD CONSTRAINT `AccedPayments_ibfk_2` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `BaseWages`
@@ -1743,7 +1775,7 @@ ALTER TABLE `Discount`
 --
 ALTER TABLE `Dropout`
   ADD CONSTRAINT `fkkropid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-  ADD CONSTRAINT `flsid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `flsid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Ensembles`
@@ -1800,15 +1832,15 @@ ALTER TABLE `FeeUni`
 -- Constraints for table `Funds`
 --
 ALTER TABLE `Funds`
+  ADD CONSTRAINT `Funds_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
   ADD CONSTRAINT `studid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Groups`
 --
 ALTER TABLE `Groups`
-  ADD CONSTRAINT `Groups_ibfk_1` FOREIGN KEY (`LessTypeID`) REFERENCES `LessonType` (`TypeID`),
+  ADD CONSTRAINT `Groups_ibfk_3` FOREIGN KEY (`LessTypeID`) REFERENCES `LessonType` (`TypeID`),
   ADD CONSTRAINT `csrid` FOREIGN KEY (`CourseID`) REFERENCES `Courses` (`CourseID`),
-  ADD CONSTRAINT `edyy` FOREIGN KEY (`LessTypeID`) REFERENCES `LessonType` (`TypeID`),
   ADD CONSTRAINT `teach` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
