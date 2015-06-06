@@ -54,7 +54,7 @@ void GeldRechen::calcStudentFees() {
          q2.prepare("SELECT StudID,Added,Dropped FROM Ensembles WHERE GroupID=:gid");
          q2.bindValue(":gid",gid);
          while (q2.exec()) {
-             QString studid=q2.value(0).toDate();
+             QString studid=q2.value(0).toString();
              QDate joined=q2.value(1).toDate();
              QDate dropped = q2.value(1).toDate();
              //get group history  from GREATEST(groupstart,added) up to LEAST(dropout,curdate)  MINUS  Truant==0 abscencies
@@ -70,8 +70,8 @@ void GeldRechen::calcStudentFees() {
                   muss_bezahlen= fee*q3.value(0).toFloat();
              }
 
-             q4
-                     insert else update
+            // q4
+                //     insert else update
          }
 
 
@@ -115,20 +115,13 @@ void GeldRechen::calcSProfSalaries() {
         QString s;
 
 
+        s+="INSERT INTO ShouldPay  (TeacherID,Amount, GroupID, Updated) VALUES (:tid,:euro,:gid,CURDATE()) ";
+        s+=" ON DUPLICATE KEY UPDATE  Amount=:euro , Updated=CURDATE()";
 
-        s="  IF EXISTS (SELECT 1 FROM ShouldPay WHERE TeacherID = '"+ tid +"' AND GroupID='"+ gid+"') THEN  \n";
-        s+=" BEGIN \n ";
-        s+="    UPDATE ShouldPay SET Amount=:euro ,Updated=:heute WHERE TeacherID=:tid and GroupID=:gid  ; \n ";
-        s+=" END \n ";
-        s+=" ELSE \n ";
-        s+=" BEGIN \n ";
-        s+="    INSERT INTO ShouldPay  (TeacherID,Amount, GroupID, Updated) VALUES (:tid,:euro,:gid,:heute); \n ";
-        s+=" END \n ";
 
         qDebug() << s;
         q3.prepare(s);
         q3.bindValue(":euro",sal);
-        q3.bindValue(":heute",QDate::currentDate());
         q3.bindValue(":tid",tid);
         q3.bindValue(":gid",gid);
 
