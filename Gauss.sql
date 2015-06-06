@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 06, 2015 at 04:01 PM
+-- Generation Time: Jun 06, 2015 at 06:37 PM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -29,37 +29,9 @@ SET time_zone = "+00:00";
 CREATE TABLE IF NOT EXISTS `Absent` (
   `AbsID` int(11) NOT NULL,
   `StudentID` int(11) NOT NULL,
-  `HistID` int(11) NOT NULL
+  `HistID` int(11) NOT NULL,
+  `Truant` tinyint(1) NOT NULL DEFAULT '1' COMMENT 'if truant is - that means there was a very serious reason for this absence dont calc fee'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='show when a student was absent';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `AccedFees`
---
-
-CREATE TABLE IF NOT EXISTS `AccedFees` (
-  `AccID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
-  `Amount` float NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `Updated` date NOT NULL,
-  `Discount` float NOT NULL COMMENT 'discount at time of creation [0-1]'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated fees for students for each month';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `AccedPayments`
---
-
-CREATE TABLE IF NOT EXISTS `AccedPayments` (
-  `AccID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `Amount` float NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `Updated` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated payments for profs for each month';
 
 -- --------------------------------------------------------
 
@@ -186,19 +158,6 @@ CREATE TABLE IF NOT EXISTS `DiscountCats` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Dropout`
---
-
-CREATE TABLE IF NOT EXISTS `Dropout` (
-  `DropID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL,
-  `StudID` int(11) NOT NULL,
-  `Dat` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='a student may decide to drop from a group we need to know when';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `Echelon`
 --
 
@@ -218,7 +177,8 @@ CREATE TABLE IF NOT EXISTS `Ensembles` (
   `EnsPK` int(11) NOT NULL,
   `GroupID` int(11) NOT NULL,
   `StudID` int(11) NOT NULL,
-  `Added` date NOT NULL COMMENT 'a  student may be added after the groups creation'
+  `Added` date NOT NULL COMMENT 'a  student may be added after the groups creation',
+  `Dropped` date NOT NULL COMMENT 'a student may decide to drop from a group we need to know when'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -684,6 +644,34 @@ CREATE TABLE IF NOT EXISTS `Schwierigkeit` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `ShouldBePayed`
+--
+
+CREATE TABLE IF NOT EXISTS `ShouldBePayed` (
+  `AccID` int(11) NOT NULL,
+  `StudentID` int(11) NOT NULL,
+  `Amount` float NOT NULL,
+  `GroupID` int(11) NOT NULL,
+  `Updated` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated fees for students discount at time of group creation';
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ShouldPay`
+--
+
+CREATE TABLE IF NOT EXISTS `ShouldPay` (
+  `AccID` int(11) NOT NULL,
+  `TeacherID` int(11) NOT NULL,
+  `Amount` float NOT NULL,
+  `GroupID` int(11) NOT NULL,
+  `Updated` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated payments for profs for each month';
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `SpecialFees`
 --
 
@@ -913,23 +901,6 @@ ALTER TABLE `Absent`
   ADD KEY `HistID` (`HistID`);
 
 --
--- Indexes for table `AccedFees`
---
-ALTER TABLE `AccedFees`
-  ADD PRIMARY KEY (`AccID`),
-  ADD KEY `StudentID` (`StudentID`),
-  ADD KEY `GroupID` (`GroupID`);
-
---
--- Indexes for table `AccedPayments`
---
-ALTER TABLE `AccedPayments`
-  ADD PRIMARY KEY (`AccID`),
-  ADD KEY `StudentID` (`TeacherID`),
-  ADD KEY `GroupID` (`GroupID`),
-  ADD KEY `TeacherID` (`TeacherID`);
-
---
 -- Indexes for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -996,14 +967,6 @@ ALTER TABLE `Discount`
 --
 ALTER TABLE `DiscountCats`
   ADD PRIMARY KEY (`SpecialID`);
-
---
--- Indexes for table `Dropout`
---
-ALTER TABLE `Dropout`
-  ADD PRIMARY KEY (`DropID`),
-  ADD KEY `GroupID` (`GroupID`),
-  ADD KEY `StudentID` (`StudID`);
 
 --
 -- Indexes for table `Echelon`
@@ -1270,6 +1233,23 @@ ALTER TABLE `Schwierigkeit`
   ADD PRIMARY KEY (`SchwerID`);
 
 --
+-- Indexes for table `ShouldBePayed`
+--
+ALTER TABLE `ShouldBePayed`
+  ADD PRIMARY KEY (`AccID`),
+  ADD KEY `StudentID` (`StudentID`),
+  ADD KEY `GroupID` (`GroupID`);
+
+--
+-- Indexes for table `ShouldPay`
+--
+ALTER TABLE `ShouldPay`
+  ADD PRIMARY KEY (`AccID`),
+  ADD KEY `StudentID` (`TeacherID`),
+  ADD KEY `GroupID` (`GroupID`),
+  ADD KEY `TeacherID` (`TeacherID`);
+
+--
 -- Indexes for table `SpecialFees`
 --
 ALTER TABLE `SpecialFees`
@@ -1398,16 +1378,6 @@ ALTER TABLE `WagesUni`
 ALTER TABLE `Absent`
   MODIFY `AbsID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `AccedFees`
---
-ALTER TABLE `AccedFees`
-  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `AccedPayments`
---
-ALTER TABLE `AccedPayments`
-  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -1452,11 +1422,6 @@ ALTER TABLE `Disciplines`
 --
 ALTER TABLE `DiscountCats`
   MODIFY `SpecialID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Dropout`
---
-ALTER TABLE `Dropout`
-  MODIFY `DropID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Echelon`
 --
@@ -1638,6 +1603,16 @@ ALTER TABLE `Schuler`
 ALTER TABLE `Schwierigkeit`
   MODIFY `SchwerID` tinyint(4) NOT NULL AUTO_INCREMENT;
 --
+-- AUTO_INCREMENT for table `ShouldBePayed`
+--
+ALTER TABLE `ShouldBePayed`
+  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- AUTO_INCREMENT for table `ShouldPay`
+--
+ALTER TABLE `ShouldPay`
+  MODIFY `AccID` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- AUTO_INCREMENT for table `SpecialFees`
 --
 ALTER TABLE `SpecialFees`
@@ -1724,20 +1699,6 @@ ALTER TABLE `Absent`
   ADD CONSTRAINT `fkstudid` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`);
 
 --
--- Constraints for table `AccedFees`
---
-ALTER TABLE `AccedFees`
-  ADD CONSTRAINT `AccedFees_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
-  ADD CONSTRAINT `AccedFees_ibfk_2` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
-
---
--- Constraints for table `AccedPayments`
---
-ALTER TABLE `AccedPayments`
-  ADD CONSTRAINT `AccedPayments_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-  ADD CONSTRAINT `AccedPayments_ibfk_2` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
-
---
 -- Constraints for table `BaseWages`
 --
 ALTER TABLE `BaseWages`
@@ -1769,13 +1730,6 @@ ALTER TABLE `Diplomas`
 --
 ALTER TABLE `Discount`
   ADD CONSTRAINT `Discount_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `DiscountCats` (`SpecialID`);
-
---
--- Constraints for table `Dropout`
---
-ALTER TABLE `Dropout`
-  ADD CONSTRAINT `fkkropid` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-  ADD CONSTRAINT `flsid` FOREIGN KEY (`StudID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `Ensembles`
@@ -1939,6 +1893,20 @@ ALTER TABLE `Schedule`
 ALTER TABLE `Schuler`
   ADD CONSTRAINT `Schuler_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
   ADD CONSTRAINT `Schuler_ibfk_2` FOREIGN KEY (`DiscipleID`) REFERENCES `Disciplines` (`DiscID`);
+
+--
+-- Constraints for table `ShouldBePayed`
+--
+ALTER TABLE `ShouldBePayed`
+  ADD CONSTRAINT `ShouldBePayed_ibfk_1` FOREIGN KEY (`StudentID`) REFERENCES `Members` (`MembID`),
+  ADD CONSTRAINT `ShouldBePayed_ibfk_2` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
+
+--
+-- Constraints for table `ShouldPay`
+--
+ALTER TABLE `ShouldPay`
+  ADD CONSTRAINT `ShouldPay_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
+  ADD CONSTRAINT `ShouldPay_ibfk_2` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
 
 --
 -- Constraints for table `SpecialFees`
