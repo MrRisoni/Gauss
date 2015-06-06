@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "zeitwandel.h"
+#include "geldrechen.h"
 #include <tuple>
 
 MainWindow::MainWindow(QWidget *parent) :
@@ -65,6 +66,13 @@ MainWindow::MainWindow(QWidget *parent) :
 
     ui->tableSchule->resizeColumnsToContents();
     ui->tableSchule->resizeRowsToContents();
+
+
+
+    //salary update :)
+
+    GeldRechen GD = GeldRechen();
+    GD.calcSProfSalaries();
 }
 
 MainWindow::~MainWindow()

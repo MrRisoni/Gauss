@@ -3,7 +3,7 @@
 salary fees each time program runs calc for active groups
 fees and salaries update acced fees and payments
 
-
+sql show groups ausgeben schulden .....
 
 
 fix group creation insert base wages and fees
