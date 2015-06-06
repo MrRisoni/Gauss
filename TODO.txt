@@ -1,9 +1,14 @@
 
 
-finish Schule  tag
+salary fees each time program runs calc for active groups
+fees and salaries update acced fees and payments
+
+
+
+
+fix group creation insert base wages and fees
 
 ------------------------------------------------
-
 
 
 Sprache groups.....
