@@ -6,6 +6,7 @@ sql show groups ausgeben schulden .....
 
 
 fix group creation insert base wages and fees ensembles
+to shouldbe payed
 
 ------------------------------------------------
 

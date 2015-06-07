@@ -73,6 +73,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     GeldRechen GD = GeldRechen();
     GD.calcSProfSalaries();
+    GD.calcStudentFees();
 }
 
 MainWindow::~MainWindow()

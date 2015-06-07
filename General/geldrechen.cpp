@@ -15,21 +15,35 @@ GeldRechen::GeldRechen()
 
 
 QDate GeldRechen::minDate(QDate a,QDate b) {
+
+
+    qDebug () << "date compar " << a.year() << " " << a.month() << " " << a.day();
+    if ((a.month()==0) && (a.year()==0) && (a.day()==0)) {
+        return b;
+    }
+    else {
+
+
+
     if (a.toJulianDay()> b.toJulianDay()) {
         return b;
     }
     else {
         return a;
+    }
     }
 }
 
 QDate GeldRechen::maxDate(QDate a,QDate b) {
-    if (a.toJulianDay()> b.toJulianDay()) {
-        return a;
-    }
-    else {
-        return b;
-    }
+    //check for null date
+
+            if (a.toJulianDay()> b.toJulianDay()) {
+                return a;
+            }
+            else {
+                return b;
+            }
+
 
 }
 
@@ -42,6 +56,9 @@ void GeldRechen::calcStudentFees() {
 
       discounts ????
     */
+
+
+    qDebug () << "FEE FOR STUDENTS";
     QSqlQuery q,q2,q3,q4;
     q.exec("SELECT GroupID,Fee,StartDate FROM Groups Where Active=1");
     while (q.next()) {
@@ -50,13 +67,20 @@ void GeldRechen::calcStudentFees() {
         QDate start_date = q.value(2).toDate();
         //for every active group
 
+        qDebug() << " fee calc for group " << gid;
+
+
         //for every student in that group
-         q2.prepare("SELECT StudID,Added,Dropped FROM Ensembles WHERE GroupID=:gid");
+         q2.prepare("SELECT StudID,Added,Dropped,Reduced FROM Ensembles WHERE GroupID=:gid");
          q2.bindValue(":gid",gid);
-         while (q2.exec()) {
+         q2.exec();
+         while (q2.next()) {
              QString studid=q2.value(0).toString();
              QDate joined=q2.value(1).toDate();
-             QDate dropped = q2.value(1).toDate();
+             QDate dropped = q2.value(2).toDate();
+             float discount =q2.value(3).toFloat();
+
+             qDebug () << "studid " << studid << "joined " << maxDate(joined,start_date).toString() << " dropped " << minDate(dropped,QDate::currentDate()).toString();
              //get group history  from GREATEST(groupstart,added) up to LEAST(dropout,curdate)  MINUS  Truant==0 abscencies
 
              q3.prepare("SELECT SUM(Duration) FROM History  Where Dat>= :join_date AND Dat<=:leave_date AND GroupID=:gid  AND Valid=1  AND HistID NOT IN (SELECT HistID FROM Absent WHERE StudentID=:sid and Truant=0)") ;
@@ -65,13 +89,33 @@ void GeldRechen::calcStudentFees() {
              q3.bindValue(":gid",gid);
              q3.bindValue(":sid",studid);
              q3.exec();
+
              float muss_bezahlen;
              while (q3.next()) {
                   muss_bezahlen= fee*q3.value(0).toFloat();
+                  qDebug() << "student " << studid << "has a total of " << q3.value(0).toFloat() << "hours fee is " << fee << " discount " << discount;
+
              }
 
-            // q4
-                //     insert else update
+             //discount
+             muss_bezahlen -= muss_bezahlen * discount/100.0f;
+
+             qDebug() << "must pay " << muss_bezahlen;
+
+             QString qry=" UPDATE  ShouldBePayed SET  Amount=:euro , Updated=CURDATE()  WHERE GroupID=:gid AND  StudentID=:stid ";
+             q4.prepare(qry);
+             q4.bindValue(":stid",studid);
+             q4.bindValue(":gid",gid);
+             q4.bindValue(":euro",muss_bezahlen);
+
+             if (!q4.exec()) {
+
+                 qDebug() << "error.." << q4.lastError().driverText() << " " << q4.lastError().databaseText();
+
+             }
+
+
+
          }
 
 
@@ -115,14 +159,13 @@ void GeldRechen::calcSProfSalaries() {
         QString s;
 
 
-        s+="INSERT INTO ShouldPay  (TeacherID,Amount, GroupID, Updated) VALUES (:tid,:euro,:gid,CURDATE()) ";
+        s+="INSERT INTO ShouldPay  ( GroupID, Amount,Updated) VALUES (:gid,:euro,CURDATE()) ";
         s+=" ON DUPLICATE KEY UPDATE  Amount=:euro , Updated=CURDATE()";
 
 
         qDebug() << s;
         q3.prepare(s);
         q3.bindValue(":euro",sal);
-        q3.bindValue(":tid",tid);
         q3.bindValue(":gid",gid);
 
         if (!q3.exec())  {

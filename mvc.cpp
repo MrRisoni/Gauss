@@ -197,6 +197,7 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 
         QStringList record;
 
+        QString teacher_name=q.value(3).toString();
 
         int GroupID=q.value(0).toInt();
         record.append(q.value(0).toString()); // group ud
@@ -280,9 +281,51 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
             Einkommen=q2.value(0).toFloat();
         }
         record.append(QString::number(Einkommen)); //einnemhen
-        record.append("0"); // how much money do we owe in total to the teacher
-        record.append("0"); // how much money do the students owe us
 
+        //get the how we should have payed
+
+        q2.prepare("SELECT Amount FROM ShouldPay Where GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        float shouldpay;
+        while (q2.next()) {
+            shouldpay=q2.value(0).toFloat();
+        }
+
+        //calc how much have we payed
+        float havepayed;
+        q2.prepare("SELECT SUM(P.Amount) FROM Payments P,Members M WHERE P.TeacherID=M.MembID AND P.GroupID=:gid AND M.Name=:name");
+        q2.bindValue(":name",teacher_name);
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+
+        while (q2.next()) {
+            havepayed=q2.value(0).toFloat();
+        }
+
+
+        record.append(QString::number(shouldpay-havepayed)); // how much money do we owe in total to the teacher
+
+        //calc how much students should pay
+        q2.prepare("SELECT SUM(Amount) FROM ShouldBePayed WHERE GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        float shouldreceive=0;
+        while (q2.next()) {
+            shouldreceive=q2.value(0).toFloat();
+        }
+
+        //have actually received
+
+        float havereceived=0;
+        q2.prepare("SELECT SUM(Amount)  FROM Funds Where GroupID=:gid");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        while (q2.next()) {
+            havereceived=q2.value(0).toFloat();
+        }
+
+        record.append(QString::number(shouldreceive-havereceived));
         record.append(q.value(4).toString().mid(0,5)); // gross salary
         record.append(q.value(5).toString().mid(0,5)); //fee
 
