@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 07, 2015 at 04:32 PM
+-- Generation Time: Jun 07, 2015 at 06:21 PM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -34,20 +34,6 @@ CREATE TABLE IF NOT EXISTS `Diplomas` (
   `Schwer` tinyint(4) NOT NULL COMMENT 'higherr is more difficult',
   `Active` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='diplomas and levels';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `ExamSchule`
---
-
-CREATE TABLE IF NOT EXISTS `ExamSchule` (
-  `ExamID` int(11) NOT NULL,
-  `CourseID` int(11) NOT NULL,
-  `ExamDat` date NOT NULL,
-  `StudentID` int(11) NOT NULL,
-  `Grade` float NOT NULL COMMENT 'totalaverage grade'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='actual exams  success rates';
 
 -- --------------------------------------------------------
 
@@ -104,20 +90,6 @@ CREATE TABLE IF NOT EXISTS `FeeSprache` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `Funds`
---
-
-CREATE TABLE IF NOT EXISTS `Funds` (
-  `FundID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
-  `GroupID` int(11) NOT NULL COMMENT 'we want to know for which group did we got the money',
-  `Dat` date NOT NULL,
-  `Amount` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='money we received from students';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `Instituts`
 --
 
@@ -136,60 +108,6 @@ CREATE TABLE IF NOT EXISTS `Languages` (
   `LangID` int(11) NOT NULL,
   `Name` varchar(12) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Meeting`
---
-
-CREATE TABLE IF NOT EXISTS `Meeting` (
-  `MeetID` int(11) NOT NULL,
-  `SchulerID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `Dat` date NOT NULL,
-  `Comments` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `PayKassen`
---
-
-CREATE TABLE IF NOT EXISTS `PayKassen` (
-  `SalID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `Dat` date NOT NULL,
-  `Wages` float NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='how much money we will pay each month for health insurance';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Payments`
---
-
-CREATE TABLE IF NOT EXISTS `Payments` (
-  `PayID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `Dat` date NOT NULL,
-  `Amount` float unsigned NOT NULL,
-  `Comments` varchar(100) DEFAULT NULL COMMENT 'what did we pay him for?',
-  `PayTypeID` tinyint(3) unsigned NOT NULL,
-  `GroupID` int(11) NOT NULL DEFAULT '0' COMMENT 'for which group lessons was he payed'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='payments to professors';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `PayType`
---
-
-CREATE TABLE IF NOT EXISTS `PayType` (
-  `PayTypeID` tinyint(3) unsigned NOT NULL,
-  `Comment` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='describes the type of payment';
 
 -- --------------------------------------------------------
 
@@ -220,21 +138,6 @@ CREATE TABLE IF NOT EXISTS `ReceiptType` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `RequestSchule`
---
-
-CREATE TABLE IF NOT EXISTS `RequestSchule` (
-  `RequestID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
-  `CourseID` int(6) NOT NULL,
-  `Settled` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 unsettled 1 settled 2 closed group',
-  `ReqDate` date NOT NULL,
-  `Comments` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `RequestSprache`
 --
 
@@ -245,20 +148,6 @@ CREATE TABLE IF NOT EXISTS `RequestSprache` (
   `Settled` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 unsettled 1 settled 2 closed group',
   `ReqDate` date NOT NULL,
   `Comments` varchar(300) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `RequestUni`
---
-
-CREATE TABLE IF NOT EXISTS `RequestUni` (
-  `RequestID` int(11) NOT NULL,
-  `StudentID` int(11) NOT NULL,
-  `CourseID` int(11) NOT NULL,
-  `Settled` tinyint(4) NOT NULL DEFAULT '0' COMMENT '0 unsettled 1 settled 2 closed group',
-  `ReqDate` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -303,20 +192,6 @@ CREATE TABLE IF NOT EXISTS `TeachSprache` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `TestSchule`
---
-
-CREATE TABLE IF NOT EXISTS `TestSchule` (
-  `TestSpID` int(11) NOT NULL,
-  `StudID` int(11) NOT NULL,
-  `Dat` date NOT NULL,
-  `CourseID` int(11) NOT NULL,
-  `Grade` float NOT NULL COMMENT 'from 0 to 100'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='in house tests aka student progress';
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `TestSprache`
 --
 
@@ -340,62 +215,6 @@ CREATE TABLE IF NOT EXISTS `Times` (
   `DayID` tinyint(4) NOT NULL,
   `HourID` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='schedule hours and days for diplomas';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `TrainingSprache`
---
-
-CREATE TABLE IF NOT EXISTS `TrainingSprache` (
-  `ExID` int(11) NOT NULL,
-  `TeachID` int(11) NOT NULL COMMENT 'if class is yes that is the correspondent teacherid',
-  `Age` float NOT NULL,
-  `Native` tinyint(4) NOT NULL COMMENT '0 not native 1 native speaker ',
-  `Sprachen` tinyint(4) NOT NULL,
-  `EduDegrees` float NOT NULL,
-  `EduQuality` float NOT NULL,
-  `Msc` tinyint(4) NOT NULL COMMENT 'number of msc diplomas',
-  `Seminars` tinyint(4) NOT NULL COMMENT 'number of seminars ',
-  `SprachDegrees` float NOT NULL COMMENT 'average degree of foreign language diplomas',
-  `TeachYears` float NOT NULL COMMENT 'teaching years',
-  `Ausland` float NOT NULL COMMENT 'year in a foreign country',
-  `Interview` float NOT NULL,
-  `Exams` float NOT NULL,
-  `Class` tinyint(4) NOT NULL COMMENT '1 hire -1 no hire'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='A training set for employing foreign language';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `TrainingUni`
---
-
-CREATE TABLE IF NOT EXISTS `TrainingUni` (
-  `ExampleID` int(11) NOT NULL,
-  `Age` float NOT NULL,
-  `Degrees` float NOT NULL,
-  `Msc` tinyint(4) NOT NULL COMMENT 'number of msc',
-  `PhD` tinyint(4) NOT NULL COMMENT '1 has a phd 0  no phd',
-  `Years` float NOT NULL COMMENT 'teaching years',
-  `Interview` float NOT NULL,
-  `Exams` float NOT NULL,
-  `Class` tinyint(4) NOT NULL COMMENT '1 hire -1 no hire'
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='A training set for employing university';
-
--- --------------------------------------------------------
-
---
--- Table structure for table `Unavailable`
---
-
-CREATE TABLE IF NOT EXISTS `Unavailable` (
-  `UnavailID` int(11) NOT NULL,
-  `TeacherID` int(11) NOT NULL,
-  `DayID` tinyint(4) NOT NULL,
-  `HourID` tinyint(4) NOT NULL,
-  `Duration` float unsigned NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf32 COMMENT='days which the prof is unavailable';
 
 -- --------------------------------------------------------
 
@@ -440,14 +259,6 @@ ALTER TABLE `Diplomas`
   ADD KEY `Schwer` (`Schwer`);
 
 --
--- Indexes for table `ExamSchule`
---
-ALTER TABLE `ExamSchule`
-  ADD PRIMARY KEY (`ExamID`),
-  ADD KEY `StudentID` (`StudentID`),
-  ADD KEY `CourseID` (`CourseID`);
-
---
 -- Indexes for table `ExamSprache`
 --
 ALTER TABLE `ExamSprache`
@@ -476,14 +287,6 @@ ALTER TABLE `FeeSprache`
   ADD KEY `SchedID` (`SchedID`);
 
 --
--- Indexes for table `Funds`
---
-ALTER TABLE `Funds`
-  ADD PRIMARY KEY (`FundID`),
-  ADD KEY `StudentID` (`StudentID`),
-  ADD KEY `GroupID` (`GroupID`);
-
---
 -- Indexes for table `Instituts`
 --
 ALTER TABLE `Instituts`
@@ -494,36 +297,6 @@ ALTER TABLE `Instituts`
 --
 ALTER TABLE `Languages`
   ADD PRIMARY KEY (`LangID`);
-
---
--- Indexes for table `Meeting`
---
-ALTER TABLE `Meeting`
-  ADD PRIMARY KEY (`MeetID`),
-  ADD KEY `SchulerID` (`SchulerID`),
-  ADD KEY `TeacherID` (`TeacherID`);
-
---
--- Indexes for table `PayKassen`
---
-ALTER TABLE `PayKassen`
-  ADD PRIMARY KEY (`SalID`),
-  ADD KEY `EchelID` (`TeacherID`),
-  ADD KEY `TeacherID` (`TeacherID`);
-
---
--- Indexes for table `Payments`
---
-ALTER TABLE `Payments`
-  ADD PRIMARY KEY (`PayID`),
-  ADD KEY `TeacherID` (`TeacherID`),
-  ADD KEY `PayTypeID` (`PayTypeID`);
-
---
--- Indexes for table `PayType`
---
-ALTER TABLE `PayType`
-  ADD PRIMARY KEY (`PayTypeID`);
 
 --
 -- Indexes for table `Receipts`
@@ -541,28 +314,12 @@ ALTER TABLE `ReceiptType`
   ADD PRIMARY KEY (`TypeID`);
 
 --
--- Indexes for table `RequestSchule`
---
-ALTER TABLE `RequestSchule`
-  ADD PRIMARY KEY (`RequestID`),
-  ADD KEY `StudentID` (`StudentID`),
-  ADD KEY `CourseID` (`CourseID`);
-
---
 -- Indexes for table `RequestSprache`
 --
 ALTER TABLE `RequestSprache`
   ADD PRIMARY KEY (`RequestID`),
   ADD KEY `StudentID` (`StudentID`),
   ADD KEY `ScheduleID` (`ScheduleID`);
-
---
--- Indexes for table `RequestUni`
---
-ALTER TABLE `RequestUni`
-  ADD PRIMARY KEY (`RequestID`),
-  ADD KEY `StudentID` (`StudentID`),
-  ADD KEY `CourseID` (`CourseID`);
 
 --
 -- Indexes for table `Roles`
@@ -586,14 +343,6 @@ ALTER TABLE `TeachSprache`
   ADD KEY `DiplomaID` (`DiplomaID`);
 
 --
--- Indexes for table `TestSchule`
---
-ALTER TABLE `TestSchule`
-  ADD PRIMARY KEY (`TestSpID`),
-  ADD KEY `StudID` (`StudID`),
-  ADD KEY `CourseID` (`CourseID`);
-
---
 -- Indexes for table `TestSprache`
 --
 ALTER TABLE `TestSprache`
@@ -609,27 +358,6 @@ ALTER TABLE `Times`
   ADD KEY `DayID` (`DayID`),
   ADD KEY `HourID` (`HourID`),
   ADD KEY `SchedID` (`SchedID`);
-
---
--- Indexes for table `TrainingSprache`
---
-ALTER TABLE `TrainingSprache`
-  ADD PRIMARY KEY (`ExID`);
-
---
--- Indexes for table `TrainingUni`
---
-ALTER TABLE `TrainingUni`
-  ADD PRIMARY KEY (`ExampleID`);
-
---
--- Indexes for table `Unavailable`
---
-ALTER TABLE `Unavailable`
-  ADD PRIMARY KEY (`UnavailID`),
-  ADD KEY `TeacherID` (`TeacherID`),
-  ADD KEY `DayID` (`DayID`),
-  ADD KEY `HourID` (`HourID`);
 
 --
 -- Indexes for table `Users`
@@ -656,11 +384,6 @@ ALTER TABLE `WagesSprache`
 ALTER TABLE `Diplomas`
   MODIFY `DiplID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `ExamSchule`
---
-ALTER TABLE `ExamSchule`
-  MODIFY `ExamID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `ExamSprache`
 --
 ALTER TABLE `ExamSprache`
@@ -681,11 +404,6 @@ ALTER TABLE `ExpensesCats`
 ALTER TABLE `FeeSprache`
   MODIFY `FspID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `Funds`
---
-ALTER TABLE `Funds`
-  MODIFY `FundID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `Instituts`
 --
 ALTER TABLE `Instituts`
@@ -695,26 +413,6 @@ ALTER TABLE `Instituts`
 --
 ALTER TABLE `Languages`
   MODIFY `LangID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Meeting`
---
-ALTER TABLE `Meeting`
-  MODIFY `MeetID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `PayKassen`
---
-ALTER TABLE `PayKassen`
-  MODIFY `SalID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Payments`
---
-ALTER TABLE `Payments`
-  MODIFY `PayID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `PayType`
---
-ALTER TABLE `PayType`
-  MODIFY `PayTypeID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Receipts`
 --
@@ -726,19 +424,9 @@ ALTER TABLE `Receipts`
 ALTER TABLE `ReceiptType`
   MODIFY `TypeID` tinyint(3) unsigned NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `RequestSchule`
---
-ALTER TABLE `RequestSchule`
-  MODIFY `RequestID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `RequestSprache`
 --
 ALTER TABLE `RequestSprache`
-  MODIFY `RequestID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `RequestUni`
---
-ALTER TABLE `RequestUni`
   MODIFY `RequestID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Roles`
@@ -756,11 +444,6 @@ ALTER TABLE `Schedule`
 ALTER TABLE `TeachSprache`
   MODIFY `SPID` int(11) NOT NULL AUTO_INCREMENT;
 --
--- AUTO_INCREMENT for table `TestSchule`
---
-ALTER TABLE `TestSchule`
-  MODIFY `TestSpID` int(11) NOT NULL AUTO_INCREMENT;
---
 -- AUTO_INCREMENT for table `TestSprache`
 --
 ALTER TABLE `TestSprache`
@@ -770,21 +453,6 @@ ALTER TABLE `TestSprache`
 --
 ALTER TABLE `Times`
   MODIFY `TimesID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TrainingSprache`
---
-ALTER TABLE `TrainingSprache`
-  MODIFY `ExID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `TrainingUni`
---
-ALTER TABLE `TrainingUni`
-  MODIFY `ExampleID` int(11) NOT NULL AUTO_INCREMENT;
---
--- AUTO_INCREMENT for table `Unavailable`
---
-ALTER TABLE `Unavailable`
-  MODIFY `UnavailID` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT for table `Users`
 --

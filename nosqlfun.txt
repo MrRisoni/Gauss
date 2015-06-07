@@ -75,6 +75,16 @@ Schuler {
   ]
   
   
+  
+  Funds [
+  {
+    GroupID
+    dat
+    Amount
+  
+  }
+  ]
+  
 
 }
 
@@ -221,6 +231,16 @@ Name
 
 }
 
+
+-------------------------------------------
+
+
+payType {
+id
+Name
+
+}
+
 -------------------------------------------
 
 
@@ -260,6 +280,77 @@ Teacher {
   ]
   
   
-
   
+  Unavail [
+  {
+   DayID
+   StartHour
+   Duration
+  }
+ ]
+ 
+ 
+ KassenAgreement [
+  {
+   dat
+   wage
+  }
+ 
+ ]
+ 
+ 
+ PaysGroups [
+  {
+   GroupID
+   Dat
+   Amount
+  }
+ 
+ ]
+
+ 
+ OtherPays [
+  {
+  PayType
+  Dat
+  Amout
+  }
+ 
+ 
+ ]
+  
+}
+
+-------------------------------------------
+
+TestsSchule {
+
+  StudentID
+  GroupID
+  date
+  Grade
+  MaxGrade 
+  
+}
+-------------------------------------------
+
+ExansSchule {
+
+  StudentID
+  CourseID
+  date
+  Grade
+  MaxGrade 
+  
+}
+
+-------------------------------------------
+Requests {
+  StudentID
+  CourseID
+  dat
+  settled
+  comments
+
+
 }
