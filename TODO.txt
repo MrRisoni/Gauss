@@ -1,7 +1,6 @@
 
 
-fees and salaries update acced fees and payments
-
+show students
 sql show groups ausgeben schulden .....
 
 

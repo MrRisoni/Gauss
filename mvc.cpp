@@ -69,7 +69,7 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
 
         //query to find the groups
 
-        q2.prepare("Select Count(E.GroupID) From Ensembles E,Groups G Where E.StudID=:sid AND G.GroupID=E.GroupID AND G.Active=1 AND G.GroupID NOT IN (Select GroupID From Dropout Where StudID=:sid)");
+        q2.prepare("Select Count(E.GroupID) From Ensembles E,Groups G Where E.StudID=:sid AND G.GroupID=E.GroupID AND G.Active=1 AND E.Added<=CURRENT_DATE AND CURRENT_DATE>=E.Dropped");
         q2.bindValue(":sid",studid);
         q2.exec();
         while (q2.next()) {
@@ -77,10 +77,21 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
 
         }
         record.append("0"); //# absencies
+
+        //abscencies
+        q2.prepare("SELECT COUNT(HistID) FROM Absent WHERE StudentID=:stid");
+        q2.bindValue(":stid",studid);
+        q2.exec();
+        while (q2.next()) {
+            record.append(q2.value(0).toString());
+        }
+
         record.append(q.value(15).toString()); //special cat
-        record.append("0"); //last lesson
+
+
+        record.append("0"); //last lesson and not absent
         record.append("0"); //last payed
-        record.append("0"); //schulden
+        record.append("0"); //schulden //overlap with geld rechen
 
 
 
