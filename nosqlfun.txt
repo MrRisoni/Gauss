@@ -1,0 +1,219 @@
+Member
+{
+  PK
+  Name  
+  Address 
+  Mobile  
+  Phone 
+  Father_Name
+  Mom_Name
+  Email
+  BirthDate
+  RegDate 
+  ADT 
+}
+
+
+-------------------------------------------
+
+
+Discounts {
+ _id 
+ Name
+ 
+ [{
+   Amount
+   Dat
+ }]
+
+}
+
+-------------------------------------------
+Buildings {
+ _id 
+ Address
+}
+
+-------------------------------------------
+Rooms {
+ _id
+ Name
+ Capacity
+ BuildID 
+
+}
+
+
+-------------------------------------------
+
+Disciplines {
+id
+Name
+}
+-------------------------------------------
+
+Schuler {
+  FK
+  Father_Mobile 
+  Mother_Mobile 
+  Discipline
+  Class
+  Discounts {
+    Cat FK
+    Von
+    Bis
+    
+  }
+  
+  Absent [
+   {
+     HistID
+     Truant bool
+     Comment
+   }
+  
+  ]
+}
+
+-------------------------------------------
+
+
+GroupType {
+  Name # uni , schule sprache skype
+}
+
+
+-------------------------------------------
+
+Groups {
+  PK
+  Course FK
+  Type: FK
+  StartDate
+  EndDate
+  Active
+  Teacher FK
+  Schuler [{
+    id FK Member
+    Joined date
+    Dropped date , group_end date
+  }]
+  
+  Perma [{
+   {
+     RoomID 
+     Day 
+     StartHour
+     Duration 
+  
+  }]
+  
+}
+
+
+
+-------------------------------------------
+
+
+History {
+    histID
+    GroupID
+    RoomID
+    Dat
+    StartHour
+    Duration
+    Valid bool
+    Absent [ memberid]
+    Base Wage # for that date
+    Course Wage # for that date
+    Fee  # for that date
+    
+ }
+
+-------------------------------------------
+
+
+
+Echelons {
+  id
+  Xp 
+  Salary {
+    amount
+    dat 
+  }
+}
+
+-------------------------------------------
+
+Departments {
+DepID
+Name
+
+}
+
+-------------------------------------------
+
+
+Course {
+  id
+  Name
+  Schwerid
+  Active
+  DepID
+  Wages [
+    {
+     EchelID
+     Amount
+     dat
+    }
+  ]
+  
+  
+   Fee [
+    {
+     
+     Amount
+     dat
+    }
+  ]
+
+}
+
+-------------------------------------------
+
+Kassen {
+id
+Name
+
+
+}
+
+-------------------------------------------
+
+
+Teacher {
+  _id
+  
+  CanTeach [ {
+    # a teacher may for some reason not be able to teach a course
+    # e.g. when for example new material has been added and thus he needs to study
+    # for a semester
+    CourseID
+    Valid bool
+  }
+  ]
+  
+  
+  Echel [ {
+    _id
+    dat
+    
+  
+  }
+  
+  ]
+  
+  Contract: EndDate
+   
+  
+}
