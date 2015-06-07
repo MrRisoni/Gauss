@@ -76,7 +76,6 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
             record.append(q2.value(0).toString()); //# groups
 
         }
-        record.append("0"); //# absencies
 
         //abscencies
         q2.prepare("SELECT COUNT(HistID) FROM Absent WHERE StudentID=:stid");

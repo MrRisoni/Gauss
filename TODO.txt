@@ -1,7 +1,10 @@
 
 
-show students
-sql show groups ausgeben schulden .....
+you could have varied salaries and courses
+add to history table course fee , base fee 
+update these values when echelon and courses and fees are updated :) 
+
+NoSQL ??? 
 
 
 fix group creation insert base wages and fees ensembles

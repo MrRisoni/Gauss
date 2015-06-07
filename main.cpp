@@ -7,7 +7,6 @@
 #include <QTextStream>
 
 
-
 QSqlDatabase vasi;
 
 QFile logFile;
@@ -16,6 +15,10 @@ QFile logFile;
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
+
+
+
+
 
 
     vasi= QSqlDatabase::addDatabase("QMYSQL");
@@ -35,9 +38,21 @@ int main(int argc, char *argv[])
     }
 
 
+
+
+
     MainWindow w;
+
+
+
+
+
+
     w.setDb(vasi);
-    w.show();
+
+
+
+ w.show();
 
     return a.exec();
 
@@ -46,3 +61,4 @@ int main(int argc, char *argv[])
     vasi.close();
     QSqlDatabase::removeDatabase("Gauss");
 }
+

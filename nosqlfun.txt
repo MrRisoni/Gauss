@@ -73,6 +73,9 @@ Schuler {
    }
   
   ]
+  
+  
+
 }
 
 -------------------------------------------
@@ -93,6 +96,7 @@ Groups {
   EndDate
   Active
   Teacher FK
+  
   Schuler [{
     id FK Member
     Joined date
@@ -108,6 +112,22 @@ Groups {
   
   }]
   
+  
+  ShouldPay {
+    Amount
+  }
+  
+  UpdatedMoney # when were the should pay updated
+    
+  ShouldPay {[
+    StudentID
+    Amount
+    ]
+  }
+  
+  
+  
+
 }
 
 
@@ -151,8 +171,21 @@ Name
 
 }
 
--------------------------------------------
 
+-------------------------------------------
+  Schwierigkeit {
+    _id
+    red
+    green
+    blue
+    name
+  
+  }
+
+
+
+
+-------------------------------------------
 
 Course {
   id
@@ -193,6 +226,9 @@ Name
 
 Teacher {
   _id
+  AMKA
+  AFM
+  KasseID
   
   CanTeach [ {
     # a teacher may for some reason not be able to teach a course
@@ -214,6 +250,16 @@ Teacher {
   ]
   
   Contract: EndDate
-   
+  DaysLeft # for Erlaubnis  
+  Erlaubnis [
+   {
+     Von
+     Bis
+  
+   }
+  ]
+  
+  
+
   
 }
