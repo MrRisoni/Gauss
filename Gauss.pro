@@ -266,4 +266,20 @@ RESOURCES     = piges.qrc
 
 
 
+LIBS += -lboost_thread \
+    -lboost_filesystem \
+    -lboost_regex \
+    -lboost_program_options \
+    -pthread \
+    -lboost_system
+
+
+
+
+unix:!macx: LIBS += -L$$PWD/../mongo-client-install/lib/ -lmongoclient
+
+INCLUDEPATH += $$PWD/../mongo-client-install
+DEPENDPATH += $$PWD/../mongo-client-install
+
+
 
