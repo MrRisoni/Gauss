@@ -12,17 +12,16 @@ add payments and give fees
 
 you could have varied salaries and courses
 add to history table course fee , base fee 
-update these values when echelon and courses and fees are updated :) 
+update these values when echelon and courses  fees are updated :) 
 
 
 discount to should be payed
 
 ------------------------------------------------
 
+finish schule module !!!!! module ??? settings 
+authentication server :) 
 
-Sprache groups.....
-
-------------------------------------------------
 
 
 

@@ -1286,6 +1286,9 @@ void ORM::setDb(const QSqlDatabase &value)
 void ORM::save(FeeSchule fsh) {
     QSqlQuery q;
     try {
+
+        vasi.transaction();
+
         int CourseID=0;
         q.prepare("SELECT CourseID FROM Courses Where CourseName=:cr");
         q.bindValue(":cr",fsh.getC().getName());
@@ -1303,10 +1306,25 @@ void ORM::save(FeeSchule fsh) {
         q.bindValue(":courseid",CourseID);
         q.bindValue(":fee",fsh.getFee());
 
-        q.exec();
+        if (!q.exec())    {
+            throw 10;
+
+        }
+        //for every valid history record from today and on update fee
+        q.prepare("UPDATE History SET fee =:new_fee Where GroupID IN (SELECT GroupID FROM Groups Where CourseID=:cid) AND Dat>=CURRENT_DATE() AND Valid=1");
+        q.bindValue(":new_fee",fsh.getFee());
+        q.bindValue(":cid",CourseID);
+
+        if (!q.exec())    {
+            throw 10;
+
+        }
+
+        vasi.commit();
         ShowSuccess();
     }
     catch (int ex) {
+        vasi.rollback();
         ShowError(q);
     }
     q.finish();

@@ -17,6 +17,9 @@ ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
     ui->tableAllGroups->resizeColumnsToContents();
 
 
+
+
+
     ORM o = ORM();
 
     for (Hours h : o.getHours()) {
@@ -82,6 +85,10 @@ void ShowGroupsDialog::on_tableAllGroups_doubleClicked(const QModelIndex &index)
 
     }
 
+
+
+    ui->tableGroupSchulden->setModel(MVC::getGroupPays(group_id));
+    ui->tableGroupSchulden->resizeColumnsToContents();
 }
 
 void ShowGroupsDialog::on_pushAddTempo_clicked()

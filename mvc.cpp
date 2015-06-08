@@ -175,6 +175,32 @@ QStandardItemModel* MVC::getGeneral_ShowPastHistory(QString GroupID) {
 
 }
 
+QStandardItemModel* MVC::getGroupPays(QString GroupID){
+    QSqlQuery q,q2,q3;
+    QStringList headers;
+    headers.append("StudentID");
+    headers.append("Name");
+    headers.append("Mobile");
+    headers.append("Joined");
+    headers.append("Dropped");
+    headers.append("Has Payed");
+    headers.append("Debt");
+    headers.append("Last Payed");
+
+    QList<QStringList> data;
+    q.exec("SELECT MembID,Name,Mobile")
+
+
+
+    QList<RGBColor> farbe;
+
+    q.finish();
+    q2.finish();
+    q3.finish();
+
+    return  MVC::makeModel(headers, data,farbe);
+
+}
 
 QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
 

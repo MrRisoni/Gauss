@@ -48,7 +48,7 @@ QStandardItemModel* getGeneral_ShowStudents_Model();
 
 QList<QListWidgetItem *> getGeneral_ShowFutureHistoryDates(QString GroupID);
 
-
+QStandardItemModel* getGroupPays(QString GroupID);
 
 QStandardItemModel* getGeneral_ShowPastHistory(QString GroupID);
 
