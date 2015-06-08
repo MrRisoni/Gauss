@@ -37,7 +37,6 @@
 #include <QComboBox>
 
 
-
 struct Zukunuft{
     std::vector<long> FutureJulianDays;
     std::vector<int> FutureRoomIDs;
@@ -47,11 +46,18 @@ struct Zukunuft{
 
 
 
+
 class ORM
 {
 public:
     ORM();
     ~ORM();
+
+
+
+
+
+
 
     void save(Schwierigkeit schw);
     void save(Departments D);
@@ -151,7 +157,6 @@ public:
 
     Zukunuft createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate);
 
-private:
     void ShowError(QSqlQuery q);
     void ShowSuccess();
     QSqlDatabase db;

@@ -1,6 +1,6 @@
 #include "managecoursesdialog.h"
 #include "ui_managecoursesdialog.h"
-
+#include "../mvc.h"
 
 #include <QStandardItemModel>
 
@@ -80,18 +80,7 @@ void ManageCoursesDialog::on_pushSaveCourses_clicked()
 
 
 void ManageCoursesDialog::populateTable() {
-    /* Show
-      CourseID
-      Course Name
-      Dep Name
-      Schwer
-      #Teachers
-      #Students
-      #Groups
-      #Open Requests
-      PaySchemes?
-      Fee Update
-      */
+
 
     QStandardItemModel *mod=new QStandardItemModel();
     QStringList headerLabs;

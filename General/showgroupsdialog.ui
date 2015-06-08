@@ -323,9 +323,9 @@
       <widget class="QTableView" name="tableGroupSchulden">
        <property name="geometry">
         <rect>
-         <x>80</x>
+         <x>20</x>
          <y>30</y>
-         <width>681</width>
+         <width>601</width>
          <height>491</height>
         </rect>
        </property>
@@ -340,6 +340,16 @@
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
+       </property>
+      </widget>
+      <widget class="QCustomPlot" name="myPlot" native="true">
+       <property name="geometry">
+        <rect>
+         <x>630</x>
+         <y>30</y>
+         <width>591</width>
+         <height>491</height>
+        </rect>
        </property>
       </widget>
      </widget>
@@ -405,6 +415,14 @@
    </property>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QCustomPlot</class>
+   <extends>QWidget</extends>
+   <header>qcustomplot.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

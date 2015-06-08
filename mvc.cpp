@@ -176,7 +176,7 @@ QStandardItemModel* MVC::getGeneral_ShowPastHistory(QString GroupID) {
 }
 
 QStandardItemModel* MVC::getGroupPays(QString GroupID){
-    QSqlQuery q,q2,q3;
+    QSqlQuery q,q2;
     QStringList headers;
     headers.append("StudentID");
     headers.append("Name");
@@ -184,19 +184,98 @@ QStandardItemModel* MVC::getGroupPays(QString GroupID){
     headers.append("Joined");
     headers.append("Dropped");
     headers.append("Has Payed");
-    headers.append("Debt");
     headers.append("Last Payed");
+    headers.append("Debt");
+
+    q.prepare("SELECT M.MembID,M.Name,M.Mobile,E.Added,E.Dropped From Members M,Ensembles E WHERE E.GroupID=:gid AND E.StudID=M.MembID  ORDER BY Name ASC");
+    q.bindValue(":gid",GroupID);
+    q.exec();
+
 
     QList<QStringList> data;
-    q.exec("SELECT MembID,Name,Mobile")
-
-
-
     QList<RGBColor> farbe;
+
+
+    int row=0;
+    while (q.next()) {
+        QStringList record;
+        QString studid=q.value(0).toString();
+        record.append(q.value(0).toString()); //id
+
+        record.append(q.value(1).toString()); //name
+        record.append(q.value(2).toString()); //mobile
+        record.append(q.value(3).toString()); //joined
+        record.append(q.value(4).toString());//dropped
+
+        //has payed
+        q2.prepare("SELECT SUM(Amount)+0 FROM Funds Where GroupID=:gid AND StudentID=:sid");
+        q2.bindValue(":sid",studid);
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        float haspayed=0;
+        while (q2.next()) {
+            haspayed=q2.value(0).toFloat();
+            record.append(q2.value(0).toString());
+        }
+        //last time payed
+        q2.prepare("SELECT Dat FROM Funds Where GroupID=:gid AND StudentID=:sid ORDER BY Dat DESC LIMIT 1");
+        q2.bindValue(":sid",studid);
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+
+          QString last_update="";
+        while (q2.next()) {
+
+          last_update = q2.value(0).toString();
+
+
+
+        }
+
+        if (last_update.length()>0) {
+            record.append(last_update);
+        }
+        else {
+            record.append("NEVER");
+        }
+
+
+        qDebug() << studid << " has payed " << haspayed;
+
+
+
+        //should payed
+        float shouldpay=0;
+        q2.prepare("SELECT Amount FROM ShouldPay Where GroupID=:gid"); //discount ????
+        q2.bindValue(":sid",studid);
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        while (q2.next()) {
+            shouldpay=q2.value(0).toFloat();
+        }
+
+        qDebug() << studid << " should have payed " << shouldpay;
+        //dept
+        record.append(QString::number(shouldpay-haspayed));
+        //show that with red
+        RGBColor f;
+        f.Blue=0;
+        f.Green=0;
+        f.Red=255;
+        f.x=row;
+        f.y=headers.size()-1;
+
+        farbe.append(f);
+
+        row++;
+
+        data.append(record);
+    }
+
+
 
     q.finish();
     q2.finish();
-    q3.finish();
 
     return  MVC::makeModel(headers, data,farbe);
 
@@ -581,9 +660,166 @@ QStandardItemModel* MVC::getGeneralManageCourses() {
     headers.append("FeeUpdate");
 
     QList<QStringList> data ;
-    QList<RGBColor> coldata;
+    QList<RGBColor> farbe;
 
-    return makeModel(headers,data,coldata);
+
+
+
+    QSqlQuery q,q2;
+
+
+
+
+   //gets CourseID,CourseName,DepName Select C.CourseID,C.CourseName, D.DepName,S.Red,S.Green,S.Blue From Courses C,Departments D ,Schwierigkeit S Where D.DepID=C.DepID AND S.SchwerID=C.Schwer ORDER BY C.CourseName
+
+
+
+  //gets Count : Select CourseID,Count(TeacherID) FROM TeachOther GROUP BY CourseID
+
+   //takes into account  lessons that are not taught by anyone
+   //IT is not taken into account if someone leavers the school
+   //
+
+
+
+ //gets open requests
+  //zero requests!!!
+
+
+
+        //repeat for uni requests
+        QString s="SELECT ALPHA.CourseID,ALPHA.CourseName,ALPHA.DepName,BRAVO.CNT,ALPHA.Red,ALPHA.Green,ALPHA.Blue FROM ";
+        s+= " (Select C.CourseID,C.CourseName, D.DepName ,S.Red,S.Green,S.Blue From Courses C,Departments D,Schwierigkeit S Where D.DepID=C.DepID AND ";
+        s+=" S.SchwerID=C.Schwer ORDER BY C.CourseName ) as ALPHA INNER JOIN ( Select CourseID,Count(TeacherID) as CNT FROM TeachOther " ;
+        s+=" GROUP BY CourseID UNION Select CourseID,0 AS CNT From Courses WHERE CourseID NOT IN (Select CourseID From TeachOther) ) AS BRAVO ";
+        s+="ON ALPHA.CourseID=BRAVO.CourseID  ORDER BY ALPHA.CourseName ASC";
+
+        qDebug() << s;
+
+        q.exec(s);
+        int row=0;
+        while (q.next()) {
+
+            QStringList record;
+
+            qDebug() << "-----------------------";
+
+            record.append(q.value(0).toString());
+            record.append(q.value(1).toString());
+            record.append(q.value(2).toString());
+
+
+            //query the db to get the # groups
+            //JOIN WITH THE ABOVE QUERY
+            s="SELECT COUNT(GroupID) FROM Groups WHERE CourseID='"+ q.value(0).toString()+"'";
+
+            qDebug() << s;
+            q2.exec(s);
+            while (q2.next()) {
+                record.append(q2.value(0).toString());
+            }
+
+            //query the db to get the open requests
+            //JOIN WITH THE ABOVE QUERY
+            s="SELECT COUNT(RequestID) FROM RequestSchule WHERE Settled=0 AND CourseID='"+ q.value(0).toString()+"'";
+            qDebug() << s;
+            q2.exec(s);
+
+            while (q2.next()) {
+                record.append(q2.value(0).toString());
+            }
+
+            //query to see if there are as many payschemes as active echelons...
+
+            //count the echel ids that do not exist in the wages
+            QString s="Select Count(EchelID) From Echelon Where Active=1 AND EchelID NOT IN (SELECT DISTINCT(EchelID) FROM `WagesSchule` WHERE CourseID='"+ q.value(0).toString()+"')";
+            qDebug() << s;
+
+            q2.exec(s);
+            while (q2.next()) {
+                qDebug() << "echel wage count " << q2.value(0).toInt();
+
+
+                if (q2.value(0).toInt()>0) {
+
+                    RGBColor f;
+                    f.Blue=0;
+                    f.Green=0;
+                    f.Red=255;
+                    f.x=row;
+                    f.y=6;
+
+                    farbe.append(f);
+                    record.append("NOT SET");
+                }
+                else {
+                    record.append("OK");
+                }
+
+
+            }
+
+
+            //find the latest update of the fee
+            s= "SELECT MAX(Dat) FROM `FeeSchule` WHERE CourseID='"+ q.value(0).toString()+"'";
+
+            qDebug() << s;
+            q2.exec(s);
+            QString FeeUpdate;
+
+            while (q2.next()) {
+                 FeeUpdate=q2.value(0).toString();
+
+
+            }
+
+
+            //if empty set to NEVER
+            if (FeeUpdate.length()==0) {
+                RGBColor f;
+                f.Blue=0;
+                f.Green=0;
+                f.Red=255;
+                f.x=row;
+                f.y=7;
+
+                farbe.append(f);
+                record.append("NEVER");
+            }
+            else {
+                record.append(FeeUpdate);
+            }
+
+
+
+            record.append("0");
+            record.append(q.value(3).toString());
+
+            RGBColor f;
+            f.Blue=q.value(6).toInt();
+            f.Green=q.value(5).toInt();
+            f.Red=q.value(4).toInt();
+            f.x=row;
+            f.y=0;
+
+            farbe.append(f);
+
+            data.append(record);
+
+
+        }
+
+
+
+
+
+
+        q.finish();
+
+        q2.finish();
+
+
+    return makeModel(headers,data,farbe);
 
 }
 

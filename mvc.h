@@ -13,7 +13,7 @@
 #include <QSqlRecord>
 #include <QListWidgetItem>
 
-namespace MVC { //nested namespaces ???
+namespace MVC {
 
 
 
