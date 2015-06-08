@@ -1015,9 +1015,10 @@ void ORM::saveTeacher(Teacher T) {
 
         qDebug() << "TeacherID  " <<T.getTeacherID() << " echelon " << T.getEch().getEchelID();
 
-        q.prepare("INSERT INTO `TeachEchelon` (`TeacherID`, `EchelonID`) VALUES (:tid,:echid)");
+        q.prepare("INSERT INTO `TeachEchelon` (`TeacherID`, `EchelonID`,`Dat`) VALUES (:tid,:echid,:dat)");
         q.bindValue(":tid",T.getTeacherID());
         q.bindValue(":echid",T.getEch().getEchelID());
+        q.bindValue(":dat",QDate::currentDate());
 
 
         if (!q.exec())  {
@@ -1132,7 +1133,7 @@ QList<WagesSchule> ORM::getWagesSchule() {
     QList<WagesSchule> WgSchule;
 
     QSqlQuery q;
-    q.exec("Select E.Exp,W.Dat,C.CourseName,W.Wage From Echelon E,WagesSchule W,Courses C WHERE E.EchelID=W.EchelID AND C.CourseID=W.CourseID");
+    q.exec("Select E.Exp,W.Dat,C.CourseName,W.Wage From Echelon E,WagesSchule W,Courses C WHERE E.EchelID=W.EchelID AND C.CourseID=W.CourseID ORDER BY C.CourseName ASC");
 
     while (q.next()) {
         WagesSchule W=WagesSchule();
@@ -1729,6 +1730,23 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         }
 
         for (QString SID : g.getMeliID()) {
+            //insert into should be payed
+            q.prepare("INSERT INTO `ShouldBePayed`  (`StudentID`, `Amount`, `GroupID`, `Updated`) VALUES (:sid,'0',:gid,:dat)");
+            q.bindValue(":sid",SID);
+            q.bindValue(":gid",GroupID);
+            q.bindValue(":dat",QDate::currentDate());
+
+            if (!q.exec()) {
+                throw 10;
+            }
+
+
+
+
+
+
+
+
             q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`,`Added`) VALUES (:gid,:sid,:dat)");
             q.bindValue(":gid",GroupID);
             q.bindValue(":sid",SID);
@@ -1838,11 +1856,74 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         qDebug() << "generated rooms " << FutureDatesRoomsHours.FutureRoomIDs.size() ;
 
 
+        //fetch the MOST RECENT base fee of the professor
+        float most_recent_bw=0;
+
+        s= "SELECT Wages FROM BaseWages WHERE EchelID IN (select EchelonID FROM TeachEchelon ";
+        s+= " Where TeacherID=:tid AND Dat IN (SELECT MAX(Dat) FROM TeachEchelon ";
+        s+= " WHERE TeacherID=:tid) ) ORDER BY Dat Desc Limit 1 ";
+
+        qDebug() << s;
+        q.prepare(s);
+        q.bindValue(":tid",g.getTeacherID());
+
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+        while (q.next()) {
+            most_recent_bw=q.value(0).toFloat();
+        }
+
+
+        qDebug() << " most recent bw " << most_recent_bw;
+        //get the most recent fee and wage for that course
+
+        float most_recent_fee;
+        float most_recent_cw;
+
+        q.prepare("SELECT Fee FROM FeeSchule Where CourseID=:cid order by Dat Desc LIMIT 1");
+        q.bindValue(":cid",CID);
+        if (!q.exec()) {
+            throw 10;
+        }
+
+        while (q.next()) {
+            most_recent_fee=q.value(0).toFloat();
+        }
+
+        qDebug() << " most recent fee " << most_recent_fee;
+
+
+
+
+        s=" SELECT Wage FROM WagesSchule WHERE EchelID IN (select EchelonID FROM TeachEchelon ";
+        s+= " Where TeacherID=:tid AND Dat IN (SELECT MAX(Dat) FROM TeachEchelon ";
+        s+= " WHERE TeacherID=:tid) ) ORDER BY Dat Desc Limit 1";
+
+        qDebug() << s;
+        q.prepare(s);
+        q.bindValue(":tid",g.getTeacherID());
+
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+        while (q.next()) {
+            most_recent_cw=q.value(0).toFloat();
+        }
+
+
+        qDebug() << " most recent cw " << most_recent_cw;
+
+
 
         int StundeID=1;
         for (int w=0;w<FutureDatesRoomsHours.FutureJulianDays.size();w++ ) {
             qDebug() << "---------------------------";
-            s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`) VALUES (:grid, :dat , :shourid , :dur , :rid)";
+            s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`,`bw`,`cw`,`fee`) VALUES (:grid, :dat , :shourid , :dur , :rid,:bw,:cw,:fee)";
             qDebug() << s;
 
             q.prepare(s);
@@ -1851,6 +1932,10 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             q.bindValue(":shourid",FutureDatesRoomsHours.FutureHourIDs.at(w));
             q.bindValue(":dur",FutureDatesRoomsHours.Durations.at(w));
             q.bindValue(":rid",FutureDatesRoomsHours.FutureRoomIDs.at(w));
+            q.bindValue(":bw",most_recent_bw);
+            q.bindValue(":cw",most_recent_cw);
+            q.bindValue(":fee",most_recent_fee);
+
             //copy to history until the end
             q.exec();
             qDebug() << "groupid " << GroupID ;

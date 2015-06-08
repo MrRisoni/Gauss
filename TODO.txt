@@ -3,8 +3,6 @@
 
 
 
-fix group creation insert base wages and fees ensembles
-to shouldbe payed
 
 
 add payments and give fees
@@ -17,9 +15,7 @@ add to history table course fee , base fee
 update these values when echelon and courses and fees are updated :) 
 
 
-
-
-
+discount to should be payed
 
 ------------------------------------------------
 
