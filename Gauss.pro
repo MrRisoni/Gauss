@@ -106,7 +106,6 @@ SOURCES += main.cpp\
     Entities/schulediscipline.cpp \
     Schule/managedisciplinesdialog.cpp \
     General/zeitwandel.cpp \
-    General/addtemporarylessondialog.cpp \
     Entities/permatimes.cpp \
     General/roomitemdelegate.cpp \
     mvc.cpp \
@@ -209,7 +208,6 @@ HEADERS  += Entities/absent.h  \
     Entities/schulediscipline.h \
     Schule/managedisciplinesdialog.h \
     General/zeitwandel.h \
-    General/addtemporarylessondialog.h \
     Entities/permatimes.h \
     General/roomitemdelegate.h \
     mvc.h \
@@ -252,8 +250,7 @@ FORMS    += Artif_Intel/plotdialog.ui \
     Schule/manageschuletestsdialog.ui \
     Sprache/managesprachetestsdialog.ui \
     E_Receipts/managediscountsdialog.ui \
-    Schule/managedisciplinesdialog.ui \
-    General/addtemporarylessondialog.ui
+    Schule/managedisciplinesdialog.ui
 
     
 

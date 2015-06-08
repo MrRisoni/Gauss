@@ -9,11 +9,8 @@ The biggest app i have ever developed!
 
 - Desktop app for the directors and secretaries : Qt,C++,MySQL,Python 
 
-- Web app for parents, students, teachers : HMTL,HTML5,CSS,Ajax,Javascript,jQuery,MySql (  that will have to wait  :((( )
-
 - Simple pseudo Document Management System : Python ,PyQt, MongoDB ( dmslite )
 
-  A total of 75 tables :)
   
   http://mrrisoni.github.io/Gauss/
   

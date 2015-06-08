@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -43,7 +43,7 @@
        <x>10</x>
        <y>10</y>
        <width>1251</width>
-       <height>571</height>
+       <height>561</height>
       </rect>
      </property>
      <property name="toolTip">
@@ -60,6 +60,19 @@
      </property>
      <property name="selectionBehavior">
       <enum>QAbstractItemView::SelectRows</enum>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushCharts">
+     <property name="geometry">
+      <rect>
+       <x>10</x>
+       <y>580</y>
+       <width>82</width>
+       <height>23</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Show Chart</string>
      </property>
     </widget>
    </widget>

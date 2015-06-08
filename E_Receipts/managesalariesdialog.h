@@ -22,6 +22,14 @@ private slots:
 
     void on_pushAddSchuleScheme_clicked();
 
+    void on_tableBase_doubleClicked(const QModelIndex &index);
+
+    void on_tableSchule_doubleClicked(const QModelIndex &index);
+
+    void on_tableUni_doubleClicked(const QModelIndex &index);
+
+    void on_tableView_5_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::ManageSalariesDialog *ui;
     void populateEchelTable();

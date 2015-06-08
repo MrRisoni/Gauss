@@ -22,6 +22,8 @@ public:
 private slots:
     void on_pushSaveCourses_clicked();
 
+    void on_tableCourses_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::ManageCoursesDialog *ui;
     void populateTable();

@@ -22,6 +22,8 @@ private slots:
 
     void on_pushAddTempo_clicked();
 
+    void on_pushCharts_clicked();
+
 private:
     Ui::ShowGroupsDialog *ui;
     QString group_id;

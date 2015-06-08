@@ -18,6 +18,12 @@ public:
 private slots:
     void on_pushSaveSchuleFee_clicked();
 
+    void on_tableCourses_doubleClicked(const QModelIndex &index);
+
+    void on_tableUniCourses_doubleClicked(const QModelIndex &index);
+
+    void on_tableSpracheCourses_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::ManageFeesDialog *ui;
     void populateTable();

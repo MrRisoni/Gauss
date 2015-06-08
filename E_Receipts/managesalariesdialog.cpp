@@ -187,3 +187,27 @@ void ManageSalariesDialog::on_pushAddSchuleScheme_clicked()
 
 
 }
+
+void ManageSalariesDialog::on_tableBase_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
+
+void ManageSalariesDialog::on_tableSchule_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
+
+void ManageSalariesDialog::on_tableUni_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
+
+void ManageSalariesDialog::on_tableView_5_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}

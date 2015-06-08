@@ -193,3 +193,8 @@ void ManageCoursesDialog::populateTable() {
     ui->tableCourses->setModel(mod);
     ui->tableCourses->resizeColumnsToContents();
 }
+
+void ManageCoursesDialog::on_tableCourses_doubleClicked(const QModelIndex &index)
+{
+    // statistics ???
+}

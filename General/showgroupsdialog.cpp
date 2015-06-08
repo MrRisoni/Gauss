@@ -104,3 +104,8 @@ void ShowGroupsDialog::on_pushAddTempo_clicked()
     o.AddTempLesson(group_id,ui->calendarTempo->selectedDate(),ui->comboStart->currentText(),ui->lineDuration->text().toFloat());
 
 }
+
+void ShowGroupsDialog::on_pushCharts_clicked()
+{
+    //show pay and be pay charts
+}

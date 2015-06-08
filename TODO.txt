@@ -7,6 +7,8 @@ fix group creation insert base wages and fees ensembles
 to shouldbe payed
 
 
+add payments and give fees
+    //show pay and be pay charts fro groups 
 
 
 

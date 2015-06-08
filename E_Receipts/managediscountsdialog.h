@@ -15,6 +15,9 @@ public:
     explicit ManageDiscountsDialog(QWidget *parent = 0);
     ~ManageDiscountsDialog();
 
+private slots:
+    void on_tableDiscounts_doubleClicked(const QModelIndex &index);
+
 private:
     Ui::ManageDiscountsDialog *ui;
 };

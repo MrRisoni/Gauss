@@ -47,3 +47,21 @@ void ManageFeesDialog::on_pushSaveSchuleFee_clicked()
     ORM o = ORM();
     o.save(fsch);
 }
+
+void ManageFeesDialog::on_tableCourses_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
+
+void ManageFeesDialog::on_tableUniCourses_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
+
+void ManageFeesDialog::on_tableSpracheCourses_doubleClicked(const QModelIndex &index)
+{
+    //values wrt time
+
+}
