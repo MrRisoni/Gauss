@@ -5,7 +5,6 @@
 #include <QSqlError>
 #include <QFile>
 #include <QTextStream>
-#include "mongo/client/dbclient.h" // for the driver
 
 QSqlDatabase vasi;
 
@@ -13,26 +12,9 @@ QFile logFile;
 
 
 
-void run() {
-  mongo::DBClientConnection c;
-  c.connect("localhost");
-
-}
-
-
-
-
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-
-    try {
-         run();
-          std::cout << "connected ok" << std::endl;
-        } catch( const mongo::DBException &e ) {
-          std::cout << "caught " << e.what() << std::endl;
-        }
-
 
 
 
@@ -67,7 +49,7 @@ int main(int argc, char *argv[])
 
 
 
- w.show();
+    w.show();
 
     return a.exec();
 

@@ -60,11 +60,11 @@ void GeldRechen::calcStudentFees() {
 
     qDebug () << "FEE FOR STUDENTS";
     QSqlQuery q,q2,q3,q4;
-    q.exec("SELECT GroupID,Fee,StartDate FROM Groups Where Active=1");
+    q.exec("SELECT GroupID,StartDate FROM Groups Where Active=1");
     while (q.next()) {
         QString gid=q.value(0).toString();
-        float fee=q.value(1).toFloat();
-        QDate start_date = q.value(2).toDate();
+
+        QDate start_date = q.value(1).toDate();
         //for every active group
 
         qDebug() << " fee calc for group " << gid;
@@ -83,19 +83,19 @@ void GeldRechen::calcStudentFees() {
              qDebug () << "studid " << studid << "joined " << maxDate(joined,start_date).toString() << " dropped " << minDate(dropped,QDate::currentDate()).toString();
              //get group history  from GREATEST(groupstart,added) up to LEAST(dropout,curdate)  MINUS  Truant==0 abscencies
 
-             q3.prepare("SELECT SUM(Duration) FROM History  Where Dat>= :join_date AND Dat<=:leave_date AND GroupID=:gid  AND Valid=1  AND HistID NOT IN (SELECT HistID FROM Absent WHERE StudentID=:sid and Truant=0)") ;
+             q3.prepare("SELECT Duration,Fee FROM History  Where Dat>= :join_date AND Dat<=:leave_date AND GroupID=:gid  AND Valid=1  AND HistID NOT IN (SELECT HistID FROM Absent WHERE StudentID=:sid and Truant=0)") ;
              q3.bindValue(":join_date",maxDate(joined,start_date));
              q3.bindValue(":leave_date",minDate(dropped,QDate::currentDate()));
              q3.bindValue(":gid",gid);
              q3.bindValue(":sid",studid);
              q3.exec();
 
-             float muss_bezahlen;
+             float muss_bezahlen=0;
              while (q3.next()) {
-                  muss_bezahlen= fee*q3.value(0).toFloat();
-                  qDebug() << "student " << studid << "has a total of " << q3.value(0).toFloat() << "hours fee is " << fee << " discount " << discount;
-
+                  muss_bezahlen += q3.value(0).toFloat() * q3.value(1).toFloat();
+                  qDebug() << "duration is " << q3.value(0).toFloat() << " fee for that " << q3.value(1).toFloat();
              }
+             qDebug() << "student " << studid <<  " discount " << discount;
 
              //discount
              muss_bezahlen -= muss_bezahlen * discount/100.0f;
@@ -126,7 +126,7 @@ void GeldRechen::calcSProfSalaries() {
     QSqlQuery q,q2,q3;
 
 
-    q.exec("SELECT GroupID,TeacherID,BW,CW FROM Groups Where Active=1");
+    q.exec("SELECT GroupID,TeacherID FROM Groups Where Active=1");
     while (q.next()) {
         /*
          for that group id
@@ -143,16 +143,15 @@ void GeldRechen::calcSProfSalaries() {
         float sal =0;
         QString gid = q.value(0).toString();
         QString tid = q.value(1).toString();
-        float bw = q.value(2).toFloat();
-        float cw = q.value(3).toFloat();
 
 
-        qDebug() << "fetching hrous for " << tid << " group " << gid << " bw is " << bw << " cw is " << cw;
-        q2.exec("SELECT SUM(Duration) FROM History Where GroupID='"+ gid+"' AND Valid=1 AND Dat<=CURRENT_DATE");
+
+        qDebug() << "fetching hrous for " << tid << " group " << gid;
+        q2.exec("SELECT Duration,bw,cw FROM History Where GroupID='"+ gid+"' AND Valid=1 AND Dat<=CURRENT_DATE");
+
         while (q2.next()) {
-            sal = q2.value(0).toFloat()*(bw+cw);
+            sal += q2.value(0).toFloat()*(q2.value(1).toFloat()+q2.value(2).toFloat());
 
-            qDebug() << " dur is " << q2.value(0).toFloat() << " sal is " << sal;
         }
 
 

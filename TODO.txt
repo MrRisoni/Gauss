@@ -1,14 +1,23 @@
 
 
-you could have varied salaries and courses
-add to history table course fee , base fee 
-update these values when echelon and courses and fees are updated :) 
 
-NoSQL ??? 
 
 
 fix group creation insert base wages and fees ensembles
 to shouldbe payed
+
+
+
+
+
+you could have varied salaries and courses
+add to history table course fee , base fee 
+update these values when echelon and courses and fees are updated :) 
+
+
+
+
+
 
 ------------------------------------------------
 
@@ -19,21 +28,11 @@ Sprache groups.....
 
 
 
-calculate wages and fees :) unit testing 
-UNIT TESTING
-
-
-
-------------------------------------------------
 
 
 
 
-accumulated fees ????????????????????????????
 
-
-
-------------------------------------------------
 
 
 take into account overlaps ???
@@ -44,6 +43,5 @@ take into account overlaps ???
 
 
 
-http://mrrisoni.github.io/Gauss/
 
 

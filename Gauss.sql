@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jun 06, 2015 at 09:34 PM
+-- Generation Time: Jun 08, 2015 at 06:39 AM
 -- Server version: 10.0.19-MariaDB
 -- PHP Version: 5.6.9
 
@@ -178,7 +178,8 @@ CREATE TABLE IF NOT EXISTS `Ensembles` (
   `GroupID` int(11) NOT NULL,
   `StudID` int(11) NOT NULL,
   `Added` date NOT NULL COMMENT 'a  student may be added after the groups creation',
-  `Dropped` date NOT NULL COMMENT 'a student may decide to drop from a group we need to know when'
+  `Dropped` date NOT NULL COMMENT 'a student may decide to drop from a group we need to know when',
+  `Reduced` float NOT NULL COMMENT 'discount'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -313,10 +314,7 @@ CREATE TABLE IF NOT EXISTS `Groups` (
   `CourseID` int(11) NOT NULL,
   `StartDate` date NOT NULL,
   `Active` tinyint(4) NOT NULL DEFAULT '1',
-  `LessTypeID` tinyint(4) NOT NULL,
-  `BW` float NOT NULL COMMENT ' base wage at time of creation',
-  `CW` float NOT NULL COMMENT 'course wage at time of creation',
-  `Fee` float NOT NULL COMMENT 'fee at the time of creation'
+  `LessTypeID` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -332,7 +330,10 @@ CREATE TABLE IF NOT EXISTS `History` (
   `StartHourID` tinyint(4) NOT NULL,
   `Duration` float NOT NULL,
   `RoomID` tinyint(4) NOT NULL COMMENT 'roomid=0 gia ta monima ',
-  `Valid` tinyint(1) NOT NULL DEFAULT '1'
+  `Valid` tinyint(1) NOT NULL DEFAULT '1',
+  `bw` float NOT NULL,
+  `cw` float NOT NULL,
+  `fee` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf32;
 
 -- --------------------------------------------------------
@@ -661,9 +662,8 @@ CREATE TABLE IF NOT EXISTS `ShouldBePayed` (
 --
 
 CREATE TABLE IF NOT EXISTS `ShouldPay` (
-  `TeacherID` int(11) NOT NULL,
-  `Amount` float NOT NULL,
   `GroupID` int(11) NOT NULL,
+  `Amount` float NOT NULL,
   `Updated` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='calculated payments for profs for each month';
 
@@ -1052,7 +1052,6 @@ ALTER TABLE `Groups`
   ADD PRIMARY KEY (`GroupID`),
   ADD KEY `TeacherID` (`TeacherID`),
   ADD KEY `CourseID` (`CourseID`),
-  ADD KEY `BW` (`BW`),
   ADD KEY `LessTypeID` (`LessTypeID`);
 
 --
@@ -1242,10 +1241,8 @@ ALTER TABLE `ShouldBePayed`
 -- Indexes for table `ShouldPay`
 --
 ALTER TABLE `ShouldPay`
-  ADD PRIMARY KEY (`TeacherID`,`GroupID`),
-  ADD KEY `StudentID` (`TeacherID`),
-  ADD KEY `GroupID` (`GroupID`),
-  ADD KEY `TeacherID` (`TeacherID`);
+  ADD PRIMARY KEY (`GroupID`),
+  ADD KEY `GroupID` (`GroupID`);
 
 --
 -- Indexes for table `SpecialFees`
@@ -1893,8 +1890,7 @@ ALTER TABLE `ShouldBePayed`
 -- Constraints for table `ShouldPay`
 --
 ALTER TABLE `ShouldPay`
-  ADD CONSTRAINT `ShouldPay_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`),
-  ADD CONSTRAINT `ShouldPay_ibfk_2` FOREIGN KEY (`TeacherID`) REFERENCES `Members` (`MembID`);
+  ADD CONSTRAINT `ShouldPay_ibfk_1` FOREIGN KEY (`GroupID`) REFERENCES `Groups` (`GroupID`);
 
 --
 -- Constraints for table `SpecialFees`

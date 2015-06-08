@@ -194,15 +194,15 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
     headers.append("Einnehmen"); // money we have received from students
     headers.append("Unser_Schulden"); //Geld , das wir dem Lehrer schulden
     headers.append("Student_Schulden"); // Geld , das die Schuler uns schulden
-    headers.append("Gross salary"); // base wage + course wage
-    headers.append("Fee");
+    headers.append("Gross salary"); // base wage + course wage as of TODAY
+    headers.append("Fee"); // fee as of TODAY
 
 
 
     QList<QStringList> data;
 
     QString s;
-    q.exec("SELECT G.GroupID,C.CourseName,G.StartDate,M.Name,G.BW+G.CW,G.Fee FROM Groups G,Courses C,Members M WHERE G.CourseID=C.CourseID AND M.MembID=G.TeacherID AND G.Active=1 ");
+    q.exec("SELECT G.GroupID,C.CourseName,G.StartDate,M.Name FROM Groups G,Courses C,Members M WHERE G.CourseID=C.CourseID AND M.MembID=G.TeacherID AND G.Active=1 ");
     while (q.next()) {
 
         QStringList record;
@@ -336,9 +336,17 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
         }
 
         record.append(QString::number(shouldreceive-havereceived));
-        record.append(q.value(4).toString().mid(0,5)); // gross salary
-        record.append(q.value(5).toString().mid(0,5)); //fee
 
+
+
+        //get fee and gross salary as of today
+        q2.prepare("SELECT bw+cw,fee FROM History WHERE GroupID=:gid AND Valid=1 and Dat<=CURRENT_DATE ORDER BY Dat Desc LIMIT 1");
+        q2.bindValue(":gid",GroupID);
+        q2.exec();
+        while (q2.next()) {
+           record.append(q2.value(0).toString().mid(0,5)); // gross salary
+           record.append(q2.value(1).toString().mid(0,5)); //fee
+         }
 
 
 
