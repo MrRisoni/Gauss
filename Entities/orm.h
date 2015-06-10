@@ -28,6 +28,8 @@
 #include "permatimes.h"
 #include "discipline.h"
 #include "discounttype.h"
+#include "student.h"
+#include "funds.h"
 
 #include <QSqlQuery>
 #include <QDebug>
@@ -58,7 +60,7 @@ public:
 
 
 
-
+    void save(Funds f);
     void save(Schwierigkeit schw);
     void save(Departments D);
     void save(Courses C);
@@ -103,7 +105,7 @@ public:
 
     QList<Rooms> getRooms();
     QList<Buildings> getBuildings();
-    Members searchStudentByName(QString name);
+    Student searchStudentByADT(QString adt);
     Teacher searchteacherByname(QString name);
     QList<Schwierigkeit> getSchwer();
     QList<Departments> getDeps();

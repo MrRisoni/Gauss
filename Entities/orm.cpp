@@ -1281,7 +1281,44 @@ void ORM::setDb(const QSqlDatabase &value)
     db = value;
 }
 
+void ORM::save(Funds f) {
+    QSqlQuery q;
+    try {
 
+        int sid=0;
+
+        q.prepare("SELECT MembID FROM Members WHERE ADT=:ausweis");
+        q.bindValue(":ausweis",f.getADT());
+        q.exec();
+
+        while (q.next()) {
+            sid=q.value(0).toInt();
+        }
+
+        if (sid<=0) {
+            throw 10;
+        }
+        QString s="INSERT INTO `Funds`  (`StudentID`, `GroupID`, `Dat`, `Amount`) VALUES (:sid,:gid,:dat,:euro)";
+        qDebug() << s;
+        q.prepare(s);
+        q.bindValue(":sid",sid);
+        q.bindValue(":gid",f.getGroupID());
+        q.bindValue(":dat",QDate::currentDate());
+        q.bindValue(":euro",f.getAmount());
+
+        if (!q.exec()) {
+             throw 10;
+        }
+
+        ShowSuccess();
+    }
+
+    catch (int ex) {
+        ShowError(q);
+    }
+
+    q.finish();
+}
 
 void ORM::save(FeeSchule fsh) {
     QSqlQuery q;
@@ -1344,22 +1381,36 @@ void ORM::ShowError(QSqlQuery q) {
 
 
 
-Members ORM::searchStudentByName(QString name) {
+Student ORM::searchStudentByADT(QString adt) {
     QSqlQuery q;
-    Members m;
+    Student st;
 
-    QString s="SELECT M.Name,M.ADT, D.Name FROM Members M,Disciplines D ,Schuler S WHERE M.MembID = S.StudentID AND  D.DiscID= S.DiscipleID AND M.Name LIKE '%" + name + "%'";
+    QString s="SELECT M.Name, M.ADT,M.MembID FROM Members M,Schuler S WHERE M.MembID = S.StudentID AND  M.ADT LIKE '%" + adt + "%'";
     qDebug() << s;
 
+    QString membid;
     q.exec(s);
     while (q.next()) {
 
-        m.setName(q.value(0).toString());
-        m.setADT(q.value(1).toString());
-        m.setRichtung(q.value(2).toString());
+        st.setName(q.value(0).toString());
+        st.setADT(q.value(1).toString());
+        membid = q.value(2).toString();
     }
     q.finish();
-    return m;
+
+    //get active courses
+    q.prepare("select GroupID FROM Ensembles Where StudID=:sid");
+    q.bindValue(":sid",membid);
+    q.exec();
+    QList<QString> groups;
+    while (q.next()){
+       groups.append(q.value(0).toString());
+    }
+
+    st.setGroupIDs(groups);
+
+
+    return st;
 }
 
 
@@ -1470,8 +1521,8 @@ void ORM::save(RequestSchule rec) {
 
 
 
-        q.prepare("SELECT MembID FROM Members WHERE Name=:nm");
-        q.bindValue(":nm",rec.getStudent().getName());
+        q.prepare("SELECT MembID FROM Members WHERE ADT=:nm");
+        q.bindValue(":nm",rec.getStudent().getADT());
         q.exec();
         while (q.next()) {
             StudID = q.value(0).toInt();

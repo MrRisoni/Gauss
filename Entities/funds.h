@@ -11,17 +11,20 @@ public:
     ~Funds();
 
 
-    QDate getDat() const;
-    void setDat(const QDate &value);
 
-    float getFee() const;
+    QString getGroupID() const;
+    void setGroupID(QString value);
 
-    void setFee(float value);
+    float getAmount() const;
+    void setAmount(float value);
+
+    QString getADT() const;
+    void setADT(const QString &value);
 
 private:
-    int  studID;
-    QDate dat;
-    float fee;
+    QString  ADT;
+    QString GroupID;
+    float amount;
 
 };
 

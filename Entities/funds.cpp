@@ -10,22 +10,32 @@ Funds::~Funds()
 
 }
 
-QDate Funds::getDat() const
+QString Funds::getGroupID() const
 {
-    return dat;
+    return GroupID;
 }
 
-void Funds::setDat(const QDate &value)
+void Funds::setGroupID(QString value)
 {
-    dat = value;
+    GroupID = value;
 }
-float Funds::getFee() const
+float Funds::getAmount() const
 {
-    return fee;
+    return amount;
 }
-void Funds::setFee(float value)
+
+void Funds::setAmount(float value)
 {
-    fee = value;
+    amount = value;
+}
+QString Funds::getADT() const
+{
+    return ADT;
+}
+
+void Funds::setADT(const QString &value)
+{
+    ADT = value;
 }
 
 
