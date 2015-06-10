@@ -43,11 +43,11 @@ void AddNewRequestDialog::on_pushSearch_clicked()
 
     ORM o = ORM();
 
-    Members m = o.searchStudentByName(ui->lineSearchQuery->text());
+    Student m = o.searchStudentByADT(ui->lineSearchQuery->text());
     ui->labelStudentData->setText(m.getName() + " " + m.getADT() + " " + m.getRichtung());
     //qDebug() << m;
     //serialization m to string
-    ui->lineSearchQuery->setText(m.getName());
+    ui->lineSearchQuery->setText(m.getADT());
 }
 
 void AddNewRequestDialog::on_pushAddSchule_clicked()
@@ -61,7 +61,7 @@ void AddNewRequestDialog::on_pushAddSchule_clicked()
     rec.setComments(ui->textScuhleComments->toPlainText());
     rec.setDat(QDate::currentDate());
     Members st=Members();
-    st.setName(ui->lineSearchQuery->text());
+    st.setADT(ui->lineSearchQuery->text());
     rec.setStudent(st);
 
     ORM o =ORM();
