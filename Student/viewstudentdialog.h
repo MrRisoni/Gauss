@@ -15,6 +15,11 @@ public:
     explicit ViewStudentDialog(QWidget *parent = 0);
     ~ViewStudentDialog();
 
+private slots:
+    void on_pushSearch_clicked();
+
+    void on_pushAddPoso_clicked();
+
 private:
     Ui::ViewStudentDialog *ui;
 };

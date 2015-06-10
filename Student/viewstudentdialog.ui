@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -1267,8 +1267,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>98</width>
-        <height>28</height>
+        <width>100</width>
+        <height>30</height>
        </rect>
       </property>
       <attribute name="label">
@@ -1307,16 +1307,16 @@
    <property name="geometry">
     <rect>
      <x>30</x>
-     <y>20</y>
+     <y>10</y>
      <width>81</width>
-     <height>31</height>
+     <height>41</height>
     </rect>
    </property>
    <property name="text">
     <string>Student</string>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit_5">
+  <widget class="QLineEdit" name="lineSearch">
    <property name="geometry">
     <rect>
      <x>120</x>
