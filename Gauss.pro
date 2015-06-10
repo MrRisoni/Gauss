@@ -110,7 +110,8 @@ SOURCES += main.cpp\
     General/roomitemdelegate.cpp \
     mvc.cpp \
     Entities/discipline.cpp \
-    validator.cpp
+    validator.cpp \
+    crud.cpp
 
 
 
@@ -212,7 +213,8 @@ HEADERS  += Entities/absent.h  \
     General/roomitemdelegate.h \
     mvc.h \
     Entities/discipline.h \
-    validator.h
+    validator.h \
+    crud.h
 
 
 

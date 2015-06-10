@@ -12,7 +12,7 @@ add payments and give fees
 
 you could have varied salaries and courses
 add to history table course fee , base fee 
-update these values when echelon and courses  fees are updated :) 
+update these values when echelon and course wages   updated :) 
 
 
 discount to should be payed
