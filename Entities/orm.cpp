@@ -1385,7 +1385,7 @@ Student ORM::searchStudentByADT(QString adt) {
     QSqlQuery q;
     Student st;
 
-    QString s="SELECT M.Name, M.ADT,M.MembID FROM Members M,Schuler S WHERE M.MembID = S.StudentID AND  M.ADT LIKE '%" + adt + "%'";
+    QString s="SELECT M.Name, M.ADT,M.MembID FROM Members M  WHERE  M.ADT LIKE '%" + adt + "%'";
     qDebug() << s;
 
     QString membid;
