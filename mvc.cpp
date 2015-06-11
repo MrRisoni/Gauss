@@ -179,6 +179,7 @@ QStandardItemModel* MVC::getGroupPays(QString GroupID){
     QSqlQuery q,q2;
     QStringList headers;
     headers.append("StudentID");
+    headers.append("ADT");
     headers.append("Name");
     headers.append("Mobile");
     headers.append("Joined");
@@ -187,7 +188,7 @@ QStandardItemModel* MVC::getGroupPays(QString GroupID){
     headers.append("Last Payed");
     headers.append("Debt");
 
-    q.prepare("SELECT M.MembID,M.Name,M.Mobile,E.Added,E.Dropped From Members M,Ensembles E WHERE E.GroupID=:gid AND E.StudID=M.MembID  ORDER BY Name ASC");
+    q.prepare("SELECT M.MembID,M.ADT,M.Name,M.Mobile,E.Added,E.Dropped From Members M,Ensembles E WHERE E.GroupID=:gid AND E.StudID=M.MembID  ORDER BY Name ASC");
     q.bindValue(":gid",GroupID);
     q.exec();
 
@@ -201,11 +202,11 @@ QStandardItemModel* MVC::getGroupPays(QString GroupID){
         QStringList record;
         QString studid=q.value(0).toString();
         record.append(q.value(0).toString()); //id
-
-        record.append(q.value(1).toString()); //name
-        record.append(q.value(2).toString()); //mobile
-        record.append(q.value(3).toString()); //joined
-        record.append(q.value(4).toString());//dropped
+        record.append(q.value(1).toString());
+        record.append(q.value(2).toString()); //name
+        record.append(q.value(3).toString()); //mobile
+        record.append(q.value(4).toString()); //joined
+        record.append(q.value(5).toString());//dropped
 
         //has payed
         q2.prepare("SELECT SUM(Amount)+0 FROM Funds Where GroupID=:gid AND StudentID=:sid");
