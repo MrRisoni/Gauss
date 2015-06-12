@@ -53,6 +53,7 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
         QStringList record;
 
         QString studid=q.value(0).toString();
+
         record.append(q.value(0).toString()); //studid
         record.append(q.value(1).toString()); //adt
         record.append(q.value(2).toString()); //name
@@ -89,8 +90,34 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
 
 
         record.append("0"); //last lesson and not absent
-        record.append("0"); //last payed
-        record.append("0"); //schulden //overlap with geld rechen
+
+        q2.prepare("SELECT MAX(Dat) FROM Funds WHERE StudentID=:sid");
+        q2.bindValue(":sid",studid);
+        q2.exec();
+        while (q2.next()) {
+            record.append(q2.value(0).toString()); //last payed
+
+        }
+
+         //schulden  should pay - has pay
+        float should_pay = 0;
+        q2.prepare("SELECT SUM(Amount) FROM ShouldBePayed Where StudentID=:sid");
+        q2.bindValue(":sid",studid);
+        q2.exec();
+        while (q2.next()) {
+            should_pay = q2.value(0).toFloat();
+        }
+
+        float has_payed = 0;
+        q2.prepare("SELECT SUM(Amount) FROM Funds Where StudentID=:sid");
+        q2.bindValue(":sid",studid);
+        q2.exec();
+        while (q2.next()) {
+            has_payed = q2.value(0).toFloat();
+        }
+
+
+        record.append(QString::number(should_pay-has_payed));
 
 
 
