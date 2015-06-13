@@ -1415,27 +1415,7 @@ Student ORM::searchStudentByADT(QString adt) {
 
 
 
-QList<Rooms> ORM::getRooms() {
 
-    QList<Rooms> domatia;
-    QSqlQuery q;
-    q.exec("SELECT R.RoomID,B.Address,R.Name,R.Capacity FROM Rooms R,Buildings B WHERE B.BuildID=R.BuildID ORDER BY B.Address ASC , R.Name ASC");
-    while (q.next()) {
-        Rooms r;
-        Buildings bl=Buildings();
-        bl.setName(q.value(1).toString());
-        r.setB(bl);
-        r.setRoomID(q.value(0).toInt());
-
-        r.setCapacity(q.value(3).toInt());
-        r.setName(q.value(2).toString());
-
-
-        domatia.append(r);
-    }
-    q.finish();
-    return domatia;
-}
 
 QList<Buildings> ORM::getBuildings() {
     QList<Buildings> Bs;

@@ -1,6 +1,45 @@
 #include "mvc.h"
 
 
+
+
+QStandardItemModel* MVC::getGeneral_Rooms() {
+
+    QStringList headers;
+    QList<QStringList> data;
+
+    headers.append("ID");
+    headers.append("Name");
+    headers.append("Building");
+    headers.append("Capacity");
+
+
+
+    QSqlQuery q;
+    q.exec("SELECT R.RoomID,R.Name,B.Address,R.Capacity FROM Rooms R,Buildings B WHERE B.BuildID=R.BuildID ORDER BY R.Name ASC");
+    while (q.next()) {
+
+        QStringList record;
+
+        record.append(q.value(0).toString());
+        record.append(q.value(1).toString());
+        record.append(q.value(2).toString());
+        record.append(q.value(3).toString());
+
+
+        data.append(record);
+    }
+
+
+
+    q.finish();
+    QList<RGBColor> farbe;
+
+    return  MVC::makeModel(headers, data,farbe);
+
+}
+
+
 //***************************      MODEL FOR Student/ShowStudents       ***************************
 
 

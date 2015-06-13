@@ -29,6 +29,10 @@ struct RGBColor {
 QList<QStringList> QueryToList(QString qry);
 
 
+//***************************      MODEL FOR General/RaumeDialog       ***************************
+
+QStandardItemModel* getGeneral_Rooms();
+
 QStandardItemModel* makeModel(QStringList headers,QList<QStringList> data,QList<RGBColor> coldata);
     //universal QStandardItemModel maker
     /* INPUT :

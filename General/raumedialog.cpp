@@ -5,6 +5,7 @@
 #include <QStandardItemModel>
 #include <QInputDialog>
 #include <QStandardItem>
+#include "../mvc.h"
 
 
 RaumeDialog::RaumeDialog(QWidget *parent) :
@@ -101,56 +102,10 @@ void RaumeDialog::populateTable() {
 
 
 void RaumeDialog::populateRoomTable() {
-    /*Show
-     * RoomID
-     * Building
-     * Name
-     * Capacity
-     */
-
-    QStringList headers;
-    headers.append("RoomID");
-    headers.append("Building");
-    headers.append("Name");
-    headers.append("Capacity");
-
-    QStandardItemModel *mod=new QStandardItemModel();
-    mod->setHorizontalHeaderLabels(headers);
-
-
-    ORM o=ORM();
-    QList<Rooms> domatia=o.getRooms();
-    int row=0;
-    for (Rooms D : domatia) {
-        QStandardItem *itRoomID=new QStandardItem();
-        itRoomID->setText(QString::number(D.getRoomID()));
-
-        mod->setItem(row,0,itRoomID);
-
-        QStandardItem *itAddress=new QStandardItem();
-        itAddress->setText(D.getB().getName());
-
-        mod->setItem(row,1,itAddress);
-
-
-        QStandardItem *itName=new QStandardItem();
-        itName->setText(D.getName());
-
-        mod->setItem(row,2,itName);
-
-
-        QStandardItem *itCapacity=new QStandardItem();
-        itCapacity->setText(QString::number(D.getCapacity()));
-
-        mod->setItem(row,3,itCapacity);
-        row++;
-
-    }
 
 
 
-
-    ui->tableRooms->setModel(mod);
+    ui->tableRooms->setModel(MVC::getGeneral_Rooms());
     ui->tableRooms->resizeColumnsToContents();
 
 }
