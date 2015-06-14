@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -699,7 +699,7 @@
          <x>20</x>
          <y>60</y>
          <width>461</width>
-         <height>261</height>
+         <height>371</height>
         </rect>
        </property>
        <property name="currentIndex">
@@ -710,8 +710,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>461</width>
+          <height>284</height>
          </rect>
         </property>
         <attribute name="label">
@@ -746,8 +746,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>98</width>
-          <height>28</height>
+          <width>461</width>
+          <height>284</height>
          </rect>
         </property>
         <attribute name="label">
@@ -789,7 +789,7 @@
           <x>0</x>
           <y>0</y>
           <width>461</width>
-          <height>174</height>
+          <height>284</height>
          </rect>
         </property>
         <attribute name="label">
@@ -799,7 +799,7 @@
          <property name="geometry">
           <rect>
            <x>70</x>
-           <y>100</y>
+           <y>160</y>
            <width>113</width>
            <height>31</height>
           </rect>
@@ -809,7 +809,7 @@
          <property name="geometry">
           <rect>
            <x>200</x>
-           <y>100</y>
+           <y>160</y>
            <width>84</width>
            <height>31</height>
           </rect>
@@ -835,13 +835,36 @@
          <property name="geometry">
           <rect>
            <x>60</x>
-           <y>40</y>
+           <y>30</y>
            <width>131</width>
-           <height>31</height>
+           <height>41</height>
           </rect>
          </property>
          <property name="text">
           <string>Select Pay Type</string>
+         </property>
+        </widget>
+        <widget class="QComboBox" name="comboPayForGroup">
+         <property name="geometry">
+          <rect>
+           <x>210</x>
+           <y>90</y>
+           <width>241</width>
+           <height>23</height>
+          </rect>
+         </property>
+        </widget>
+        <widget class="QLabel" name="label_17">
+         <property name="geometry">
+          <rect>
+           <x>60</x>
+           <y>80</y>
+           <width>131</width>
+           <height>41</height>
+          </rect>
+         </property>
+         <property name="text">
+          <string>Select Group</string>
          </property>
         </widget>
        </widget>

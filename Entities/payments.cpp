@@ -48,6 +48,16 @@ void Payments::setTeacherName(const QString &value)
 {
     TeacherName = value;
 }
+int Payments::getGroupID() const
+{
+    return GroupID;
+}
+
+void Payments::setGroupID(const int &value)
+{
+    GroupID = value;
+}
+
 
 
 

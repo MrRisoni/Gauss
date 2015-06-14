@@ -94,7 +94,6 @@
      <addaction name="actionAdd_Student"/>
      <addaction name="actionView_Student"/>
      <addaction name="actionShow_All_Students"/>
-     <addaction name="actionWarum"/>
     </widget>
     <widget class="QMenu" name="menuTeachers">
      <property name="title">
@@ -102,6 +101,7 @@
      </property>
      <addaction name="actionAdd_Teacher"/>
      <addaction name="actionShow_Teacher"/>
+     <addaction name="actionShow_All_Teachers"/>
     </widget>
     <addaction name="menuStudents"/>
     <addaction name="menuTeachers"/>
@@ -322,6 +322,11 @@
   <action name="actionSprache_Tests">
    <property name="text">
     <string>Sprache Tests</string>
+   </property>
+  </action>
+  <action name="actionShow_All_Teachers">
+   <property name="text">
+    <string>Show All Teachers</string>
    </property>
   </action>
  </widget>

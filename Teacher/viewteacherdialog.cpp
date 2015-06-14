@@ -4,6 +4,8 @@
 #include "Entities/orm.h"
 #include <QBuffer>
 #include "E_Receipts/createnewreceiptdialog.h"
+#include "../crud.h"
+
 
 ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -18,9 +20,12 @@ ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
         ui->comboDeps->addItem(D.getDepName());
     }
 
-    for (PayType p : o.getPayTypes()) {
-        ui->comboPayType->addItem(p.getComment());
+    for (QString p : CRUD::getPayTypes()) {
+        ui->comboPayType->addItem(p);
+        ui->comboSelectPayType->addItem(p);
     }
+
+
 }
 
 ViewTeacherDialog::~ViewTeacherDialog()
@@ -62,6 +67,13 @@ void ViewTeacherDialog::on_pushButton_clicked()
    ui->labSignature->setPixmap(L.getSignaturePixie());
 
 
+   //get groupis
+   ui->comboPayForGroup->clear();
+   for (QString gid : CRUD::getGroupIDs(ui->lineName->text())) {
+       ui->comboPayForGroup->addItem(gid);
+   }
+
+
 }
 
 
@@ -72,10 +84,9 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
     pay.setMoney(ui->linePoso->text().toFloat());
     pay.setTeacherName(ui->labName->text());
     pay.setPayType(ui->comboSelectPayType->currentText());
+    pay.setGroupID(ui->comboPayForGroup->currentText().toInt());
 
-    ORM O=ORM();
-    O.save(pay);
-
+    CRUD::save(pay);
 
     CreateNewReceiptDialog *gief= new CreateNewReceiptDialog();
     gief->setReceiptType(-1);
