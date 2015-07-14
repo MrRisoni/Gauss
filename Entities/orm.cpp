@@ -323,32 +323,9 @@ Teacher ORM::searchteacherByname(QString name) {
 
     qDebug() << mid << " " << L.getName() << " " << L.getMembID();
 
-    QString FilePath = getSetFacesPath();
-
-    qDebug() << "loading image " << FilePath + QString::number(mid) + ".jpg";
-    QPixmap p;
-
-    p.load(FilePath + QString::number(mid) + ".jpg");
-    L.setPixie(p);
 
 
-    //get signature
 
-    //check first if the signature exists
-    QFile Fout("/tmp/sign" + QString::number(mid) + ".png");
-
-
-    if(!Fout.exists())
-    {
-        L.setSignaturePixie(getSignaturePic(QString::number(mid)));
-    }
-    else {
-        QPixmap p;
-        p.load("/tmp/sign" + QString::number(mid) + ".png");
-        qDebug() << "signature already exists";
-        L.setSignaturePixie(p);
-
-    }
 
     q.finish();
     return L;
@@ -855,39 +832,8 @@ QString ORM::generateMobile() {
 }
 
 
-QPixmap ORM::getSignaturePic(QString TeacherID) {
-
-    std::string filename = "python2  /home/linguine/Gauss/E_Receipts/py_scripts/RetrieveAndShow.py " + TeacherID.toStdString();
-
-    system(filename.c_str());
-
-    QPixmap p;
-    p.load("/tmp/sign" + TeacherID + ".png");
-    return p;
-
-}
 
 
-
-QString ORM::getSetFacesPath() {
-    //save to Faces Folder
-    //open settings file http://stackoverflow.com/questions/15893040/how-to-create-read-write-json-files-in-qt5
-
-    QString val;
-    QFile file;
-    file.setFileName(":sets/settings.json");
-    file.open(QIODevice::ReadOnly | QIODevice::Text);
-    val = file.readAll();
-    file.close();
-    qWarning() << val;
-    QJsonDocument dok = QJsonDocument::fromJson(val.toUtf8());
-    QJsonObject setFilePath = dok.object();
-    QString FilePath = setFilePath.value(QString("Faces")).toString() + "/";
-
-    qDebug() << "faces path " << FilePath;
-
-    return FilePath;
-}
 
 
 void ORM::saveTeacher(Teacher T) {

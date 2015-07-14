@@ -1,6 +1,0 @@
-<RCC>
-  <qresource prefix="icons">
-    <file>forms/adduser.png</file>
-    <file>forms/save.png</file>
-  </qresource>
-</RCC>

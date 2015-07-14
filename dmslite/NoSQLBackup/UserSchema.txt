@@ -1,9 +1,0 @@
-{
- id : hex
- RoleID : RoleID
- UsName : string,
- UsPass : hash,
- RealName : string,
- ADT : adt
-
-}
