@@ -630,9 +630,6 @@ QStandardItemModel* MVC::getGeneral_SchwierigModel() {
 
 
 
-
-
-
 QStandardItemModel* MVC::getSpracheDiplomas() {
     QStringList headers;
 
@@ -647,6 +644,31 @@ QStandardItemModel* MVC::getSpracheDiplomas() {
     QList<QStringList> data;
     QList<RGBColor> coldata;
 
+    QSqlQuery q,q2,q3;
+    q.exec("SELECT D.DiplID , I.Name, D.Name , 0,0,0,0 ,S.Red, S.Green, S.Blue From Diplomas D,Instituts I, Schwierigkeit S Where D.Schwer = S.SchwerID AND I.InstID = D.ProvID ORDER BY D.Name ASC");
+    int i=0;
+    while (q.next()) {
+        QStringList row;
+        row.append(q.value(0).toString());
+        row.append(q.value(2).toString());
+        row.append(q.value(1).toString());
+        row.append(q.value(3).toString());
+        row.append(q.value(4).toString());
+        row.append(q.value(5).toString());
+        row.append(q.value(6).toString());
+        RGBColor col ;
+        col.Red = q.value(7).toInt();
+        col.Green = q.value(8).toInt();
+        col.Blue = q.value(9).toInt();
+        col.x =i;
+        col.y = 1;
+        i++;
+        coldata.append(col);
+
+
+        data.append(row);
+    }
+    q.finish();
     return makeModel(headers, data,coldata);
 
 }
@@ -994,44 +1016,6 @@ QStandardItemModel* MVC::getGeneralManageFees() {
 
     return makeModel(headers,data,coldata);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

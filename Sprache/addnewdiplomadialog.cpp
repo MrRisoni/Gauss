@@ -79,6 +79,6 @@ void AddNewDiplomaDialog::on_pushSave_clicked()
 
 void AddNewDiplomaDialog::on_tableDiplomas_doubleClicked(const QModelIndex &index)
 {
-    //show the success rate and failure rate so far for that diploma
+    //show a plot of  the success rate and failure rate for that diploma
 
 }

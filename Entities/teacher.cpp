@@ -86,6 +86,16 @@ void Teacher::setSignaturePixie(const QPixmap &value)
 {
     SignaturePixie = value;
 }
+QList<Diplomas> Teacher::getCatTeachSprachen() const
+{
+    return CatTeachSprachen;
+}
+
+void Teacher::setCatTeachSprachen(const QList<Diplomas> &value)
+{
+    CatTeachSprachen = value;
+}
+
 
 
 

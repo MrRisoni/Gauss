@@ -36,7 +36,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="tab">
     <attribute name="title">
@@ -385,19 +385,6 @@
       <string>12</string>
      </property>
     </widget>
-    <widget class="QLabel" name="labProfile">
-     <property name="geometry">
-      <rect>
-       <x>20</x>
-       <y>360</y>
-       <width>171</width>
-       <height>181</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Profil</string>
-     </property>
-    </widget>
     <widget class="QLabel" name="label_13">
      <property name="geometry">
       <rect>
@@ -474,19 +461,6 @@
      </property>
      <property name="text">
       <string>ADT</string>
-     </property>
-    </widget>
-    <widget class="QLabel" name="labSignature">
-     <property name="geometry">
-      <rect>
-       <x>290</x>
-       <y>360</y>
-       <width>171</width>
-       <height>181</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Signature</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_15">
@@ -710,8 +684,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>461</width>
-          <height>284</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">
@@ -746,8 +720,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>461</width>
-          <height>284</height>
+          <width>98</width>
+          <height>28</height>
          </rect>
         </property>
         <attribute name="label">

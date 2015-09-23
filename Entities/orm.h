@@ -118,6 +118,8 @@ public:
 
 
     QList<Languages> getSprachen();
+    QList<QString> getDiplomaForThatLanguage(QString SprachName);
+
     QList<Diplomas> getDiplomas();
     QList<Courses> getSpecialCourses(QString DepName);
     QList<Days> getDays();

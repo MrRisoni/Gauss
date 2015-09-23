@@ -1105,7 +1105,34 @@ QList<WagesSchule> ORM::getWagesSchule() {
 }
 
 
+QList<Languages> ORM::getSprachen() {
+    QList<Languages> ls;
+    QSqlQuery q;
+    q.exec("SELECT Name FROM Languages ORDER BY Name ASC");
+    while (q.next()) {
+        Languages l;
+        l.setName(q.value(0).toString());
+        ls.append(l);
+    }
 
+    q.finish();
+    return ls;
+}
+
+
+QList<QString> ORM::getDiplomaForThatLanguage(QString SprachName) {
+    QList<QString> dipls;
+
+    QSqlQuery q;
+    q.prepare("SELECT D.Name FROM Diplomas D, Languages L Where D.LangID = L.LangID AND L.Name=:nam");
+    q.bindValue(":nam",SprachName);
+    q.exec();
+    while (q.next()) {
+        dipls.append(q.value(0).toString());
+    }
+    q.finish();
+    return dipls;
+}
 
 
 QList<Courses> ORM::getSpecialCourses(QString DepName) {

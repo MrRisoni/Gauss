@@ -27,6 +27,14 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
 
 
     //fetch langs
+    QList<Languages> langs = cppHib.getSprachen();
+    for (Languages L : langs) {
+        ui->comboSprachen->addItem(L.getName());
+    }
+
+
+
+
 
 
     coursesModel=new QStandardItemModel();
@@ -153,6 +161,7 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
 
 
     t.setCanTeach(kann_Lehren);
+
     t.setEmail(ui->lineEmail->text());
 
     t.setEndOfContract(QDate::currentDate().addDays(370));
@@ -169,7 +178,6 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
 
     QBuffer buffer( &Arr );
     buffer.open( QIODevice::WriteOnly );
-    ui->labelProfile->pixmap()->save( &buffer, "PNG" );
 
     t.setPhoto(Arr);
     t.setRegDate(QDate::currentDate());
@@ -239,14 +247,7 @@ void AddNewTeacherDialog::setDb(const QSqlDatabase &value)
 void AddNewTeacherDialog::on_pushLoadPic_clicked()
 {
 
-    QString FileName=QFileDialog::getOpenFileName(this, "Open File", "/tmp/","*.*");
-    QPixmap p(FileName);
 
-    int w = ui->labelProfile->width();
-    int h = ui->labelProfile->height();
-
-
-    ui->labelProfile->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
 
 
 }
@@ -258,12 +259,20 @@ void AddNewTeacherDialog::on_pushESymvasis_clicked()
 
 void AddNewTeacherDialog::on_pushLoadPic_2_clicked()
 {
-    QString FileName=QFileDialog::getOpenFileName(this, "Open File", "/tmp/","*.*");
-    QPixmap p(FileName);
 
-    int w = ui->labelSignature->width();
-    int h = ui->labelSignature->height();
 
-ui->labelSignature->setPixmap(p.scaled(w,h,Qt::KeepAspectRatio));
+}
 
+void AddNewTeacherDialog::on_comboSprachen_activated(const QString &arg1)
+{
+    ui->listAllDiplomas->clear();
+    ORM o =  ORM();
+    for (QString s : o.getDiplomaForThatLanguage(arg1)) {
+        ui->listAllDiplomas->addItem(s);
+    }
+}
+
+void AddNewTeacherDialog::on_listAllDiplomas_itemDoubleClicked(QListWidgetItem *item)
+{
+    ui->listCanDiplomas->addItem(item->text());
 }

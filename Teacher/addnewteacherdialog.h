@@ -38,6 +38,10 @@ private slots:
 
     void on_pushLoadPic_2_clicked();
 
+    void on_comboSprachen_activated(const QString &arg1);
+
+    void on_listAllDiplomas_itemDoubleClicked(QListWidgetItem *item);
+
 private:
     Ui::AddNewTeacherDialog *ui;
     QStandardItemModel *coursesModel;

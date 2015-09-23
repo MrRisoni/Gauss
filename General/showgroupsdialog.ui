@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1304</width>
-    <height>684</height>
+    <height>697</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,11 +19,11 @@
      <x>10</x>
      <y>10</y>
      <width>1281</width>
-     <height>661</height>
+     <height>671</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -31,7 +31,7 @@
       <x>0</x>
       <y>0</y>
       <width>1281</width>
-      <height>603</height>
+      <height>613</height>
      </rect>
     </property>
     <attribute name="label">
@@ -41,9 +41,9 @@
      <property name="geometry">
       <rect>
        <x>10</x>
-       <y>10</y>
+       <y>30</y>
        <width>1251</width>
-       <height>561</height>
+       <height>541</height>
       </rect>
      </property>
      <property name="toolTip">
@@ -75,6 +75,29 @@
       <string>Show Chart</string>
      </property>
     </widget>
+    <widget class="QComboBox" name="comboGroupType">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>0</y>
+       <width>151</width>
+       <height>23</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkShowInactive">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>0</y>
+       <width>211</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>CheckBox</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page_2">
     <property name="geometry">
@@ -82,7 +105,7 @@
       <x>0</x>
       <y>0</y>
       <width>1281</width>
-      <height>603</height>
+      <height>613</height>
      </rect>
     </property>
     <attribute name="label">
@@ -94,7 +117,7 @@
        <x>20</x>
        <y>10</y>
        <width>1241</width>
-       <height>571</height>
+       <height>591</height>
       </rect>
      </property>
      <property name="currentIndex">
@@ -326,7 +349,7 @@
          <x>20</x>
          <y>30</y>
          <width>601</width>
-         <height>491</height>
+         <height>511</height>
         </rect>
        </property>
        <property name="editTriggers">
@@ -348,7 +371,7 @@
          <x>630</x>
          <y>30</y>
          <width>591</width>
-         <height>491</height>
+         <height>511</height>
         </rect>
        </property>
       </widget>
@@ -360,7 +383,7 @@
    <property name="geometry">
     <rect>
      <x>390</x>
-     <y>650</y>
+     <y>660</y>
      <width>1011</width>
      <height>31</height>
     </rect>

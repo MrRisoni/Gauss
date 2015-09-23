@@ -47,6 +47,9 @@ QDate GeldRechen::maxDate(QDate a,QDate b) {
 
 }
 
+
+
+
 void GeldRechen::calcStudentFees() {
     /*
       absencies are NOT and SHOULD NOT be taken into account
@@ -55,12 +58,13 @@ void GeldRechen::calcStudentFees() {
 
 
       discounts ????
-    */
 
+
+*/
 
     qDebug () << "FEE FOR STUDENTS";
     QSqlQuery q,q2,q3,q4;
-    q.exec("SELECT GroupID,StartDate FROM Groups Where Active=1");
+    q.exec("SELECT GroupID,StartDate FROM Groups");
     while (q.next()) {
         QString gid=q.value(0).toString();
 
@@ -124,11 +128,14 @@ void GeldRechen::calcStudentFees() {
     }
 }
 
+
+
+
 void GeldRechen::calcSProfSalaries() {
     QSqlQuery q,q2,q3;
 
 
-    q.exec("SELECT GroupID,TeacherID FROM Groups Where Active=1");
+    q.exec("SELECT GroupID,TeacherID FROM Groups");
     while (q.next()) {
         /*
          for that group id

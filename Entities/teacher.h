@@ -9,6 +9,7 @@
 #include "courses.h"
 #include <QPixmap>
 #include "teachechel.h"
+#include "diplomas.h"
 
 class Teacher : public Members
 {
@@ -86,10 +87,14 @@ public:
     QPixmap getSignaturePixie() const;
     void setSignaturePixie(const QPixmap &value);
 
+    QList<Diplomas> getCatTeachSprachen() const;
+    void setCatTeachSprachen(const QList<Diplomas> &value);
+
 private:
     int TeacherID;
     BaseWages base_wages;
     QList<Courses> CanTeach;
+    QList<Diplomas> CatTeachSprachen;
 
 
     Echelon Ech;
