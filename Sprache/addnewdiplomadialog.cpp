@@ -5,6 +5,7 @@
 
 #include "Entities/orm.h"
 #include "../mvc.h"
+#include "../crud.h"
 
 AddNewDiplomaDialog::AddNewDiplomaDialog(QWidget *parent) :
     QDialog(parent),
@@ -67,13 +68,13 @@ AddNewDiplomaDialog::~AddNewDiplomaDialog()
 void AddNewDiplomaDialog::on_pushSave_clicked()
 {
     if (ui->lineDiploma->text().length()>2) {
-        ORM O=ORM();
+
         Diplomas D=Diplomas();
         D.setInstitutName(ui->comboInstitut->currentText());
         D.setLanguage(ui->comboSprache->currentText());
         D.setName(ui->lineDiploma->text());
         D.setSchwerID(ui->comboSchwer->currentText());
-        O.save(D);
+        CRUD::save(D);
     }
 }
 

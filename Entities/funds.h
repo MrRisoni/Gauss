@@ -25,6 +25,7 @@ private:
     QString  ADT;
     QString GroupID;
     float amount;
+    int MembID;
 
 };
 

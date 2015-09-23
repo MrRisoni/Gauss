@@ -20,19 +20,16 @@ SOURCES += main.cpp\
   Entities/absent.cpp  \
   Entities/basewages.cpp  \
   Entities/buildings.cpp \
-  Entities/canceled.cpp \
   Entities/contract.cpp \
   Entities/courses.cpp \
   Entities/days.cpp \
   Entities/departments.cpp \
   Entities/diplomas.cpp \
   Entities/echelon.cpp \
-  Entities/edutypes.cpp \
   Entities/ensembles.cpp \
   Entities/erlaubnis.cpp \
   Entities/examschule.cpp \
   Entities/examsprache.cpp \
-  Entities/faces.cpp \
   Entities/feeschule.cpp \
   Entities/feesprache.cpp \
   Entities/feeuni.cpp \
@@ -82,7 +79,6 @@ SOURCES += main.cpp\
     E_Receipts/kassendialog.cpp \
     E_Receipts/managefeesdialog.cpp \
     E_Receipts/managesalariesdialog.cpp \
-    E_Receipts/receiptviewerdialog.cpp \
     General/absentbuchdialog.cpp \
     General/addnewrequestdialog.cpp \
     General/addnewschwerdialog.cpp \
@@ -95,7 +91,6 @@ SOURCES += main.cpp\
     General/showgroupsdialog.cpp \
     Student/viewstudentdialog.cpp \
     Uni/createunidialog.cpp \
-    E_Receipts/createnewreceiptdialog.cpp \
     Schule/manageschuletestsdialog.cpp \
     Sprache/managesprachetestsdialog.cpp \
     Entities/teachechel.cpp \
@@ -111,26 +106,25 @@ SOURCES += main.cpp\
     mvc.cpp \
     Entities/discipline.cpp \
     validator.cpp \
-    crud.cpp
+    crud.cpp \
+    Entities/wages.cpp \
+    Entities/fee.cpp
 
 
 
 HEADERS  += Entities/absent.h  \
     Entities/basewages.h \
     Entities/buildings.h \
-    Entities/canceled.h \
     Entities/contract.h \
     Entities/courses.h \
     Entities/days.h \
     Entities/departments.h \
     Entities/diplomas.h \
     Entities/echelon.h \
-    Entities/edutypes.h \
     Entities/ensembles.h \
     Entities/erlaubnis.h \
     Entities/examschule.h \
     Entities/examsprache.h \
-    Entities/faces.h \
     Entities/feeschule.h \
     Entities/feesprache.h \
     Entities/feeuni.h \
@@ -174,7 +168,6 @@ HEADERS  += Entities/absent.h  \
     E_Receipts/kassendialog.h \
     E_Receipts/managefeesdialog.h \
     E_Receipts/managesalariesdialog.h \
-    E_Receipts/receiptviewerdialog.h \
     General/absentbuchdialog.h \
     General/addnewrequestdialog.h \
     General/addnewschwerdialog.h \
@@ -214,7 +207,9 @@ HEADERS  += Entities/absent.h  \
     mvc.h \
     Entities/discipline.h \
     validator.h \
-    crud.h
+    crud.h \
+    Entities/wages.h \
+    Entities/fee.h
 
 
 
@@ -225,7 +220,6 @@ FORMS    += Artif_Intel/plotdialog.ui \
     E_Receipts/kassendialog.ui \
     E_Receipts/managefeesdialog.ui \
     E_Receipts/managesalariesdialog.ui \
-    E_Receipts/receiptviewerdialog.ui \
     General/absentbuchdialog.ui \
     General/addnewrequestdialog.ui \
     General/addnewschwerdialog.ui \
@@ -248,7 +242,6 @@ FORMS    += Artif_Intel/plotdialog.ui \
     Student/showstudentsdialog.ui \
     Student/viewstudentdialog.ui \
     Student/addnewstudentdialog.ui \
-    E_Receipts/createnewreceiptdialog.ui \
     Schule/manageschuletestsdialog.ui \
     Sprache/managesprachetestsdialog.ui \
     E_Receipts/managediscountsdialog.ui \

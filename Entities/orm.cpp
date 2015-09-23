@@ -175,68 +175,6 @@ void ORM::save(Payments p) {
     q.finish();
 }
 
-void  ORM::save(Diplomas d) {
-    QSqlQuery q;
-    try {
-
-        vasi.transaction();
-
-        qDebug() << "saving diploma...";
-        int lid=0,pid=0;
-
-
-        q.prepare("SELECT LangID From Languages Where Name=:nm");
-        q.bindValue(":nm",d.getLanguage());
-        q.exec();
-
-        while (q.next()) {
-            lid = q.value(0).toInt();
-        }
-
-        qDebug() << "languageID " << lid << " " << d.getLanguage();
-
-        if (lid<=0) {
-            throw 10;
-        }
-
-        qDebug() << "languageID " << lid << " " << d.getLanguage();
-
-        q.prepare("SELECT InstID FROM Instituts Where Name=:nm");
-        q.bindValue(":nm",d.getInstitutName());
-        q.exec();
-
-        while (q.next()) {
-            pid = q.value(0).toInt();
-        }
-
-        qDebug() << "providerIDD " << pid << " " << d.getInstitutName();
-
-
-        q.prepare("INSERT INTO `Diplomas` (`LangID`, `ProvID`, `Name`, `Schwer`) VALUES (:lid,:pid,:name,:schwid)");
-        q.bindValue(":lid",lid);
-        q.bindValue(":pid",pid);
-        q.bindValue(":name",d.getName());
-        q.bindValue(":schwid",d.getSchwerID());
-
-        if (!q.exec()) {
-            throw 10;
-        }
-
-
-        vasi.commit();
-
-        ShowSuccess();
-    }
-
-    catch (int ex) {
-
-        vasi.rollback();
-
-        ShowError(q);
-
-    }
-    q.finish();
-}
 
 
 

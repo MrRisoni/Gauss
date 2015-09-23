@@ -3,7 +3,6 @@
 
 #include "Entities/orm.h"
 #include <QBuffer>
-#include "E_Receipts/createnewreceiptdialog.h"
 #include "../crud.h"
 
 
@@ -75,11 +74,7 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
 
     CRUD::save(pay);
 
-    CreateNewReceiptDialog *gief= new CreateNewReceiptDialog();
-    gief->setReceiptType(-1);
-    gief->setAttribute(Qt::WA_DeleteOnClose);
-    gief->show();
-    //fill in the blanks
+
 
 }
 

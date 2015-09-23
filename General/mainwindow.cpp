@@ -127,17 +127,11 @@ void MainWindow::showAllGroups() {
 
 void MainWindow::giveMoneyReceipt() {
 
-    CreateNewReceiptDialog *gief = new CreateNewReceiptDialog();
-    gief->setReceiptType(-1);
-    gief->setAttribute(Qt::WA_DeleteOnClose);
-    gief->show();
+
 }
 
 void MainWindow::takeMoneyReceipt() {
-    CreateNewReceiptDialog *rec = new CreateNewReceiptDialog();
-    rec->setReceiptType(1);
-    rec->setAttribute(Qt::WA_DeleteOnClose);
-    rec->show();
+
 }
 
 void MainWindow::manageDiplomas() {

@@ -1,5 +1,6 @@
 
 #include "Entities/payments.h"
+#include "Entities/diplomas.h"
 #include <QString>
 #include <QList>
 #include <QSqlQuery>
@@ -10,6 +11,7 @@
 #include <QMessageBox>
 #include <QSqlDatabase>
 
+
 namespace CRUD {
 
 
@@ -19,6 +21,7 @@ namespace CRUD {
     void save(Payments p);
     void ShowSuccess();
     void ShowError(QSqlQuery q);
+    void save(Diplomas d);
 
 
 

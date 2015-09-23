@@ -20,6 +20,77 @@ QList<QString> CRUD::getPayTypes() {
 }
 
 
+void  CRUD::save(Diplomas d) {
+    QSqlQuery q;
+    try {
+
+        vasi.transaction();
+
+        qDebug() << "saving diploma...";
+        int lid=0,pid=0;
+
+
+        q.prepare("SELECT LangID From Languages Where Name=:nm");
+        q.bindValue(":nm",d.getLanguage());
+        q.exec();
+
+        while (q.next()) {
+            lid = q.value(0).toInt();
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        if (lid<=0) {
+            throw 10;
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        q.prepare("SELECT InstID FROM Instituts Where Name=:nm");
+        q.bindValue(":nm",d.getInstitutName());
+        q.exec();
+
+        while (q.next()) {
+            pid = q.value(0).toInt();
+        }
+
+        qDebug() << "providerID " << pid << " " << d.getInstitutName();
+
+        q.prepare("INSERT INTO Fache (FachTypeID, Name) VALUES (3,:name)");
+        q.bindValue(":name",d.getName());
+        if (!q.exec()) {
+            throw 10;
+        }
+        int fachid = q.lastInsertId().toInt();
+
+        q.prepare("INSERT INTO `Diplomas` (`LangID`, `ProvID`, `FachID`, `Schwer`) VALUES (:lid,:pid,:fachid,:schwid)");
+        q.bindValue(":lid",lid);
+        q.bindValue(":pid",pid);
+        q.bindValue(":fachid",fachid);
+        q.bindValue(":schwid",d.getSchwerID());
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+
+        vasi.commit();
+
+        ShowSuccess();
+    }
+
+    catch (int ex) {
+
+        vasi.rollback();
+
+        ShowError(q);
+
+    }
+    q.finish();
+}
+
+
+
 QList<QString> CRUD::getGroupIDs(QString Name) {
     QList<QString> groups;
     QSqlQuery q;

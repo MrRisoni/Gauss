@@ -23,7 +23,6 @@
 #include "Sprache/addinstitutdialog.h"
 #include "Sprache/addlanguagedialog.h"
 #include "Sprache/addnewdiplomadialog.h"
-#include "E_Receipts/createnewreceiptdialog.h"
 #include "showgroupsdialog.h"
 #include "Student/showstudentsdialog.h"
 #include "Student/viewstudentdialog.h"
