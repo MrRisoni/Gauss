@@ -11,10 +11,11 @@ import random
 
 # get should pay for each student
 
-sql = "SELECT StudentID,SUM(Amount) FROM ShouldBePayed GROUP BY StudentID"
-print 3/0
+sql = "SELECT StudentID,SUM(Amount) FROM ShouldBePayed WHERE StudentID>92 GROUP BY StudentID"
 
 db = MySQLdb.connect(host="localhost", user='jamie', passwd='jamie', db="Gauss", charset="utf8")
+
+
 
 cur = db.cursor()
 data = []
@@ -26,12 +27,18 @@ for row in rows:
 import pandas as pd
 
 for row in data:
-    startdate = "01/01/2007"
+    #sql = "SELECT SUM(Amount) FROM Funds Where StudentID='"+ str(row[0])+"'"
+    #cur.execute(sql)
+    #records = cur.fetchone()
+    pliromeno = 0 #records[0]
+    print pliromeno
+    times =0
+    startdate = "01/03/2014"
     arxiko = row[1]
-    left = arxiko
-    while left>0:
+    left = arxiko - pliromeno
+    while  times<20:
         amount = random.randint(88,150)
-    
+        times+=1
 
         startdate = pd.to_datetime(startdate) + pd.DateOffset(days= random.randint(25,45))
         dat = str(startdate)

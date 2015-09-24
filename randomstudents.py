@@ -18,20 +18,18 @@ with open ('/home/linguine/Gauss/male.txt') as fil:
         names.append(line.replace('\n',''))
         
         
-for n in names:
-    print n
+
 
 db = MySQLdb.connect(host="localhost", user='jamie', passwd='jamie', db="Gauss", charset="utf8")
 
-fache = [9,10,11,12]
 cur = db.cursor()
 
-for i in xrange(0,177):
+for i in xrange(0,8):
     
-    jahr = str(random.randint(1995,1997)) + '-' + str(random.randint(1,12)) + '-' + str(random.randint(2,27))
+    jahr = str(random.randint(1982,1987)) + '-' + str(random.randint(1,12)) + '-' + str(random.randint(2,27))
     
-    sql= "UPDATE `Members` SET BirthDate = '"+ jahr +"' Where MembTypeID=1"
-        
+    sql="INSERT INTO `Members` (`Name`, `MembTypeID`, `RegDate`, `BirthDate`) VALUES "
+    sql+= "('"+ random.choice(names) +"',1,'2014-01-01','"+ jahr+"')"        
     cur.execute(sql)
     
     

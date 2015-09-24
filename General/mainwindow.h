@@ -19,7 +19,6 @@
 #include "Uni/createunidialog.h"
 #include "E_Receipts/managefeesdialog.h"
 #include "Teacher/viewteacherdialog.h"
-#include "Artif_Intel/plotdialog.h"
 #include "Sprache/addinstitutdialog.h"
 #include "Sprache/addlanguagedialog.h"
 #include "Sprache/addnewdiplomadialog.h"

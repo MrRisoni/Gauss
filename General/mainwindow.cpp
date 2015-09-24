@@ -162,9 +162,7 @@ void MainWindow::manageInstituts() {
 }
 
 void MainWindow::showTestPlot() {
-    PlotDialog *plotdial= new PlotDialog();
-    plotdial->setAttribute(Qt::WA_DeleteOnClose);
-    plotdial->show();
+
 }
 
 void MainWindow::setDb(const QSqlDatabase &value)

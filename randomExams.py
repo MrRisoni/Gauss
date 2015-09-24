@@ -29,14 +29,21 @@ db = MySQLdb.connect(host="localhost", user='jamie', passwd='jamie', db="Gauss",
 
 cur = db.cursor()
 
+cur.execute("select StudID FROM Ensembles Where GroupID>7")
+rows = cur.fetchall()
+studs = []
+for row in rows:
+    studs.append(row[0])
 
-import pandas as pd
-startdate = "01/01/2009"
+print len(studs)
+
+print 3/0
+
 
 # a small percentage of failure
-grades = [ random.randint(75,100) for t in xrange(9,90)]
+grades = [ random.randint(75,100) for t in studs]
 
-fail = int ( 6* len(grades) /100 )
+fail = int ( 8* len(grades) /100 )
 print fail
 random.shuffle(grades)
 for i in xrange(fail):
@@ -47,9 +54,9 @@ random.shuffle(grades)
 
 
 i=0
-for t in xrange(9,90):    
+for t in studs:    
     sql = "INSERT INTO Exam (FachID, ExamDat, StudentID, Grade) "
-    sql+= " VALUES (1,'2010-06-15','"+ str(t)+"','"+ str(grades[i])+"')"
+    sql+= " VALUES (1,'2011-07-15','"+ str(t)+"','"+ str(grades[i])+"')"
     i+=1
     print sql
     cur.execute(sql)

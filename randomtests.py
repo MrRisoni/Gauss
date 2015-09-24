@@ -22,20 +22,25 @@ db = MySQLdb.connect(host="localhost", user='jamie', passwd='jamie', db="Gauss",
 
 cur = db.cursor()
 
-
 import pandas as pd
-startdate = "01/01/2009"
+startdate = "01/03/2014"
 
+cur.execute("select StudID FROM Ensembles Where GroupID>12")
+rows = cur.fetchall()
+studs = []
+for row in rows:
+    studs.append(row[0])
 
+print len(studs)
 
-for i in xrange(35):
+for i in xrange(42):
     startdate = pd.to_datetime(startdate) + pd.DateOffset(days= 15)
     dat = str(startdate)
     dat = dat[:10]  
     print dat
-    for t in xrange(9,90):    
+    for t in studs:    
         sql = "INSERT INTO `Tests` (`StudID`, `Dat`, `FachID`, `Grade`) VALUES "
-        sql+= " ('"+ str(t)+"','"+ dat +"',1,'" + str(random.randint(65,100))+"')"
+        sql+= " ('"+ str(t)+"','"+ dat +"',9,'" + str(random.randint(85,100))+"')"
         print sql
         cur.execute(sql)
         

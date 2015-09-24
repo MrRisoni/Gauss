@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 23 22:11:15 2015
 
-@author: linguine
-"""
 
-# -*- coding: utf-8 -*-
-"""
-Created on Wed Sep 23 19:51:27 2015
-
-@author: linguine
-"""
 
 #create 15 English 7 french and 6 de teachers
 import MySQLdb
 import random
-print 3/0
+
+
 # get should pay for each student
 
 sql = "Select G.TeacherID , SUM(Amount) FROM Groups G ,ShouldPay S WHERE S.GroupID = G.GroupID Group BY G.TeacherID "
@@ -31,12 +22,18 @@ for row in rows:
 
 import pandas as pd
 
+
 for row in data:
     startdate = "01/01/2007"
-    arxiko = row[1]
-    left = arxiko
+    #sql = "SELECT SUM(Amount) FROM Payments Where TeacherID='"+ str(row[0])+"' AND PayTypeID=1"
+    #cur.execute(sql)
+    #records = cur.fetchone()
+    #pliromeno = records[0]
+    #print pliromeno
+    #arxiko = row[1] - pliromeno
+    left = row[1]
     while left>0:
-        amount = random.randint(150,250)
+        amount = random.randint(450,550)
     
 
         startdate = pd.to_datetime(startdate) + pd.DateOffset(days= random.randint(28,32))

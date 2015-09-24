@@ -13,10 +13,6 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-  Artif_Intel/exportutils.cpp \
-  Artif_Intel/plotdialog.cpp \
-  Artif_Intel/qcustomplot.cpp  \
-  Artif_Intel/statisticsdialog.cpp  \
   Entities/absent.cpp  \
   Entities/basewages.cpp  \
   Entities/buildings.cpp \
@@ -161,10 +157,6 @@ HEADERS  += Entities/absent.h  \
     Entities/wagesschule.h \
     Entities/wagessprache.h \
     Entities/wagesuni.h \
-    Artif_Intel/exportutils.h \
-    Artif_Intel/plotdialog.h \
-    Artif_Intel/qcustomplot.h \
-    Artif_Intel/statisticsdialog.h \
     E_Receipts/kassendialog.h \
     E_Receipts/managefeesdialog.h \
     E_Receipts/managesalariesdialog.h \
@@ -215,9 +207,7 @@ HEADERS  += Entities/absent.h  \
 
 
 
-FORMS    += Artif_Intel/plotdialog.ui \
-    Artif_Intel/statisticsdialog.ui \
-    E_Receipts/kassendialog.ui \
+FORMS    +=   E_Receipts/kassendialog.ui \
     E_Receipts/managefeesdialog.ui \
     E_Receipts/managesalariesdialog.ui \
     General/absentbuchdialog.ui \

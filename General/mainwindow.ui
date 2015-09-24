@@ -110,13 +110,6 @@
     <property name="title">
      <string>Utilities</string>
     </property>
-    <widget class="QMenu" name="menuReceipts">
-     <property name="title">
-      <string>Receipts</string>
-     </property>
-     <addaction name="actionGive_Receipt"/>
-     <addaction name="actionTake_Money"/>
-    </widget>
     <addaction name="actionSchwer_Levels"/>
     <addaction name="actionManage_Departments"/>
     <addaction name="actionManage_Courses"/>
@@ -126,14 +119,6 @@
     <addaction name="actionManage_Langugages"/>
     <addaction name="actionManage_Kassen"/>
     <addaction name="actionManage_Diplomas"/>
-    <addaction name="menuReceipts"/>
-   </widget>
-   <widget class="QMenu" name="menuStatistics">
-    <property name="title">
-     <string>Statistics</string>
-    </property>
-    <addaction name="actionTest_Plot"/>
-    <addaction name="actionMachine_Learning"/>
    </widget>
    <widget class="QMenu" name="menuGroups">
     <property name="title">
@@ -155,7 +140,6 @@
    </widget>
    <addaction name="menuMembers"/>
    <addaction name="menuUtilities"/>
-   <addaction name="menuStatistics"/>
    <addaction name="menuGroups"/>
    <addaction name="menuTests"/>
   </widget>
