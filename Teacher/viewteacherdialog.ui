@@ -605,7 +605,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <property name="movable">
       <bool>false</bool>
@@ -645,21 +645,6 @@
        </property>
        <property name="text">
         <string>Show</string>
-       </property>
-      </widget>
-     </widget>
-     <widget class="QWidget" name="tab_3">
-      <attribute name="title">
-       <string>Graph</string>
-      </attribute>
-      <widget class="QWidget" name="plotWidget" native="true">
-       <property name="geometry">
-        <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>491</width>
-         <height>441</height>
-        </rect>
        </property>
       </widget>
      </widget>

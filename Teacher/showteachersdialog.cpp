@@ -10,8 +10,7 @@ ShowTeachersDialog::ShowTeachersDialog(QWidget *parent) :
      * teacherid
      * name
      * address
-     * #courses + #diplomas
-     * Courses tooltip
+     * #face
      * salary
      * total money payed
      * debt

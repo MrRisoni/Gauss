@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <property name="geometry">
@@ -43,7 +43,7 @@
        <x>10</x>
        <y>30</y>
        <width>1251</width>
-       <height>541</height>
+       <height>571</height>
       </rect>
      </property>
      <property name="toolTip">
@@ -62,19 +62,6 @@
       <enum>QAbstractItemView::SelectRows</enum>
      </property>
     </widget>
-    <widget class="QPushButton" name="pushCharts">
-     <property name="geometry">
-      <rect>
-       <x>10</x>
-       <y>580</y>
-       <width>82</width>
-       <height>23</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Show Chart</string>
-     </property>
-    </widget>
     <widget class="QComboBox" name="comboGroupType">
      <property name="geometry">
       <rect>
@@ -85,7 +72,7 @@
       </rect>
      </property>
     </widget>
-    <widget class="QCheckBox" name="checkShowInactive">
+    <widget class="QCheckBox" name="checkShowActiveOnly">
      <property name="geometry">
       <rect>
        <x>240</x>
@@ -95,7 +82,10 @@
       </rect>
      </property>
      <property name="text">
-      <string>CheckBox</string>
+      <string>Show Active Only</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </widget>
@@ -121,7 +111,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -348,7 +338,7 @@
         <rect>
          <x>20</x>
          <y>30</y>
-         <width>601</width>
+         <width>1201</width>
          <height>511</height>
         </rect>
        </property>
@@ -363,16 +353,6 @@
        </property>
        <property name="selectionBehavior">
         <enum>QAbstractItemView::SelectRows</enum>
-       </property>
-      </widget>
-      <widget class="QCustomPlot" name="myPlot" native="true">
-       <property name="geometry">
-        <rect>
-         <x>630</x>
-         <y>30</y>
-         <width>591</width>
-         <height>511</height>
-        </rect>
        </property>
       </widget>
      </widget>
@@ -438,14 +418,6 @@
    </property>
   </widget>
  </widget>
- <customwidgets>
-  <customwidget>
-   <class>QCustomPlot</class>
-   <extends>QWidget</extends>
-   <header>qcustomplot.h</header>
-   <container>1</container>
-  </customwidget>
- </customwidgets>
  <resources/>
  <connections/>
 </ui>

@@ -12,6 +12,8 @@
 #include <QBrush>
 #include <QSqlRecord>
 #include <QListWidgetItem>
+#include <QSqlError>
+#include <QMessageBox>
 
 namespace MVC {
 
@@ -27,6 +29,7 @@ struct RGBColor {
 };
 
 QList<QStringList> QueryToList(QString qry);
+void ShowError(QSqlQuery q);
 
 
 //***************************      MODEL FOR General/RaumeDialog       ***************************
