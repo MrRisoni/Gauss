@@ -495,8 +495,8 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
             q2.bindValue(":gid",GroupID);
             q2.exec();
             while (q2.next()) {
-                record.append(q2.value(0).toString()); // gross salary
-                record.append(q2.value(1).toString()); //fee
+                record.append(q2.value(0).toString().mid(0,5)); // gross salary
+                record.append(q2.value(1).toString().mid(0,5)); //fee
             }
 
 

@@ -91,7 +91,7 @@ void GeldRechen::calcStudentFees() {
              qDebug () << "studid " << studid << "joined " << maxDate(joined,start_date) << " dropped " << minDate(dropped,QDate::currentDate());
              //get group history  from GREATEST(groupstart,added) up to LEAST(dropout,curdate)  MINUS  Truant==0 abscencies
 
-             q3.prepare("SELECT Duration,fee FROM History  Where Dat>= :join_date AND Dat<=:leave_date AND GroupID=:gid  AND Valid=1  AND HistID NOT IN (SELECT HistID FROM Absent WHERE StudentID=:sid and Truant=0)") ;
+             q3.prepare("SELECT Duration,fee+ fee*vat FROM History  Where Dat>= :join_date AND Dat<=:leave_date AND GroupID=:gid  AND Valid=1  AND HistID NOT IN (SELECT HistID FROM Absent WHERE StudentID=:sid and Truant=0)") ;
              qDebug() << "Joined date " << joined.toString() << " dropped " << dropped.toString();
              q3.bindValue(":join_date",maxDate(joined,start_date));
              q3.bindValue(":leave_date",minDate(dropped,QDate::currentDate()));
@@ -103,7 +103,8 @@ void GeldRechen::calcStudentFees() {
              float unterricht = 0;
              float muss_bezahlen=0;
              while (q3.next()) {
-                  muss_bezahlen += q3.value(0).toFloat() * q3.value(1).toFloat();
+                 //qDebug() << "VATED" << q3.value(1).toFloat();
+                  muss_bezahlen += q3.value(0).toFloat() * q3.value(1).toFloat() ;
                   unterricht += q3.value(0).toFloat();
              }
 
