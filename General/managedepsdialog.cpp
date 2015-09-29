@@ -1,5 +1,7 @@
 #include "managedepsdialog.h"
 #include "ui_managedepsdialog.h"
+#include "../orm.h"
+
 
 ManageDepsDialog::ManageDepsDialog(QWidget *parent) :
     QDialog(parent),
@@ -31,12 +33,11 @@ void ManageDepsDialog::populateTable() {
 
 void ManageDepsDialog::on_pushSaveDep_clicked()
 {
-    ORM O=ORM();
     Departments d=Departments();
     d.setDepName(ui->lineDep->text());
 
     qDebug() << "prepared department object" ;
 
-    O.save(d);
+    ORM::save(d);
     populateTable();
 }

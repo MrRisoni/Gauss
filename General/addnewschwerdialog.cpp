@@ -5,7 +5,7 @@
 #include <QColorDialog>
 #include <QAbstractItemModel>
 #include  "../mvc.h"
-
+#include "../orm.h"
 
 AddNewSchwerDialog::AddNewSchwerDialog(QWidget *parent) :
     QDialog(parent),
@@ -116,13 +116,12 @@ void AddNewSchwerDialog::on_pushPickColor_clicked()
 
 void AddNewSchwerDialog::on_pushSave_clicked()
 {
-    ORM myorm= ORM();
     Schwierigkeit schw=Schwierigkeit();
     schw.setBlue(blue);
     schw.setRed(red);
     schw.setGreen(green);
     qDebug() << "red " << QString::number(schw.getRed()) << " " << QString::number(schw.getGreen()) << " " << QString::number(schw.getBlue());
-    myorm.save(schw);
+    ORM::save(schw);
 
     LoadColors();
 

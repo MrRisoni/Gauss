@@ -2,7 +2,7 @@
 #include "ui_managesalariesdialog.h"
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 #include "Entities/basewages.h"
 #include <QInputDialog>
 #include "Entities/courses.h"
@@ -23,8 +23,7 @@ ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
 
 
     //fill combo boxes
-    ORM o=ORM();
-    QList<Echelon> Ec=o.getEchels();
+    QList<Echelon> Ec = ORM::getEchels();
     for (Echelon c : Ec) {
         ui->comboBaseEchelon->addItem(QString::number(c.getExpYears()));
 
@@ -37,7 +36,7 @@ ManageSalariesDialog::ManageSalariesDialog(QWidget *parent) :
 
 
     //get schule courses
-    QList<Courses> SchuleCourses=o.getSchuleCourses();
+    QList<Courses> SchuleCourses = ORM::getSchuleCourses();
     for (Courses C : SchuleCourses) {
         ui->comboSchule->addItem(C.getName());
     }
@@ -71,10 +70,9 @@ void ManageSalariesDialog::on_pushNewEchel_clicked()
     QString text =  inputDialog->getText(NULL ,"Gauss",
                                              "Enter months", QLineEdit::Normal);
     if (text.length()>0) {
-        ORM O=ORM();
         Echelon e=Echelon();
         e.setExpYears(text.toInt());
-        O.save(e);
+        ORM::save(e);
     }
 
     populateEchelTable();
@@ -115,8 +113,7 @@ void ManageSalariesDialog::populateSchuleTable() {
 
     schuleMod->setHorizontalHeaderLabels(headers);
 
-    ORM cppHib = ORM();
-    QList<WagesSchule> WSchule = cppHib.getWagesSchule();
+    QList<WagesSchule> WSchule = ORM::getWagesSchule();
 
     int row=0;
     for (WagesSchule W : WSchule) {
@@ -156,8 +153,7 @@ void ManageSalariesDialog::on_pushAddBaseScheme_clicked()
 
     B.setE(E);
 
-    ORM o=ORM();
-    o.save(B);
+    ORM::save(B);
     populateBaseTable();
 }
 
@@ -180,34 +176,10 @@ void ManageSalariesDialog::on_pushAddSchuleScheme_clicked()
 
     WgSchule.setWage(ui->lineSchuleWages->text().toFloat());
 
-    ORM o=ORM();
-    o.save(WgSchule);
+    ORM::save(WgSchule);
 
     populateSchuleTable();
 
 
 }
 
-void ManageSalariesDialog::on_tableBase_doubleClicked(const QModelIndex &index)
-{
-    //values wrt time
-
-}
-
-void ManageSalariesDialog::on_tableSchule_doubleClicked(const QModelIndex &index)
-{
-    //values wrt time
-
-}
-
-void ManageSalariesDialog::on_tableUni_doubleClicked(const QModelIndex &index)
-{
-    //values wrt time
-
-}
-
-void ManageSalariesDialog::on_tableView_5_doubleClicked(const QModelIndex &index)
-{
-    //values wrt time
-
-}

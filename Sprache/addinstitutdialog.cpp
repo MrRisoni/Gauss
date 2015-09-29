@@ -3,7 +3,7 @@
 
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 #include <QStandardItemModel>
 
 
@@ -14,8 +14,7 @@ AddInstitutDialog::AddInstitutDialog(QWidget *parent) :
     ui->setupUi(this);
 
 
-    ORM o=ORM();
-    AddInstitutDialogMVC mvc=o.getAddInstitutMVC();
+    AddInstitutDialogMVC mvc=ORM::getAddInstitutMVC();
 
     QStandardItemModel *model=new QStandardItemModel(this);
 

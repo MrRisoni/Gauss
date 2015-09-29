@@ -4,7 +4,7 @@
 #include <algorithm>
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 
 AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
     QDialog(parent),
@@ -44,14 +44,13 @@ AddNewStudentDialog::AddNewStudentDialog(QWidget *parent) :
 
 
     //fetch disciplines
-    ORM o = ORM();
-    for (Discipline d : o.getDisciplines()) {
+    for (Discipline d : ORM::getDisciplines()) {
          ui->comboDiscipline->addItem(d.getName());
     }
 
 
 
-    for (DiscountType dt : o.getDiscountTypes()) {
+    for (DiscountType dt : ORM::getDiscountTypes()) {
         ui->comboSpecialCats->addItem(dt.getDescription());
     }
 
@@ -79,13 +78,12 @@ void AddNewStudentDialog::on_pushAddStudent_clicked()
         m.setADT(ui->lineADT->text()); //set a random string and number
 
 
-        ORM O=ORM();
         if (ui->checkSchule->checkState()==Qt::Checked) {
-            O.saveSchuleStudent(m,ui->comboDiscipline->currentText(),ui->comboSpecialCats->currentText());
+            ORM::saveSchuleStudent(m,ui->comboDiscipline->currentText(),ui->comboSpecialCats->currentText());
 
         }
         else {
-            O.saveStudent(m);
+            ORM::saveStudent(m);
         }
     }
 }
@@ -185,9 +183,8 @@ void AddNewStudentDialog::on_pushBulkInsert_clicked()
 
         qDebug() << "richtung " << richter << " " << orphana;
 
-        ORM HIB = ORM();
         qDebug() << "saving.............................................";
-        HIB.saveSchuleStudent(m,richter,orphana);
+        ORM::saveSchuleStudent(m,richter,orphana);
     }
 
     qDebug() << "end";

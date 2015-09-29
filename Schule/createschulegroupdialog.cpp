@@ -12,6 +12,7 @@
 #include "General/roomitemdelegate.h"
 #include <tuple>
 #include <vector>
+#include "../orm.h"
 
 
 //use a tuple :) Column,Duration,Room , only duration changes
@@ -24,9 +25,8 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
     ui->setupUi(this);
 
 
-    ORM o = ORM();
 
-    QList<Courses> Clist = o.getSchuleCourses();
+    QList<Courses> Clist = ORM::getSchuleCourses();
     int r=0;
     for (Courses C : Clist) {
         ui->comboCourse->addItem(C.getName());
@@ -50,7 +50,7 @@ CreateSchuleGroupDialog::CreateSchuleGroupDialog(QWidget *parent) :
 
     //populate the hours and days
     ScheduleModel = new QStandardItemModel();
-    TimeTableHeaders HEADS= o .getTimeTableHeaders();
+    TimeTableHeaders HEADS= ORM::getTimeTableHeaders();
     ScheduleModel->setHorizontalHeaderLabels(HEADS.horHeaders);
     ScheduleModel->setVerticalHeaderLabels(HEADS.verHeaders);
 
@@ -94,8 +94,7 @@ void CreateSchuleGroupDialog::populateStudentsTable(QString CourseName) {
 
     AllModel->setHorizontalHeaderLabels(headers);
 
-    ORM o=ORM();
-    QList<Members> mathites = o.getRequestsSchule(ui->comboCourse->currentText());
+    QList<Members> mathites = ORM::getRequestsSchule(ui->comboCourse->currentText());
 
     for (Members m : mathites) {
         QStandardItem *itID = new QStandardItem();
@@ -131,8 +130,7 @@ void CreateSchuleGroupDialog::populateTable(QString CourseName) {
     QStandardItemModel *mod = new QStandardItemModel();
 
 
-    ORM o =ORM();
-    SchuleTeacherMVC profs= o.getCanTeachSchuleMVC(CourseName);
+    SchuleTeacherMVC profs= ORM::getCanTeachSchuleMVC(CourseName);
 
     mod->setHorizontalHeaderLabels(profs.SchuleTeacherViewHeaders);
 
@@ -377,8 +375,7 @@ void CreateSchuleGroupDialog::on_pushOK_clicked()
     qDebug() << "end date " << QDate::currentDate().addDays(ui->lineDuration->text().toInt());
 
 
-    ORM o= ORM();
-    o.saveSchule(G,p,Programma);
+    ORM::saveSchule(G,p,Programma);
 
 }
 

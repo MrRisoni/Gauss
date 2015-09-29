@@ -38,15 +38,11 @@ SOURCES += main.cpp\
   Entities/languages.cpp \
   Entities/members.cpp \
   Entities/membtypes.cpp \
-  Entities/orm.cpp \
+  orm.cpp \
   Entities/paykassen.cpp  \
   Entities/payments.cpp  \
     Entities/paytype.cpp  \
     Entities/permament.cpp  \
-    Entities/receipt.cpp \
-    Entities/requestschule.cpp \
-    Entities/requestsprache.cpp \
-    Entities/requestuni.cpp \
     Entities/rooms.cpp \
     Entities/schedule.cpp \
     Entities/schwierigkeit.cpp \
@@ -101,10 +97,10 @@ SOURCES += main.cpp\
     General/roomitemdelegate.cpp \
     mvc.cpp \
     Entities/discipline.cpp \
-    validator.cpp \
     crud.cpp \
     Entities/wages.cpp \
-    Entities/fee.cpp
+    Entities/fee.cpp \
+    Entities/requests.cpp
 
 
 
@@ -133,15 +129,12 @@ HEADERS  += Entities/absent.h  \
     Entities/languages.h \
     Entities/members.h \
     Entities/membtypes.h \
-    Entities/orm.h \
+    orm.h \
     Entities/paykassen.h \
     Entities/payments.h \
     Entities/paytype.h \
     Entities/permament.h \
     Entities/receipt.h \
-    Entities/requestschule.h \
-    Entities/requestsprache.h \
-    Entities/requestuni.h \
     Entities/rooms.h \
     Entities/schedule.h \
     Entities/schwierigkeit.h \
@@ -198,10 +191,10 @@ HEADERS  += Entities/absent.h  \
     General/roomitemdelegate.h \
     mvc.h \
     Entities/discipline.h \
-    validator.h \
     crud.h \
     Entities/wages.h \
-    Entities/fee.h
+    Entities/fee.h \
+    Entities/requests.h
 
 
 

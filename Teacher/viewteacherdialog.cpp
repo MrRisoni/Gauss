@@ -1,7 +1,7 @@
 #include "viewteacherdialog.h"
 #include "ui_viewteacherdialog.h"
 
-#include "Entities/orm.h"
+#include "../orm.h"
 #include <QBuffer>
 #include "../crud.h"
 
@@ -14,8 +14,7 @@ ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
 
     //combo paytype
 
-    ORM o=ORM();
-    for (Departments D : o.getDeps()) {
+    for (Departments D : ORM::getDeps()) {
         ui->comboDeps->addItem(D.getDepName());
     }
 
@@ -34,9 +33,8 @@ ViewTeacherDialog::~ViewTeacherDialog()
 
 void ViewTeacherDialog::on_pushButton_clicked()
 {
-    ORM o=ORM();
 
-    Teacher L = o.searchteacherByname(ui->lineName->text());
+    Teacher L = ORM::searchteacherByname(ui->lineName->text());
 
     ui->labName->setText(L.getName());
     ui->labAddress->setText(L.getAddress());
@@ -81,9 +79,8 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
 void ViewTeacherDialog::on_comboDeps_currentIndexChanged(const QString &arg1)
 {
     ui->comboAllCourses->clear();
-    ORM o=ORM();
 
-    for (Courses c : o.getUniCourses(arg1)) {
+    for (Courses c : ORM::getUniCourses(arg1)) {
         ui->comboAllCourses->addItem(c.getName());
      }
 

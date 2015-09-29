@@ -1,36 +1,39 @@
-#ifndef ORM_H
-#define ORM_H
 
 
-#include "tablestructs.h"
+#include "Entities/tablestructs.h"
+#include "Entities/departments.h"
+#include "Entities/courses.h"
+#include "Entities/echelon.h"
+#include "Entities/basewages.h"
+#include "Entities/wagesschule.h"
+#include "Entities/members.h"
+#include "Entities/teacher.h"
+#include "Entities/languages.h"
+#include "Entities/diplomas.h"
+#include "Entities/basewages.h"
+#include "Entities/days.h"
+#include "Entities/hours.h"
+#include "Entities/kassen.h"
+#include "Entities/requests.h"
+#include "Entities/buildings.h"
+#include "Entities/rooms.h"
+#include "Entities/feeschule.h"
+#include "Entities/groups.h"
+#include "Entities/payments.h"
+#include "Entities/paytype.h"
+#include "Entities/permament.h"
+#include "Entities/permatimes.h"
+#include "Entities/discipline.h"
+#include "Entities/discounttype.h"
+#include "Entities/student.h"
+#include "Entities/funds.h"
 
-#include "departments.h"
-#include "courses.h"
-#include "echelon.h"
-#include "basewages.h"
-#include "wagesschule.h"
-#include "members.h"
-#include "teacher.h"
-#include "languages.h"
-#include "diplomas.h"
-#include "basewages.h"
-#include "days.h"
-#include "hours.h"
-#include "kassen.h"
-#include "requestschule.h"
-#include "buildings.h"
-#include "rooms.h"
-#include "feeschule.h"
-#include "groups.h"
-#include "payments.h"
-#include "paytype.h"
-#include "permament.h"
-#include "permatimes.h"
-#include "discipline.h"
-#include "discounttype.h"
-#include "student.h"
-#include "funds.h"
 
+
+
+#include <exception>
+#include <iostream>
+#include <QFile>
 #include <QSqlQuery>
 #include <QDebug>
 #include <QSqlError>
@@ -38,22 +41,17 @@
 #include <QSqlDatabase>
 #include <QComboBox>
 
+namespace ORM {
 
-struct Zukunuft{
-    std::vector<long> FutureJulianDays;
-    std::vector<int> FutureRoomIDs;
-    std::vector<int> FutureHourIDs;
-    std::vector<float> Durations;
-};
+  
+    struct Zukunuft{
+        std::vector<long> FutureJulianDays;
+        std::vector<int> FutureRoomIDs;
+        std::vector<int> FutureHourIDs;
+        std::vector<float> Durations;
+    };
 
 
-
-
-class ORM
-{
-public:
-    ORM();
-    ~ORM();
 
 
 
@@ -70,7 +68,7 @@ public:
     void saveStudent(Members m);
     void save(Kassen K);
     void saveTeacher(Teacher T);
-    void save(RequestSchule rec);
+    void save(Requests rec);
     void save(Buildings B);
     void save(Rooms R);
     void save(FeeSchule fsh);
@@ -129,11 +127,8 @@ public:
     QList<PayType> getPayTypes();
 
 
-    QSqlDatabase getDb() const;
-    void setDb(const QSqlDatabase &value);
 
 
-    QString getSetFacesPath();
 
 
     //  MVC
@@ -163,7 +158,6 @@ public:
 
     void ShowError(QSqlQuery q);
     void ShowSuccess();
-    QSqlDatabase db;
     QString generateADT();
     QString generateAFM();
     QString generatePhone();
@@ -176,6 +170,6 @@ public:
 
 
 
-};
+} //END OF NAMESPACE
 
-#endif // ORM_H
+

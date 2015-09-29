@@ -2,8 +2,6 @@
 #define MANAGECOURSESDIALOG_H
 
 #include <QDialog>
-#include "Entities/orm.h"
-#include "Entities/courses.h"
 #include <QDebug>
 
 
@@ -27,8 +25,7 @@ private slots:
 private:
     Ui::ManageCoursesDialog *ui;
     void populateTable();
-    QList<Schwierigkeit> Stuffen;
-    QList<Departments> Deps;
+
 
 };
 

@@ -3,7 +3,7 @@
 
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 #include "../mvc.h"
 #include "../crud.h"
 
@@ -16,12 +16,11 @@ AddNewDiplomaDialog::AddNewDiplomaDialog(QWidget *parent) :
 
     //fetch Shweriegkeit levels
 
-    ORM O=ORM();
     int row=0;
 
 
 
-    QList<Schwierigkeit> Stuffen = O.getSchwer();
+    QList<Schwierigkeit> Stuffen = ORM::getSchwer();
     for (Schwierigkeit stuffe: Stuffen) {
         qDebug() << "new stuffe" << stuffe.getRed() << " " << stuffe.getGreen() << " " << stuffe.getBlue();
         ui->comboSchwer->addItem(QString::number(stuffe.getSchwerID()));

@@ -2,7 +2,6 @@
 #define CREATESCHULEGROUPDIALOG_H
 
 #include <QDialog>
-#include "Entities/orm.h"
 #include <QStandardItem>
 #include <QStandardItemModel>
 

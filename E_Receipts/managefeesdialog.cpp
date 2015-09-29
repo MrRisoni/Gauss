@@ -3,7 +3,7 @@
 
 
 #include <QStandardItemModel>
-#include "Entities/orm.h"
+#include "../orm.h"
 #include "../mvc.h"
 
 ManageFeesDialog::ManageFeesDialog(QWidget *parent) :
@@ -13,8 +13,7 @@ ManageFeesDialog::ManageFeesDialog(QWidget *parent) :
     ui->setupUi(this);
 
     populateTable();
-    ORM o=ORM();
-    QList<Courses> cs=o.getSchuleCourses();
+    QList<Courses> cs = ORM::getSchuleCourses();
     for (Courses c : cs) {
         ui->comboCourses->addItem(c.getName());
     }
@@ -44,8 +43,7 @@ void ManageFeesDialog::on_pushSaveSchuleFee_clicked()
     fsch.setDat(QDate::currentDate());
     fsch.setFee(ui->lineSchuleFee->text().toFloat());
 
-    ORM o = ORM();
-    o.save(fsch);
+    ORM::save(fsch);
 }
 
 void ManageFeesDialog::on_tableCourses_doubleClicked(const QModelIndex &index)

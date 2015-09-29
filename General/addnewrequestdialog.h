@@ -22,6 +22,12 @@ private slots:
 
     void on_pushAddUni_clicked();
 
+    void on_pushButton_3_clicked();
+
+    void on_comboDep_activated(const QString &arg1);
+
+    void on_comboCourses_activated(const QString &arg1);
+
 private:
     Ui::AddNewRequestDialog *ui;
 };

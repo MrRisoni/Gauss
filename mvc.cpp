@@ -170,6 +170,13 @@ QStandardItemModel* MVC::getGeneral_ShowStudents_Model() {
         record.append(QString::number(should_pay-has_payed));
 
 
+        //get tests
+        q2.prepare("SELECT AVG(Grade) FROM Tests Where StudID=:sid");
+        q2.bindValue(":sid",studid);
+        q2.exec();
+        while (q2.next()) {
+            record.append(q2.value(0).toString().mid(0,5));
+        }
 
 
         data.append(record);
@@ -495,8 +502,8 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
             q2.bindValue(":gid",GroupID);
             q2.exec();
             while (q2.next()) {
-                record.append(q2.value(0).toString()); // gross salary
-                record.append(q2.value(1).toString()); //fee
+                record.append(q2.value(0).toString().mid(0,5)); // gross salary
+                record.append(q2.value(1).toString().mid(0,5)); //fee
             }
 
 
@@ -934,7 +941,7 @@ QStandardItemModel* MVC::getGeneralManageFees() {
          -these courses don't have a fee yet : Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule)
 
 
-        /* UNION Courses have have a fee and courses that dont
+        UNION Courses have have a fee and courses that dont
         Select CourseID,0 as Plithos,0 as Latest FROM Courses Where DepID=1 AND CourseID NOT IN (SELECT CourseID FROM FeeSchule) UNION
 
         SELECT CourseID,Count(Dat) As Fores ,MAX(Dat) as Latest FROM `FeeSchule`Group By CourseID

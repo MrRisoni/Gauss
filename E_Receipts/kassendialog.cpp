@@ -2,7 +2,7 @@
 #include "ui_kassendialog.h"
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 #include <QStandardItem>
 #include <QStandardItemModel>
 
@@ -21,8 +21,7 @@ void KassenDialog::populateKassenTable() {
 
     QStandardItemModel *kassenModel = new QStandardItemModel();
 
-    ORM O=ORM();
-    KassenMVC mvc= O.getKassenMVC();
+    KassenMVC mvc= ORM::getKassenMVC();
     kassenModel->setHorizontalHeaderLabels(mvc.headers);
 
     int row=0;
@@ -68,10 +67,9 @@ KassenDialog::~KassenDialog()
 
 void KassenDialog::on_pushSave_clicked()
 {
-    ORM o = ORM();
     Kassen K = Kassen();
     K.setName(ui->lineKasse->text());
-    o.save(K);
+    ORM::save(K);
 
 }
 

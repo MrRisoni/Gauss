@@ -4,6 +4,8 @@
 
 #include <QFileDialog>
 #include "../mvc.h"
+#include "../orm.h"
+
 
 AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     QDialog(parent),
@@ -12,9 +14,8 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     ui->setupUi(this);
 
 
-    ORM cppHib = ORM();
     //fetch deps
-    QList<Departments> Ds = cppHib.getDeps();
+    QList<Departments> Ds = ORM::getDeps();
     for (Departments d : Ds) {
         ui->comboDeps->addItem(d.getDepName());
     }
@@ -27,7 +28,7 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
 
 
     //fetch langs
-    QList<Languages> langs = cppHib.getSprachen();
+    QList<Languages> langs = ORM::getSprachen();
     for (Languages L : langs) {
         ui->comboSprachen->addItem(L.getName());
     }
@@ -48,8 +49,8 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     //fetch hours and dates for the unavailable table
 
 
-    QList<Days> Tage=cppHib.getDays();
-    QList<Hours> Studen=cppHib.getHours();
+    QList<Days> Tage=ORM::getDays();
+    QList<Hours> Studen=ORM::getHours();
 
     QStringList horLabels,verLabels;
 
@@ -69,7 +70,7 @@ AddNewTeacherDialog::AddNewTeacherDialog(QWidget *parent) :
     ui->tableUnAvail->resizeColumnsToContents();
 
     //fetch Kassen
-    QList<Kassen> Tameia = cppHib.getKassen();
+    QList<Kassen> Tameia = ORM::getKassen();
     for (Kassen K : Tameia) {
         ui->comboKassen->addItem(K.getName());
     }
@@ -86,8 +87,7 @@ void AddNewTeacherDialog::on_comboDeps_currentTextChanged(const QString &arg1)
 {
     //load the courses from the db
     ui->listAllCourses->clear();
-    ORM o =ORM();
-    QList<Courses> clist=o.getSpecialCourses(arg1);
+    QList<Courses> clist=ORM::getSpecialCourses(arg1);
 
     for (Courses c  : clist) {
 
@@ -227,21 +227,11 @@ void AddNewTeacherDialog::on_pushSaveTeacher_clicked()
     pk.setWages(ui->lineKasse->text().toFloat());
     t.setPayKasse(pk);
 
-    ORM o=ORM();
-    o.setDb(getDb());
-    o.saveTeacher(t);
+    ORM::saveTeacher(t);
 
 
 }
-QSqlDatabase AddNewTeacherDialog::getDb() const
-{
-    return db;
-}
 
-void AddNewTeacherDialog::setDb(const QSqlDatabase &value)
-{
-    db = value;
-}
 
 
 void AddNewTeacherDialog::on_pushLoadPic_clicked()
@@ -266,8 +256,7 @@ void AddNewTeacherDialog::on_pushLoadPic_2_clicked()
 void AddNewTeacherDialog::on_comboSprachen_activated(const QString &arg1)
 {
     ui->listAllDiplomas->clear();
-    ORM o =  ORM();
-    for (QString s : o.getDiplomaForThatLanguage(arg1)) {
+    for (QString s : ORM::getDiplomaForThatLanguage(arg1)) {
         ui->listAllDiplomas->addItem(s);
     }
 }

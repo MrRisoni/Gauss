@@ -2,7 +2,6 @@
 #define ADDNEWSCHWERDIALOG_H
 
 #include <QDialog>
-#include "Entities/orm.h"
 
 
 

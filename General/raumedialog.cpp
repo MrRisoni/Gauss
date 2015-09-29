@@ -6,6 +6,7 @@
 #include <QInputDialog>
 #include <QStandardItem>
 #include "../mvc.h"
+#include "../orm.h"
 
 
 RaumeDialog::RaumeDialog(QWidget *parent) :
@@ -18,8 +19,7 @@ RaumeDialog::RaumeDialog(QWidget *parent) :
 
 
     //fetch Buildings
-    ORM o=ORM();
-    QList<Buildings> Bs=o.getBuildings();
+    QList<Buildings> Bs= ORM::getBuildings();
     for (Buildings b :Bs) {
         ui->comboBuilding->addItem(b.getName());
     }
@@ -44,10 +44,9 @@ void RaumeDialog::on_pushAdd_clicked()
     QString text =  inputDialog->getText(NULL ,"Gauss",
                                              "Enter address", QLineEdit::Normal);
     if (text.length()>0) {
-        ORM O=ORM();
-        Buildings b=Buildings() ;
+        Buildings b = Buildings() ;
         b.setName(text);
-        O.save(b);
+        ORM::save(b);
 
     }
 
@@ -74,8 +73,7 @@ void RaumeDialog::populateTable() {
     mod->setHorizontalHeaderLabels(headers);
 
 
-    ORM o=ORM();
-    QList<Buildings> Bs=o.getBuildings();
+    QList<Buildings> Bs = ORM::getBuildings();
     int r=0;
     for (Buildings b :Bs) {
 
@@ -120,7 +118,6 @@ void RaumeDialog::on_pushAddRoom_clicked()
     R.setCapacity(ui->lineCapacity->text().toInt());
     R.setName(ui->lineName->text());
 
-    ORM o =ORM();
-    o.save(R);
+    ORM::save(R);
     populateRoomTable();
 }

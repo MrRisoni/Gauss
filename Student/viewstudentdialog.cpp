@@ -1,6 +1,6 @@
 #include "viewstudentdialog.h"
 #include "ui_viewstudentdialog.h"
-#include "Entities/orm.h"
+#include "../orm.h"
 
 ViewStudentDialog::ViewStudentDialog(QWidget *parent) :
     QDialog(parent),
@@ -16,8 +16,7 @@ ViewStudentDialog::~ViewStudentDialog()
 
 void ViewStudentDialog::on_pushSearch_clicked()
 {
-    ORM o = ORM();
-    Student st = o.searchStudentByADT(ui->lineSearch->text());
+    Student st = ORM::searchStudentByADT(ui->lineSearch->text());
 
     ui->labName->setText(st.getName());
 
@@ -34,6 +33,5 @@ void ViewStudentDialog::on_pushAddPoso_clicked()
     F.setADT(ui->lineSearch->text());
     F.setAmount(ui->linePoso->text().toFloat());
     F.setGroupID(ui->comboAttends->currentText());
-    ORM o = ORM();
-    o.save(F);
+    ORM::save(F);
 }

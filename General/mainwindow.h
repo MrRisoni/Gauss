@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 
-
+#include <QSqlDatabase>
 #include "addnewschwerdialog.h"
 #include "managedepsdialog.h"
 #include "managecoursesdialog.h"

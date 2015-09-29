@@ -2,7 +2,6 @@
 #define MANAGEDEPSDIALOG_H
 
 #include <QDialog>
-#include "Entities/orm.h"
 
 
 namespace Ui {

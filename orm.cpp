@@ -1,25 +1,11 @@
 #include "orm.h"
-#include <exception>
-#include <iostream>
-#include <QFile>
-#include <QJsonDocument>
-#include <QJsonObject>
 
-using namespace std;
 
 extern QSqlDatabase vasi;
 
+#include <exception>
 
-ORM::ORM()
-{
-
-
-}
-
-ORM::~ORM()
-{
-
-}
+using namespace std;
 
 TimeTableHeaders ORM::getTimeTableHeaders() {
 
@@ -1182,15 +1168,10 @@ void ORM::ShowSuccess() {
     int ret = msgBox.exec();
 
 }
-QSqlDatabase ORM::getDb() const
-{
-    return db;
-}
 
-void ORM::setDb(const QSqlDatabase &value)
-{
-    db = value;
-}
+
+
+
 
 void ORM::save(Funds f) {
     QSqlQuery q;
@@ -1296,7 +1277,7 @@ Student ORM::searchStudentByADT(QString adt) {
     QSqlQuery q;
     Student st;
 
-    QString s="SELECT M.Name, M.ADT,M.MembID FROM Members M  WHERE  M.ADT LIKE '%" + adt + "%'";
+    QString s="SELECT Name, ADT,MembID FROM Members  WHERE  ADT LIKE '%" + adt + "%'";
     qDebug() << s;
 
     QString membid;
@@ -1397,12 +1378,15 @@ void ORM::save(Rooms R) {
     q.finish();
 }
 
-void ORM::save(RequestSchule rec) {
+
+
+
+void ORM::save(Requests rec) {
     QSqlQuery q;
     try {
 
         int StudID=0,CourseID=0;
-        q.prepare("SELECT CourseID FROM Courses WHERE CourseName=:cnm");
+        q.prepare("SELECT FachID FROM Fache WHERE Name=:cnm");
         q.bindValue(":cnm",rec.getC().getName());
         q.exec();
         while (q.next()) {
@@ -1429,7 +1413,7 @@ void ORM::save(RequestSchule rec) {
 
 
         int exists =0;
-        q.prepare("Select Count(CourseID) From RequestSchule Where CourseID=:cid AND StudentID=:stid");
+        q.prepare("Select Count(FachID) From Requests Where FachID=:cid AND StudentID=:stid");
         q.bindValue(":stid",StudID);
         q.bindValue(":cid",CourseID);
         q.exec();
@@ -1439,7 +1423,7 @@ void ORM::save(RequestSchule rec) {
         }
         if (exists==0) {
             //dont insert if record exists....
-            q.prepare("INSERT INTO `RequestSchule`  ( `StudentID`, `CourseID`, `Settled`, `ReqDate`, `Comments`) VALUES (:stid,:cid,'0',:dat,:coms)");
+            q.prepare("INSERT INTO `Requests`  ( `StudentID`, `FachID`, `Settled`, `ReqDate`, `Comments`) VALUES (:stid,:cid,'0',:dat,:coms)");
             q.bindValue(":stid",StudID);
             q.bindValue(":cid",CourseID);
             q.bindValue(":dat",rec.getDat());
@@ -1495,7 +1479,7 @@ QList<Courses> ORM::getUniCourses(QString DepName) {
     QList<Courses> CL;
     QSqlQuery q;
 
-    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID IN (SELECT DepID FROM Departments Where DepName='"+ DepName+"') ORDER BY C.CourseName  ASC");
+    q.exec("Select F.Name ,S.Red,S.Green,S.Blue From Fache F,Schwierigkeit S,UniCourses U , Departments D  Where U.FachID = F.FachID AND D.DepID = U.DepID  AND F.SchwerID=S.SchwerID AND D.DepName='"+ DepName+"' ORDER BY F.Name  ASC");
     while (q.next()) {
         Courses C=Courses();
         qDebug() << "Uni Course " << q.value(0).toString() << " @ " << DepName;
@@ -1519,7 +1503,7 @@ QList<Courses> ORM::getSchuleCourses() {
     QList<Courses> CL;
     QSqlQuery q;
 
-    q.exec("Select C.CourseName ,S.Red,S.Green,S.Blue From Courses C,Schwierigkeit S Where S.SchwerID=C.Schwer AND C.DepID=1 ORDER BY C.CourseName  ASC");
+    q.exec("Select F.Name ,S.Red,S.Green,S.Blue From Fache F,Schwierigkeit S Where S.SchwerID=F.SchwerID AND F.FachTypeID=1 ORDER BY F.Name  ASC");
     while (q.next()) {
         Courses C=Courses();
         qDebug() << "Schule Course " << q.value(0).toString();
@@ -1923,7 +1907,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
 }
 
-Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate) {
+ORM::Zukunuft ORM::createFutureDatesAndRooms(QList<Permatimes> Settings,QDate startDate,QDate endDate) {
 
 
 

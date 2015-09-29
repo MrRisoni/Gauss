@@ -2,8 +2,7 @@
 #include "ui_showgroupsdialog.h"
 #include <QMessageBox>
 #include  "../mvc.h"
-#include "../validator.h"
-#include "Entities/orm.h"
+#include "../orm.h"
 
 
 ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
@@ -20,9 +19,8 @@ ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
 
 
 
-    ORM o = ORM();
 
-    for (Hours h : o.getHours()) {
+    for (Hours h : ORM::getHours()) {
         ui->comboStart->addItem(h.getName());
     }
 }
@@ -41,9 +39,8 @@ void ShowGroupsDialog::on_pushCancel_clicked()
         dats.append(it->text());
     }
 
-    ORM o = ORM ();
 
-    o.CancelLesson( group_id,dats) ;
+    ORM::CancelLesson( group_id,dats) ;
 
     qDebug () << "example for empty form validation";
 }
@@ -95,27 +92,9 @@ void ShowGroupsDialog::on_pushAddTempo_clicked()
 {
 
 
-    Validator Val= Validator();
-    if (Val.ValidateFields(this->findChildren<QLineEdit*>())==false) {
-        QMessageBox msgBox;
-        msgBox.setText("Some fields are empty");
-        msgBox.setStandardButtons(QMessageBox::Ok);
-        msgBox.setIcon( QMessageBox::Critical);
-
-        int ret = msgBox.exec();
-    }
-
     qDebug() << "go on ";
 
-    ORM o = ORM();
-    o.AddTempLesson(group_id,ui->calendarTempo->selectedDate(),ui->comboStart->currentText(),ui->lineDuration->text().toFloat());
+    ORM::AddTempLesson(group_id,ui->calendarTempo->selectedDate(),ui->comboStart->currentText(),ui->lineDuration->text().toFloat());
 
 }
 
-void ShowGroupsDialog::on_pushCharts_clicked()
-{
-    //show pay and be pay charts
-
-
-
-}

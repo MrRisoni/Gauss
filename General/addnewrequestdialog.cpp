@@ -2,7 +2,7 @@
 #include "ui_addnewrequestdialog.h"
 
 
-#include "Entities/orm.h"
+#include "../orm.h"
 
 
 AddNewRequestDialog::AddNewRequestDialog(QWidget *parent) :
@@ -13,9 +13,8 @@ AddNewRequestDialog::AddNewRequestDialog(QWidget *parent) :
 
     //fetch schule courses
 
-    ORM o = ORM();
 
-    QList<Courses> Clist = o.getSchuleCourses();
+    QList<Courses> Clist = ORM::getSchuleCourses();
     int r=0;
     for (Courses C : Clist) {
         ui->comboSchuleCourses->addItem(C.getName());
@@ -31,6 +30,11 @@ AddNewRequestDialog::AddNewRequestDialog(QWidget *parent) :
     }
 
 
+    //fetch departments
+    for (Departments D : ORM::getDeps()){
+        ui->comboDep->addItem(D.getDepName());
+    }
+
 }
 
 AddNewRequestDialog::~AddNewRequestDialog()
@@ -41,18 +45,16 @@ AddNewRequestDialog::~AddNewRequestDialog()
 void AddNewRequestDialog::on_pushSearch_clicked()
 {
 
-    ORM o = ORM();
 
-    Student m = o.searchStudentByADT(ui->lineSearchQuery->text());
-    ui->labelStudentData->setText(m.getName() + " " + m.getADT() + " " + m.getRichtung());
+    Student m = ORM::searchStudentByADT(ui->lineSearchQuery->text());
+    ui->labelStudentData->setText(m.getName() + " " + m.getADT());
     //qDebug() << m;
-    //serialization m to string
     ui->lineSearchQuery->setText(m.getADT());
 }
 
 void AddNewRequestDialog::on_pushAddSchule_clicked()
 {
-    RequestSchule rec= RequestSchule();
+    Requests rec= Requests();
     Courses c= Courses();
     c.setName(ui->comboSchuleCourses->currentText());
 
@@ -64,11 +66,44 @@ void AddNewRequestDialog::on_pushAddSchule_clicked()
     st.setADT(ui->lineSearchQuery->text());
     rec.setStudent(st);
 
-    ORM o =ORM();
-    o.save(rec);
+    ORM::save(rec);
 }
 
 void AddNewRequestDialog::on_pushAddUni_clicked()
+{
+ //save uni requiest
+    Requests rec= Requests();
+    Courses c= Courses();
+    c.setName(ui->comboSchuleCourses->currentText());
+
+    rec.setC(c);
+
+    rec.setComments(ui->textScuhleComments->toPlainText());
+    rec.setDat(QDate::currentDate());
+    Members st=Members();
+    st.setADT(ui->lineSearchQuery->text());
+    rec.setStudent(st);
+
+    ORM::save(rec);
+}
+
+void AddNewRequestDialog::on_pushButton_3_clicked()
+{
+
+}
+
+void AddNewRequestDialog::on_comboDep_activated(const QString &arg1)
+{
+    //get courses by that dep
+    ui->comboCourses->clear();
+
+    for (Courses c : ORM::getUniCourses(arg1)) {
+        ui->comboCourses->addItem(c.getName());
+    }
+
+}
+
+void AddNewRequestDialog::on_comboCourses_activated(const QString &arg1)
 {
 
 }

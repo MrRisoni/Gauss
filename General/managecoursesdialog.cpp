@@ -1,9 +1,12 @@
 #include "managecoursesdialog.h"
 #include "ui_managecoursesdialog.h"
 #include "../mvc.h"
+#include "../orm.h"
 
 #include <QStandardItemModel>
 
+QList<Schwierigkeit> Stuffen;
+QList<Departments> Deps;
 
 ManageCoursesDialog::ManageCoursesDialog(QWidget *parent) :
     QDialog(parent),
@@ -14,10 +17,9 @@ ManageCoursesDialog::ManageCoursesDialog(QWidget *parent) :
 
     //fetch Shweriegkeit levels
 
-    ORM O=ORM();
     int row=0;
 
-    Stuffen=O.getSchwer();
+    Stuffen = ORM::getSchwer();
     for (Schwierigkeit stuffe: Stuffen) {
         qDebug() << "new stuffe" << stuffe.getRed() << " " << stuffe.getGreen() << " " << stuffe.getBlue();
         ui->comboSchwer->addItem(QString::number(stuffe.getSchwerID()));
@@ -36,7 +38,7 @@ ManageCoursesDialog::ManageCoursesDialog(QWidget *parent) :
     }
 
     //fetch departments
-    QList<Departments> Deps=O.getDeps();
+    QList<Departments> Deps = ORM::getDeps();
     for (Departments d : Deps) {
         ui->comboDepName->addItem(d.getDepName());
     }
@@ -70,9 +72,8 @@ void ManageCoursesDialog::on_pushSaveCourses_clicked()
         C.setName(ui->lineCourse->text());
         C.setSchwerID(ui->comboSchwer->currentText().toInt());
 
-        ORM O=ORM();
 
-        O.save(C);
+        ORM::save(C);
     }
 
     populateTable();
@@ -96,9 +97,8 @@ void ManageCoursesDialog::populateTable() {
 
     mod->setHorizontalHeaderLabels(headerLabs);
 
-    ORM o=ORM();
 
-    QList<ManageCourseTable>  tblk = o.getManageCourseTable();
+    QList<ManageCourseTable>  tblk = ORM::getManageCourseTable();
 
 
     int row=0;

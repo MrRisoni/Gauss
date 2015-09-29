@@ -1,16 +1,17 @@
-#ifndef REQUESTSCHULE_H
-#define REQUESTSCHULE_H
+#ifndef REQUESTS_H
+#define REQUESTS_H
 
 #include "courses.h"
 #include "members.h"
 #include <QDate>
 
 
-class RequestSchule
+class Requests
 {
 public:
-    RequestSchule();
-    ~RequestSchule();
+    Requests();
+
+
     Courses getC() const;
     void setC(const Courses &value);
 
@@ -39,4 +40,4 @@ private:
 
 };
 
-#endif // REQUESTSCHULE_H
+#endif // REQUESTS_H
