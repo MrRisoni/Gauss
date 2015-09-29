@@ -384,3 +384,6 @@ void CreateSchuleGroupDialog::on_pushAddExisting_clicked()
     //insert to a random active group for that course
     //set request to settled
 }
+
+
+

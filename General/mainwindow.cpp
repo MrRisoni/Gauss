@@ -28,8 +28,6 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->actionShow_Teacher,SIGNAL(triggered()),this,SLOT(showTeacher()));
 
 
-    connect(ui->actionTest_Plot,SIGNAL(triggered()),this,SLOT(showTestPlot()));
-    connect(ui->actionMachine_Learning,SIGNAL(triggered()),this,SLOT(MachLearn()));
     connect(ui->actionManage_Instituts,SIGNAL(triggered()),this,SLOT(manageInstituts()));
     connect(ui->actionManage_Langugages,SIGNAL(triggered()),this,SLOT(manageLanguages()));
     connect(ui->actionManage_Diplomas,SIGNAL(triggered()),this,SLOT(manageDiplomas()));
@@ -147,12 +145,7 @@ void MainWindow::manageLanguages() {
     addLang->show();
 }
 
-void MainWindow::MachLearn() {
 
-    std::string filename = "python2  /home/linguine/Gauss/Artif_Intel/test.py";
-
-    system(filename.c_str());
-}
 
 
 void MainWindow::manageInstituts() {
@@ -161,9 +154,6 @@ void MainWindow::manageInstituts() {
     instdial->show();
 }
 
-void MainWindow::showTestPlot() {
-
-}
 
 void MainWindow::setDb(const QSqlDatabase &value)
 {

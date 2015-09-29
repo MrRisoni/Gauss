@@ -5,7 +5,6 @@
 
 #include "../orm.h"
 #include "../mvc.h"
-#include "../crud.h"
 
 AddNewDiplomaDialog::AddNewDiplomaDialog(QWidget *parent) :
     QDialog(parent),
@@ -73,7 +72,7 @@ void AddNewDiplomaDialog::on_pushSave_clicked()
         D.setLanguage(ui->comboSprache->currentText());
         D.setName(ui->lineDiploma->text());
         D.setSchwerID(ui->comboSchwer->currentText());
-        CRUD::save(D);
+        ORM::save(D);
     }
 }
 

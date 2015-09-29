@@ -64,8 +64,6 @@ private slots:
     void showTeacher();
     void showStudent();
     void showAllStudents();
-    void showTestPlot();
-    void MachLearn();
     void manageInstituts();
     void manageLanguages();
     void manageDiplomas();

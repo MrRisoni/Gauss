@@ -2,8 +2,6 @@
 #include "ui_viewteacherdialog.h"
 
 #include "../orm.h"
-#include <QBuffer>
-#include "../crud.h"
 
 
 ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
@@ -18,9 +16,9 @@ ViewTeacherDialog::ViewTeacherDialog(QWidget *parent) :
         ui->comboDeps->addItem(D.getDepName());
     }
 
-    for (QString p : CRUD::getPayTypes()) {
-        ui->comboPayType->addItem(p);
-        ui->comboSelectPayType->addItem(p);
+    for (PayType p : ORM::getPayTypes()) {
+        ui->comboPayType->addItem(p.getComment());
+        ui->comboSelectPayType->addItem(p.getComment());
     }
 
 
@@ -53,7 +51,7 @@ void ViewTeacherDialog::on_pushButton_clicked()
 
    //get groupis
    ui->comboPayForGroup->clear();
-   for (QString gid : CRUD::getGroupIDs(ui->lineName->text())) {
+   for (QString gid : ORM::getGroupIDs(ui->lineName->text())) {
        ui->comboPayForGroup->addItem(gid);
    }
 
@@ -70,7 +68,7 @@ void ViewTeacherDialog::on_pushAddAmount_clicked()
     pay.setPayType(ui->comboSelectPayType->currentText());
     pay.setGroupID(ui->comboPayForGroup->currentText().toInt());
 
-    CRUD::save(pay);
+    ORM::save(pay);
 
 
 

@@ -62,9 +62,9 @@ std::tuple<QStandardItemModel*,QList<Cell>> ZeitWandel::getSchule() {
     //get the data from the db
     //groupid,roomid,hourid,duration,teacher,coursename
 
-    QString s="select H.GroupID,H.RoomID,H.StartHourID-1,H.Duration,M.Name,C.CourseName From History H ";
-    s+=" ,Members M,Courses C,Groups G Where H.Valid=1 AND H.Dat=CURRENT_DATE AND G.GroupID=H.GroupID ";
-    s+=" AND C.CourseID=G.CourseID AND M.MembID=G.TeacherID ";
+    QString s="select H.GroupID, H.RoomID, H.StartHourID-1, H.Duration, M.Name, F.Name From History H ";
+    s+=" ,Members M, Fache F, Groups G Where H.Valid = 1 AND H.Dat = CURRENT_DATE AND G.GroupID = H.GroupID ";
+    s+=" AND F.FachID = G.FachID AND M.MembID = G.TeacherID ";
 
     qDebug() << s;
     //OVERLAPS PICK THE FIRST ENTRY IN THE TABLE

@@ -262,7 +262,7 @@ QList<Members> ORM::getRequestsSchule(QString CourseName) {
 
     qDebug() << "fetching requests for " << CourseName;
     QSqlQuery q;
-    q.prepare("SELECT M.MembID,M.Name FROM RequestSchule R,Courses C,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND C.CourseID=R.CourseID AND C.CourseName =:cn");
+    q.prepare("SELECT M.MembID,M.Name FROM Requests R,Fache F,Members M WHERE R.Settled=0 AND M.MembID=R.StudentID AND F.FachID=R.FachID AND F.Name =:cn");
     q.bindValue(":cn",CourseName);
     q.exec();
 
@@ -301,101 +301,6 @@ void ORM::save(Kassen K) {
     q.finish();
 }
 
-
-
-
-
-QString ORM::generateAMKA() {
-
-    QSqlQuery q;
-
-    QList<QString> ExistingAMKAs;
-    q.exec("SELECT AMKA FROM Versicherung");
-    while (q.next()) {
-        ExistingAMKAs.append(q.value(0).toString());
-    }
-
-    bool exists= true;
-
-
-
-
-    QString randomString;
-
-
-    while (exists==true) {
-
-        randomString="";
-
-
-        int High=9;
-        int Low=0;
-        for (int i=0;i<12;i++) {
-            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-        }
-
-        //if random string exists in the db regenerate
-
-
-        exists=ExistingAMKAs.contains(randomString);
-
-
-    }
-
-    q.finish();
-    return randomString;
-}
-
-
-QString ORM::generateADT() {
-    //get all the ADTs from the db
-    //adt must be uniquq
-    QSqlQuery q;
-
-    QList<QString> ExistingADTS;
-    q.exec("SELECT ADT FROM Members UNION SELECT ADT FROM Users ORDER BY `ADT` ASC ");
-    while (q.next()) {
-        ExistingADTS.append(q.value(0).toString());
-    }
-
-    bool exists= true;
-
-
-    //generates a 8 digit ADT
-    QString possibleCharacters("ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-
-
-    QString randomString;
-
-    srand ( time(NULL) );
-
-    while (exists==true) {
-
-        randomString="";
-        for(int i=0; i<2; ++i)
-        {
-            int index = qrand() % possibleCharacters.length();
-            QChar nextChar = possibleCharacters.at(index);
-            randomString.append(nextChar);
-        }
-        int High=9;
-        int Low=0;
-        for (int i=0;i<6;i++) {
-            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-        }
-
-        //if random string exists in the db regenerate
-
-        qDebug() << "new ADT" << randomString;
-        exists=ExistingADTS.contains(randomString);
-
-
-    }
-
-    q.finish();
-    return randomString;
-
-}
 
 
 
@@ -532,37 +437,6 @@ QList<ManageCourseTable>  ORM::getManageCourseTable() {
 }
 
 
-QString ORM::generateAFM() {
-
-
-    QSqlQuery q;
-    QList<QString> ExistingAFMs;
-    q.exec("SELECT AFM FROM Versicherung");
-    while (q.next()) {
-        ExistingAFMs.append(q.value(0).toString());
-    }
-
-    bool exists= true;
-    QString randomString;
-
-    while (exists==true) {
-
-        randomString="";
-
-        int High=9;
-        int Low=0;
-        for (int i=0;i<7;i++) {
-            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-        }
-
-        exists=ExistingAFMs.contains(randomString);
-
-    }
-    q.finish();
-
-    return randomString;
-}
-
 
 QDate ORM::calcEOC(QString tid) {
     //fetch end of contract
@@ -596,7 +470,7 @@ SchuleTeacherMVC ORM::getCanTeachSchuleMVC(QString CourseName) {
     mvc.SchuleTeacherViewHeaders=headers;
 
     QSqlQuery q,q2;
-    QString s="SELECT M.MembID,M.Name,M.Mobile,E.EchelonID From Members M,Courses C,TeachOther T,TeachEchelon E WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND M.MembID=E.TeacherID AND C.CourseName='"+ CourseName+"'";
+    QString s="SELECT M.MembID,M.Name,M.Mobile,E.EchelonID From Members M,Fache F,TeachFach T,TeachEchelon E WHERE F.FachID=T.FachID AND M.MembID=T.TeacherID AND M.MembID=E.TeacherID AND F.Name='"+ CourseName+"'";
     qDebug() << s;
     q.exec(s);
 
@@ -654,7 +528,7 @@ QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
 
 
 
-    QString s="SELECT M.MembID,M.Name From Members M,Courses C,TeachOther T WHERE C.CourseID=T.CourseID AND M.MembID=T.TeacherID AND C.CourseName='"+ CourseName+"'";
+    QString s="SELECT M.MembID,M.Name From Members M,Fache F,TeachFach T WHERE F.FachID=T.FachID AND M.MembID=T.TeacherID AND F.Name='"+ CourseName+"'";
     qDebug() << s;
     q.exec(s);
 
@@ -684,78 +558,6 @@ QList<Teacher> ORM::getCanTeachThis(QString CourseName) {
 }
 
 
-QString ORM::generatePhone() {
-    QList<QString> ExistingPhones;
-    QSqlQuery q;
-
-    // i want the app to be realistic
-    //generate a unique mobile
-    //however allow for a few collisions
-
-
-    int Tries =0;
-    q.exec("SELECT Phone FROM Members");
-    while (q.next()) {
-        ExistingPhones.append(q.value(0).toString());
-    }
-
-    QString randomString;
-    int High=9;
-    int Low=0;
-
-    srand ( time(NULL) );
-
-    do {
-
-        randomString="210";
-        for (int i=0;i<7;i++) {
-            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-        }
-        qDebug() << "new phone " << randomString;
-
-
-    } while (ExistingPhones.contains(randomString)==false && (Tries>300));
-    return randomString;
-}
-
-QString ORM::generateMobile() {
-
-    QList<QString> ExistingMobiles;
-    QSqlQuery q;
-
-    // i want the app to be realistic
-    //generate a unique mobile
-    //however allow for a few collisions
-
-    int Tries =0;
-
-    q.exec("SELECT FatherMobile FROM Schuler UNION SELECT MotherMobile FROM Schuler UNION SELECT Mobile FROM Members");
-    while (q.next()) {
-        ExistingMobiles.append(q.value(0).toString());
-    }
-    q.finish();
-
-    int High=9;
-    int Low=0;
-
-    srand ( time(NULL) );
-
-
-    QString randomString;
-
-    do {
-        randomString="69";
-        for (int i=0;i<8;i++) {
-            randomString.append(QString::number(qrand() % ((High + 1) - Low) + Low));
-        }
-        Tries++;
-
-        qDebug() << "new mobile " << randomString;
-    } while (ExistingMobiles.contains(randomString)==false && (Tries>300));
-    return randomString;
-}
-
-
 
 
 
@@ -767,17 +569,9 @@ void ORM::saveTeacher(Teacher T) {
         vasi.transaction();
 
 
-        T.setAFM(generateAFM());
-        T.setADT(generateADT());
-        T.setPhone(generatePhone());
-        T.setMobile(generateMobile());
-
 
         qDebug() << "random generations" ;
-        qDebug() << "AFM " <<  T.getAFM();
-        qDebug() << "ADT " << T.getADT();
-        qDebug() << "Phone " << T.getPhone();
-        qDebug() << "Mobile " << T.getMobile();
+
 
         qDebug() << "Trying to save teacher " ;
         //query the db to get CourseIDs
@@ -1641,7 +1435,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         qDebug() << "attempting to save schule group";
         int CID=-1;
         //query for courseID
-        q.prepare("SELECT CourseID FROM Courses WHERE CourseName=:name AND DepID=1");
+        q.prepare("SELECT FachID FROM Fache WHERE Name=:name AND FachTypeID=1");
         q.bindValue(":name",g.getCourseName());
         q.exec();
         while (q.next()) {
@@ -1652,8 +1446,9 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             throw 10;
         }
 
+        qDebug() << "couseid " << CID;
 
-        q.prepare("INSERT INTO `Groups`  (`TeacherID`, `CourseID`, `StartDate`,`LessTypeID`) VALUES (:tid,:cid,:sdat,'1')");
+        q.prepare("INSERT INTO `Groups`  (`TeacherID`, `FachID`, `StartDate`) VALUES (:tid,:cid,:sdat)");
         q.bindValue(":tid",g.getTeacherID());
         q.bindValue(":cid",CID);
         q.bindValue(":sdat",g.getStartDate());
@@ -1661,6 +1456,8 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         if (!q.exec()) {
             throw 10;
         }
+
+
 
         int GroupID;
         q.exec("SELECT MAX(GroupID) FROM Groups");
@@ -1673,6 +1470,8 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             throw 10;
         }
 
+        qDebug() << "groupid " << GroupID;
+
         for (QString SID : g.getMeliID()) {
             //insert into should be payed
             q.prepare("INSERT INTO `ShouldBePayed`  (`StudentID`, `Amount`, `GroupID`, `Updated`) VALUES (:sid,'0',:gid,:dat)");
@@ -1684,25 +1483,29 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
                 throw 10;
             }
 
+            qDebug() << "Update Should be payed";
 
 
 
 
 
 
-
-            q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`,`Added`) VALUES (:gid,:sid,:dat)");
+            q.prepare("INSERT INTO `Ensembles` ( `GroupID`, `StudID`,`Added`,`Dropped`) VALUES (:gid,:sid,:dat,:drop)");
             q.bindValue(":gid",GroupID);
             q.bindValue(":sid",SID);
             q.bindValue(":dat",QDate::currentDate());
+            q.bindValue(":drop",Perma.getEnds());
 
             if (!q.exec()) {
                 throw 10;
             }
+
+            qDebug() << "Update ensemb;es";
+
             //set Request Setted= 1
 
             qDebug() << "deleting request for " << SID;
-            QString s="UPDATE `RequestSchule` SET `Settled`=1  WHERE CourseID='"+ QString::number(CID)+"' AND StudentID='"+ SID+"' ";
+            QString s="UPDATE `Requests` SET `Settled`=1  WHERE FachID='"+ QString::number(CID)+"' AND StudentID='"+ SID+"' ";
             qDebug() << s;
             q.exec(s);
 
@@ -1710,6 +1513,8 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             if (!q.exec()) {
                 throw 10;
             }
+
+            qDebug() << "update requests";
         }
 
 
@@ -1718,7 +1523,6 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
 
         //insert into permament
-        int PermaID=0;
         s= "INSERT INTO `Permament` (`GroupID`, `StartsOn`, `EndsOn`) VALUES (:grid,:start,:end)";
         qDebug () << s;
         q.prepare(s);
@@ -1730,20 +1534,10 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         if (!q.exec()) {
             throw 10;
         }
-        qDebug() << s;
+        qDebug() << "updated permament";
 
 
 
-        q.exec("SELECT MAX(PermaID) FROM Permament");
-        while (q.next()) {
-            PermaID=q.value(0).toInt();
-        }
-
-        if (PermaID<=0) {
-            throw 10;
-        }
-
-        qDebug() << "maximum permament ID " << PermaID;
 
         qDebug() << "Querying for room names " ;
 
@@ -1771,9 +1565,9 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
                 throw 10;
             }
 
-            s = "INSERT INTO `PermaTimes` (`PermaID`, `DayID`, `StartHourID`, `Duration`,`RoomID`) VALUES (:perid,:did,:shid,:dur,:rid)";
+            s = "INSERT INTO `PermaTimes` (`GroupID`, `DayID`, `StartHourID`, `Duration`,`RoomID`) VALUES (:perid,:did,:shid,:dur,:rid)";
             q.prepare(s);
-            q.bindValue(":perid",PermaID);
+            q.bindValue(":perid",GroupID);
             q.bindValue(":did",Programma.at(z).getDayID());
             q.bindValue(":shid",Programma.at(z).getStartHourID());
             q.bindValue(":dur",Programma.at(z).getDiarkeia());
@@ -1822,12 +1616,18 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
 
         qDebug() << " most recent bw " << most_recent_bw;
+
+
+
+
+
+
         //get the most recent fee and wage for that course
 
         float most_recent_fee;
         float most_recent_cw;
 
-        q.prepare("SELECT Fee FROM FeeSchule Where CourseID=:cid order by Dat Desc LIMIT 1");
+        q.prepare("SELECT Fee FROM Fee Where FachID=:cid order by Dat Desc LIMIT 1");
         q.bindValue(":cid",CID);
         if (!q.exec()) {
             throw 10;
@@ -1840,20 +1640,28 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
         qDebug() << " most recent fee " << most_recent_fee;
 
 
-
-
-        s=" SELECT Wage FROM WagesSchule WHERE EchelID IN (select EchelonID FROM TeachEchelon ";
-        s+= " Where TeacherID=:tid AND Dat IN (SELECT MAX(Dat) FROM TeachEchelon ";
-        s+= " WHERE TeacherID=:tid) ) ORDER BY Dat Desc Limit 1";
-
-        qDebug() << s;
-        q.prepare(s);
+        int teachel = 0;
+        q.prepare("select EchelonID FROM TeachEchelon Where TeacherID=:tid ORDER BY Dat Desc LIMIT 1");
         q.bindValue(":tid",g.getTeacherID());
-
-
         if (!q.exec()) {
             throw 10;
         }
+
+         while (q.next()) {
+             teachel = q.value(0).toInt();
+         }
+
+
+        s=" SELECT Wage FROM Wages WHERE EchelID = :ech AND FachID =:fid  ORDER BY Dat Desc Limit 1";
+
+        qDebug() << s;
+        q.prepare(s);
+        q.bindValue(":ech", teachel);
+        q.bindValue(":fid", CID);
+        if (!q.exec()) {
+            throw 10;
+        }
+
 
         while (q.next()) {
             most_recent_cw=q.value(0).toFloat();
@@ -1862,12 +1670,19 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
 
         qDebug() << " most recent cw " << most_recent_cw;
 
+        //get vat
+        float vat = 0 ;
+        q.exec("SELECT Value FROM VATHistory order by Dat Desc LIMIT 1");
+
+        while (q.next()) {
+            vat = q.value(0).toFloat();
+        }
 
 
         int StundeID=1;
         for (int w=0;w<FutureDatesRoomsHours.FutureJulianDays.size();w++ ) {
             qDebug() << "---------------------------";
-            s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`,`bw`,`cw`,`fee`) VALUES (:grid, :dat , :shourid , :dur , :rid,:bw,:cw,:fee)";
+            s="INSERT INTO `History`  (`GroupID`, `Dat`, `StartHourID`, `Duration`, `RoomID`,`bw`,`fw`,`fee`,`vat`) VALUES (:grid, :dat , :shourid , :dur , :rid,:bw,:cw,:fee,:vat)";
             qDebug() << s;
 
             q.prepare(s);
@@ -1879,6 +1694,7 @@ void ORM::saveSchule(Groups g,Permament Perma,QList<Permatimes> Programma) {
             q.bindValue(":bw",most_recent_bw);
             q.bindValue(":cw",most_recent_cw);
             q.bindValue(":fee",most_recent_fee);
+            q.bindValue(":vat",vat);
 
             //copy to history until the end
             q.exec();
@@ -2024,7 +1840,7 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
     try {
 
         vasi.transaction();
-        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`, `Phone`, `Mobile`, `EMail`, `MembTypeID`, `RegDate`, `BirthDate`, `ADT`) VALUES (:name,:fname,:mname,:adres,:phone,:mobile,:email,'2',:rdate,:bdate,:adt)");
+        q.prepare("INSERT INTO `Members` ( `Name`, `FName`, `MName`, `Address`,  `EMail`, `MembTypeID`, `RegDate`, `BirthDate`) VALUES (:name,:fname,:mname,:adres,:email,'2',:rdate,:bdate)");
 
 
 
@@ -2037,12 +1853,9 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
         q.bindValue(":fname",m.getFName());
         q.bindValue(":mname",m.getMName());
         q.bindValue(":adres",m.getAddress());
-        q.bindValue(":phone",generatePhone());
-        q.bindValue(":mobile",generateMobile());
         q.bindValue(":email",m.getEmail());
         q.bindValue(":rdate",m.getRegDate());
         q.bindValue(":bdate",m.getBirthDate());
-        q.bindValue(":adt",generateADT());
 
 
 
@@ -2086,17 +1899,6 @@ void ORM::saveSchuleStudent(Members m,QString kateuthinsi,QString specialcat) {
         vasi.transaction();
 
 
-        q.prepare("INSERT INTO `Schuler` ( `StudentID`, `DiscipleID`, `FatherMobile`, `MotherMobile`) VALUES (:sid,:did,:dad,:mom)");
-        q.bindValue(":sid",StudID);
-        q.bindValue(":did",DiscID);
-        q.bindValue(":dad",generateMobile());
-        q.bindValue(":mom",generateMobile());
-
-        if (!q.exec()) {
-            throw 10;
-        }
-
-        qDebug() << "insert into schuler";
         //special category
 
 
@@ -2168,12 +1970,9 @@ void ORM::saveStudent(Members m) {
         q.bindValue(":fname",m.getFName());
         q.bindValue(":mname",m.getMName());
         q.bindValue(":adres",m.getAddress());
-        q.bindValue(":phone",generatePhone());
-        q.bindValue(":mobile",generateMobile());
         q.bindValue(":email",m.getEmail());
         q.bindValue(":rdate",m.getRegDate());
         q.bindValue(":bdate",m.getBirthDate());
-        q.bindValue(":adt",generateADT());
         q.exec();
 
         vasi.commit();
@@ -2347,4 +2146,107 @@ void ORM::AddTempLesson(QString GroupID,QDate dat,QString hour,float duration) {
     }
     q.finish();
 }
+
+
+
+
+
+
+
+void  ORM::save(Diplomas d) {
+    QSqlQuery q;
+    try {
+
+        vasi.transaction();
+
+        qDebug() << "saving diploma...";
+        int lid=0,pid=0;
+
+
+        q.prepare("SELECT LangID From Languages Where Name=:nm");
+        q.bindValue(":nm",d.getLanguage());
+        q.exec();
+
+        while (q.next()) {
+            lid = q.value(0).toInt();
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        if (lid<=0) {
+            throw 10;
+        }
+
+        qDebug() << "languageID " << lid << " " << d.getLanguage();
+
+        q.prepare("SELECT InstID FROM Instituts Where Name=:nm");
+        q.bindValue(":nm",d.getInstitutName());
+        q.exec();
+
+        while (q.next()) {
+            pid = q.value(0).toInt();
+        }
+
+        qDebug() << "providerID " << pid << " " << d.getInstitutName();
+
+        q.prepare("INSERT INTO Fache (FachTypeID, Name) VALUES (3,:name)");
+        q.bindValue(":name",d.getName());
+        if (!q.exec()) {
+            throw 10;
+        }
+        int fachid = q.lastInsertId().toInt();
+
+        q.prepare("INSERT INTO `Diplomas` (`LangID`, `ProvID`, `FachID`, `Schwer`) VALUES (:lid,:pid,:fachid,:schwid)");
+        q.bindValue(":lid",lid);
+        q.bindValue(":pid",pid);
+        q.bindValue(":fachid",fachid);
+        q.bindValue(":schwid",d.getSchwerID());
+
+        if (!q.exec()) {
+            throw 10;
+        }
+
+
+        vasi.commit();
+
+        ShowSuccess();
+    }
+
+    catch (int ex) {
+
+        vasi.rollback();
+
+        ShowError(q);
+
+    }
+    q.finish();
+}
+
+
+
+QList<QString> ORM::getGroupIDs(QString Name) {
+    QList<QString> groups;
+    QSqlQuery q;
+    int tid;
+    q.exec("SELECT MembID FROM Members Where Name  LIKE '%" + Name + "%'");
+    while (q.next()) {
+        tid=q.value(0).toInt();
+    }
+
+    qDebug () << "crud teacherid " << tid;
+    q.prepare("SELECT GroupID FROM Groups Where TeacherID=:tid");
+    groups.append("-1");
+
+    q.bindValue(":tid",tid);
+    q.exec();
+    while (q.next()) {
+        groups.append(q.value(0).toString());
+    }
+
+
+    return groups;
+}
+
+
+
 

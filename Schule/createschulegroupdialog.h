@@ -31,6 +31,8 @@ private slots:
 
     void on_pushAddExisting_clicked();
 
+
+
 private:
     Ui::CreateSchuleGroupDialog *ui;
     void populateTable(QString CourseName);

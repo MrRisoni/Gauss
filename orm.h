@@ -58,6 +58,12 @@ namespace ORM {
 
 
 
+    QList<QString> getGroupIDs(QString Name);
+    void save(Payments p);
+    void ShowSuccess();
+    void ShowError(QSqlQuery q);
+    void save(Diplomas d);
+
     void save(Funds f);
     void save(Schwierigkeit schw);
     void save(Departments D);
@@ -158,11 +164,6 @@ namespace ORM {
 
     void ShowError(QSqlQuery q);
     void ShowSuccess();
-    QString generateADT();
-    QString generateAFM();
-    QString generatePhone();
-    QString generateMobile();
-    QString generateAMKA();
     QDate calcEOC(QString tid);
 
 

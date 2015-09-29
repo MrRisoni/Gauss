@@ -97,7 +97,6 @@ SOURCES += main.cpp\
     General/roomitemdelegate.cpp \
     mvc.cpp \
     Entities/discipline.cpp \
-    crud.cpp \
     Entities/wages.cpp \
     Entities/fee.cpp \
     Entities/requests.cpp
@@ -191,7 +190,6 @@ HEADERS  += Entities/absent.h  \
     General/roomitemdelegate.h \
     mvc.h \
     Entities/discipline.h \
-    crud.h \
     Entities/wages.h \
     Entities/fee.h \
     Entities/requests.h
