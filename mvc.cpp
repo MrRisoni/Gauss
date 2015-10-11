@@ -649,13 +649,17 @@ QStandardItemModel* MVC::getSpracheDiplomas() {
     QList<RGBColor> coldata;
 
     QSqlQuery q,q2,q3;
-    q.exec("SELECT D.DiplID , I.Name, D.Name , 0,0,0,0 ,S.Red, S.Green, S.Blue From Diplomas D,Instituts I, Schwierigkeit S Where D.Schwer = S.SchwerID AND I.InstID = D.ProvID ORDER BY D.Name ASC");
+
+
+
+
+    q.exec("    SELECT D.DiplID , F.Name, I.Name, 0,0,0,0 ,S.Red, S.Green, S.Blue From Diplomas D,Instituts I, Schwierigkeit S , Fache F  Where F.FachID = D.FachID AND F.SchwerID = S.SchwerID AND I.InstID = D.ProvID ORDER BY F.Name ASC");
     int i=0;
     while (q.next()) {
         QStringList row;
         row.append(q.value(0).toString());
-        row.append(q.value(2).toString());
         row.append(q.value(1).toString());
+        row.append(q.value(2).toString());
         row.append(q.value(3).toString());
         row.append(q.value(4).toString());
         row.append(q.value(5).toString());
