@@ -76,6 +76,8 @@ MainWindow::MainWindow(QWidget *parent) :
 
 MainWindow::~MainWindow()
 {
+    delete ui->tableSchule->model();
+
     delete ui;
 }
 QSqlDatabase MainWindow::getDb() const

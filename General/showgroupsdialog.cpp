@@ -28,6 +28,7 @@ ShowGroupsDialog::ShowGroupsDialog(QWidget *parent) :
 ShowGroupsDialog::~ShowGroupsDialog()
 {
     delete ui->tableAllGroups->model();
+    delete ui->tablePastLessons->model();
     delete ui;
 }
 

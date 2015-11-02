@@ -99,7 +99,8 @@ SOURCES += main.cpp\
     Entities/discipline.cpp \
     Entities/wages.cpp \
     Entities/fee.cpp \
-    Entities/requests.cpp
+    Entities/requests.cpp \
+    Entities/querybuilder.cpp
 
 
 
@@ -192,7 +193,8 @@ HEADERS  += Entities/absent.h  \
     Entities/discipline.h \
     Entities/wages.h \
     Entities/fee.h \
-    Entities/requests.h
+    Entities/requests.h \
+    Entities/querybuilder.h
 
 
 
