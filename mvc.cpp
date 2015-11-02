@@ -1,5 +1,5 @@
 #include "mvc.h"
-
+#include "Entities/querybuilder.h"
 
 
 
@@ -235,18 +235,22 @@ QStandardItemModel* MVC::getGeneral_ShowPastHistory(QString GroupID) {
 
     QList<QStringList> data;
 
-    QString s="SELECT DAYNAME(H.Dat), H.Dat , R.Name , S.HourN,H.Duration FROM History H,Rooms R ,Hours S Where S.HourID=H.StartHourID AND H.RoomID=R.RoomID AND H.Valid=1 AND H.GroupID=:gid AND H.Dat<=CURRENT_DATE";
-    qDebug () << s;
-    q.prepare(s);
-    q.bindValue(":gid",GroupID);
-    q.exec();
-    while (q.next()) {
+
+    QueryBuilder qb =  QueryBuilder();
+    qb.setQuery("SELECT DAYNAME(H.Dat), H.Dat , R.Name , S.HourN,H.Duration FROM History H,Rooms R ,Hours S Where S.HourID=H.StartHourID AND H.RoomID=R.RoomID AND H.Valid=1 AND H.GroupID=:gid AND H.Dat<=CURRENT_DATE");
+    qb.addParameter(":gid", GroupID);
+    QList<QStringList> result = qb.execSelect();
+    for (QStringList row : result)
+    {
         QStringList record;
-        record.append(q.value(0).toString());
-        record.append(q.value(1).toString());
-        record.append(q.value(2).toString());
-        record.append(q.value(3).toString());
-        record.append(q.value(4).toString());
+
+        short cols = row.count();
+        for (short y =0 ; y < cols;y++)
+        {
+            record.append(row.at(y));
+
+        }
+
 
         data.append(record);
 
@@ -396,6 +400,8 @@ QStandardItemModel* MVC::getGeneral_ShowGroup_Model() {
     QList<QStringList> data;
     try {
         QString s;
+
+
         if (!q.exec("SELECT G.GroupID, F.Name,FT.Description, G.StartDate, M.Name , G.Active FROM Groups G,Fache F, Members M, FachType FT WHERE FT.TypeID = F.FachTypeID AND G.FachID= F.FachID AND M.MembID=G.TeacherID ")) {
             throw 10;
         }
